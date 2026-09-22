@@ -263,6 +263,10 @@ svg {
     .deck-download {
         display: none !important;
     }
+
+    .dl-hotzone {
+        display: none !important;
+    }
 }
 
 /* 8. Reduced motion */
@@ -307,6 +311,13 @@ svg {
 .deck-download {
     position: fixed; right: 22px; bottom: 22px; z-index: 1001;
     display: flex; gap: 8px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.deck-download.show { opacity: 1; pointer-events: auto; }
+.dl-hotzone {
+    position: fixed; right: 0; bottom: 0; width: 300px; height: 300px;
+    z-index: 1000; cursor: pointer;
 }
 .deck-download a {
     display: inline-flex; align-items: center; gap: 6px;
@@ -553,6 +564,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
         <div class="s1-chip">语音线路</div>
         <div class="s1-chip">一键认证</div>
         <div class="s1-chip">5G消息</div>
+        <div class="s1-chip">消息推送</div>
         <div class="s1-chip">国际短信</div>
         <div class="s1-chip">中间号</div>
       </div>
@@ -596,9 +608,9 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             <div class="s2-t">业务介绍</div>
             <div class="s2-e">OUR BUSINESS</div>
           </div>
-          <div class="s2-d">产品矩阵 · GMP · 短信 · 语音 · 语音线路 · 5G消息 · 一键认证</div>
+          <div class="s2-d">产品矩阵 · GMP · 短信 · 语音 · 语音线路 · 5G消息 · 消息推送 · 一键认证</div>
         </div>
-        <div class="s2-p">11 - 23</div>
+        <div class="s2-p">11 - 25</div>
       </div>
       <div class="s2-row reveal" style="--d:0.35s">
         <div class="s2-num">03</div>
@@ -609,11 +621,11 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
           </div>
           <div class="s2-d">极致服务 · 5000+ 企业共同选择</div>
         </div>
-        <div class="s2-p">24 - 27</div>
+        <div class="s2-p">26 - 29</div>
       </div>
     </div>
   </div>
-  <div class="pageno">02 / 27</div>
+  <div class="pageno">02 / 29</div>
 </section>
 
 <!-- ============ s3 · 章节页 01 公司介绍 ============ -->
@@ -638,7 +650,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
     </div>
     <div class="s3-bottom"></div>
   </div>
-  <div class="pageno">03 / 27</div>
+  <div class="pageno">03 / 29</div>
 </section>
 
 <!-- ============ s4 · 公司简介 ============ -->
@@ -700,7 +712,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       <div class="s4-r-note">公众公司治理 + 3A 信用认证，<br />合作可信度的硬背书。</div>
     </div>
   </div>
-  <div class="pageno">04 / 27</div>
+  <div class="pageno">04 / 29</div>
 </section>
 
 <!-- ============ s5 · 发展历程 ============ -->
@@ -766,7 +778,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       <div class="s5-dwrap next reveal" style="--d:0.54s"><div class="s5-dcard"><div class="s5-dtext">智能化办公系统上线，以 AI 驱动内部协作、运营与交付流程全面提效</div></div></div>
     </div>
   </div>
-  <div class="pageno">05 / 27</div>
+  <div class="pageno">05 / 29</div>
 </section>
 
 <!-- ============ s6 · 公司荣誉 ============ -->
@@ -830,7 +842,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       </div>
     </div>
   </div>
-  <div class="pageno">06 / 27</div>
+  <div class="pageno">06 / 29</div>
 </section>
 
 <!-- ============ s7 · 公司资质 ============ -->
@@ -917,7 +929,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       </div>
     </div>
   </div>
-  <div class="pageno">07 / 27</div>
+  <div class="pageno">07 / 29</div>
 </section>
 
 <!-- ============ s8 · 服务团队/网络 ============ -->
@@ -991,7 +1003,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       </div>
     </div>
   </div>
-  <div class="pageno">08 / 27</div>
+  <div class="pageno">08 / 29</div>
 </section>
 
 <!-- ============ s9 · 研发能力 ============ -->
@@ -1085,7 +1097,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       </div>
     </div>
   </div>
-  <div class="pageno">09 / 27</div>
+  <div class="pageno">09 / 29</div>
 </section>
 
 <!-- ==================== P10 业务规模（巨型数字 hero，深蓝渐变） ==================== -->
@@ -1132,7 +1144,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             <div class="s10-band-item"><span class="num s10-band-v">100+</span><span class="s10-band-l">软件著作权</span></div>
         </div>
     </div>
-    <div class="pageno">10 / 27</div>
+    <div class="pageno">10 / 29</div>
 </section>
 
 <!-- ==================== P11 章节页 02 · 业务介绍 ==================== -->
@@ -1149,13 +1161,13 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
                 <div class="s11-bar"></div>
                 <div class="s11-title">业务介绍</div>
                 <div class="s11-eng">OUR BUSINESS</div>
-                <div class="s11-desc">产品服务矩阵 · GMP 本地化部署消息平台<br />企业短信 · 语音验证 · 语音线路 · 5G消息 · 富媒体消息 · 一键认证</div>
+                <div class="s11-desc">产品服务矩阵 · GMP 本地化部署消息平台<br />企业短信 · 语音验证 · 语音线路 · 5G消息 · 消息推送 · 富媒体消息 · 一键认证</div>
             </div>
         </div>
         <div class="s11-spacer"></div>
     </div>
     <img class="s11-phone floaty reveal reveal-right" style="--d:0.3s" src="assets/gen-ch2-phone.png" alt="" />
-    <div class="pageno">11 / 27</div>
+    <div class="pageno">11 / 29</div>
 </section>
 
 <!-- ==================== P12 产品服务矩阵 ==================== -->
@@ -1204,6 +1216,13 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
                 </div>
             </div>
             <div class="s12-card reveal" style="--d:0.3s">
+                <div class="icon-tile red"><img src="assets/icons/bullhorn-F02D4E.png" alt="" /></div>
+                <div class="s12-card-text">
+                    <div class="s12-card-t">消息推送</div>
+                    <div class="s12-card-d">APP 通知栏推送 · 全厂商通道 · 精细化运营触达</div>
+                </div>
+            </div>
+            <div class="s12-card wide reveal" style="--d:0.35s">
                 <div class="icon-tile red"><img src="assets/icons/server-F02D4E.png" alt="" /></div>
                 <div class="s12-card-text">
                     <div class="s12-card-t">GMP 本地化部署消息平台</div>
@@ -1226,7 +1245,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             </div>
         </div>
     </div>
-    <div class="pageno">12 / 27</div>
+    <div class="pageno">12 / 29</div>
 </section>
 
 <!-- ==================== P13 GMP 聚合消息服务平台 ==================== -->
@@ -1270,7 +1289,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             </div>
         </div>
     </div>
-    <div class="pageno">13 / 27</div>
+    <div class="pageno">13 / 29</div>
 </section>
 
 <!-- ==================== P14 GMP 平台功能 ==================== -->
@@ -1333,7 +1352,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             </div>
         </div>
     </div>
-    <div class="pageno">14 / 27</div>
+    <div class="pageno">14 / 29</div>
 </section>
 
 <!-- ==================== P15 企业短信 ==================== -->
@@ -1379,7 +1398,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             </div>
         </div>
     </div>
-    <div class="pageno">15 / 27</div>
+    <div class="pageno">15 / 29</div>
 </section>
 
 <!-- ==================== P16 UMC 云通信服务 ==================== -->
@@ -1439,7 +1458,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             </div>
         </div>
     </div>
-    <div class="pageno">16 / 27</div>
+    <div class="pageno">16 / 29</div>
 </section>
 
 <!-- ==================== P17 语音验证 ==================== -->
@@ -1506,7 +1525,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             </div>
         </div>
     </div>
-    <div class="pageno">17 / 27</div>
+    <div class="pageno">17 / 29</div>
 </section>
 
 <!-- ==================== P18 5G 消息 ==================== -->
@@ -1617,7 +1636,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             </div>
         </div>
     </div>
-    <div class="pageno">18 / 27</div>
+    <div class="pageno">18 / 29</div>
 </section>
 
 <!-- ==================== P19 语音线路 · 场景与策略 ==================== -->
@@ -1684,7 +1703,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             </div>
         </div>
     </div>
-    <div class="pageno">19 / 27</div>
+    <div class="pageno">19 / 29</div>
 </section>
 
 <section class="slide" id="s20" style="background:var(--bg)">
@@ -1724,7 +1743,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             <div class="s18-card-eng">RCS · CHATBOT · AI</div>
         </div>
     </div>
-    <div class="pageno">20 / 27</div>
+    <div class="pageno">20 / 29</div>
 </section>
 
 <style>
@@ -1785,8 +1804,9 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s12 .s12-lead-sub { font-size:20px; color:rgba(255,255,255,0.55); letter-spacing:3px; }
 #s12 .s12-tags { display:flex; gap:15px; }
 #s12 .s12-tag { padding:9px 24px; border-radius:999px; background:rgba(255,255,255,0.1); border:1.5px solid rgba(255,255,255,0.25); font-size:20px; color:#fff; }
-#s12 .s12-grid { flex:1; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(2,1fr); gap:21px; }
-#s12 .s12-card { background:#fff; border-radius:21px; padding:36px 33px; box-shadow:0 6px 24px rgba(10,31,68,0.06); display:flex; flex-direction:column; justify-content:space-between; }
+#s12 .s12-grid { flex:1; display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(2,1fr); gap:21px; }
+#s12 .s12-card { background:#fff; border-radius:21px; padding:33px 30px; box-shadow:0 6px 24px rgba(10,31,68,0.06); display:flex; flex-direction:column; justify-content:space-between; }
+#s12 .s12-card.wide { grid-column:span 2; }
 #s12 .s12-card .icon-tile { width:75px; height:75px; border-radius:18px; background:rgba(46,111,232,0.10); }
 #s12 .s12-card .icon-tile.red { background:rgba(240,45,78,0.10); }
 #s12 .s12-card .icon-tile img { width:36px; height:36px; }
@@ -2060,7 +2080,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
     </div>
     <div class="s19-band">广泛应用于党政、公益、银行、游戏、汽车、美妆、旅游、电商、房产、影视等行业</div>
   </div>
-  <div class="pageno">21 / 27</div>
+  <div class="pageno">21 / 29</div>
 </section>
 
 <!-- P20 多内容样式承载 · 沉浸式体验 -->
@@ -2117,7 +2137,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       <div class="s20-bi">党政</div><div class="s20-bi">公益</div><div class="s20-bi">银行</div><div class="s20-bi">游戏</div><div class="s20-bi">汽车</div><div class="s20-bi">美妆</div><div class="s20-bi">旅游</div><div class="s20-bi">电商</div><div class="s20-bi">房产</div><div class="s20-bi">影视</div>
     </div>
   </div>
-  <div class="pageno">22 / 27</div>
+  <div class="pageno">22 / 29</div>
 </section>
 
 <!-- P21 一键认证 -->
@@ -2171,7 +2191,181 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       </div>
     </div>
   </div>
-  <div class="pageno">23 / 27</div>
+  <div class="pageno">23 / 29</div>
+</section>
+
+<!-- ==================== 消息推送（新增 P24/P25，id 用 s28/s29 避免样式冲突） ==================== -->
+<style>
+/* ========== s28 消息推送 · 产品能力 ========== */
+#s28 .s28-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; gap:42px; }
+#s28 .s28-lead { width:510px; flex-shrink:0; background:linear-gradient(165deg,#0A1F44 0%,#123A7A 100%); border-radius:24px; padding:60px 48px; display:flex; flex-direction:column; justify-content:space-between; }
+#s28 .s28-lead-top { display:flex; align-items:center; gap:24px; }
+#s28 .s28-iconbox { width:90px; height:90px; border-radius:21px; background:rgba(240,45,78,0.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+#s28 .s28-iconbox img { width:42px; height:42px; object-fit:contain; }
+#s28 .s28-lead-tag { font-size:18px; color:rgba(255,255,255,0.55); letter-spacing:4px; font-family:var(--font-num); }
+#s28 .s28-lead-mid { display:flex; flex-direction:column; gap:21px; }
+#s28 .s28-lead-title { font-size:36px; font-weight:700; color:#fff; line-height:1.5; }
+#s28 .s28-lead-desc { font-size:21px; color:rgba(255,255,255,0.65); line-height:1.85; }
+#s28 .s28-lead-eng { font-size:18px; color:rgba(255,255,255,0.45); letter-spacing:3px; font-family:var(--font-num); }
+#s28 .s28-grid { flex:1; display:grid; grid-template-columns:1fr 1fr 1fr; grid-template-rows:1fr 1fr; gap:27px; }
+#s28 .s28-cap { background:#fff; border-radius:21px; box-shadow:0 6px 24px rgba(10,31,68,0.06); padding:36px 33px; display:flex; flex-direction:column; gap:18px; }
+#s28 .s28-cap-tile { width:72px; height:72px; border-radius:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+#s28 .s28-cap-tile img { width:36px; height:36px; object-fit:contain; }
+#s28 .s28-tile-red { background:rgba(240,45,78,0.1); }
+#s28 .s28-tile-blue { background:rgba(46,111,232,0.1); }
+#s28 .s28-tile-navy { background:rgba(10,31,68,0.07); }
+#s28 .s28-cap-t { font-size:26px; font-weight:700; color:var(--navy); }
+#s28 .s28-cap-d { font-size:20px; color:var(--muted); line-height:1.7; }
+
+/* ========== s29 消息推送 · 精细化运营与数据 ========== */
+#s29 .s29-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; flex-direction:column; gap:27px; }
+#s29 .s29-cols { flex:1; display:flex; gap:36px; }
+#s29 .s29-col { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 24px rgba(10,31,68,0.06); padding:39px 45px; display:flex; flex-direction:column; }
+#s29 .s29-col-head { display:flex; align-items:center; gap:21px; padding-bottom:24px; border-bottom:1.5px solid #EDF1F7; }
+#s29 .s29-col-head .icon-tile { width:72px; height:72px; flex:none; }
+#s29 .s29-col-head .icon-tile img { width:36px; height:36px; }
+#s29 .s29-col-t { font-size:30px; font-weight:700; color:var(--navy); }
+#s29 .s29-col-e { font-size:17px; color:var(--faint); letter-spacing:3px; font-family:var(--font-num); margin-top:4px; }
+#s29 .s29-rows { flex:1; display:flex; flex-direction:column; }
+#s29 .s29-row { flex:1; display:flex; align-items:center; gap:21px; border-bottom:1.5px solid #F0F4F9; }
+#s29 .s29-row.last { border-bottom:none; }
+#s29 .s29-row-dot { width:10px; height:10px; border-radius:5px; background:var(--red); flex:none; }
+#s29 .s29-col.blue .s29-row-dot { background:var(--blue); }
+#s29 .s29-rt { font-size:23px; font-weight:700; color:var(--navy); width:250px; flex:none; }
+#s29 .s29-rd { font-size:20px; color:var(--muted); line-height:1.6; flex:1; }
+#s29 .s29-band { height:108px; flex:none; background:linear-gradient(90deg,#0A1F44 0%,#123A7A 100%); border-radius:18px; display:flex; align-items:center; justify-content:center; gap:24px; }
+#s29 .s29-band img { width:38px; height:38px; object-fit:contain; }
+#s29 .s29-band-t { font-size:22.5px; color:#fff; font-weight:600; letter-spacing:2px; }
+</style>
+
+<!-- ==================== P24 消息推送 · 产品能力 ==================== -->
+<section class="slide" id="s28" style="background:var(--bg)">
+    <div class="slide-head reveal">
+        <div class="kicker">02 · 消息推送</div>
+        <div class="slide-title">消息推送 · 高效触达每一条用户</div>
+        <div class="title-bar"></div>
+    </div>
+    <div class="s28-body">
+        <div class="s28-lead reveal reveal-left" style="--d:0.1s">
+            <div class="s28-lead-top">
+                <div class="s28-iconbox"><img src="assets/icons/paper-plane-FFFFFF.png" alt="" /></div>
+                <div class="s28-lead-tag">全厂商通道 · 智能路由</div>
+            </div>
+            <div class="s28-lead-mid">
+                <div class="s28-lead-title">通知栏消息<br />稳定必达</div>
+                <div class="s28-lead-desc">为 APP 提供稳定、高到达的通知栏消息推送服务，覆盖全厂商通道，支撑验证码外的用户触达与运营场景。</div>
+            </div>
+            <div class="s28-lead-eng">PUSH NOTIFICATION</div>
+        </div>
+        <div class="s28-grid">
+            <div class="s28-cap reveal" style="--d:0.18s">
+                <div class="s28-cap-tile s28-tile-blue"><img src="assets/icons/mobile-screen-button-2E6FE8.png" alt="" /></div>
+                <div class="s28-cap-t">通知栏 / 透传双模式</div>
+                <div class="s28-cap-d">通知消息由系统通知栏直接展现；透传消息交由 APP 自定义展示，灵活适配业务。</div>
+            </div>
+            <div class="s28-cap reveal" style="--d:0.24s">
+                <div class="s28-cap-tile s28-tile-blue"><img src="assets/icons/tower-broadcast-2E6FE8.png" alt="" /></div>
+                <div class="s28-cap-t">全厂商通道覆盖</div>
+                <div class="s28-cap-d">APNs、华为、荣耀、小米、OPPO、vivo、魅族、FCM 等国内外主流通道，智能路由择优下发。</div>
+            </div>
+            <div class="s28-cap reveal" style="--d:0.30s">
+                <div class="s28-cap-tile s28-tile-red"><img src="assets/icons/gauge-high-F02D4E.png" alt="" /></div>
+                <div class="s28-cap-t">高并发极速下发</div>
+                <div class="s28-cap-d">独享 + 共享通道组合，支持百万级 / 秒并发推送。</div>
+            </div>
+            <div class="s28-cap reveal" style="--d:0.36s">
+                <div class="s28-cap-tile s28-tile-navy"><img src="assets/icons/database-0A1F44.png" alt="" /></div>
+                <div class="s28-cap-t">离线消息库</div>
+                <div class="s28-cap-d">消息有效时长可配，离线消息入库，用户上线即达，提升到达率。</div>
+            </div>
+            <div class="s28-cap reveal" style="--d:0.42s">
+                <div class="s28-cap-tile s28-tile-navy"><img src="assets/icons/clock-0A1F44.png" alt="" /></div>
+                <div class="s28-cap-t">定时 / 定速推送</div>
+                <div class="s28-cap-d">支持定时下发与限速群推，削峰保护业务服务器。</div>
+            </div>
+            <div class="s28-cap reveal" style="--d:0.48s">
+                <div class="s28-cap-tile s28-tile-blue"><img src="assets/icons/layer-group-2E6FE8.png" alt="" /></div>
+                <div class="s28-cap-t">多端触达</div>
+                <div class="s28-cap-d">APP、小程序、H5、Web、鸿蒙，可叠加短信补量兜底。</div>
+            </div>
+        </div>
+    </div>
+    <div class="pageno">24 / 29</div>
+</section>
+
+<!-- ==================== P25 消息推送 · 精细化运营与数据 ==================== -->
+<section class="slide" id="s29" style="background:var(--bg)">
+    <div class="slide-head reveal">
+        <div class="kicker">02 · 消息推送</div>
+        <div class="slide-title">精细化运营与全链路数据</div>
+        <div class="title-bar"></div>
+    </div>
+    <div class="s29-body">
+        <div class="s29-cols">
+            <div class="s29-col reveal reveal-left" style="--d:0.15s">
+                <div class="s29-col-head">
+                    <div class="icon-tile navy"><img src="assets/icons/sliders-0A1F44.png" alt="" /></div>
+                    <div>
+                        <div class="s29-col-t">运营提效</div>
+                        <div class="s29-col-e">OPERATION</div>
+                    </div>
+                </div>
+                <div class="s29-rows">
+                    <div class="s29-row">
+                        <div class="s29-row-dot"></div>
+                        <div class="s29-rt">标签 / 别名圈人</div>
+                        <div class="s29-rd">多维标签与别名体系，精准圈定目标人群</div>
+                    </div>
+                    <div class="s29-row">
+                        <div class="s29-row-dot"></div>
+                        <div class="s29-rt">分组对比测试</div>
+                        <div class="s29-rd">A/B 文案分组对比，择优全量补发</div>
+                    </div>
+                    <div class="s29-row">
+                        <div class="s29-row-dot"></div>
+                        <div class="s29-rt">到达提升</div>
+                        <div class="s29-rd">厂商通道策略优化，支持消息撤回与覆盖</div>
+                    </div>
+                    <div class="s29-row last">
+                        <div class="s29-row-dot"></div>
+                        <div class="s29-rt">点击提升</div>
+                        <div class="s29-rd">大文本、大图、角标、自定义铃声等富样式</div>
+                    </div>
+                </div>
+            </div>
+            <div class="s29-col blue reveal reveal-right" style="--d:0.28s">
+                <div class="s29-col-head">
+                    <div class="icon-tile"><img src="assets/icons/arrow-trend-up-0A1F44.png" alt="" /></div>
+                    <div>
+                        <div class="s29-col-t">数据报表</div>
+                        <div class="s29-col-e">DATA &amp; ANALYTICS</div>
+                    </div>
+                </div>
+                <div class="s29-rows">
+                    <div class="s29-row">
+                        <div class="s29-row-dot"></div>
+                        <div class="s29-rt">全链路转化报表</div>
+                        <div class="s29-rd">下发 → 到达 → 展示 → 点击，逐级转化清晰可查</div>
+                    </div>
+                    <div class="s29-row">
+                        <div class="s29-row-dot"></div>
+                        <div class="s29-rt">分渠道厂商报表</div>
+                        <div class="s29-rd">各厂商通道到达与点击数据独立统计</div>
+                    </div>
+                    <div class="s29-row last">
+                        <div class="s29-row-dot"></div>
+                        <div class="s29-rt">折损原因分析</div>
+                        <div class="s29-rd">折损节点归因，输出通道与文案优化建议</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="s29-band reveal" style="--d:0.4s">
+            <img src="assets/icons/paper-plane-FFFFFF.png" alt="" />
+            <div class="s29-band-t">全厂商通道 · 智能路由 · 离线补达 · 全链路数据回溯</div>
+        </div>
+    </div>
+    <div class="pageno">25 / 29</div>
 </section>
 
 <!-- P22 章节 03 服务客户 -->
@@ -2194,7 +2388,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
     </div>
     <div class="s22-bspace"></div>
   </div>
-  <div class="pageno">24 / 27</div>
+  <div class="pageno">26 / 29</div>
 </section>
 
 <!-- P23 极致服务 -->
@@ -2266,7 +2460,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       </div>
     </div>
   </div>
-  <div class="pageno">25 / 27</div>
+  <div class="pageno">27 / 29</div>
 </section>
 
 <!-- P24 服务客户 logo 墙 -->
@@ -2312,7 +2506,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       <div class="s24-dot"></div>
     </div>
   </div>
-  <div class="pageno">26 / 27</div>
+  <div class="pageno">28 / 29</div>
 </section>
 
 <!-- P25 封底 THANKS -->
@@ -2341,8 +2535,9 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 <div class="deck-progress" id="deckProgress" aria-hidden="true"><div class="deck-progress-bar" id="deckProgressBar"></div></div>
 <div class="edit-hotzone" title="编辑模式 (E)"></div>
 <button class="edit-toggle" id="editToggle" title="编辑模式 (E)">✏️</button>
+<div class="dl-hotzone" title="下载资料"></div>
 <div class="deck-download">
-    <a href="2026.pdf" download="微网通联业务介绍-2026.pdf">↓ PDF</a>
+    <a href="2026.pdf" download="微网通联业务介绍-2026.pdf">PDF</a>
     <a href="2026.pptx" download="微网通联业务介绍-2026.pptx">↓ PPTX</a>
 </div>
 <div class="edit-toast" id="editToast">已保存</div>
@@ -2481,6 +2676,9 @@ const hotzone = document.querySelector('.edit-hotzone');
 const editToggle = document.getElementById('editToggle');
 let hideTimeout = null;
 editToggle.addEventListener('click', () => editor.toggleEditMode());
+document.querySelector('.dl-hotzone').addEventListener('click', () => {
+    document.querySelector('.deck-download').classList.toggle('show');
+});
 hotzone.addEventListener('mouseenter', () => { clearTimeout(hideTimeout); editToggle.classList.add('show'); });
 hotzone.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });
 editToggle.addEventListener('mouseenter', () => clearTimeout(hideTimeout));

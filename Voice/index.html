@@ -224,6 +224,14 @@ svg {
     .deck-controls {
         display: none !important;
     }
+
+    .deck-download {
+        display: none !important;
+    }
+
+    .dl-hotzone {
+        display: none !important;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -264,6 +272,26 @@ svg {
     opacity: 0; transition: opacity 0.3s, transform 0.3s;
 }
 .edit-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.deck-download {
+    position: fixed; right: 22px; bottom: 22px; z-index: 1001;
+    display: flex; gap: 8px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.deck-download.show { opacity: 1; pointer-events: auto; }
+.dl-hotzone {
+    position: fixed; right: 0; bottom: 0; width: 300px; height: 300px;
+    z-index: 1000; cursor: pointer;
+}
+.deck-download a {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 20px;
+    background: rgba(11,61,46,0.85); color: #fff;
+    font-size: 14px; font-weight: 600; letter-spacing: 1px;
+    text-decoration: none; font-family: var(--font-num);
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+.deck-download a:hover { background: #F59E0B; transform: translateY(-2px); }
 body.editing .slide.active { cursor: text; }
 body.editing [contenteditable="true"] { outline: 2px dashed #F59E0B; outline-offset: 2px; }
 
@@ -1201,6 +1229,10 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F59E0B; outline-off
 <div class="deck-progress" id="deckProgress" aria-hidden="true"><div class="deck-progress-bar" id="deckProgressBar"></div></div>
 <div class="edit-hotzone" title="编辑模式 (E)"></div>
 <button class="edit-toggle" id="editToggle" title="编辑模式 (E)">✏️</button>
+<div class="dl-hotzone" title="下载资料"></div>
+<div class="deck-download">
+    <a href="Voice.pdf" download="Voice.pdf">PDF</a>
+</div>
 <div class="edit-toast" id="editToast">已保存</div>
 
 <script>
@@ -1336,6 +1368,9 @@ const hotzone = document.querySelector('.edit-hotzone');
 const editToggle = document.getElementById('editToggle');
 let hideTimeout = null;
 editToggle.addEventListener('click', () => editor.toggleEditMode());
+document.querySelector('.dl-hotzone').addEventListener('click', () => {
+    document.querySelector('.deck-download').classList.toggle('show');
+});
 hotzone.addEventListener('mouseenter', () => { clearTimeout(hideTimeout); editToggle.classList.add('show'); });
 hotzone.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });
 editToggle.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
