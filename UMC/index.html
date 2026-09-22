@@ -259,6 +259,10 @@ svg {
     .deck-controls {
         display: none !important;
     }
+
+    .deck-download {
+        display: none !important;
+    }
 }
 
 /* 8. Reduced motion */
@@ -300,6 +304,19 @@ svg {
     opacity: 0; transition: opacity 0.3s, transform 0.3s;
 }
 .edit-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.deck-download {
+    position: fixed; right: 22px; bottom: 22px; z-index: 1001;
+    display: flex; gap: 8px;
+}
+.deck-download a {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 20px;
+    background: rgba(10,31,68,0.85); color: #fff;
+    font-size: 14px; font-weight: 600; letter-spacing: 1px;
+    text-decoration: none; font-family: var(--font-num);
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+.deck-download a:hover { background: #F02D4E; transform: translateY(-2px); }
 body.editing .slide.active { cursor: text; }
 body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-offset: 2px; }
 
@@ -2324,6 +2341,10 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 <div class="deck-progress" id="deckProgress" aria-hidden="true"><div class="deck-progress-bar" id="deckProgressBar"></div></div>
 <div class="edit-hotzone" title="编辑模式 (E)"></div>
 <button class="edit-toggle" id="editToggle" title="编辑模式 (E)">✏️</button>
+<div class="deck-download">
+    <a href="2026.pdf" download="微网通联业务介绍-2026.pdf">↓ PDF</a>
+    <a href="2026.pptx" download="微网通联业务介绍-2026.pptx">↓ PPTX</a>
+</div>
 <div class="edit-toast" id="editToast">已保存</div>
 
 <script>
