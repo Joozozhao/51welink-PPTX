@@ -1,0 +1,125 @@
+/* ===========================================
+   微网通联 2026 · DESIGN SYSTEM（1920×1080 舞台）
+   由 1280×720 DSL 按 ×1.5 缩放得到
+   =========================================== */
+
+:root {
+    /* 品牌色 */
+    --navy: #0A1F44;          /* 主色·深海军蓝 */
+    --navy-2: #123A7A;        /* 渐变过渡蓝 */
+    --blue: #2E6FE8;          /* 辅色·通信蓝 */
+    --red: #F02D4E;           /* 强调色·品牌红 */
+    --bg: #F6F8FB;            /* 内容页浅灰白底 */
+    --ink: #1B2A4A;           /* 正文深色 */
+    --muted: #5A6B85;         /* 次要文字 */
+    --faint: #8A94A6;         /* 页码灰 */
+
+    /* 字体：西文/数字 Archivo（近 Helvetica Neue），中文 PingFang SC / Noto Sans SC */
+    --font-body: "Archivo", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    --font-num: "Archivo", "Helvetica Neue", "PingFang SC", "Noto Sans SC", sans-serif;
+
+    /* 字阶（×1.5 后） */
+    --fs-cover: 96px;    /* 封面主标 bold */
+    --fs-section: 84px;  /* 章节大字 bold */
+    --fs-giant: 120px;   /* 巨型数字 108–144 */
+    --fs-title: 45px;    /* 内容页主标 */
+    --fs-card: 31px;     /* 卡片小标 30–33 */
+    --fs-body: 23px;     /* 正文 22.5–24 */
+    --fs-note: 20px;     /* 说明 20–21 */
+    --fs-pageno: 18px;   /* 页码 */
+
+    /* 页面骨架 */
+    --pad-x: 96px;       /* 内容页左右留白 */
+    --head-top: 44px;    /* 标题块顶距 */
+
+    /* 动效 */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur: 0.7s;
+
+    --slide-bg: var(--bg);
+    --stage-bg: #060D1F;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { font-family: var(--font-body); color: var(--ink); }
+
+/* ===========================================
+   内容页骨架：标题块 + 红色短条 + 页码
+   =========================================== */
+.slide-head { position: absolute; left: var(--pad-x); top: var(--head-top); z-index: 5; }
+.kicker {
+    font-size: 20px; font-weight: 600; color: var(--red);
+    letter-spacing: 3px; font-family: var(--font-num);
+}
+.slide-title {
+    font-size: var(--fs-title); font-weight: 700; color: var(--navy);
+    margin-top: 14px; line-height: 1.2; letter-spacing: 0.5px;
+}
+.title-bar { width: 60px; height: 5px; background: var(--red); border-radius: 3px; margin-top: 16px; }
+
+.pageno {
+    position: absolute; right: 20px; bottom: 20px; z-index: 5;
+    font-size: var(--fs-pageno); color: var(--faint);
+    font-family: var(--font-num); letter-spacing: 1px;
+}
+
+/* ===========================================
+   卡片与图标
+   =========================================== */
+.card {
+    background: #fff; border-radius: 18px;
+    box-shadow: 0 12px 32px rgba(10, 31, 68, 0.08);
+}
+.icon-tile {
+    width: 72px; height: 72px; border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(46, 111, 232, 0.08);
+}
+.icon-tile.red { background: rgba(240, 45, 78, 0.08); }
+.icon-tile.navy { background: rgba(10, 31, 68, 0.07); }
+.icon-tile.dark { background: rgba(255, 255, 255, 0.10); }
+.icon-tile img { width: 40px; height: 40px; object-fit: contain; }
+
+/* ===========================================
+   深色页（封面/章节/封底）
+   =========================================== */
+.slide.dark { background: var(--navy); color: #fff; }
+.dark-grad { background: linear-gradient(135deg, #0A1F44 0%, #123A7A 60%, #2E6FE8 100%); }
+.glass-card { background: rgba(255, 255, 255, 0.06); border-radius: 18px; }
+.on-dark-sub { color: rgba(255, 255, 255, 0.72); }
+
+.num { font-family: var(--font-num); font-weight: 800; letter-spacing: -1px; }
+
+/* ===========================================
+   入场动效：.reveal + --d 延迟变量
+   =========================================== */
+.reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity var(--dur) var(--ease-out-expo),
+                transform var(--dur) var(--ease-out-expo);
+    transition-delay: var(--d, 0s);
+}
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+
+.reveal-left { transform: translateX(-48px); }
+.reveal-right { transform: translateX(48px); }
+.reveal-zoom { transform: scale(0.92); }
+.slide.visible .reveal-left,
+.slide.visible .reveal-right,
+.slide.visible .reveal-zoom { transform: none; }
+
+/* 深色页装饰缓浮 */
+@keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+}
+.floaty { animation: floaty 7s ease-in-out infinite; }
+
+/* 渐变光缓慢流动（深色页氛围） */
+@keyframes gradient-drift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}

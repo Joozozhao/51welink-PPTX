@@ -1,0 +1,11 @@
+import { chromium } from 'file:///Users/joozo/.npm/_npx/e41f203b7505f1fb/node_modules/playwright/index.mjs';
+const n = parseInt(process.argv[2]);
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
+await page.goto('file://' + process.cwd() + '/index.html');
+await page.waitForTimeout(2000);
+await page.evaluate((i) => deck.showSlide(i), n - 1);
+await page.waitForTimeout(900);
+await page.screenshot({ path: `build/shots/check-s${String(n).padStart(2,'0')}.png` });
+await browser.close();
+console.log('done s' + n);
