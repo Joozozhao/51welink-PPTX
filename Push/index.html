@@ -2534,8 +2534,8 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 <button class="edit-toggle" id="editToggle" title="编辑模式 (E)">✏️</button>
 <div class="dl-hotzone" title="下载资料"></div>
 <div class="deck-download">
-    <a href="Push.pdf" id="dlPdf">PDF</a>
-    <a href="Push.pptx" id="dlPptx">↓ PPTX</a>
+    <a href="Push.pdf" id="dlPdf" download>PDF</a>
+    <a href="Push.pptx" id="dlPptx" download>↓ PPTX</a>
 </div>
 <div class="edit-toast" id="editToast">已保存</div>
 
@@ -2686,10 +2686,10 @@ function getDownloadFilename(ext) {
     return title + '_' + date + '.' + ext;
 }
 document.getElementById('dlPdf').addEventListener('click', function(e) {
-    this.download = getDownloadFilename('pdf');
+    this.setAttribute('download', getDownloadFilename('pdf'));
 });
 document.getElementById('dlPptx').addEventListener('click', function(e) {
-    this.download = getDownloadFilename('pptx');
+    this.setAttribute('download', getDownloadFilename('pptx'));
 });
 hotzone.addEventListener('mouseenter', () => { clearTimeout(hideTimeout); editToggle.classList.add('show'); });
 hotzone.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });
