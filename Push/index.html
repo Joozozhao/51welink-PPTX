@@ -309,15 +309,12 @@ svg {
 }
 .edit-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 .deck-download {
-    position: fixed; right: 22px; bottom: 22px; z-index: 1001;
-    display: flex; gap: 8px;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.3s ease;
+    position: fixed; right: 22px; top: 50%; transform: translateY(-50%); z-index: 1001;
+    display: flex; flex-direction: column; gap: 12px;
+    opacity: 1; pointer-events: auto;
 }
-.deck-download.show { opacity: 1; pointer-events: auto; }
 .dl-hotzone {
-    position: fixed; right: 0; bottom: 0; width: 300px; height: 300px;
-    z-index: 1000; cursor: pointer;
+    display: none;
 }
 .deck-download a {
     display: inline-flex; align-items: center; gap: 6px;
@@ -2537,8 +2534,8 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 <button class="edit-toggle" id="editToggle" title="编辑模式 (E)">✏️</button>
 <div class="dl-hotzone" title="下载资料"></div>
 <div class="deck-download">
-    <a href="Push.pdf" download="Push.pdf">PDF</a>
-    <a href="Push.pptx" download="Push.pptx">↓ PPTX</a>
+    <a href="Push.pdf" id="dlPdf">PDF</a>
+    <a href="Push.pptx" id="dlPptx">↓ PPTX</a>
 </div>
 <div class="edit-toast" id="editToast">已保存</div>
 
@@ -2678,8 +2675,21 @@ const hotzone = document.querySelector('.edit-hotzone');
 const editToggle = document.getElementById('editToggle');
 let hideTimeout = null;
 editToggle.addEventListener('click', () => editor.toggleEditMode());
-document.querySelector('.dl-hotzone').addEventListener('click', () => {
-    document.querySelector('.deck-download').classList.toggle('show');
+
+// 下载按钮：标题+日期命名
+function getDownloadFilename(ext) {
+    const title = document.title.replace(/\s*[·•]\s*/g, '').replace(/\s+/g, '').trim();
+    const now = new Date();
+    const date = now.getFullYear().toString() +
+        (now.getMonth() + 1).toString().padStart(2, '0') +
+        now.getDate().toString().padStart(2, '0');
+    return title + '_' + date + '.' + ext;
+}
+document.getElementById('dlPdf').addEventListener('click', function(e) {
+    this.download = getDownloadFilename('pdf');
+});
+document.getElementById('dlPptx').addEventListener('click', function(e) {
+    this.download = getDownloadFilename('pptx');
 });
 hotzone.addEventListener('mouseenter', () => { clearTimeout(hideTimeout); editToggle.classList.add('show'); });
 hotzone.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });
