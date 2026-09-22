@@ -1,0 +1,176 @@
+<!-- ==================== P18 语音线路 · 产品能力 ==================== -->
+<style>
+/* ========== s18 语音线路（新增） ========== */
+#s18 .s18-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; gap:42px; }
+#s18 .s18-lead { width:510px; flex-shrink:0; background:linear-gradient(165deg,#0A1F44 0%,#123A7A 100%); border-radius:24px; padding:60px 48px; display:flex; flex-direction:column; justify-content:space-between; }
+#s18 .s18-lead-top { display:flex; align-items:center; gap:24px; }
+#s18 .s18-iconbox { width:90px; height:90px; border-radius:21px; background:rgba(240,45,78,0.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+#s18 .s18-iconbox img { width:42px; height:42px; object-fit:contain; }
+#s18 .s18-lead-tag { font-size:18px; color:rgba(255,255,255,0.55); letter-spacing:4px; font-family:var(--font-num); }
+#s18 .s18-lead-mid { display:flex; flex-direction:column; gap:21px; }
+#s18 .s18-lead-title { font-size:36px; font-weight:700; color:#fff; line-height:1.5; }
+#s18 .s18-lead-desc { font-size:21px; color:rgba(255,255,255,0.65); line-height:1.85; }
+#s18 .s18-lead-eng { font-size:18px; color:rgba(255,255,255,0.45); letter-spacing:3px; font-family:var(--font-num); }
+#s18 .s18-grid { flex:1; display:grid; grid-template-columns:1fr 1fr 1fr; grid-template-rows:1fr 1fr; gap:27px; }
+#s18 .s18-cap { background:#fff; border-radius:21px; box-shadow:0 6px 24px rgba(10,31,68,0.06); padding:40px 36px; display:flex; flex-direction:column; gap:20px; }
+#s18 .s18-cap-tile { width:72px; height:72px; border-radius:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+#s18 .s18-cap-tile img { width:36px; height:36px; object-fit:contain; }
+#s18 .s18-tile-red { background:rgba(240,45,78,0.1); }
+#s18 .s18-tile-blue { background:rgba(46,111,232,0.1); }
+#s18 .s18-tile-navy { background:rgba(10,31,68,0.07); }
+#s18 .s18-cap-t { font-size:26px; font-weight:700; color:var(--navy); }
+#s18 .s18-cap-d { font-size:20px; color:var(--muted); line-height:1.7; }
+
+/* ========== s19 语音线路 · 场景与策略（新增） ========== */
+#s19 .s19-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; flex-direction:column; gap:27px; }
+#s19 .s19-row { flex:1; display:flex; gap:27px; }
+#s19 .s19-scenes { width:850px; flex-shrink:0; display:flex; flex-direction:column; gap:21px; }
+#s19 .s19-scene { flex:1; background:#fff; border-radius:18px; box-shadow:0 6px 24px rgba(10,31,68,0.06); padding:0 33px; display:flex; align-items:center; gap:24px; }
+#s19 .s19-scene-tile { width:69px; height:69px; border-radius:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+#s19 .s19-scene-tile img { width:33px; height:33px; object-fit:contain; }
+#s19 .s19-tile-red { background:rgba(240,45,78,0.1); }
+#s19 .s19-tile-blue { background:rgba(46,111,232,0.1); }
+#s19 .s19-scene-main { flex:1; display:flex; flex-direction:column; gap:6px; }
+#s19 .s19-scene-t { font-size:24px; font-weight:700; color:var(--navy); }
+#s19 .s19-scene-d { font-size:19px; color:var(--muted); line-height:1.6; }
+#s19 .s19-scene-kpi { flex-shrink:0; text-align:right; }
+#s19 .s19-kpi-v { font-size:36px; font-weight:800; color:var(--red); font-family:var(--font-num); }
+#s19 .s19-kpi-l { font-size:16px; color:var(--faint); margin-top:4px; }
+#s19 .s19-vs { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 24px rgba(10,31,68,0.06); padding:36px 42px; display:flex; flex-direction:column; }
+#s19 .s19-vs-title { font-size:24px; font-weight:700; color:var(--navy); margin-bottom:24px; display:flex; align-items:baseline; gap:16px; }
+#s19 .s19-vs-sub { font-size:16px; font-weight:400; color:var(--faint); letter-spacing:2px; font-family:var(--font-num); }
+#s19 .s19-vs-head, #s19 .s19-vs-row { display:flex; align-items:center; }
+#s19 .s19-vs-head { font-size:17px; color:var(--faint); padding-bottom:12px; border-bottom:2px solid #EDF1F7; letter-spacing:1px; }
+#s19 .s19-vs-row { flex:1; border-bottom:1px solid #F2F5FA; font-size:19px; }
+#s19 .s19-vs-row:last-child { border-bottom:none; }
+#s19 .s19-vs-dim { width:150px; flex-shrink:0; color:var(--muted); font-weight:600; }
+#s19 .s19-vs-voice { flex:1.15; color:var(--navy); font-weight:700; display:flex; align-items:center; gap:10px; }
+#s19 .s19-vs-sms { flex:1; color:var(--faint); }
+#s19 .s19-dot { width:8px; height:8px; border-radius:4px; background:var(--red); flex-shrink:0; }
+#s19 .s19-strategy { height:120px; flex-shrink:0; background:linear-gradient(90deg,#0A1F44 0%,#123A7A 100%); border-radius:21px; display:flex; align-items:center; padding:0 42px; gap:36px; }
+#s19 .s19-st-t { font-size:22px; font-weight:700; color:#fff; flex-shrink:0; }
+#s19 .s19-st-items { display:flex; gap:30px; flex:1; }
+#s19 .s19-st-item { display:flex; align-items:center; gap:12px; font-size:19px; color:rgba(255,255,255,0.8); }
+#s19 .s19-st-item i { width:8px; height:8px; border-radius:4px; background:var(--red); flex-shrink:0; }
+</style>
+
+<section class="slide" id="s18" style="background:var(--bg)">
+    <div class="slide-head reveal">
+        <div class="kicker">02 · 语音线路</div>
+        <div class="slide-title">语音线路</div>
+        <div class="title-bar"></div>
+    </div>
+    <div class="s18-body">
+        <div class="s18-lead reveal reveal-left" style="--d:0.1s">
+            <div class="s18-lead-top">
+                <div class="s18-iconbox"><img src="assets/icons/phone-volume-FFFFFF.png" alt="" /></div>
+                <div class="s18-lead-tag">运营商级语音通道</div>
+            </div>
+            <div class="s18-lead-mid">
+                <div class="s18-lead-title">关键消息，<br />电话直达</div>
+                <div class="s18-lead-desc">语音线路基于运营商语音通道，以电话呼入方式为企业播报通知、提醒与告警：TTS 模板化播报、状态全程回执、失败智能重拨，与短信通道互为补充，构建「必达」的消息触达闭环。</div>
+            </div>
+            <div class="s18-lead-eng">VOICE LINE · CALL NOTIFICATION</div>
+        </div>
+        <div class="s18-grid">
+            <div class="s18-cap reveal" style="--d:0.2s">
+                <div class="s18-cap-tile s18-tile-red"><img src="assets/icons/phone-volume-F02D4E.png" alt="" /></div>
+                <div class="s18-cap-t">电话强提醒</div>
+                <div class="s18-cap-d">订单异常、风险预警、服务提醒等关键事件，以电话播报强制触达</div>
+            </div>
+            <div class="s18-cap reveal" style="--d:0.26s">
+                <div class="s18-cap-tile s18-tile-blue"><img src="assets/icons/comment-dots-2E6FE8.png" alt="" /></div>
+                <div class="s18-cap-t">TTS 模板播报</div>
+                <div class="s18-cap-d">文本转语音模板化播报，支持变量替换、多音色选择与试听审核</div>
+            </div>
+            <div class="s18-cap reveal" style="--d:0.32s">
+                <div class="s18-cap-tile s18-tile-blue"><img src="assets/icons/mobile-screen-button-2E6FE8.png" alt="" /></div>
+                <div class="s18-cap-t">按键确认</div>
+                <div class="s18-cap-d">支持 DTMF 按键回执，确认、拒绝、转人工状态实时回传</div>
+            </div>
+            <div class="s18-cap reveal" style="--d:0.38s">
+                <div class="s18-cap-tile s18-tile-red"><img src="assets/icons/arrows-rotate-F02D4E.png" alt="" /></div>
+                <div class="s18-cap-t">失败重拨</div>
+                <div class="s18-cap-d">未接、占线、失败按策略重拨，支持呼叫时段控制，避免无效打扰</div>
+            </div>
+            <div class="s18-cap reveal" style="--d:0.44s">
+                <div class="s18-cap-tile s18-tile-blue"><img src="assets/icons/users-2E6FE8.png" alt="" /></div>
+                <div class="s18-cap-t">多人轮呼</div>
+                <div class="s18-cap-d">告警场景按值班表顺序轮呼，未接自动升级至负责人</div>
+            </div>
+            <div class="s18-cap reveal" style="--d:0.5s">
+                <div class="s18-cap-tile s18-tile-navy"><img src="assets/icons/shield-halved-0A1F44.png" alt="" /></div>
+                <div class="s18-cap-t">合规可审计</div>
+                <div class="s18-cap-d">模板、号码、频次、呼叫时段全程留痕，满足企业采购审计要求</div>
+            </div>
+        </div>
+    </div>
+    <div class="pageno">18 / 27</div>
+</section>
+
+<!-- ==================== P19 语音线路 · 场景与策略 ==================== -->
+<section class="slide" id="s19" style="background:var(--bg)">
+    <div class="slide-head reveal">
+        <div class="kicker">02 · 语音线路</div>
+        <div class="slide-title">场景与触发策略</div>
+        <div class="title-bar"></div>
+    </div>
+    <div class="s19-body">
+        <div class="s19-row">
+            <div class="s19-scenes">
+                <div class="s19-scene reveal reveal-left" style="--d:0.15s">
+                    <div class="s19-scene-tile s19-tile-red"><img src="assets/icons/bullhorn-F02D4E.png" alt="" /></div>
+                    <div class="s19-scene-main">
+                        <div class="s19-scene-t">订单异常强提醒</div>
+                        <div class="s19-scene-d">付款超时、派送失败、预约临期等「必须处理」事件，电话播报及时触达，支持订单号、金额、预约时间变量播报</div>
+                    </div>
+                    <div class="s19-scene-kpi">
+                        <div class="s19-kpi-v num">92.8%</div>
+                        <div class="s19-kpi-l">关键提醒接通率</div>
+                    </div>
+                </div>
+                <div class="s19-scene reveal reveal-left" style="--d:0.23s">
+                    <div class="s19-scene-tile s19-tile-blue"><img src="assets/icons/building-columns-2E6FE8.png" alt="" /></div>
+                    <div class="s19-scene-main">
+                        <div class="s19-scene-t">金融账单提醒</div>
+                        <div class="s19-scene-d">账单提醒只靠短信易被漏看，语音作为补充提醒，按键确认形成业务闭环，回执全部入库可查</div>
+                    </div>
+                    <div class="s19-scene-kpi">
+                        <div class="s19-kpi-v num">-36%</div>
+                        <div class="s19-kpi-l">漏看提醒下降</div>
+                    </div>
+                </div>
+                <div class="s19-scene reveal reveal-left" style="--d:0.31s">
+                    <div class="s19-scene-tile s19-tile-blue"><img src="assets/icons/tower-broadcast-2E6FE8.png" alt="" /></div>
+                    <div class="s19-scene-main">
+                        <div class="s19-scene-t">告警值班轮呼</div>
+                        <div class="s19-scene-d">P1 告警直接语音呼叫值班人，未接按策略自动升级负责人，比 IM 群提醒更可靠</div>
+                    </div>
+                    <div class="s19-scene-kpi">
+                        <div class="s19-kpi-v num">0</div>
+                        <div class="s19-kpi-l">漏处理告警</div>
+                    </div>
+                </div>
+            </div>
+            <div class="s19-vs reveal reveal-right" style="--d:0.2s">
+                <div class="s19-vs-title">语音线路 vs 短信单通道<span class="s19-vs-sub">COMPARISON</span></div>
+                <div class="s19-vs-head"><div class="s19-vs-dim">对比维度</div><div class="s19-vs-voice">语音线路</div><div class="s19-vs-sms">短信单通道</div></div>
+                <div class="s19-vs-row"><div class="s19-vs-dim">提醒强度</div><div class="s19-vs-voice"><i class="s19-dot"></i>电话呼入播报</div><div class="s19-vs-sms">用户需主动查看</div></div>
+                <div class="s19-vs-row"><div class="s19-vs-dim">接收状态</div><div class="s19-vs-voice"><i class="s19-dot"></i>接通 / 未接 / 拒接</div><div class="s19-vs-sms">仅发送到达回执</div></div>
+                <div class="s19-vs-row"><div class="s19-vs-dim">用户确认</div><div class="s19-vs-voice"><i class="s19-dot"></i>支持按键确认</div><div class="s19-vs-sms">需跳转或回复</div></div>
+                <div class="s19-vs-row"><div class="s19-vs-dim">失败处理</div><div class="s19-vs-voice"><i class="s19-dot"></i>按策略智能重拨</div><div class="s19-vs-sms">通常仅重发短信</div></div>
+                <div class="s19-vs-row"><div class="s19-vs-dim">人工成本</div><div class="s19-vs-voice"><i class="s19-dot"></i>API 自动触发</div><div class="s19-vs-sms">需人工外呼兜底</div></div>
+            </div>
+        </div>
+        <div class="s19-strategy reveal" style="--d:0.4s">
+            <div class="s19-st-t">推荐触发策略</div>
+            <div class="s19-st-items">
+                <div class="s19-st-item"><i></i>短信 3 分钟未读，自动补语音提醒</div>
+                <div class="s19-st-item"><i></i>订单类提醒限 9:00–21:00 呼叫</div>
+                <div class="s19-st-item"><i></i>P1 告警直呼值班人，未接逐级升级</div>
+                <div class="s19-st-item"><i></i>服务确认类启用按键回执闭环</div>
+            </div>
+        </div>
+    </div>
+    <div class="pageno">19 / 27</div>
+</section>

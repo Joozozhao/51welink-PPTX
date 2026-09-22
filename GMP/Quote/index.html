@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GMP本地化部署消息平台 报价文件 V2021.09 · 北京微网通联</title>
+<style>
+/* ============================================================
+   GMP 本地化部署消息平台 报价文件 V2021.09 —— HTML 矢量重绘版
+   依据原 PDF 重绘：封面 / 产品介绍 / 报价明细 / 公司介绍
+   ============================================================ */
+:root{
+  --red:#D92645;        /* 品牌红（GMP圆 / Logo） */
+  --red-soft:#E04E7B;   /* 引号粉 */
+  --teal:#5EB6C9;       /* 青 */
+  --teal-dark:#2E9E9B;
+  --blue:#4A6BA8;       /* 封面蓝 */
+  --blue-mid:#7B9BD0;
+  --blue-light:#A9C2E4;
+  --sky:#C4E6F2;
+  --orange:#F0A63A;
+  --navy:#3E4C63;
+  --purple:#8E6FB8;
+  --green-tint:#EAF2E4; /* 表格浅绿 */
+  --ink:#333333;
+  --gray:#777777;
+  --line:#5a5a5a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+body{
+  background:#E9E9EC;
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Source Han Sans SC",sans-serif;
+  color:var(--ink);
+  display:flex;flex-direction:column;align-items:center;
+  padding:32px 0 64px;gap:32px;
+}
+/* ---------- A4 纸张 ---------- */
+.sheet{
+  position:relative;
+  width:210mm;height:297mm;
+  background:#fff;
+  box-shadow:0 6px 30px rgba(0,0,0,.16);
+  overflow:hidden;
+  page-break-after:always;break-after:page;
+}
+/* ---------- 页眉 / 页脚 ---------- */
+.page-header{
+  position:absolute;top:0;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:flex-end;
+  padding:10mm 12mm 2.5mm;
+  border-bottom:2px solid var(--red);
+}
+.page-header .co{font-size:11px;color:var(--ink);letter-spacing:1px;padding-bottom:2px;}
+.page-footer{
+  position:absolute;bottom:7mm;left:12mm;right:12mm;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:10px;color:var(--gray);letter-spacing:.5px;
+}
+/* ---------- Logo（矢量重绘） ---------- */
+.logo{display:flex;align-items:center;}
+.logo .wl-svg-logo{display:block;height:29px;width:auto;}
+.about-deco .lg .wl-svg-logo{height:22px;width:auto;}
+
+/* ============================================================
+   第 1 页 · 封面
+   ============================================================ */
+.cover .band{position:absolute;top:0;left:0;right:0;height:150px;}
+/* 封面中部插画组合 */
+.c-hero{position:absolute;top:150px;left:0;right:0;height:470px;}
+.c-orbit{
+  position:absolute;left:50%;top:46%;width:400px;height:400px;
+  transform:translate(-42%,-50%);
+  border:1px solid #D9DEE5;border-radius:50%;
+}
+.c-circle-sky{
+  position:absolute;left:20px;top:120px;width:310px;height:310px;
+  background:var(--sky);border-radius:50%;
+}
+.c-card{
+  position:absolute;left:335px;top:20px;width:235px;height:225px;
+  background:linear-gradient(160deg,#63BDC9 0%,#4FA9BB 100%);
+  border-radius:8px;
+  box-shadow:0 10px 24px rgba(63,143,173,.25);
+  padding:64px 22px 0;
+}
+.c-card .line{height:7px;border-radius:4px;background:rgba(255,255,255,.85);margin-bottom:9px;}
+.c-card .line.w60{width:60%;} .c-card .line.w80{width:80%;}
+.c-card .line.ghost{background:rgba(255,255,255,.45);}
+.c-card .chart{
+  margin-top:16px;background:#fff;border-radius:6px;height:86px;
+  display:flex;align-items:flex-end;justify-content:center;gap:9px;padding:12px 14px;
+}
+.c-card .chart i{display:block;width:16px;background:#D7DBE0;border-radius:2px 2px 0 0;}
+.c-minicard{
+  position:absolute;left:384px;top:34px;width:92px;height:64px;
+  background:linear-gradient(150deg,#3E6DA8,#31598C);
+  border-radius:8px;padding:10px;
+  box-shadow:0 8px 18px rgba(39,72,117,.35);z-index:3;
+}
+.c-minicard .ml{height:5px;border-radius:3px;background:rgba(255,255,255,.75);margin-bottom:6px;}
+.c-minicard .ml.w50{width:50%;}
+.c-minicard .dots{display:flex;gap:5px;margin-top:9px;}
+.c-minicard .dots i{width:7px;height:7px;border-radius:50%;background:#9FB6D8;}
+.c-minicard .chip{width:20px;height:14px;border-radius:3px;background:linear-gradient(90deg,#E8536A 55%,#F0A63A 55%);margin-left:auto;}
+.c-gmp{
+  position:absolute;left:205px;top:52px;width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle at 32% 28%,#E8405F 0%,var(--red) 55%,#C11F3D 100%);
+  box-shadow:0 16px 36px rgba(217,38,69,.32);
+  display:flex;align-items:center;justify-content:center;z-index:2;
+}
+.c-gmp span{color:#fff;font-size:47px;font-weight:800;letter-spacing:4px;font-family:"Arial Black","Arial",sans-serif;}
+.c-sq{position:absolute;border-radius:8px;}
+.c-sq.orange{left:192px;top:44px;width:48px;height:48px;background:var(--orange);opacity:.92;}
+.c-sq.blue{left:168px;top:172px;width:28px;height:28px;background:#2E9BC6;}
+.c-dot{position:absolute;border-radius:50%;}
+.c-dot.gray{left:278px;top:26px;width:18px;height:18px;background:#E3E6EA;}
+/* 封面标题区 */
+.c-title{position:absolute;right:56px;top:608px;text-align:right;}
+.c-title .net{display:block;margin-left:auto;margin-bottom:26px;}
+.c-title h1{font-size:31px;font-weight:500;color:var(--blue);letter-spacing:2px;}
+.c-title h2{font-size:21px;font-weight:700;color:var(--ink);letter-spacing:8px;margin-top:12px;}
+.c-company{position:absolute;right:56px;bottom:64px;text-align:right;}
+.c-company .n{font-size:16px;font-weight:600;color:var(--ink);letter-spacing:1px;}
+.c-company .u{font-size:12px;color:var(--gray);margin-top:7px;letter-spacing:.5px;}
+
+/* ============================================================
+   第 2 页 · 产品介绍
+   ============================================================ */
+.intro-body{position:absolute;top:26mm;left:12mm;right:12mm;bottom:18mm;}
+.quote-mark{font-size:44px;line-height:1;color:var(--red-soft);font-family:Georgia,serif;font-weight:700;}
+.intro-body h1{font-size:27px;font-weight:800;letter-spacing:2px;margin:2px 0 0 44px;}
+.intro-body .sub{font-size:14.5px;color:#555;letter-spacing:3px;margin:9px 0 0 46px;}
+.intro-body .desc{
+  margin:18px 2px 0;font-size:11.5px;line-height:2.05;color:#444;text-align:justify;
+}
+/* 架构图 */
+.arch{display:flex;align-items:center;justify-content:space-between;margin-top:20px;padding:0 2px;}
+.arch-col{display:flex;flex-direction:column;align-items:center;gap:0;}
+.sys-stack{display:flex;flex-direction:column;gap:9px;}
+.sys-box{
+  width:118px;height:34px;background:var(--navy);border-radius:5px;
+  display:flex;align-items:center;gap:8px;padding:0 12px;
+  box-shadow:0 3px 8px rgba(62,76,99,.28);
+}
+.sys-box span{color:#fff;font-size:11.5px;letter-spacing:1px;}
+.arch-link{position:relative;flex:0 0 74px;height:0;border-top:2px dashed #84CBD9;}
+.arch-link em{
+  position:absolute;top:-27px;left:50%;transform:translateX(-50%);
+  font-style:normal;font-size:11px;font-weight:700;color:var(--navy);white-space:nowrap;
+}
+.gmp-stage{
+  width:206px;height:196px;border:2px dashed #84CBD9;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;background:#FAFDFE;
+}
+.ch-stack{display:flex;flex-direction:column;gap:9px;}
+.ch-item{
+  display:flex;align-items:center;gap:9px;width:104px;height:32px;
+  background:#fff;border:1px solid #E3E7EC;border-radius:16px;padding:0 10px;
+  box-shadow:0 2px 6px rgba(0,0,0,.06);
+}
+.ch-item span{font-size:11.5px;color:var(--ink);letter-spacing:1px;font-weight:600;}
+.ch-ic{width:19px;height:19px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 19px;}
+.arch-caption{
+  margin-top:16px;display:inline-block;padding:5px 20px;border-radius:15px;
+  background:#EEF2F7;color:var(--navy);font-size:14px;font-weight:800;letter-spacing:3px;
+}
+/* 树下接三卡片 */
+.tree{position:relative;height:44px;margin:2px 0 0;}
+.tree::before{content:'';position:absolute;left:50%;top:0;height:22px;border-left:2px dashed #84CBD9;}
+.tree::after{content:'';position:absolute;left:16.66%;right:16.66%;top:22px;border-top:2px dashed #84CBD9;}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:34px;}
+.feat-stub{width:0;height:22px;border-left:2px dashed #84CBD9;margin:0 auto;}
+.feat-card{
+  border:2px dashed #84CBD9;border-radius:8px;background:#FDFEFE;
+  padding:16px 20px 14px;min-height:196px;
+}
+.feat-card h3{display:flex;align-items:center;gap:9px;font-size:16px;letter-spacing:4px;margin-bottom:12px;}
+.feat-card h3.orange{color:var(--orange);}
+.feat-card h3.green{color:#3FA66A;}
+.feat-card h3.purple{color:var(--purple);}
+.feat-card ul{list-style:none;}
+.feat-card li{
+  font-size:11.5px;color:#444;line-height:2.0;letter-spacing:1px;
+  padding-left:16px;position:relative;
+}
+.feat-card li::before{content:'';position:absolute;left:2px;top:9px;width:6px;height:6px;background:#5B6572;}
+/* 左下红色装饰 */
+.intro-deco{position:absolute;left:0;bottom:0;width:330px;height:190px;overflow:hidden;}
+.intro-deco .b1{position:absolute;left:-150px;bottom:-160px;width:420px;height:300px;border-radius:50%;background:#F3BFCE;}
+.intro-deco .b2{position:absolute;left:-120px;bottom:-190px;width:400px;height:300px;border-radius:50%;background:var(--red);}
+.intro-deco .card{
+  position:absolute;left:66px;bottom:66px;width:86px;height:96px;background:#fff;border-radius:8px;
+  box-shadow:0 8px 18px rgba(120,20,40,.25);padding:12px 10px;
+}
+.intro-deco .card i{display:block;height:6px;border-radius:3px;background:#E8B7C6;margin-bottom:7px;}
+.intro-deco .card i.w60{width:60%;}
+.intro-deco .tag{
+  position:absolute;font-size:9.5px;color:#8a8a8a;background:#fff;border-radius:10px;padding:3px 9px;
+  box-shadow:0 3px 8px rgba(0,0,0,.12);
+}
+
+/* ============================================================
+   第 3-5 页 · 报价明细
+   ============================================================ */
+.price-body{position:absolute;top:24mm;left:12mm;right:12mm;bottom:16mm;}
+table.price{
+  width:100%;border-collapse:collapse;table-layout:fixed;
+  font-family:"Songti SC","SimSun","STSong",serif;
+}
+table.price caption{
+  font-size:16px;font-weight:800;font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+  letter-spacing:2px;color:var(--ink);padding:10px 0 12px;
+  border:1.2px solid var(--line);border-bottom:none;
+}
+table.price th,table.price td{
+  border:1px solid var(--line);
+  font-size:12px;color:#222;
+  padding:2.5px 8px;height:23px;
+  overflow:hidden;
+}
+table.price thead th{
+  background:var(--green-tint);
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:13px;font-weight:700;letter-spacing:2px;height:30px;
+  text-align:center;
+}
+col.c-no{width:11%;} col.c-mod{width:21%;} col.c-fn{width:41%;} col.c-pr{width:27%;}
+table.price td.no{text-align:center;background:var(--green-tint);}
+table.price td.mod{text-align:center;vertical-align:middle;letter-spacing:1px;}
+table.price td.pr{text-align:center;letter-spacing:.5px;}
+table.price tr.total td{height:30px;}
+table.price tr.total td.tl{text-align:right;font-size:13px;letter-spacing:2px;padding-right:18px;}
+table.price tr.total td.tv{
+  text-align:center;font-size:16px;font-weight:800;color:#000;
+  font-family:"Arial",serif;letter-spacing:.5px;
+}
+
+/* ============================================================
+   第 6 页 · 关于微网通联
+   ============================================================ */
+.about-body{position:absolute;top:24mm;left:12mm;right:12mm;bottom:0;}
+.about-deco{position:relative;height:130px;}
+.about-deco .cc1{position:absolute;left:8px;top:2px;width:76px;height:76px;border-radius:50%;background:var(--teal);opacity:.85;}
+.about-deco .cc2{position:absolute;left:64px;top:34px;width:120px;height:120px;border-radius:50%;background:#EDF1F4;}
+.about-deco .tri{position:absolute;left:118px;top:16px;width:0;height:0;
+  border-left:9px solid transparent;border-right:9px solid transparent;border-top:14px solid #F5D020;}
+.about-deco .lg{position:absolute;left:96px;top:70px;}
+.about-title{position:relative;margin:6px 0 0 200px;}
+.about-title .halftone{
+  position:absolute;left:150px;top:-16px;width:250px;height:110px;
+  background-image:radial-gradient(#E3B7C6 1.2px,transparent 1.2px);
+  background-size:7px 7px;opacity:.7;
+}
+.about-title .q{position:absolute;left:-56px;top:-8px;}
+.about-title h1{position:relative;font-size:29px;font-weight:800;letter-spacing:4px;}
+.about-title .en{position:relative;font-size:15px;font-weight:700;color:#222;margin-top:6px;letter-spacing:.5px;}
+.about-text{margin-top:22px;}
+.about-text p{
+  font-size:11.5px;line-height:1.9;color:#333;text-align:justify;
+  margin-bottom:12px;letter-spacing:.3px;
+}
+.about-text p b{font-weight:700;}
+.about-img{position:absolute;left:-12mm;right:-12mm;bottom:0;height:280px;overflow:hidden;}
+.about-img svg{display:block;width:100%;height:100%;}
+
+/* ---------- 屏幕工具条（打印时隐藏） ---------- */
+.toolbar{
+  position:fixed;top:16px;right:16px;z-index:99;display:flex;gap:8px;
+}
+.toolbar button{
+  border:none;background:var(--red);color:#fff;font-size:13px;letter-spacing:1px;
+  padding:9px 18px;border-radius:22px;cursor:pointer;
+  box-shadow:0 4px 14px rgba(217,38,69,.4);font-family:inherit;
+}
+.toolbar button:hover{background:#B81E3A;}
+
+/* ---------- 打印 ---------- */
+@page{size:A4;margin:0;}
+@media print{
+  body{background:#fff;padding:0;gap:0;display:block;}
+  .sheet{box-shadow:none;margin:0 auto;}
+  .toolbar{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar no-print">
+  <button onclick="window.print()">🖨️ 打印 / 另存为 PDF</button>
+</div>
+
+<!-- ================= 第 1 页 · 封面 ================= -->
+<section class="sheet cover">
+  <!-- 顶部蓝色透视带 -->
+  <svg class="band" viewBox="0 0 800 150" preserveAspectRatio="none">
+    <polygon points="0,0 800,0 800,58 0,118" fill="#7B9BD0"/>
+    <polygon points="0,26 800,0 800,26 0,86" fill="#4A6BA8"/>
+    <polygon points="0,118 800,58 800,92 400,138 0,132" fill="#A9C2E4" opacity=".9"/>
+    <polygon points="0,132 400,138 800,92 800,104 0,150" fill="#C9D8EE" opacity=".7"/>
+  </svg>
+
+  <!-- 中部插画 -->
+  <div class="c-hero">
+    <div class="c-orbit"></div>
+    <div class="c-circle-sky"></div>
+    <div class="c-card">
+      <div class="line w60"></div>
+      <div class="line w80 ghost"></div>
+      <div class="line ghost" style="width:45%"></div>
+      <div class="chart">
+        <i style="height:26%"></i><i style="height:48%"></i><i style="height:70%"></i>
+        <i style="height:40%"></i><i style="height:58%"></i><i style="height:82%"></i>
+      </div>
+    </div>
+    <div class="c-minicard">
+      <div class="ml w50"></div>
+      <div class="ml"></div>
+      <div class="dots"><i></i><i></i><i></i><i></i><span class="chip"></span></div>
+    </div>
+    <div class="c-gmp"><span>GMP</span></div>
+    <div class="c-sq orange"></div>
+    <div class="c-sq blue"></div>
+    <div class="c-dot gray"></div>
+  </div>
+
+  <!-- 标题 + 网络星座 -->
+  <div class="c-title">
+    <svg class="net" width="230" height="170" viewBox="0 0 230 170">
+      <g stroke="#C9CDD4" stroke-width="1">
+        <line x1="30" y1="120" x2="80" y2="80"/><line x1="80" y1="80" x2="140" y2="95"/>
+        <line x1="140" y1="95" x2="180" y2="55"/><line x1="180" y1="55" x2="205" y2="20"/>
+        <line x1="140" y1="95" x2="120" y2="140"/><line x1="80" y1="80" x2="60" y2="35"/>
+        <line x1="60" y1="35" x2="110" y2="18"/><line x1="80" y1="80" x2="45" y2="150"/>
+        <line x1="120" y1="140" x2="170" y2="130"/><line x1="180" y1="55" x2="150" y2="25"/>
+        <line x1="140" y1="95" x2="200" y2="100"/><line x1="200" y1="100" x2="215" y2="145"/>
+        <line x1="30" y1="120" x2="70" y2="135"/><line x1="70" y1="135" x2="120" y2="140"/>
+        <line x1="110" y1="18" x2="150" y2="25"/>
+      </g>
+      <g>
+        <circle cx="30" cy="120" r="7" fill="#2E9E9B"/>
+        <circle cx="80" cy="80" r="10" fill="#F0A63A"/>
+        <circle cx="140" cy="95" r="8" fill="#D92645"/>
+        <circle cx="180" cy="55" r="11" fill="#2E9E9B"/>
+        <circle cx="205" cy="20" r="7" fill="#5EB6C9"/>
+        <circle cx="120" cy="140" r="9" fill="#1B7F8E"/>
+        <circle cx="60" cy="35" r="6" fill="#F0A63A"/>
+        <circle cx="110" cy="18" r="5" fill="#D92645"/>
+        <circle cx="45" cy="150" r="5" fill="#5EB6C9"/>
+        <circle cx="170" cy="130" r="6" fill="#F0A63A"/>
+        <circle cx="150" cy="25" r="6" fill="#1B7F8E"/>
+        <circle cx="200" cy="100" r="5" fill="#D92645"/>
+        <circle cx="215" cy="145" r="4" fill="#2E9E9B"/>
+        <circle cx="70" cy="135" r="4" fill="#D92645"/>
+      </g>
+    </svg>
+    <h1>GMP 本地化部署消息平台 V3.0</h1>
+    <h2>报价文件</h2>
+  </div>
+
+  <div class="c-company">
+    <div class="n">北京微网通联股份有限公司</div>
+    <div class="u">http://www.51welink.com</div>
+  </div>
+</section>
+
+<!-- ================= 第 2 页 · 产品介绍 ================= -->
+<section class="sheet intro">
+  <div class="page-header">
+    <div class="logo">
+      <img class="wl-svg-logo" src="微网通联-logo-horizontal.png" alt="微网通联"/>
+    </div>
+    <div class="co">北京微网通联股份有限公司</div>
+  </div>
+
+  <div class="intro-body">
+    <div class="quote-mark">❝</div>
+    <h1>GMP本地化部署消息平台</h1>
+    <div class="sub">精准聚焦多行业场景&nbsp;&nbsp;打造全渠道通信能力</div>
+    <p class="desc">
+      GMP为政企客户提供的统一消息发送与管理平台，集成短信、富媒体信息、微信公众号、微信小程序、APP推送、邮件、号码认证、5G消息等多种消息渠道。通过一次接口调用，实现内部各业务系统对全渠道通信的智能化、综合管理。
+    </p>
+
+    <!-- 架构图 -->
+    <div class="arch">
+      <div class="arch-col">
+        <div class="sys-stack">
+          <div class="sys-box">
+            <svg width="16" height="16" viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="8.5" rx="1" fill="none" stroke="#fff" stroke-width="1.3"/><line x1="5" y1="13.5" x2="11" y2="13.5" stroke="#fff" stroke-width="1.3"/><line x1="8" y1="11" x2="8" y2="13.5" stroke="#fff" stroke-width="1.3"/><line x1="4" y1="5.5" x2="12" y2="5.5" stroke="#fff" stroke-width="1.1"/><line x1="4" y1="8" x2="9" y2="8" stroke="#fff" stroke-width="1.1"/></svg>
+            <span>核心系统</span>
+          </div>
+          <div class="sys-box">
+            <svg width="16" height="16" viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="8.5" rx="1" fill="none" stroke="#fff" stroke-width="1.3"/><line x1="5" y1="13.5" x2="11" y2="13.5" stroke="#fff" stroke-width="1.3"/><line x1="8" y1="11" x2="8" y2="13.5" stroke="#fff" stroke-width="1.3"/><line x1="4" y1="5.5" x2="12" y2="5.5" stroke="#fff" stroke-width="1.1"/><line x1="4" y1="8" x2="9" y2="8" stroke="#fff" stroke-width="1.1"/></svg>
+            <span>业务系统</span>
+          </div>
+          <div class="sys-box">
+            <svg width="16" height="16" viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="8.5" rx="1" fill="none" stroke="#fff" stroke-width="1.3"/><line x1="5" y1="13.5" x2="11" y2="13.5" stroke="#fff" stroke-width="1.3"/><line x1="8" y1="11" x2="8" y2="13.5" stroke="#fff" stroke-width="1.3"/><line x1="4" y1="5.5" x2="12" y2="5.5" stroke="#fff" stroke-width="1.1"/><line x1="4" y1="8" x2="9" y2="8" stroke="#fff" stroke-width="1.1"/></svg>
+            <span>O A 系统</span>
+          </div>
+          <div class="sys-box">
+            <svg width="16" height="16" viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="8.5" rx="1" fill="none" stroke="#fff" stroke-width="1.3"/><line x1="5" y1="13.5" x2="11" y2="13.5" stroke="#fff" stroke-width="1.3"/><line x1="8" y1="11" x2="8" y2="13.5" stroke="#fff" stroke-width="1.3"/><line x1="4" y1="5.5" x2="12" y2="5.5" stroke="#fff" stroke-width="1.1"/><line x1="4" y1="8" x2="9" y2="8" stroke="#fff" stroke-width="1.1"/></svg>
+            <span>CRM系统</span>
+          </div>
+          <div class="sys-box">
+            <svg width="16" height="16" viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="8.5" rx="1" fill="none" stroke="#fff" stroke-width="1.3"/><line x1="5" y1="13.5" x2="11" y2="13.5" stroke="#fff" stroke-width="1.3"/><line x1="8" y1="11" x2="8" y2="13.5" stroke="#fff" stroke-width="1.3"/><line x1="4" y1="5.5" x2="12" y2="5.5" stroke="#fff" stroke-width="1.1"/><line x1="4" y1="8" x2="9" y2="8" stroke="#fff" stroke-width="1.1"/></svg>
+            <span>……系统</span>
+          </div>
+        </div>
+        <div class="arch-caption">政企内部系统</div>
+      </div>
+
+      <div class="arch-link"><em>统一集成</em></div>
+
+      <div class="arch-col">
+        <div class="gmp-stage">
+          <!-- GMP 平台立体插画（矢量重绘） -->
+          <svg width="180" height="172" viewBox="0 0 220 200">
+            <!-- 底座平台 -->
+            <polygon points="110,152 202,112 110,72 18,112" fill="#86CBDD"/>
+            <polygon points="18,112 110,152 110,170 18,130" fill="#5AA9C4"/>
+            <polygon points="202,112 110,152 110,170 202,130" fill="#3F8FAD"/>
+            <text x="0" y="0" font-size="21" font-weight="800" fill="#27667F" letter-spacing="2"
+                  transform="matrix(0.866,0.5,-0.866,0.5,88,96)">GMP</text>
+            <!-- 柱状图 -->
+            <g>
+              <polygon points="60,86 72,80 72,52 60,58" fill="#5EB6C9"/>
+              <polygon points="72,80 80,76 80,48 72,52" fill="#3F8FAD"/>
+              <polygon points="60,58 72,52 80,48 68,54" fill="#9CD8E6"/>
+              <polygon points="84,76 96,70 96,40 84,46" fill="#F0A63A"/>
+              <polygon points="96,70 104,66 104,36 96,40" fill="#D88F28"/>
+              <polygon points="84,46 96,40 104,36 92,42" fill="#F7C470"/>
+              <polygon points="108,66 120,60 120,24 108,30" fill="#5EB6C9"/>
+              <polygon points="120,60 128,56 128,20 120,24" fill="#3F8FAD"/>
+              <polygon points="108,30 120,24 128,20 116,26" fill="#9CD8E6"/>
+            </g>
+            <!-- 小楼 -->
+            <g>
+              <polygon points="150,96 182,82 182,42 150,56" fill="#7FA8D8"/>
+              <polygon points="182,82 198,75 198,35 182,42" fill="#5B84BC"/>
+              <polygon points="150,56 182,42 198,35 166,49" fill="#A9C6E8"/>
+              <g fill="#EAF2FB">
+                <polygon points="156,62 162,60 162,67 156,69"/><polygon points="167,58 173,56 173,63 167,65"/>
+                <polygon points="156,73 162,71 162,78 156,80"/><polygon points="167,69 173,67 173,74 167,76"/>
+                <polygon points="186,46 193,43 193,50 186,53"/><polygon points="186,56 193,53 193,60 186,63"/>
+              </g>
+            </g>
+            <!-- 漂浮齿轮 -->
+            <g transform="translate(46,30)">
+              <circle r="11" fill="none" stroke="#F0A63A" stroke-width="4" stroke-dasharray="4.2 3.4"/>
+              <circle r="4" fill="#F0A63A"/>
+            </g>
+            <circle cx="170" cy="18" r="4" fill="#5EB6C9"/>
+            <circle cx="186" cy="26" r="2.6" fill="#D92645"/>
+          </svg>
+        </div>
+        <div class="arch-caption">GMP平台</div>
+      </div>
+
+      <div class="arch-link"><em>专线直连</em></div>
+
+      <div class="arch-col">
+        <div class="ch-stack">
+          <div class="ch-item">
+            <span class="ch-ic" style="background:#F0A63A"><svg width="11" height="11" viewBox="0 0 12 12"><rect x="1" y="2.5" width="10" height="7.5" rx="1" fill="none" stroke="#fff" stroke-width="1.2"/><path d="M1.5 3.5 L6 7 L10.5 3.5" fill="none" stroke="#fff" stroke-width="1.2"/></svg></span>
+            <span>短&nbsp;信</span>
+          </div>
+          <div class="ch-item">
+            <span class="ch-ic" style="background:#3FA66A"><svg width="11" height="11" viewBox="0 0 12 12"><path d="M6 1.5 C3 1.5 1 3.3 1 5.6 C1 7.9 3 9.7 6 9.7 L6.8 9.7 L9 11 L8.6 8.9 C10 8.2 11 7 11 5.6 C11 3.3 9 1.5 6 1.5 Z" fill="#fff"/></svg></span>
+            <span>公众号</span>
+          </div>
+          <div class="ch-item">
+            <span class="ch-ic" style="background:#2E9E9B"><svg width="11" height="11" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.4" fill="none" stroke="#fff" stroke-width="1.2"/><circle cx="6" cy="6" r="1.6" fill="#fff"/><line x1="6" y1="0.6" x2="6" y2="2.4" stroke="#fff" stroke-width="1.1"/><line x1="6" y1="9.6" x2="6" y2="11.4" stroke="#fff" stroke-width="1.1"/></svg></span>
+            <span>小程序</span>
+          </div>
+          <div class="ch-item">
+            <span class="ch-ic" style="background:#D92645"><svg width="11" height="11" viewBox="0 0 12 12"><rect x="1" y="2.5" width="10" height="7.5" rx="1" fill="none" stroke="#fff" stroke-width="1.2"/><path d="M1.5 3.5 L6 7 L10.5 3.5" fill="none" stroke="#fff" stroke-width="1.2"/><line x1="1.5" y1="9.5" x2="4.2" y2="6.8" stroke="#fff" stroke-width="1"/><line x1="10.5" y1="9.5" x2="7.8" y2="6.8" stroke="#fff" stroke-width="1"/></svg></span>
+            <span>邮&nbsp;件</span>
+          </div>
+          <div class="ch-item">
+            <span class="ch-ic" style="background:#E8833A"><svg width="11" height="11" viewBox="0 0 12 12"><rect x="3" y="1" width="6" height="10" rx="1.4" fill="none" stroke="#fff" stroke-width="1.2"/><line x1="5" y1="9.2" x2="7" y2="9.2" stroke="#fff" stroke-width="1.1"/><path d="M9.5 3.5 L11.5 2.5 M9.5 6 L11.7 6 M9.5 8.5 L11.5 9.5" stroke="#fff" stroke-width="1"/></svg></span>
+            <span>APP推送</span>
+          </div>
+          <div class="ch-item">
+            <span class="ch-ic" style="background:#8E6FB8"><svg width="11" height="11" viewBox="0 0 12 12"><circle cx="2.6" cy="6" r="1.4" fill="#fff"/><circle cx="6" cy="6" r="1.4" fill="#fff"/><circle cx="9.4" cy="6" r="1.4" fill="#fff"/></svg></span>
+            <span>其&nbsp;它</span>
+          </div>
+        </div>
+        <div class="arch-caption">终端接收渠道</div>
+      </div>
+    </div>
+
+    <!-- 三大能力卡片 -->
+    <div class="tree"></div>
+    <div class="feat-grid">
+      <div>
+        <div class="feat-stub"></div>
+        <div class="feat-card">
+          <h3 class="orange">
+            <svg width="20" height="20" viewBox="0 0 20 20"><path d="M2 10 L18 2 L12 18 L9 11 Z" fill="#F0A63A"/><path d="M9 11 L18 2" stroke="#fff" stroke-width="1.2"/></svg>
+            发送
+          </h3>
+          <ul>
+            <li>短信消息</li><li>微信消息</li><li>邮件消息</li><li>APP消息</li>
+            <li>小程序消息</li><li>其他消息</li><li>组合消息</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="feat-stub"></div>
+        <div class="feat-card">
+          <h3 class="green">
+            <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="7.5" cy="6" r="3" fill="#3FA66A"/><path d="M2.5 16 C2.5 12.5 4.8 10.8 7.5 10.8 C10.2 10.8 12.5 12.5 12.5 16 Z" fill="#3FA66A"/><circle cx="15" cy="14" r="3.4" fill="none" stroke="#3FA66A" stroke-width="1.8" stroke-dasharray="2.2 1.6"/><circle cx="15" cy="14" r="1.1" fill="#3FA66A"/></svg>
+            管理
+          </h3>
+          <ul>
+            <li>账号管理</li><li>审核管理</li><li>渠道管理</li><li>报表管理</li>
+            <li>费用管理</li><li>基础数据</li><li>系统管理</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="feat-stub"></div>
+        <div class="feat-card">
+          <h3 class="purple">
+            <svg width="20" height="20" viewBox="0 0 20 20"><path d="M3 13 A7.5 7.5 0 0 1 17 13" fill="none" stroke="#8E6FB8" stroke-width="2"/><line x1="10" y1="13" x2="14" y2="7.5" stroke="#8E6FB8" stroke-width="2" stroke-linecap="round"/><circle cx="10" cy="13" r="1.8" fill="#8E6FB8"/><line x1="3" y1="16.5" x2="17" y2="16.5" stroke="#8E6FB8" stroke-width="2" stroke-linecap="round"/></svg>
+            监控
+          </h3>
+          <ul>
+            <li>业务监控</li><li>渠道监控</li><li>应用程序监控</li>
+            <li>服务器监控</li><li>告警设置</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 左下装饰 -->
+    <div class="intro-deco">
+      <div class="b1"></div>
+      <div class="b2"></div>
+      <div class="card">
+        <i class="w60"></i><i></i><i></i><i class="w60"></i><i></i>
+      </div>
+      <span class="tag" style="left:120px;bottom:128px;">营销推送</span>
+      <span class="tag" style="left:56px;bottom:34px;">会员运营</span>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>版权所有©北京微网通联股份有限公司</span>
+    <span>-1-</span>
+    <span>-保密文件-</span>
+  </div>
+</section>
+
+<!-- ================= 第 3 页 · 报价明细（一） ================= -->
+<section class="sheet price">
+  <div class="page-header">
+    <div class="logo">
+      <img class="wl-svg-logo" src="微网通联-logo-horizontal.png" alt="微网通联"/>
+    </div>
+    <div class="co">北京微网通联股份有限公司</div>
+  </div>
+
+  <div class="price-body">
+    <table class="price">
+      <colgroup><col class="c-no"><col class="c-mod"><col class="c-fn"><col class="c-pr"></colgroup>
+      <caption>GMP 本地化部署消息平台报价明细</caption>
+      <thead>
+        <tr><th>序号</th><th>项目模块</th><th>功能</th><th>价格（元）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="no">1</td><td class="mod" rowspan="10">短信模块</td><td>普通短信发送功能</td><td class="pr">8000.00</td></tr>
+        <tr><td class="no">2</td><td>个性短信发送功能</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">3</td><td>加密短信发送功能</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">4</td><td>模板短信功能</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">5</td><td>验证码信息功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">6</td><td>生日短信功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">7</td><td>会议短信功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">8</td><td>短信查询功能</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">9</td><td>上行查询功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">10</td><td>状态重推功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">11</td><td class="mod" rowspan="3">彩信模块</td><td>彩信发送功能</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">12</td><td>加密彩信功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">13</td><td>彩信查询功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">14</td><td class="mod" rowspan="2">语音模块</td><td>普通语音功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">15</td><td>语音查询功能</td><td class="pr">2000.00</td></tr>
+        <tr><td class="no">16</td><td class="mod" rowspan="4">邮件模块</td><td>邮件发送功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">17</td><td>邮件配置功能</td><td class="pr">2000.00</td></tr>
+        <tr><td class="no">18</td><td>邮箱模板功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">19</td><td>邮件查询功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">20</td><td class="mod" rowspan="8">微信模块</td><td>微信配置功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">21</td><td>微信群发功能</td><td class="pr">8000.00</td></tr>
+        <tr><td class="no">22</td><td>微信推送功能</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">23</td><td>微信用户管理功能</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">24</td><td>微信模板管理功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">25</td><td>微信菜单配置功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">26</td><td>微信自动回复设置功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">27</td><td>微信消息接收功能</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">28</td><td class="mod" rowspan="2">组合消息模块</td><td>组合消息发送功能</td><td class="pr">12000.00</td></tr>
+        <tr><td class="no">29</td><td>组合消息查询功能</td><td class="pr">8000.00</td></tr>
+        <tr><td class="no">30</td><td class="mod" rowspan="4">互动指令模块</td><td>消息模板功能</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">31</td><td>互动信息配置功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">32</td><td>码号配置功能</td><td class="pr">2000.00</td></tr>
+        <tr><td class="no">33</td><td>互动信息发送功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">34</td><td class="mod" rowspan="3">审核模块</td><td>信息审核功能</td><td class="pr">8000.00</td></tr>
+        <tr><td class="no">35</td><td>模板审核功能</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">36</td><td>配置审核规则功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">37</td><td class="mod" rowspan="2">账号模块</td><td>账号管理功能</td><td class="pr">8000.00</td></tr>
+        <tr><td class="no">38</td><td>密码管理功能</td><td class="pr">4000.00</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page-footer">
+    <span>版权所有©北京微网通联股份有限公司</span>
+    <span>-2-</span>
+    <span>-保密文件-</span>
+  </div>
+</section>
+
+<!-- ================= 第 4 页 · 报价明细（二） ================= -->
+<section class="sheet price">
+  <div class="page-header">
+    <div class="logo">
+      <img class="wl-svg-logo" src="微网通联-logo-horizontal.png" alt="微网通联"/>
+    </div>
+    <div class="co">北京微网通联股份有限公司</div>
+  </div>
+
+  <div class="price-body">
+    <table class="price">
+      <colgroup><col class="c-no"><col class="c-mod"><col class="c-fn"><col class="c-pr"></colgroup>
+      <thead>
+        <tr><th>序号</th><th>项目模块</th><th>功能</th><th>价格（元）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="no">39</td><td class="mod" rowspan="2">权限模块</td><td>角色管理功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">40</td><td>角色分配功能</td><td class="pr">2000.00</td></tr>
+        <tr><td class="no">41</td><td class="mod" rowspan="2">机构模块</td><td>部门管理功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">42</td><td>区域管理功能</td><td class="pr">2000.00</td></tr>
+        <tr><td class="no">43</td><td class="mod" rowspan="2">通讯录模块</td><td>通讯录功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">44</td><td>字段配置功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">45</td><td class="mod" rowspan="3">渠道配置模块</td><td>渠道配置功能</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">46</td><td>备用通道切换功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">47</td><td>信息类型管理功能</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">48</td><td class="mod" rowspan="6">数据管理模块</td><td>关键字管理功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">49</td><td>黑/白名单管理功能</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">50</td><td>状态码管理功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">51</td><td>重发配置管理功能</td><td class="pr">2000.00</td></tr>
+        <tr><td class="no">52</td><td>外围系统管理功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">53</td><td>号段数据管理功能</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">54</td><td class="mod">报表模块</td><td>账号/机构/渠道/区域/信息类型/资源结算报表功能</td><td class="pr">10000.00</td></tr>
+        <tr><td class="no">55</td><td class="mod" rowspan="3">监控模块</td><td>服务器监控功能</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">56</td><td>应用监控功能</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">57</td><td>业务监控功能</td><td class="pr">8000.00</td></tr>
+        <tr><td class="no">58</td><td class="mod" rowspan="2">告警模块</td><td>告警策略功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">59</td><td>告警通知设置功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">60</td><td class="mod" rowspan="5">系统设置模块</td><td>参数设置功能</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">61</td><td>退订设置功能</td><td class="pr">2000.00</td></tr>
+        <tr><td class="no">62</td><td>皮肤设置功能</td><td class="pr">2000.00</td></tr>
+        <tr><td class="no">63</td><td>站点设置功能</td><td class="pr">2000.00</td></tr>
+        <tr><td class="no">64</td><td>公告设置功能</td><td class="pr">2000.00</td></tr>
+        <tr><td class="no">65</td><td class="mod" rowspan="3">日志管理模块</td><td>操作日志</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">66</td><td>运行日志</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">67</td><td>日志清理功能</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">68</td><td class="mod" rowspan="4">接口服务</td><td>HTTP 接口</td><td class="pr">12000.00</td></tr>
+        <tr><td class="no">69</td><td>Web Service 接口</td><td class="pr">10000.00</td></tr>
+        <tr><td class="no">70</td><td>Restful API 接口</td><td class="pr">10000.00</td></tr>
+        <tr><td class="no">71</td><td>Socket 接口</td><td class="pr">12000.00</td></tr>
+        <tr><td class="no">72</td><td class="mod" rowspan="8">系统服务</td><td>定时扫描服务</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">73</td><td>数据迁移服务</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">74</td><td>资源渠道发送服务</td><td class="pr">8000.00</td></tr>
+        <tr><td class="no">75</td><td>统计报表服务</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">76</td><td>计费组件服务</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">77</td><td>消息推送服务</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">78</td><td>文件短信服务</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">79</td><td>监控告警服务</td><td class="pr">4000.00</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page-footer">
+    <span>版权所有©北京微网通联股份有限公司</span>
+    <span>-3-</span>
+    <span>-保密文件-</span>
+  </div>
+</section>
+
+<!-- ================= 第 5 页 · 报价明细（三） ================= -->
+<section class="sheet price">
+  <div class="page-header">
+    <div class="logo">
+      <img class="wl-svg-logo" src="微网通联-logo-horizontal.png" alt="微网通联"/>
+    </div>
+    <div class="co">北京微网通联股份有限公司</div>
+  </div>
+
+  <div class="price-body">
+    <table class="price">
+      <colgroup><col class="c-no"><col class="c-mod"><col class="c-fn"><col class="c-pr"></colgroup>
+      <thead>
+        <tr><th>序号</th><th>项目模块</th><th>功能</th><th>价格（元）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="no">80</td><td class="mod" rowspan="5" style="background:#fff">&nbsp;</td><td>数据加载服务</td><td class="pr">8000.00</td></tr>
+        <tr><td class="no">81</td><td>文件组件服务</td><td class="pr">6000.00</td></tr>
+        <tr><td class="no">82</td><td>个性化服务</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">83</td><td>数据存储组件服务</td><td class="pr">4000.00</td></tr>
+        <tr><td class="no">84</td><td>系统容灾备份</td><td class="pr">10000.00</td></tr>
+        <tr class="total">
+          <td class="no" style="height:30px"></td>
+          <td></td>
+          <td class="tl">总价</td>
+          <td class="tv">440000.00</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- 数据校验：84 项单价累加 = 440000 元，与总价一致 -->
+  </div>
+
+  <div class="page-footer">
+    <span>版权所有©北京微网通联股份有限公司</span>
+    <span>-4-</span>
+    <span>-保密文件-</span>
+  </div>
+</section>
+
+<!-- ================= 第 6 页 · 关于微网通联 ================= -->
+<section class="sheet about">
+  <div class="page-header">
+    <div class="logo">
+      <img class="wl-svg-logo" src="微网通联-logo-horizontal.png" alt="微网通联"/>
+    </div>
+    <div class="co">北京微网通联股份有限公司</div>
+  </div>
+
+  <div class="about-body">
+    <div class="about-deco">
+      <div class="cc1"></div>
+      <div class="cc2"></div>
+      <div class="tri"></div>
+      <div class="lg">
+        <div class="logo">
+          <img class="wl-svg-logo" src="微网通联-logo-horizontal.png" alt="微网通联"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-title">
+      <div class="halftone"></div>
+      <span class="q quote-mark">❝</span>
+      <h1>关于微网通联</h1>
+      <div class="en">The profile of welink</div>
+    </div>
+
+    <div class="about-text">
+      <p>北京微网通联股份有限公司（简称“微网通联”）是国内领先的<b>新媒体及智慧车场运营商</b>，新媒体矩阵包括：<b>云通信平台（UMC）</b>、<b>本地化部署消息平台（GMP）</b>和智慧出行场景的自媒体平台<b>（泊聚量）</b>。</p>
+      <p>其中，UMC和GMP是基于移动信息服务生态，为企业和政府服务机构（政务）提供短信（验证码、会员通知等）、<b>5G消息</b>（智能短信、视频短信、Chatbot消息）、语音通知/验证，闪信等服务。</p>
+      <p>智慧车场业务包括：<b>智慧车场SaaS服务</b>，<b>智慧车场综合体2.0运营服务</b>。</p>
+      <p>公司自2008年开始运营，至今已建立了覆盖全国的客户服务网络，在北京、上海、山东、深圳、成都、长沙等地设有本地化运营和客服团队。</p>
+      <p>微网通联以资源整合和价值营销为双驱动力，凭借平台运营能力和“极致服务”理念等综合竞争力，荣获<b>高新技术企业认证</b>、ISO 27001信息安全管理体系认证、ISO 27701隐私信息管理体系认证证书、ISO 9001质量管理体系认证、公安部信息系统安全三级等保评测认证、<b>“专精特新”企业认证</b>，获得企业信用最高等级3A认证、中国互联网协会最具价值产品服务、最佳移动即时通信平台、中国移动互联网领域最佳运营支撑服务奖和中国最佳客户体验平台等多项殊荣。此外，于2016年成功登陆<b>新三板</b>（证券简称：微网通联，证券代码：870213），并于2021年荣获新三板治理性优质企业认证。</p>
+    </div>
+
+    <!-- 大楼插画（矢量重绘） -->
+    <div class="about-img">
+      <svg viewBox="0 0 800 340" preserveAspectRatio="xMidYMax slice">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#7FB3E0"/><stop offset="1" stop-color="#D9EAF7"/>
+          </linearGradient>
+          <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#5E7891"/><stop offset="1" stop-color="#3E5266"/>
+          </linearGradient>
+        </defs>
+        <rect width="800" height="340" fill="url(#sky)"/>
+        <!-- 云 -->
+        <g fill="#FFFFFF" opacity=".85">
+          <ellipse cx="120" cy="60" rx="46" ry="14"/><ellipse cx="160" cy="52" rx="34" ry="12"/>
+          <ellipse cx="620" cy="42" rx="52" ry="15"/><ellipse cx="672" cy="52" rx="36" ry="12"/>
+          <ellipse cx="420" cy="82" rx="38" ry="11"/>
+        </g>
+        <!-- 斜切白色遮罩（还原原图斜切构图） -->
+        <polygon points="0,340 520,0 800,0 800,340" fill="#FFFFFF" opacity=".18"/>
+        <!-- 大楼主体 -->
+        <g>
+          <polygon points="90,340 90,150 560,120 560,340" fill="url(#glass)"/>
+          <polygon points="560,120 700,160 700,340 560,340" fill="#33465A"/>
+          <!-- 顶部护栏 -->
+          <rect x="84" y="140" width="482" height="10" fill="#2E3F52"/>
+          <g stroke="#2E3F52" stroke-width="3">
+            <line x1="100" y1="140" x2="100" y2="124"/><line x1="150" y1="140" x2="150" y2="122"/>
+            <line x1="200" y1="140" x2="200" y2="120"/><line x1="250" y1="140" x2="250" y2="118"/>
+            <line x1="300" y1="140" x2="300" y2="116"/><line x1="350" y1="140" x2="350" y2="114"/>
+            <line x1="400" y1="140" x2="400" y2="112"/><line x1="450" y1="140" x2="450" y2="110"/>
+            <line x1="500" y1="140" x2="500" y2="108"/><line x1="550" y1="140" x2="550" y2="106"/>
+          </g>
+          <!-- 玻璃幕墙 -->
+          <g stroke="#8FA5B8" stroke-width="2" opacity=".8">
+            <line x1="90" y1="180" x2="560" y2="152"/><line x1="90" y1="216" x2="560" y2="188"/>
+            <line x1="90" y1="252" x2="560" y2="224"/><line x1="90" y1="288" x2="560" y2="260"/>
+            <line x1="140" y1="147" x2="140" y2="340"/><line x1="200" y1="144" x2="200" y2="340"/>
+            <line x1="260" y1="140" x2="260" y2="340"/><line x1="320" y1="137" x2="320" y2="340"/>
+            <line x1="380" y1="134" x2="380" y2="340"/><line x1="440" y1="131" x2="440" y2="340"/>
+            <line x1="500" y1="128" x2="500" y2="340"/>
+            <line x1="610" y1="133" x2="610" y2="340"/><line x1="655" y1="146" x2="655" y2="340"/>
+            <line x1="560" y1="152" x2="700" y2="192"/><line x1="560" y1="224" x2="700" y2="264"/>
+          </g>
+          <!-- 玻璃反光 -->
+          <polygon points="120,178 210,172 150,250 110,254" fill="#FFFFFF" opacity=".14"/>
+          <polygon points="330,166 400,161 340,244 300,247" fill="#FFFFFF" opacity=".1"/>
+          <!-- 楼顶 Logo（官方横版标识） -->
+          <g transform="translate(170,88)">
+            <image x="0" y="0" width="200" height="51" href="微网通联-logo-horizontal.png"/>
+          </g>
+          <!-- 右侧红砖配楼 -->
+          <polygon points="700,210 780,236 780,340 700,340" fill="#8C4A3C"/>
+          <g stroke="#A96A55" stroke-width="2" opacity=".7">
+            <line x1="700" y1="240" x2="780" y2="266"/><line x1="700" y1="270" x2="780" y2="296"/>
+            <line x1="700" y1="300" x2="780" y2="326"/>
+          </g>
+        </g>
+        <!-- 前景树 -->
+        <g>
+          <ellipse cx="60" cy="330" rx="90" ry="42" fill="#3E6B4F"/>
+          <ellipse cx="140" cy="345" rx="80" ry="34" fill="#2F5840"/>
+          <ellipse cx="740" cy="348" rx="90" ry="30" fill="#3E6B4F"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

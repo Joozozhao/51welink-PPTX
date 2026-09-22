@@ -1,0 +1,757 @@
+<!-- ============================================================
+     part-1.html · 微网通联 2026 业务介绍 · 第 1–9 页片段
+     由 slides/01–09.slide 按 ×1.5 缩放忠实还原（1920×1080）
+     依赖：design-system.css（组装方统一引入），本文件不含脚本
+     ============================================================ -->
+<style>
+/* ==================== s1 封面 ==================== */
+#s1 .s1-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+#s1 .s1-mask { position:absolute; inset:0; background:linear-gradient(90deg, rgba(10,31,68,0.92) 0%, rgba(10,31,68,0.55) 45%, rgba(10,31,68,0.15) 100%); }
+#s1 .s1-inner { position:absolute; inset:0; z-index:1; display:flex; flex-direction:column; justify-content:space-between; padding:72px 96px; }
+#s1 .s1-top { display:flex; justify-content:space-between; align-items:center; }
+#s1 .s1-logo { width:225px; height:57px; object-fit:contain; }
+#s1 .s1-en-top { font-size:21px; color:rgba(255,255,255,0.6); letter-spacing:6px; font-family:var(--font-num); }
+#s1 .s1-main { display:flex; flex-direction:column; gap:30px; }
+#s1 .s1-bar { width:84px; height:6px; background:var(--red); border-radius:3px; }
+#s1 .s1-title { font-size:93px; font-weight:700; color:#FFFFFF; line-height:1.2; letter-spacing:3px; }
+#s1 .s1-en { font-size:22.5px; color:rgba(255,255,255,0.65); letter-spacing:4.5px; font-family:var(--font-num); }
+#s1 .s1-tag { font-size:36px; color:#FFFFFF; font-weight:600; margin-top:9px; }
+#s1 .s1-chips { display:flex; gap:15px; margin-top:15px; flex-wrap:wrap; }
+#s1 .s1-chip { padding:9px 21px; border-radius:999px; border:1.5px solid rgba(255,255,255,0.35); background:rgba(255,255,255,0.06); font-size:19.5px; color:rgba(255,255,255,0.85); letter-spacing:1.5px; }
+#s1 .s1-company { font-size:21px; color:rgba(255,255,255,0.55); margin-top:21px; letter-spacing:1.5px; }
+
+/* ==================== s2 目录 ==================== */
+#s2 .s2-inner { position:absolute; inset:0; display:flex; }
+#s2 .s2-panel { position:relative; width:630px; height:100%; flex:none; overflow:hidden; }
+#s2 .s2-panel-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+#s2 .s2-panel-mask { position:absolute; inset:0; background:linear-gradient(160deg, rgba(10,31,68,0.88) 0%, rgba(18,58,122,0.80) 100%); }
+#s2 .s2-panel-body { position:relative; z-index:1; height:100%; display:flex; flex-direction:column; justify-content:space-between; padding:84px 72px; }
+#s2 .s2-logo { width:210px; height:54px; object-fit:contain; }
+#s2 .s2-panel-main { display:flex; flex-direction:column; gap:27px; }
+#s2 .s2-bar { width:72px; height:6px; background:var(--red); border-radius:3px; }
+#s2 .s2-h { font-size:81px; font-weight:700; color:#FFFFFF; letter-spacing:6px; }
+#s2 .s2-en { font-size:24px; color:rgba(255,255,255,0.6); letter-spacing:9px; font-family:var(--font-num); }
+#s2 .s2-intro { font-size:21px; color:rgba(255,255,255,0.55); line-height:1.8; margin-top:15px; }
+#s2 .s2-right { flex:1; display:flex; flex-direction:column; justify-content:center; gap:12px; padding:120px 108px; }
+#s2 .s2-row { display:flex; align-items:center; gap:48px; padding:39px 12px; }
+#s2 .s2-row.with-line { border-bottom:1.5px solid #E3E9F2; }
+#s2 .s2-num { font-size:69px; font-weight:700; color:var(--red); font-family:var(--font-num); width:120px; flex:none; line-height:1.1; }
+#s2 .s2-mid { flex:1; display:flex; flex-direction:column; gap:9px; }
+#s2 .s2-trow { display:flex; align-items:baseline; gap:21px; }
+#s2 .s2-t { font-size:39px; font-weight:700; color:var(--navy); }
+#s2 .s2-e { font-size:19.5px; color:var(--faint); letter-spacing:4.5px; font-family:var(--font-num); }
+#s2 .s2-d { font-size:21px; color:var(--muted); }
+#s2 .s2-p { font-size:21px; color:var(--faint); font-family:var(--font-num); }
+
+/* ==================== s3 章节页 01 ==================== */
+#s3 .s3-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+#s3 .s3-globe { position:absolute; right:90px; top:210px; width:620px; z-index:1; }
+#s3 .s3-globe img { width:100%; display:block; mix-blend-mode:screen; }
+#s3 .s3-inner { position:absolute; inset:0; z-index:2; display:flex; flex-direction:column; justify-content:space-between; padding:84px 108px; }
+#s3 .s3-top { display:flex; justify-content:space-between; align-items:center; }
+#s3 .s3-logo { width:195px; height:49.5px; object-fit:contain; }
+#s3 .s3-part { font-size:19.5px; color:rgba(255,255,255,0.5); letter-spacing:6px; font-family:var(--font-num); }
+#s3 .s3-mid { display:flex; align-items:flex-end; gap:72px; }
+#s3 .s3-bignum { font-size:300px; font-weight:800; color:rgba(255,255,255,0.12); font-family:var(--font-num); line-height:1; }
+#s3 .s3-block { display:flex; flex-direction:column; gap:24px; padding-bottom:36px; }
+#s3 .s3-bar { width:72px; height:6px; background:var(--red); border-radius:3px; }
+#s3 .s3-h { font-size:84px; font-weight:700; color:#FFFFFF; letter-spacing:6px; }
+#s3 .s3-en { font-size:24px; color:rgba(255,255,255,0.6); letter-spacing:7.5px; font-family:var(--font-num); }
+#s3 .s3-desc { font-size:21px; color:rgba(255,255,255,0.5); line-height:1.8; margin-top:12px; }
+#s3 .s3-bottom { height:27px; }
+#s3 .pageno { color:rgba(255,255,255,0.45); }
+
+/* ==================== 内容页标题行（s4–s9 共用结构，逐页前缀） ==================== */
+#s4 .head-line, #s5 .head-line, #s6 .head-line, #s7 .head-line, #s8 .head-line, #s9 .head-line { display:flex; align-items:center; gap:24px; margin-top:14px; }
+#s4 .head-line .slide-title, #s5 .head-line .slide-title, #s6 .head-line .slide-title, #s7 .head-line .slide-title, #s8 .head-line .slide-title, #s9 .head-line .slide-title { margin-top:0; }
+#s4 .head-line .title-bar, #s5 .head-line .title-bar, #s6 .head-line .title-bar, #s7 .head-line .title-bar, #s8 .head-line .title-bar, #s9 .head-line .title-bar { margin-top:0; flex:none; }
+
+/* ==================== s4 公司简介 ==================== */
+#s4 .s4-body { position:absolute; left:96px; right:96px; top:165px; height:750px; display:flex; gap:54px; }
+#s4 .s4-left { flex:1.5; min-width:0; display:flex; flex-direction:column; justify-content:center; gap:27px; }
+#s4 .s4-block { display:flex; flex-direction:column; gap:12px; }
+#s4 .s4-h { font-size:25.5px; font-weight:700; color:var(--navy); }
+#s4 .s4-p { font-size:22.5px; color:#3A4A66; line-height:1.7; }
+#s4 .s4-p strong { font-weight:700; color:var(--navy); }
+#s4 .s4-cards { display:flex; gap:24px; }
+#s4 .s4-card { flex:1; background:#FFFFFF; border-radius:18px; padding:27px 30px; box-shadow:0 6px 30px rgba(10,31,68,0.06); display:flex; flex-direction:column; gap:12px; }
+#s4 .s4-card-head { display:flex; align-items:center; gap:15px; }
+#s4 .s4-card-head img { width:33px; height:33px; object-fit:contain; }
+#s4 .s4-card-t { font-size:24px; font-weight:700; color:var(--navy); }
+#s4 .s4-card-d { font-size:19.5px; color:var(--muted); line-height:1.7; }
+#s4 .s4-right { flex:1; background:linear-gradient(160deg, #0A1F44 0%, #123A7A 100%); border-radius:24px; padding:54px 48px; display:flex; flex-direction:column; justify-content:space-between; }
+#s4 .s4-r-top { display:flex; flex-direction:column; gap:9px; }
+#s4 .s4-r-en { font-size:19.5px; color:rgba(255,255,255,0.6); letter-spacing:4.5px; font-family:var(--font-num); }
+#s4 .s4-r-year { font-size:108px; color:#FFFFFF; line-height:1.1; }
+#s4 .s4-r-tag { font-size:30px; font-weight:700; color:#FFFFFF; }
+#s4 .s4-r-rows { display:flex; flex-direction:column; gap:21px; }
+#s4 .s4-r-row { display:flex; justify-content:space-between; align-items:center; border-bottom:1.5px solid rgba(255,255,255,0.15); padding-bottom:18px; }
+#s4 .s4-r-row.last { border-bottom:none; padding-bottom:0; }
+#s4 .s4-r-label { font-size:21px; color:rgba(255,255,255,0.65); }
+#s4 .s4-r-val { font-size:22.5px; font-weight:700; color:#FFFFFF; }
+#s4 .s4-r-val.nf { font-family:var(--font-num); }
+#s4 .s4-r-val.red { color:var(--red); }
+#s4 .s4-r-note { background:rgba(240,45,78,0.15); border-radius:15px; padding:18px 24px; font-size:19.5px; color:rgba(255,255,255,0.85); line-height:1.6; }
+
+/* ==================== s5 发展历程 ==================== */
+#s5 .s5-band { position:absolute; left:0; right:0; bottom:0; height:165px; width:100%; object-fit:cover; object-position:center 42%; opacity:0.95; -webkit-mask-image:linear-gradient(180deg, transparent 0%, #000 55%); mask-image:linear-gradient(180deg, transparent 0%, #000 55%); }
+#s5 .s5-body { position:absolute; left:96px; right:96px; top:165px; height:750px; z-index:1; display:flex; flex-direction:column; justify-content:center; }
+#s5 .s5-years { display:flex; align-items:flex-end; width:100%; }
+#s5 .s5-ycol { flex:1; display:flex; flex-direction:column; align-items:center; gap:15px; padding-bottom:24px; }
+#s5 .s5-year { font-size:45px; font-weight:700; color:var(--navy); font-family:var(--font-num); line-height:1.1; width:100%; text-align:center; }
+#s5 .s5-ycol.hot .s5-year { font-size:60px; color:var(--red); }
+#s5 .s5-ylabel { font-size:22.5px; font-weight:700; color:var(--blue); width:100%; text-align:center; }
+#s5 .s5-ycol.hot .s5-ylabel { color:var(--red); }
+#s5 .s5-dots { position:relative; width:100%; height:30px; display:flex; align-items:center; }
+#s5 .s5-line { position:absolute; left:0; right:0; top:13.5px; height:3px; background:linear-gradient(90deg, #2E6FE8 0%, #F02D4E 100%); opacity:0.55; }
+#s5 .s5-dots-row { display:flex; width:100%; }
+#s5 .s5-dcol { flex:1; display:flex; justify-content:center; }
+#s5 .s5-dot { width:21px; height:21px; border-radius:10.5px; background:var(--blue); border:4.5px solid #FFFFFF; box-shadow:0 0 0 3px #2E6FE8; z-index:1; }
+#s5 .s5-dcol.hot .s5-dot { background:var(--red); box-shadow:0 0 0 3px #F02D4E; }
+#s5 .s5-descs { display:flex; width:100%; padding-top:30px; align-items:flex-start; }
+#s5 .s5-dwrap { flex:1; padding:0 12px; }
+#s5 .s5-dcard { background:#FFFFFF; border-radius:15px; padding:21px 18px; box-shadow:0 6px 24px rgba(10,31,68,0.08); height:180px; }
+#s5 .s5-dwrap.hot .s5-dcard { background:var(--navy); }
+#s5 .s5-dtext { font-size:18px; color:var(--muted); line-height:1.6; text-align:center; width:100%; }
+#s5 .s5-dwrap.hot .s5-dtext { color:rgba(255,255,255,0.85); }
+#s5 .pageno { color:rgba(255,255,255,0.65); }
+
+/* ==================== s6 公司荣誉 ==================== */
+#s6 .s6-body { position:absolute; left:96px; right:96px; top:165px; height:750px; display:flex; gap:42px; }
+#s6 .s6-panel { width:450px; flex:none; background:linear-gradient(165deg, #0A1F44 0%, #123A7A 100%); border-radius:24px; padding:60px 48px; display:flex; flex-direction:column; justify-content:space-between; }
+#s6 .s6-trophy { width:96px; height:96px; object-fit:contain; }
+#s6 .s6-mid { display:flex; flex-direction:column; gap:15px; }
+#s6 .s6-bignum-row { display:flex; align-items:baseline; gap:9px; }
+#s6 .s6-100 { font-size:132px; color:#FFFFFF; line-height:1; }
+#s6 .s6-plus { font-size:48px; font-weight:700; color:var(--red); font-family:var(--font-num); }
+#s6 .s6-h { font-size:27px; font-weight:700; color:#FFFFFF; }
+#s6 .s6-p { font-size:21px; color:rgba(255,255,255,0.65); line-height:1.8; }
+#s6 .s6-en { font-size:18px; color:rgba(255,255,255,0.45); letter-spacing:3px; font-family:var(--font-num); }
+#s6 .s6-grid { flex:1; display:flex; flex-wrap:wrap; gap:21px; align-content:space-between; }
+#s6 .s6-card { width:31.8%; height:231px; background:#FFFFFF; border-radius:18px; padding:27px; box-shadow:0 6px 24px rgba(10,31,68,0.06); display:flex; flex-direction:column; justify-content:space-between; }
+#s6 .s6-tile { width:66px; height:66px; border-radius:15px; display:flex; align-items:center; justify-content:center; background:rgba(46,111,232,0.1); }
+#s6 .s6-card.hot .s6-tile { background:rgba(240,45,78,0.1); }
+#s6 .s6-tile img { width:33px; height:33px; object-fit:contain; }
+#s6 .s6-t { font-size:19.5px; font-weight:600; color:var(--ink); line-height:1.5; }
+
+/* ==================== s7 公司资质 ==================== */
+#s7 .s7-body { position:absolute; left:96px; right:96px; top:165px; height:750px; display:flex; flex-direction:column; gap:30px; }
+#s7 .s7-banner { background:linear-gradient(90deg, #0A1F44 0%, #123A7A 100%); border-radius:18px; padding:30px 48px; display:flex; align-items:center; gap:30px; }
+#s7 .s7-banner img { width:45px; height:45px; object-fit:contain; flex:none; }
+#s7 .s7-banner-t { font-size:25.5px; color:#FFFFFF; font-weight:600; line-height:1.6; }
+#s7 .s7-banner-en { font-size:19.5px; color:rgba(255,255,255,0.55); letter-spacing:3px; margin-left:auto; font-family:var(--font-num); }
+#s7 .s7-grid { flex:1; display:flex; flex-wrap:wrap; gap:27px; align-content:space-between; justify-content:space-between; }
+#s7 .s7-card { width:32%; height:279px; background:#FFFFFF; border:1.5px solid #EAEFF6; border-radius:18px; padding:33px; box-shadow:0 6px 24px rgba(10,31,68,0.06); display:flex; align-items:center; gap:24px; }
+#s7 .s7-badge { position:relative; width:108px; height:108px; flex:none; display:flex; align-items:center; justify-content:center; }
+#s7 .s7-badge img { position:absolute; inset:0; width:100%; height:100%; }
+#s7 .s7-badge svg { width:36px; height:36px; position:relative; }
+#s7 .s7-text { flex:1; min-width:0; display:flex; flex-direction:column; gap:9px; }
+#s7 .s7-t { font-size:24px; font-weight:700; color:var(--navy); line-height:1.4; }
+#s7 .s7-s { font-size:18px; font-weight:600; }
+#s7 .s7-s.seal-red { color:#F02D4E; }
+#s7 .s7-s.seal-blue { color:#2E6FE8; }
+#s7 .s7-s.seal-navy { color:#0A1F44; }
+#s7 .s7-d { font-size:18px; color:var(--muted); line-height:1.6; }
+
+/* ==================== s8 服务团队/网络 ==================== */
+#s8 .s8-body { position:absolute; left:96px; right:96px; top:165px; height:750px; display:flex; gap:48px; }
+#s8 .s8-panel { width:510px; flex:none; background:linear-gradient(165deg, #0A1F44 0%, #123A7A 100%); border-radius:24px; padding:60px 48px; display:flex; flex-direction:column; justify-content:space-between; }
+#s8 .s8-p-top { display:flex; flex-direction:column; gap:21px; }
+#s8 .s8-en { font-size:19.5px; color:rgba(255,255,255,0.6); letter-spacing:4.5px; font-family:var(--font-num); }
+#s8 .s8-h { font-size:39px; font-weight:700; color:#FFFFFF; line-height:1.5; }
+#s8 .s8-p { font-size:21px; color:rgba(255,255,255,0.65); line-height:1.9; }
+#s8 .s8-pill { display:flex; align-items:center; gap:15px; background:rgba(255,255,255,0.08); border-radius:15px; padding:18px 24px; }
+#s8 .s8-pill img { width:30px; height:30px; object-fit:contain; }
+#s8 .s8-pill-t { font-size:19.5px; color:rgba(255,255,255,0.85); }
+#s8 .s8-right { flex:1; display:flex; flex-direction:column; gap:30px; }
+#s8 .s8-nums { display:flex; gap:30px; flex:1; }
+#s8 .s8-numcard { flex:1; background:#FFFFFF; border-radius:21px; padding:42px 45px; box-shadow:0 6px 30px rgba(10,31,68,0.06); display:flex; flex-direction:column; justify-content:center; gap:12px; }
+#s8 .s8-numrow { display:flex; align-items:baseline; gap:12px; }
+#s8 .s8-num { font-size:126px; line-height:1; }
+#s8 .s8-num.red { color:var(--red); }
+#s8 .s8-num.blue { color:var(--blue); }
+#s8 .s8-unit { font-size:39px; font-weight:700; color:var(--navy); }
+#s8 .s8-nh { font-size:24px; font-weight:700; color:var(--navy); }
+#s8 .s8-np { font-size:19.5px; color:var(--muted); line-height:1.6; }
+#s8 .s8-centers { background:#FFFFFF; border-radius:21px; padding:36px 45px; box-shadow:0 6px 30px rgba(10,31,68,0.06); display:flex; flex-direction:column; gap:21px; }
+#s8 .s8-ch { font-size:21px; font-weight:700; color:var(--navy); }
+#s8 .s8-chips { display:flex; gap:18px; flex-wrap:wrap; }
+#s8 .s8-chip { display:flex; align-items:center; gap:12px; padding:12px 27px; border-radius:999px; background:rgba(46,111,232,0.08); }
+#s8 .s8-chip.hq { background:rgba(240,45,78,0.1); }
+#s8 .s8-dot { width:12px; height:12px; border-radius:6px; background:var(--blue); flex:none; }
+#s8 .s8-chip.hq .s8-dot { background:var(--red); }
+#s8 .s8-ct { font-size:21px; font-weight:600; color:var(--navy); }
+#s8 .s8-chip.hq .s8-ct { color:var(--red); }
+
+/* ==================== s9 研发能力 ==================== */
+#s9 .s9-body { position:absolute; left:96px; right:96px; top:165px; height:750px; display:flex; flex-wrap:wrap; gap:21px; align-content:space-between; justify-content:space-between; }
+#s9 .s9-card { width:49.2%; height:364.5px; background:#FFFFFF; border-radius:21px; padding:30px 36px; box-shadow:0 6px 30px rgba(10,31,68,0.07); display:flex; flex-direction:column; gap:18px; }
+#s9 .s9-card.dark { background:linear-gradient(160deg, #0A1F44 0%, #123A7A 100%); }
+#s9 .s9-head { display:flex; align-items:center; gap:18px; }
+#s9 .s9-n { font-size:45px; font-weight:700; font-family:var(--font-num); color:rgba(46,111,232,0.3); }
+#s9 .s9-card.dark .s9-n { color:rgba(255,255,255,0.25); }
+#s9 .s9-t { font-size:27px; font-weight:700; color:var(--navy); }
+#s9 .s9-card.dark .s9-t { color:#FFFFFF; }
+#s9 .s9-item { flex:1; border-top:1.5px solid #EDF1F7; padding-top:15px; display:flex; flex-direction:column; gap:6px; }
+#s9 .s9-card.dark .s9-item { border-top-color:rgba(255,255,255,0.12); }
+#s9 .s9-irow { display:flex; justify-content:space-between; align-items:center; }
+#s9 .s9-s { font-size:21px; font-weight:700; color:var(--ink); }
+#s9 .s9-card.dark .s9-s { color:#FFFFFF; }
+#s9 .s9-m { font-size:19.5px; font-weight:700; color:var(--red); font-family:var(--font-num); }
+#s9 .s9-d { font-size:18px; color:var(--muted); line-height:1.55; }
+#s9 .s9-card.dark .s9-d { color:rgba(255,255,255,0.7); }
+</style>
+
+<!-- ============ s1 · 封面 ============ -->
+<section class="slide dark" id="s1">
+  <img class="s1-bg" src="assets/cover_hero.png" alt="" />
+  <div class="s1-mask"></div>
+  <div class="s1-inner">
+    <div class="s1-top reveal">
+      <img class="s1-logo" src="assets/logo_white.png" alt="微网通联" />
+      <div class="s1-en-top">2026 · BUSINESS PRESENTATION</div>
+    </div>
+    <div class="s1-main">
+      <div class="s1-bar reveal" style="--d:0.10s"></div>
+      <div class="s1-title reveal" style="--d:0.15s">微网通联业务介绍</div>
+      <div class="s1-en reveal" style="--d:0.22s">WEIWANG TONGLIAN · CLOUD COMMUNICATION PLATFORM</div>
+      <div class="s1-tag reveal" style="--d:0.30s">行业领先的云通信平台及解决方案服务商</div>
+      <div class="s1-chips reveal" style="--d:0.38s">
+        <div class="s1-chip">国内短信</div>
+        <div class="s1-chip">语音验证</div>
+        <div class="s1-chip">一键认证</div>
+        <div class="s1-chip">5G消息</div>
+        <div class="s1-chip">国际短信</div>
+        <div class="s1-chip">中间号</div>
+      </div>
+      <div class="s1-company reveal" style="--d:0.45s">北京微网通联股份有限公司</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ s2 · 目录 ============ -->
+<section class="slide" id="s2" style="background:var(--bg)">
+  <div class="s2-inner">
+    <div class="s2-panel">
+      <img class="s2-panel-img" src="assets/gen-toc-panel-flip.png" alt="" />
+      <div class="s2-panel-mask"></div>
+      <div class="s2-panel-body">
+        <img class="s2-logo reveal" src="assets/logo_white.png" alt="微网通联" />
+        <div class="s2-panel-main">
+          <div class="s2-bar reveal" style="--d:0.10s"></div>
+          <div class="s2-h reveal" style="--d:0.15s">目录</div>
+          <div class="s2-en reveal" style="--d:0.22s">CONTENTS</div>
+          <div class="s2-intro reveal" style="--d:0.30s">从公司实力、产品矩阵到客户背书，<br />完整呈现微网通联的云通信服务能力。</div>
+        </div>
+      </div>
+    </div>
+    <div class="s2-right">
+      <div class="s2-row with-line reveal" style="--d:0.15s">
+        <div class="s2-num">01</div>
+        <div class="s2-mid">
+          <div class="s2-trow">
+            <div class="s2-t">公司介绍</div>
+            <div class="s2-e">ABOUT US</div>
+          </div>
+          <div class="s2-d">定位 · 历程 · 荣誉资质 · 研发与规模</div>
+        </div>
+        <div class="s2-p">03 - 10</div>
+      </div>
+      <div class="s2-row with-line reveal" style="--d:0.25s">
+        <div class="s2-num">02</div>
+        <div class="s2-mid">
+          <div class="s2-trow">
+            <div class="s2-t">业务介绍</div>
+            <div class="s2-e">OUR BUSINESS</div>
+          </div>
+          <div class="s2-d">产品矩阵 · GMP · 短信 · 语音 · 5G消息 · 一键认证</div>
+        </div>
+        <div class="s2-p">11 - 21</div>
+      </div>
+      <div class="s2-row reveal" style="--d:0.35s">
+        <div class="s2-num">03</div>
+        <div class="s2-mid">
+          <div class="s2-trow">
+            <div class="s2-t">服务客户</div>
+            <div class="s2-e">OUR CLIENTS</div>
+          </div>
+          <div class="s2-d">极致服务 · 5000+ 企业共同选择</div>
+        </div>
+        <div class="s2-p">22 - 25</div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">02 / 25</div>
+</section>
+
+<!-- ============ s3 · 章节页 01 公司介绍 ============ -->
+<section class="slide dark" id="s3">
+  <img class="s3-bg" src="assets/section_bg.png" alt="" />
+  <div class="s3-globe reveal reveal-zoom" style="--d:0.25s">
+    <img class="floaty" src="assets/gen-ch1-globe.png" alt="" />
+  </div>
+  <div class="s3-inner">
+    <div class="s3-top reveal">
+      <img class="s3-logo" src="assets/logo_white.png" alt="微网通联" />
+      <div class="s3-part">PART 01</div>
+    </div>
+    <div class="s3-mid">
+      <div class="s3-bignum reveal" style="--d:0.10s">01</div>
+      <div class="s3-block">
+        <div class="s3-bar reveal" style="--d:0.15s"></div>
+        <div class="s3-h reveal" style="--d:0.20s">公司介绍</div>
+        <div class="s3-en reveal" style="--d:0.28s">ABOUT US</div>
+        <div class="s3-desc reveal" style="--d:0.36s">定位与业务 · 发展历程 · 荣誉资质<br />服务网络 · 研发能力 · 业务规模</div>
+      </div>
+    </div>
+    <div class="s3-bottom"></div>
+  </div>
+  <div class="pageno">03 / 25</div>
+</section>
+
+<!-- ============ s4 · 公司简介 ============ -->
+<section class="slide" id="s4" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">01 · 公司简介</div>
+    <div class="head-line">
+      <div class="slide-title">关于微网通联</div>
+      <div class="title-bar"></div>
+    </div>
+  </div>
+  <div class="s4-body">
+    <div class="s4-left">
+      <div class="s4-block reveal" style="--d:0.10s">
+        <div class="s4-h">公司定位</div>
+        <div class="s4-p">北京微网通联股份有限公司（简称「微网通联」）是<strong>行业领先的云通信平台及解决方案服务商</strong>之一，以云通信平台为根基，打造云通信与移动营销并轨的业务模式。</div>
+      </div>
+      <div class="s4-cards">
+        <div class="s4-card reveal" style="--d:0.18s">
+          <div class="s4-card-head">
+            <img src="assets/icons/cloud-0A1F44.png" alt="" />
+            <div class="s4-card-t">云通信业务</div>
+          </div>
+          <div class="s4-card-d">构建涵盖 UMC 云通信平台与 GMP 聚合消息服务平台于一体的政企服务生态，提供国内短信、一键认证、5G消息、国际短信及其他号码服务。</div>
+        </div>
+        <div class="s4-card reveal" style="--d:0.26s">
+          <div class="s4-card-head">
+            <img src="assets/icons/bullhorn-F02D4E.png" alt="" />
+            <div class="s4-card-t">移动营销业务</div>
+          </div>
+          <div class="s4-card-d">依托聚WE平台，致力于自媒体代运营、小程序开发和社会化媒体精准营销，与云通信业务并轨协同。</div>
+        </div>
+      </div>
+      <div class="s4-block reveal" style="--d:0.34s">
+        <div class="s4-h">服务网络与资质</div>
+        <div class="s4-p">公司自 2008 年开始运营，已建立覆盖全国的客户服务网络，在北京、上海、山东、深圳、成都、长沙设有客户服务团队。以资源整合为驱动力、平台运营能力和「极致服务」理念等综合竞争力，荣获互联网信用评价中心最高等级 3A 认证等多项殊荣。</div>
+      </div>
+    </div>
+    <div class="s4-right reveal reveal-right" style="--d:0.20s">
+      <div class="s4-r-top">
+        <div class="s4-r-en">LISTED COMPANY</div>
+        <div class="s4-r-year num">2016</div>
+        <div class="s4-r-tag">登陆新三板</div>
+      </div>
+      <div class="s4-r-rows">
+        <div class="s4-r-row">
+          <div class="s4-r-label">证券简称</div>
+          <div class="s4-r-val">微网通联</div>
+        </div>
+        <div class="s4-r-row">
+          <div class="s4-r-label">证券代码</div>
+          <div class="s4-r-val nf red">870213</div>
+        </div>
+        <div class="s4-r-row last">
+          <div class="s4-r-label">运营起始</div>
+          <div class="s4-r-val nf">2008</div>
+        </div>
+      </div>
+      <div class="s4-r-note">公众公司治理 + 3A 信用认证，<br />合作可信度的硬背书。</div>
+    </div>
+  </div>
+  <div class="pageno">04 / 25</div>
+</section>
+
+<!-- ============ s5 · 发展历程 ============ -->
+<section class="slide" id="s5" style="background:var(--bg)">
+  <img class="s5-band" src="assets/gen-timeline-band.png" alt="" />
+  <div class="slide-head reveal">
+    <div class="kicker">01 · 发展历程</div>
+    <div class="head-line">
+      <div class="slide-title">开拓进取 · 砥砺前行</div>
+      <div class="title-bar"></div>
+    </div>
+  </div>
+  <div class="s5-body">
+    <div class="s5-years reveal" style="--d:0.10s">
+      <div class="s5-ycol">
+        <div class="s5-year">2006</div>
+        <div class="s5-ylabel">公司成立</div>
+      </div>
+      <div class="s5-ycol">
+        <div class="s5-year">2014</div>
+        <div class="s5-ylabel">荣誉加身</div>
+      </div>
+      <div class="s5-ycol">
+        <div class="s5-year">2015</div>
+        <div class="s5-ylabel">理念确立</div>
+      </div>
+      <div class="s5-ycol hot">
+        <div class="s5-year">2016</div>
+        <div class="s5-ylabel">新三板挂牌</div>
+      </div>
+      <div class="s5-ycol">
+        <div class="s5-year">2017</div>
+        <div class="s5-ylabel">全网布局</div>
+      </div>
+      <div class="s5-ycol">
+        <div class="s5-year">2020</div>
+        <div class="s5-ylabel">5G消息上线</div>
+      </div>
+      <div class="s5-ycol">
+        <div class="s5-year">2022</div>
+        <div class="s5-ylabel">服务升级</div>
+      </div>
+    </div>
+    <div class="s5-dots reveal" style="--d:0.20s">
+      <div class="s5-line"></div>
+      <div class="s5-dots-row">
+        <div class="s5-dcol"><div class="s5-dot"></div></div>
+        <div class="s5-dcol"><div class="s5-dot"></div></div>
+        <div class="s5-dcol"><div class="s5-dot"></div></div>
+        <div class="s5-dcol hot"><div class="s5-dot"></div></div>
+        <div class="s5-dcol"><div class="s5-dot"></div></div>
+        <div class="s5-dcol"><div class="s5-dot"></div></div>
+        <div class="s5-dcol"><div class="s5-dot"></div></div>
+      </div>
+    </div>
+    <div class="s5-descs">
+      <div class="s5-dwrap reveal" style="--d:0.26s"><div class="s5-dcard"><div class="s5-dtext">微网通联成立，于北京设立总部，相继在上海、山东成立分公司</div></div></div>
+      <div class="s5-dwrap reveal" style="--d:0.30s"><div class="s5-dcard"><div class="s5-dtext">获「福布斯中国非上市潜力企业100强」等多项大奖</div></div></div>
+      <div class="s5-dwrap reveal" style="--d:0.34s"><div class="s5-dcard"><div class="s5-dtext">提出并践行「极致服务」理念</div></div></div>
+      <div class="s5-dwrap hot reveal" style="--d:0.38s"><div class="s5-dcard"><div class="s5-dtext">登陆新三板，证券代码 870213</div></div></div>
+      <div class="s5-dwrap reveal" style="--d:0.42s"><div class="s5-dcard"><div class="s5-dtext">建立全国营销服务网络，获 AAA 信用资质与年度最佳平台奖</div></div></div>
+      <div class="s5-dwrap reveal" style="--d:0.46s"><div class="s5-dcard"><div class="s5-dtext">5G消息平台上线，获多省 CSP 资质</div></div></div>
+      <div class="s5-dwrap reveal" style="--d:0.50s"><div class="s5-dcard"><div class="s5-dtext">上线 5G 消息服务，云通信生态持续完善</div></div></div>
+    </div>
+  </div>
+  <div class="pageno">05 / 25</div>
+</section>
+
+<!-- ============ s6 · 公司荣誉 ============ -->
+<section class="slide" id="s6" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">01 · 公司荣誉</div>
+    <div class="head-line">
+      <div class="slide-title">载誉不断</div>
+      <div class="title-bar"></div>
+    </div>
+  </div>
+  <div class="s6-body">
+    <div class="s6-panel reveal reveal-left" style="--d:0.10s">
+      <img class="s6-trophy" src="assets/icons/trophy-FFFFFF.png" alt="" />
+      <div class="s6-mid">
+        <div class="s6-bignum-row">
+          <div class="s6-100 num">100</div>
+          <div class="s6-plus">+</div>
+        </div>
+        <div class="s6-h">企业荣誉资质</div>
+        <div class="s6-p">凭借诚信经营和企业实力，荣获超百项企业荣誉资质——公信力是长期合作的第一块基石。</div>
+      </div>
+      <div class="s6-en">HONORS &amp; QUALIFICATIONS</div>
+    </div>
+    <div class="s6-grid">
+      <div class="s6-card hot reveal" style="--d:0.14s">
+        <div class="s6-tile"><img src="assets/icons/medal-F02D4E.png" alt="" /></div>
+        <div class="s6-t">年度最佳移动即时通信平台</div>
+      </div>
+      <div class="s6-card reveal" style="--d:0.18s">
+        <div class="s6-tile"><img src="assets/icons/award-2E6FE8.png" alt="" /></div>
+        <div class="s6-t">中国移动互联网领域最佳运营支撑服务</div>
+      </div>
+      <div class="s6-card hot reveal" style="--d:0.22s">
+        <div class="s6-tile"><img src="assets/icons/certificate-F02D4E.png" alt="" /></div>
+        <div class="s6-t">互联网信用评价中心最高等级 AAA 级信用企业</div>
+      </div>
+      <div class="s6-card reveal" style="--d:0.26s">
+        <div class="s6-tile"><img src="assets/icons/microchip-2E6FE8.png" alt="" /></div>
+        <div class="s6-t">高新技术企业</div>
+      </div>
+      <div class="s6-card hot reveal" style="--d:0.30s">
+        <div class="s6-tile"><img src="assets/icons/crown-F02D4E.png" alt="" /></div>
+        <div class="s6-t">福布斯非上市百强企业</div>
+      </div>
+      <div class="s6-card reveal" style="--d:0.34s">
+        <div class="s6-tile"><img src="assets/icons/building-columns-2E6FE8.png" alt="" /></div>
+        <div class="s6-t">中国通信企业协会增值服务委员会副主任单位</div>
+      </div>
+      <div class="s6-card reveal" style="--d:0.38s">
+        <div class="s6-tile"><img src="assets/icons/trophy-2E6FE8.png" alt="" /></div>
+        <div class="s6-t">中国移动泉州分公司突出贡献奖</div>
+      </div>
+      <div class="s6-card reveal" style="--d:0.42s">
+        <div class="s6-tile"><img src="assets/icons/handshake-2E6FE8.png" alt="" /></div>
+        <div class="s6-t">杭州电信年度金牌合作伙伴</div>
+      </div>
+      <div class="s6-card reveal" style="--d:0.46s">
+        <div class="s6-tile"><img src="assets/icons/headset-2E6FE8.png" alt="" /></div>
+        <div class="s6-t">淮安移动合作伙伴 · 卓越贡献奖</div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">06 / 25</div>
+</section>
+
+<!-- ============ s7 · 公司资质 ============ -->
+<section class="slide" id="s7" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">01 · 公司资质</div>
+    <div class="head-line">
+      <div class="slide-title">追求卓越 · 品质保证</div>
+      <div class="title-bar"></div>
+    </div>
+  </div>
+  <div class="s7-body">
+    <div class="s7-banner reveal" style="--d:0.10s">
+      <img src="assets/icons/shield-halved-F02D4E.png" alt="" />
+      <div class="s7-banner-t">以技术为本、以品质为先 —— 多方权威机构技术资质认证，为云通信服务保驾护航</div>
+      <div class="s7-banner-en">CERTIFIED</div>
+    </div>
+    <div class="s7-grid">
+      <div class="s7-card reveal" style="--d:0.16s">
+        <div class="s7-badge">
+          <img src="assets/icons/ring-F02D4E.png" alt="" />
+          <svg viewBox="0 0 448 512"><path fill="#F02D4E" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+        </div>
+        <div class="s7-text">
+          <div class="s7-t">ISO/IEC 27001</div>
+          <div class="s7-s seal-red">信息安全管理体系认证</div>
+          <div class="s7-d">数据存储与传输全程加密，金融级信息安全标准</div>
+        </div>
+      </div>
+      <div class="s7-card reveal" style="--d:0.22s">
+        <div class="s7-badge">
+          <img src="assets/icons/ring-2E6FE8.png" alt="" />
+          <svg viewBox="0 0 448 512"><path fill="#2E6FE8" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+        </div>
+        <div class="s7-text">
+          <div class="s7-t">等保三级</div>
+          <div class="s7-s seal-blue">网络安全等级保护三级</div>
+          <div class="s7-d">核心系统通过国家等级保护三级测评</div>
+        </div>
+      </div>
+      <div class="s7-card reveal" style="--d:0.28s">
+        <div class="s7-badge">
+          <img src="assets/icons/ring-0A1F44.png" alt="" />
+          <svg viewBox="0 0 448 512"><path fill="#0A1F44" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+        </div>
+        <div class="s7-text">
+          <div class="s7-t">增值电信业务经营许可证</div>
+          <div class="s7-s seal-navy">工信部核发</div>
+          <div class="s7-d">合规经营电信增值业务的基础准入资质</div>
+        </div>
+      </div>
+      <div class="s7-card reveal" style="--d:0.34s">
+        <div class="s7-badge">
+          <img src="assets/icons/ring-F02D4E.png" alt="" />
+          <svg viewBox="0 0 448 512"><path fill="#F02D4E" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+        </div>
+        <div class="s7-text">
+          <div class="s7-t">AAA 级信用企业</div>
+          <div class="s7-s seal-red">互联网信用评价中心</div>
+          <div class="s7-d">诚信经营获信用评价最高等级认证</div>
+        </div>
+      </div>
+      <div class="s7-card reveal" style="--d:0.40s">
+        <div class="s7-badge">
+          <img src="assets/icons/ring-2E6FE8.png" alt="" />
+          <svg viewBox="0 0 448 512"><path fill="#2E6FE8" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+        </div>
+        <div class="s7-text">
+          <div class="s7-t">高新技术企业</div>
+          <div class="s7-s seal-blue">国家级认定</div>
+          <div class="s7-d">以核心技术自主研发能力获国家级认定</div>
+        </div>
+      </div>
+      <div class="s7-card reveal" style="--d:0.46s">
+        <div class="s7-badge">
+          <img src="assets/icons/ring-0A1F44.png" alt="" />
+          <svg viewBox="0 0 448 512"><path fill="#0A1F44" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+        </div>
+        <div class="s7-text">
+          <div class="s7-t">5G消息 CSP 资质</div>
+          <div class="s7-s seal-navy">多省运营商准入</div>
+          <div class="s7-d">获多省 5G消息 CSP 资质，生态服务能力认证</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">07 / 25</div>
+</section>
+
+<!-- ============ s8 · 服务团队/网络 ============ -->
+<section class="slide" id="s8" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">01 · 服务团队</div>
+    <div class="head-line">
+      <div class="slide-title">专业 · 极致 · 全网</div>
+      <div class="title-bar"></div>
+    </div>
+  </div>
+  <div class="s8-body">
+    <div class="s8-panel reveal reveal-left" style="--d:0.10s">
+      <div class="s8-p-top">
+        <div class="s8-en">SERVICE NETWORK</div>
+        <div class="s8-h">全网营销和<br />客户服务网络</div>
+      </div>
+      <div class="s8-p">依托覆盖全国的服务网络，建立本地化服务快速响应机制——客户在哪里，服务团队就在哪里。</div>
+      <div class="s8-pill">
+        <img src="assets/icons/bolt-F02D4E.png" alt="" />
+        <div class="s8-pill-t">本地化服务 · 快速响应</div>
+      </div>
+    </div>
+    <div class="s8-right">
+      <div class="s8-nums">
+        <div class="s8-numcard reveal" style="--d:0.18s">
+          <div class="s8-numrow">
+            <div class="s8-num red num">6</div>
+            <div class="s8-unit">家</div>
+          </div>
+          <div class="s8-nh">分公司覆盖全国</div>
+          <div class="s8-np">北京总部 + 区域分公司，形成南北呼应的服务布局</div>
+        </div>
+        <div class="s8-numcard reveal" style="--d:0.26s">
+          <div class="s8-numrow">
+            <div class="s8-num blue num">34</div>
+            <div class="s8-unit">个</div>
+          </div>
+          <div class="s8-nh">省级行政区服务覆盖</div>
+          <div class="s8-np">服务能力触达全国所有省级行政区域</div>
+        </div>
+      </div>
+      <div class="s8-centers reveal" style="--d:0.34s">
+        <div class="s8-ch">六大服务中心</div>
+        <div class="s8-chips">
+          <div class="s8-chip hq">
+            <div class="s8-dot"></div>
+            <div class="s8-ct">北京 · 总部</div>
+          </div>
+          <div class="s8-chip">
+            <div class="s8-dot"></div>
+            <div class="s8-ct">上海</div>
+          </div>
+          <div class="s8-chip">
+            <div class="s8-dot"></div>
+            <div class="s8-ct">山东</div>
+          </div>
+          <div class="s8-chip">
+            <div class="s8-dot"></div>
+            <div class="s8-ct">深圳</div>
+          </div>
+          <div class="s8-chip">
+            <div class="s8-dot"></div>
+            <div class="s8-ct">成都</div>
+          </div>
+          <div class="s8-chip">
+            <div class="s8-dot"></div>
+            <div class="s8-ct">长沙</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">08 / 25</div>
+</section>
+
+<!-- ============ s9 · 研发能力 ============ -->
+<section class="slide" id="s9" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">01 · 研发能力</div>
+    <div class="head-line">
+      <div class="slide-title">强大的研发能力</div>
+      <div class="title-bar"></div>
+    </div>
+  </div>
+  <div class="s9-body">
+    <div class="s9-card dark reveal" style="--d:0.10s">
+      <div class="s9-head">
+        <div class="s9-n">01</div>
+        <div class="s9-t">核心技术架构能力</div>
+      </div>
+      <div class="s9-item">
+        <div class="s9-irow">
+          <div class="s9-s">亿级消息处理平台</div>
+          <div class="s9-m">可用性 99.99%</div>
+        </div>
+        <div class="s9-d">微服务架构+容器化部署，日均处理超1亿条消息，128个API模块毫秒级响应</div>
+      </div>
+      <div class="s9-item">
+        <div class="s9-irow">
+          <div class="s9-s">智能路由保障机制</div>
+          <div class="s9-m">成功率 &gt;99.5%</div>
+        </div>
+        <div class="s9-d">实时监控200+运营商节点，12维参数动态选路，0.5秒故障切换</div>
+      </div>
+    </div>
+    <div class="s9-card reveal" style="--d:0.18s">
+      <div class="s9-head">
+        <div class="s9-n">02</div>
+        <div class="s9-t">智能信息处理能力</div>
+      </div>
+      <div class="s9-item">
+        <div class="s9-irow">
+          <div class="s9-s">场景化交互升级</div>
+          <div class="s9-m">效率 +300%</div>
+        </div>
+        <div class="s9-d">NLP识别20+业务场景，动态生成交互卡片（如值机二维码）</div>
+      </div>
+      <div class="s9-item">
+        <div class="s9-irow">
+          <div class="s9-s">精准用户触达</div>
+          <div class="s9-m">转化率 +42%</div>
+        </div>
+        <div class="s9-d">50+特征标签构建画像，LBS技术助力电商促销短信转化</div>
+      </div>
+    </div>
+    <div class="s9-card reveal" style="--d:0.26s">
+      <div class="s9-head">
+        <div class="s9-n">03</div>
+        <div class="s9-t">安全合规体系</div>
+      </div>
+      <div class="s9-item">
+        <div class="s9-irow">
+          <div class="s9-s">全链路内容管控</div>
+          <div class="s9-m">拦截准确率 99.7%</div>
+        </div>
+        <div class="s9-d">AI+规则+人工三重审核，秒级过滤3000条短信，7×24小时值守</div>
+      </div>
+      <div class="s9-item">
+        <div class="s9-irow">
+          <div class="s9-s">金融级防护标准</div>
+          <div class="s9-m">国密 SM4</div>
+        </div>
+        <div class="s9-d">SM4国密加密传输，ISO27001认证存储，核心系统通过等保三级</div>
+      </div>
+    </div>
+    <div class="s9-card reveal" style="--d:0.34s">
+      <div class="s9-head">
+        <div class="s9-n">04</div>
+        <div class="s9-t">研发创新实力</div>
+      </div>
+      <div class="s9-item">
+        <div class="s9-irow">
+          <div class="s9-s">技术壁垒</div>
+          <div class="s9-m">46 项专利</div>
+        </div>
+        <div class="s9-d">累计申请46项发明专利，8项已落地运营商项目</div>
+      </div>
+      <div class="s9-item">
+        <div class="s9-irow">
+          <div class="s9-s">持续技术迭代</div>
+          <div class="s9-m">研发投入年增 85%</div>
+        </div>
+        <div class="s9-d">50+研发团队（占比40%），已布局5G消息/AIGC等前沿领域</div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">09 / 25</div>
+</section>

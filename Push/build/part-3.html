@@ -1,0 +1,430 @@
+<!-- part-3.html · 微网通联 2026 云通信业务介绍 · P19–P25 -->
+<style>
+/* ================= P19 富媒体消息 ================= */
+#s19 .s19-img { position: absolute; left: 96px; top: 165px; width: 690px; height: 750px; border-radius: 24px; overflow: hidden; box-shadow: 0 18px 60px rgba(10,31,68,0.18); }
+#s19 .s19-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+#s19 .s19-cap { position: absolute; left: 0; bottom: 0; width: 100%; padding: 27px 33px; background: linear-gradient(0deg, rgba(10,31,68,0.85) 0%, rgba(10,31,68,0) 100%); font-size: 19.5px; color: rgba(255,255,255,0.85); letter-spacing: 3px; }
+#s19 .s19-right { position: absolute; left: 828px; top: 165px; width: 996px; height: 750px; display: flex; flex-direction: column; justify-content: center; gap: 24px; }
+#s19 .s19-lead { font-size: 21px; color: #3A4A66; line-height: 1.75; }
+#s19 .s19-grid { display: flex; flex-wrap: wrap; justify-content: space-between; row-gap: 21px; }
+#s19 .s19-f { width: 483px; height: 225px; background: #fff; border-radius: 18px; padding: 27px 30px; box-shadow: 0 6px 24px rgba(10,31,68,0.06); display: flex; flex-direction: column; gap: 12px; }
+#s19 .s19-fh { display: flex; align-items: center; gap: 15px; font-size: 24px; font-weight: 700; color: var(--navy); }
+#s19 .s19-fh img { width: 30px; height: 30px; object-fit: contain; }
+#s19 .s19-fd { font-size: 18.75px; color: var(--muted); line-height: 1.6; }
+#s19 .s19-band { background: rgba(46,111,232,0.07); border-radius: 15px; padding: 18px 27px; font-size: 19.5px; color: var(--blue); font-weight: 600; }
+
+/* ================= P20 富媒体场景 ================= */
+#s20 .s20-cards { position: absolute; left: 96px; top: 165px; width: 1728px; height: 615px; display: flex; gap: 27px; }
+#s20 .s20-card { flex: 1; background: #fff; border-radius: 21px; box-shadow: 0 6px 30px rgba(10,31,68,0.07); padding: 39px 36px; display: flex; flex-direction: column; gap: 24px; }
+#s20 .s20-scene { width: 100%; height: 240px; border-radius: 15px; object-fit: cover; display: block; }
+#s20 .s20-ch { display: flex; align-items: center; gap: 18px; }
+#s20 .tile-69 { width: 69px; height: 69px; border-radius: 18px; flex: none; }
+#s20 .tile-69 img { width: 33px; height: 33px; }
+#s20 .bg-red { background: rgba(240,45,78,0.1); }
+#s20 .bg-navy { background: rgba(10,31,68,0.08); }
+#s20 .bg-blue { background: rgba(46,111,232,0.1); }
+#s20 .s20-ct { font-size: 27px; font-weight: 700; color: var(--navy); }
+#s20 .s20-ce { font-size: 15.75px; color: var(--faint); letter-spacing: 2.25px; font-family: var(--font-num); margin-top: 3px; }
+#s20 .s20-tags { display: flex; flex-wrap: wrap; gap: 12px; }
+#s20 .s20-tag { padding: 9px 21px; border-radius: 999px; background: rgba(10,31,68,0.05); font-size: 19.5px; color: #3A4A66; white-space: nowrap; }
+#s20 .s20-band { position: absolute; left: 96px; top: 807px; width: 1728px; height: 108px; background: linear-gradient(90deg, #0A1F44 0%, #123A7A 100%); border-radius: 18px; padding: 30px 42px; display: flex; align-items: center; gap: 36px; }
+#s20 .s20-bl { font-size: 22.5px; font-weight: 700; color: #fff; width: 270px; flex: none; }
+#s20 .s20-bp { flex: 1; display: flex; justify-content: space-between; gap: 15px; }
+#s20 .s20-bi { padding: 9px 21px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.06); font-size: 19.5px; color: rgba(255,255,255,0.9); white-space: nowrap; }
+
+/* ================= P21 一键认证 ================= */
+#s21 .s21-left { position: absolute; left: 96px; top: 165px; width: 980px; height: 750px; display: flex; flex-direction: column; justify-content: center; gap: 30px; }
+#s21 .s21-lead { font-size: 22.5px; color: #3A4A66; line-height: 1.8; }
+#s21 .s21-lead strong { color: var(--navy); font-weight: 700; }
+#s21 .s21-f { display: flex; align-items: center; gap: 27px; background: #fff; border-radius: 18px; padding: 27px 36px; box-shadow: 0 6px 24px rgba(10,31,68,0.06); }
+#s21 .tile-75 { width: 75px; height: 75px; border-radius: 18px; flex: none; }
+#s21 .tile-75 img { width: 36px; height: 36px; }
+#s21 .s21-ft { font-size: 27px; font-weight: 700; color: var(--navy); }
+#s21 .s21-fd { font-size: 21px; color: var(--muted); margin-top: 6px; }
+#s21 .s21-note { font-size: 19.5px; color: var(--faint); }
+#s21 .s21-card { position: absolute; left: 1124px; top: 165px; width: 700px; height: 750px; background: linear-gradient(160deg, #0A1F44 0%, #123A7A 100%); border-radius: 24px; padding: 54px 45px; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
+#s21 .s21-deco { position: absolute; right: -105px; top: -105px; width: 330px; height: 330px; border-radius: 50%; background: rgba(46,111,232,0.18); }
+#s21 .s21-kick { position: relative; z-index: 1; font-size: 18px; color: rgba(255,255,255,0.55); letter-spacing: 4.5px; font-family: var(--font-num); }
+#s21 .s21-phone { position: relative; z-index: 1; width: 225px; height: 420px; border-radius: 39px; border: 4.5px solid rgba(255,255,255,0.35); background: rgba(255,255,255,0.06); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; }
+#s21 .s21-circle { width: 96px; height: 96px; border-radius: 50%; background: rgba(240,45,78,0.2); display: flex; align-items: center; justify-content: center; }
+#s21 .s21-circle img { width: 51px; height: 51px; object-fit: contain; }
+#s21 .s21-pt { font-size: 19.5px; color: rgba(255,255,255,0.85); }
+#s21 .s21-btn { padding: 7.5px 24px; border-radius: 999px; background: var(--red); font-size: 18px; color: #fff; font-weight: 700; }
+#s21 .s21-stats { position: relative; z-index: 1; display: flex; gap: 60px; }
+#s21 .s21-stat { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+#s21 .s21-sn { font-size: 57px; font-weight: 700; color: #fff; font-family: var(--font-num); line-height: 1; }
+#s21 .s21-sn small { font-size: 27px; font-weight: 700; }
+#s21 .s21-sn.red { color: var(--red); }
+#s21 .s21-sl { font-size: 18px; color: rgba(255,255,255,0.6); }
+
+/* ================= P22 章节 03 服务客户 ================= */
+#s22 .s22-bg { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover; }
+#s22 .s22-wrap { position: relative; z-index: 1; width: 100%; height: 100%; padding: 84px 108px; display: flex; flex-direction: column; justify-content: space-between; }
+#s22 .s22-top { display: flex; justify-content: space-between; align-items: center; }
+#s22 .s22-logo { width: 195px; height: 49.5px; object-fit: contain; }
+#s22 .s22-part { font-size: 19.5px; color: rgba(255,255,255,0.5); letter-spacing: 6px; font-family: var(--font-num); }
+#s22 .s22-mid { display: flex; align-items: flex-end; gap: 72px; }
+#s22 .s22-no { font-size: 300px; font-weight: 700; color: rgba(255,255,255,0.12); font-family: var(--font-num); line-height: 1; }
+#s22 .s22-tb { display: flex; flex-direction: column; gap: 24px; padding-bottom: 36px; }
+#s22 .s22-bar { width: 72px; height: 6px; background: var(--red); border-radius: 3px; }
+#s22 .s22-title { font-size: 84px; font-weight: 700; color: #fff; letter-spacing: 6px; line-height: 1.1; }
+#s22 .s22-eng { font-size: 24px; color: rgba(255,255,255,0.6); letter-spacing: 7.5px; font-family: var(--font-num); }
+#s22 .s22-sub { font-size: 21px; color: rgba(255,255,255,0.5); line-height: 1.8; margin-top: 12px; }
+#s22 .s22-bspace { height: 27px; }
+#s22 .s22-shield { position: absolute; right: 130px; top: 290px; height: 520px; z-index: 2; }
+#s22 .pageno { color: rgba(255,255,255,0.4); }
+
+/* ================= P23 极致服务 ================= */
+#s23 .s23-trow { display: flex; align-items: center; gap: 24px; margin-top: 14px; }
+#s23 .s23-trow .slide-title { margin-top: 0; }
+#s23 .s23-trow .title-bar { margin-top: 0; flex: none; }
+#s23 .s23-magic { font-size: 19.5px; color: var(--faint); letter-spacing: 4.5px; font-family: var(--font-num); }
+#s23 .s23-left { position: absolute; left: 96px; top: 165px; width: 657px; height: 750px; background: linear-gradient(165deg, #0A1F44 0%, #123A7A 100%); border-radius: 24px; padding: 54px 45px; display: flex; flex-direction: column; justify-content: space-between; }
+#s23 .s23-lh { display: flex; flex-direction: column; gap: 24px; }
+#s23 .s23-lk { font-size: 19.5px; color: rgba(255,255,255,0.6); letter-spacing: 4.5px; font-family: var(--font-num); }
+#s23 .s23-ls { font-size: 34.5px; font-weight: 700; color: #fff; line-height: 1.6; }
+#s23 .s23-lrows { display: flex; flex-direction: column; gap: 18px; }
+#s23 .s23-lr { display: flex; align-items: center; gap: 21px; background: rgba(255,255,255,0.07); border-radius: 15px; padding: 19.5px 24px; }
+#s23 .s23-lr img { width: 30px; height: 30px; object-fit: contain; flex: none; }
+#s23 .s23-lt { font-size: 21px; font-weight: 700; color: #fff; }
+#s23 .s23-ld { font-size: 18px; color: rgba(255,255,255,0.65); line-height: 1.55; margin-top: 3px; }
+#s23 .s23-grid { position: absolute; left: 792px; top: 165px; width: 1032px; height: 750px; display: flex; flex-wrap: wrap; justify-content: space-between; align-content: space-between; }
+#s23 .s23-c { width: 504px; height: 364.5px; background: #fff; border-radius: 21px; padding: 39px; box-shadow: 0 6px 24px rgba(10,31,68,0.06); display: flex; flex-direction: column; gap: 21px; }
+#s23 .tile-78 { width: 78px; height: 78px; border-radius: 18px; }
+#s23 .tile-78 img { width: 36px; height: 36px; }
+#s23 .s23-ct { font-size: 27px; font-weight: 700; color: var(--navy); }
+#s23 .s23-cd { font-size: 19.5px; color: var(--muted); line-height: 1.7; margin-top: 12px; }
+
+/* ================= P24 服务客户 logo 墙 ================= */
+#s24 .s24-trow { display: flex; align-items: center; gap: 24px; margin-top: 14px; }
+#s24 .s24-trow .slide-title { margin-top: 0; }
+#s24 .s24-trow .title-bar { margin-top: 0; flex: none; }
+#s24 .s24-note { font-size: 21px; color: var(--muted); margin-left: 12px; }
+#s24 .s24-wrap { position: absolute; left: 96px; top: 165px; width: 1728px; height: 750px; display: flex; flex-direction: column; justify-content: center; gap: 21px; }
+#s24 .s24-grid { flex: 1; display: flex; flex-wrap: wrap; justify-content: space-between; align-content: space-between; }
+#s24 .s24-cell { width: 270px; height: 156px; background: #fff; border: 1.5px solid #EEF2F8; border-radius: 15px; box-shadow: 0 4.5px 18px rgba(10,31,68,0.05); display: flex; align-items: center; justify-content: center; padding: 18px 21px; }
+#s24 .s24-cell img { width: 195px; height: 93px; object-fit: contain; }
+#s24 .s24-cap { display: flex; justify-content: center; align-items: center; gap: 15px; font-size: 19.5px; color: var(--muted); }
+#s24 .s24-dot { width: 9px; height: 9px; border-radius: 4.5px; background: var(--red); }
+
+/* ================= P25 封底 THANKS ================= */
+#s25 .s25-bg { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover; }
+#s25 .s25-veil { position: absolute; inset: 0; background: rgba(10,31,68,0.72); }
+#s25 .s25-wrap { position: relative; z-index: 1; width: 100%; height: 100%; padding: 96px 108px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
+#s25 .s25-logo { width: 255px; height: 64.5px; object-fit: contain; }
+#s25 .s25-mid { display: flex; flex-direction: column; align-items: center; gap: 30px; }
+#s25 .s25-thanks { font-size: 114px; font-weight: 700; color: rgba(255,255,255,0.16); letter-spacing: 21px; font-family: var(--font-num); line-height: 1; }
+#s25 .s25-hello { font-size: 66px; font-weight: 700; color: #fff; letter-spacing: 9px; margin-top: -45px; }
+#s25 .s25-bar { width: 84px; height: 6px; background: var(--red); border-radius: 3px; }
+#s25 .s25-sub { font-size: 22.5px; color: rgba(255,255,255,0.7); letter-spacing: 3px; }
+#s25 .s25-bot { display: flex; flex-direction: column; align-items: center; gap: 9px; }
+#s25 .s25-co { font-size: 22.5px; color: #fff; font-weight: 600; letter-spacing: 3px; }
+#s25 .s25-en { font-size: 18px; color: rgba(255,255,255,0.45); letter-spacing: 3px; font-family: var(--font-num); }
+</style>
+
+<!-- P19 富媒体消息 -->
+<section class="slide" id="s19" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">02 · 富媒体消息</div>
+    <div class="slide-title">富媒体消息</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s19-img reveal reveal-left" style="--d:0.15s">
+    <img src="assets/rich_media.png" alt="富媒体消息">
+    <div class="s19-cap">集影、音、文字一体的新媒体消息</div>
+  </div>
+  <div class="s19-right reveal reveal-right" style="--d:0.3s">
+    <div class="s19-lead">富媒体消息基于移动通信技术和手机号，为企事业单位提供面向用户的新型通信方式——内含可沟通互动的短信内容，以视频、图片等富媒体形态表达，形成集影、音、文字一体的手机消息。</div>
+    <div class="s19-grid">
+      <div class="s19-f">
+        <div class="s19-fh"><img src="assets/icons/photo-film-F02D4E.png" alt=""><span>内容丰富</span></div>
+        <div class="s19-fd">支持视频、音频、图片、文字等富媒体内容形式</div>
+      </div>
+      <div class="s19-f">
+        <div class="s19-fh"><img src="assets/icons/layer-group-2E6FE8.png" alt=""><span>超大容量</span></div>
+        <div class="s19-fd">大容量内容承载，完整讲述品牌故事</div>
+      </div>
+      <div class="s19-f">
+        <div class="s19-fh"><img src="assets/icons/tower-broadcast-2E6FE8.png" alt=""><span>高效触达</span></div>
+        <div class="s19-fd">直击目标用户，即接即用，三网覆盖，终端适配率高</div>
+      </div>
+      <div class="s19-f">
+        <div class="s19-fh"><img src="assets/icons/gauge-high-F02D4E.png" alt=""><span>高转化率</span></div>
+        <div class="s19-fd">多行业成功营销案例，多样化品牌营销，直观高效</div>
+      </div>
+    </div>
+    <div class="s19-band">广泛应用于党政、公益、银行、游戏、汽车、美妆、旅游、电商、房产、影视等行业</div>
+  </div>
+  <div class="pageno">19 / 25</div>
+</section>
+
+<!-- P20 多内容样式承载 · 沉浸式体验 -->
+<section class="slide" id="s20" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">02 · 富媒体消息</div>
+    <div class="slide-title">多内容样式承载 · 沉浸式体验</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s20-cards reveal" style="--d:0.15s">
+    <div class="s20-card">
+      <img class="s20-scene" src="assets/gen-scene-promo.png" alt="营销场景化">
+      <div class="s20-ch">
+        <div class="icon-tile tile-69 bg-red"><img src="assets/icons/bullhorn-F02D4E.png" alt=""></div>
+        <div>
+          <div class="s20-ct">营销场景化</div>
+          <div class="s20-ce">MARKETING SCENARIOS</div>
+        </div>
+      </div>
+      <div class="s20-tags">
+        <div class="s20-tag">商品促销</div><div class="s20-tag">优惠促销</div><div class="s20-tag">活动推广</div><div class="s20-tag">爆点卖点</div><div class="s20-tag">唤醒老用户</div><div class="s20-tag">直播互动</div>
+      </div>
+    </div>
+    <div class="s20-card">
+      <img class="s20-scene" src="assets/gen-scene-service.png" alt="服务多元化">
+      <div class="s20-ch">
+        <div class="icon-tile tile-69 bg-navy"><img src="assets/icons/cloud-0A1F44.png" alt=""></div>
+        <div>
+          <div class="s20-ct">服务多元化</div>
+          <div class="s20-ce">DIVERSE SERVICES</div>
+        </div>
+      </div>
+      <div class="s20-tags">
+        <div class="s20-tag">品牌推广</div><div class="s20-tag">形象传播</div><div class="s20-tag">会员活动提醒</div><div class="s20-tag">旅游景点信息发布</div><div class="s20-tag">住宿信息</div><div class="s20-tag">新品上线</div>
+      </div>
+    </div>
+    <div class="s20-card">
+      <img class="s20-scene" src="assets/gen-scene-content.png" alt="内容生动化">
+      <div class="s20-ch">
+        <div class="icon-tile tile-69 bg-blue"><img src="assets/icons/comment-dots-2E6FE8.png" alt=""></div>
+        <div>
+          <div class="s20-ct">内容生动化</div>
+          <div class="s20-ce">VIVID CONTENT</div>
+        </div>
+      </div>
+      <div class="s20-tags">
+        <div class="s20-tag">新游戏上线</div><div class="s20-tag">新玩法告知</div><div class="s20-tag">电竞赛事</div><div class="s20-tag">体育赛事</div><div class="s20-tag">视频故事</div><div class="s20-tag">互动卡片</div>
+      </div>
+    </div>
+  </div>
+  <div class="s20-band reveal" style="--d:0.3s">
+    <div class="s20-bl">覆盖十大行业领域</div>
+    <div class="s20-bp">
+      <div class="s20-bi">党政</div><div class="s20-bi">公益</div><div class="s20-bi">银行</div><div class="s20-bi">游戏</div><div class="s20-bi">汽车</div><div class="s20-bi">美妆</div><div class="s20-bi">旅游</div><div class="s20-bi">电商</div><div class="s20-bi">房产</div><div class="s20-bi">影视</div>
+    </div>
+  </div>
+  <div class="pageno">20 / 25</div>
+</section>
+
+<!-- P21 一键认证 -->
+<section class="slide" id="s21" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">02 · 一键认证</div>
+    <div class="slide-title">一键认证</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s21-left reveal reveal-left" style="--d:0.15s">
+    <div class="s21-lead">一键认证是面向移动应用提供的用户身份认证服务。整合<strong>三大运营商特有的数据网关认证能力</strong>，包括一键登录、本机号码校验服务，应用于用户注册、登录、安全校验等场景。</div>
+    <div class="s21-f">
+      <div class="icon-tile tile-75 bg-blue"><img src="assets/icons/fingerprint-2E6FE8.png" alt=""></div>
+      <div>
+        <div class="s21-ft">便捷</div>
+        <div class="s21-fd">免密、免注册，本机号一键登录</div>
+      </div>
+    </div>
+    <div class="s21-f">
+      <div class="icon-tile tile-75 bg-navy"><img src="assets/icons/shield-halved-0A1F44.png" alt=""></div>
+      <div>
+        <div class="s21-ft">安全</div>
+        <div class="s21-fd">运营商直接认证，更加安全可靠</div>
+      </div>
+    </div>
+    <div class="s21-f">
+      <div class="icon-tile tile-75 bg-red"><img src="assets/icons/bolt-F02D4E.png" alt=""></div>
+      <div>
+        <div class="s21-ft">高效</div>
+        <div class="s21-fd">0.5 秒内完成验证，准确率高达 99.99%</div>
+      </div>
+    </div>
+    <div class="s21-note">应用场景：用户注册 · 登录 · 安全校验</div>
+  </div>
+  <div class="s21-card reveal reveal-right" style="--d:0.3s">
+    <div class="s21-deco"></div>
+    <div class="s21-kick">ONE-CLICK AUTH</div>
+    <div class="s21-phone">
+      <div class="s21-circle"><img src="assets/icons/mobile-screen-button-FFFFFF.png" alt=""></div>
+      <div class="s21-pt">本机号码一键登录</div>
+      <div class="s21-btn">立即认证</div>
+    </div>
+    <div class="s21-stats">
+      <div class="s21-stat">
+        <div class="s21-sn">0.5<small>s</small></div>
+        <div class="s21-sl">完成验证</div>
+      </div>
+      <div class="s21-stat">
+        <div class="s21-sn red">99.99<small>%</small></div>
+        <div class="s21-sl">准确率</div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">21 / 25</div>
+</section>
+
+<!-- P22 章节 03 服务客户 -->
+<section class="slide dark" id="s22">
+  <img class="s22-bg" src="assets/section_bg.png" alt="">
+  <img class="s22-shield floaty reveal reveal-right" style="--d:0.45s" src="assets/gen-ch3-shield.png" alt="服务客户">
+  <div class="s22-wrap">
+    <div class="s22-top reveal">
+      <img class="s22-logo" src="assets/logo_white.png" alt="微网通联">
+      <div class="s22-part">PART 03</div>
+    </div>
+    <div class="s22-mid reveal" style="--d:0.15s">
+      <div class="s22-no">03</div>
+      <div class="s22-tb">
+        <div class="s22-bar"></div>
+        <div class="s22-title">服务客户</div>
+        <div class="s22-eng">OUR CLIENTS</div>
+        <div class="s22-sub">极致服务理念 · 众多知名企业的共同选择</div>
+      </div>
+    </div>
+    <div class="s22-bspace"></div>
+  </div>
+  <div class="pageno">22 / 25</div>
+</section>
+
+<!-- P23 极致服务 -->
+<section class="slide" id="s23" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">03 · 极致服务</div>
+    <div class="s23-trow">
+      <div class="slide-title">极致服务</div>
+      <div class="s23-magic">MAGIC SERVICE</div>
+      <div class="title-bar"></div>
+    </div>
+  </div>
+  <div class="s23-left reveal reveal-left" style="--d:0.15s">
+    <div class="s23-lh">
+      <div class="s23-lk">SERVICE CONCEPT</div>
+      <div class="s23-ls">以创造客户价值为中心<br>以提升服务质量为宗旨</div>
+    </div>
+    <div class="s23-lrows">
+      <div class="s23-lr">
+        <img src="assets/icons/headset-FFFFFF.png" alt="">
+        <div>
+          <div class="s23-lt">全天候服务</div>
+          <div class="s23-ld">7×24 小时分秒响应，合理客户服务结构，即时响应客户需求</div>
+        </div>
+      </div>
+      <div class="s23-lr">
+        <img src="assets/icons/users-FFFFFF.png" alt="">
+        <div>
+          <div class="s23-lt">团队实力</div>
+          <div class="s23-ld">10 年以上专业团队，深厚运营商资源和互联网通信运营经验</div>
+        </div>
+      </div>
+      <div class="s23-lr">
+        <img src="assets/icons/magnifying-glass-chart-FFFFFF.png" alt="">
+        <div>
+          <div class="s23-lt">精细化运营</div>
+          <div class="s23-ld">以精细化运营保障每一次服务的稳定与品质</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="s23-grid reveal reveal-right" style="--d:0.3s">
+    <div class="s23-c">
+      <div class="icon-tile tile-78 bg-blue"><img src="assets/icons/tower-broadcast-2E6FE8.png" alt=""></div>
+      <div>
+        <div class="s23-ct">运营商网关异常</div>
+        <div class="s23-cd">多通道智能路由和并联技术，结合通道自动监控切换机制，即时解决运营商网关异常</div>
+      </div>
+    </div>
+    <div class="s23-c">
+      <div class="icon-tile tile-78 bg-navy"><img src="assets/icons/shield-halved-0A1F44.png" alt=""></div>
+      <div>
+        <div class="s23-ct">平台安全</div>
+        <div class="s23-cd">各业务节点分布式部署，采用多活机制，数据库节点双机热备，保障平台业务正常运行</div>
+      </div>
+    </div>
+    <div class="s23-c">
+      <div class="icon-tile tile-78 bg-red"><img src="assets/icons/lock-F02D4E.png" alt=""></div>
+      <div>
+        <div class="s23-ct">数据安全</div>
+        <div class="s23-cd">高性能防火墙、VPN、专线连接，底层数据存储对称加密、数据库热备等多重保障</div>
+      </div>
+    </div>
+    <div class="s23-c">
+      <div class="icon-tile tile-78 bg-blue"><img src="assets/icons/layer-group-2E6FE8.png" alt=""></div>
+      <div>
+        <div class="s23-ct">其他增值服务</div>
+        <div class="s23-cd">根据客户需求个性化定制相关增值服务，满足客户个性化需求</div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">23 / 25</div>
+</section>
+
+<!-- P24 服务客户 logo 墙 -->
+<section class="slide" id="s24" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">03 · 服务客户</div>
+    <div class="s24-trow">
+      <div class="slide-title">服务客户</div>
+      <div class="title-bar"></div>
+      <div class="s24-note">众多知名企业正在使用微网通联的云通信服务</div>
+    </div>
+  </div>
+  <div class="s24-wrap reveal" style="--d:0.15s">
+    <div class="s24-grid">
+      <div class="s24-cell"><img src="assets/client_01.png" alt="客户 01"></div>
+      <div class="s24-cell"><img src="assets/client_02.png" alt="客户 02"></div>
+      <div class="s24-cell"><img src="assets/client_03.png" alt="客户 03"></div>
+      <div class="s24-cell"><img src="assets/client_04.png" alt="客户 04"></div>
+      <div class="s24-cell"><img src="assets/client_05.png" alt="客户 05"></div>
+      <div class="s24-cell"><img src="assets/client_06.png" alt="客户 06"></div>
+      <div class="s24-cell"><img src="assets/client_07.png" alt="客户 07"></div>
+      <div class="s24-cell"><img src="assets/client_08.png" alt="客户 08"></div>
+      <div class="s24-cell"><img src="assets/client_09.png" alt="客户 09"></div>
+      <div class="s24-cell"><img src="assets/client_10.png" alt="客户 10"></div>
+      <div class="s24-cell"><img src="assets/client_11.png" alt="客户 11"></div>
+      <div class="s24-cell"><img src="assets/client_12.png" alt="客户 12"></div>
+      <div class="s24-cell"><img src="assets/client_13.png" alt="客户 13"></div>
+      <div class="s24-cell"><img src="assets/client_14.png" alt="客户 14"></div>
+      <div class="s24-cell"><img src="assets/client_15.png" alt="客户 15"></div>
+      <div class="s24-cell"><img src="assets/client_16.png" alt="客户 16"></div>
+      <div class="s24-cell"><img src="assets/client_17.png" alt="客户 17"></div>
+      <div class="s24-cell"><img src="assets/client_18.png" alt="客户 18"></div>
+      <div class="s24-cell"><img src="assets/client_19.png" alt="客户 19"></div>
+      <div class="s24-cell"><img src="assets/client_20.png" alt="客户 20"></div>
+      <div class="s24-cell"><img src="assets/client_21.png" alt="客户 21"></div>
+      <div class="s24-cell"><img src="assets/client_22.png" alt="客户 22"></div>
+      <div class="s24-cell"><img src="assets/client_23.png" alt="客户 23"></div>
+      <div class="s24-cell"><img src="assets/client_24.png" alt="客户 24"></div>
+    </div>
+    <div class="s24-cap">
+      <div class="s24-dot"></div>
+      <div>5000+ 企业的共同选择，覆盖出行、电商、金融、政企、互联网等行业</div>
+      <div class="s24-dot"></div>
+    </div>
+  </div>
+  <div class="pageno">24 / 25</div>
+</section>
+
+<!-- P25 封底 THANKS -->
+<section class="slide dark" id="s25">
+  <img class="s25-bg" src="assets/cover_hero.png" alt="">
+  <div class="s25-veil"></div>
+  <div class="s25-wrap">
+    <img class="s25-logo reveal" src="assets/logo_white.png" alt="微网通联">
+    <div class="s25-mid reveal" style="--d:0.15s">
+      <div class="s25-thanks">THANKS</div>
+      <div class="s25-hello">感谢聆听</div>
+      <div class="s25-bar"></div>
+      <div class="s25-sub">行业领先的云通信平台及解决方案服务商</div>
+    </div>
+    <div class="s25-bot reveal" style="--d:0.3s">
+      <div class="s25-co">北京微网通联股份有限公司</div>
+      <div class="s25-en">BEIJING WEIWANG TONGLIAN CO., LTD. · 2026</div>
+    </div>
+  </div>
+</section>
