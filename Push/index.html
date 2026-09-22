@@ -317,7 +317,13 @@ svg {
     writing-mode: vertical-rl;
     text-orientation: mixed;
     padding: 16px 8px;
-    border-radius: 8px 0 0 8px;
+    border-radius: 0;
+}
+.deck-download a:first-child {
+    border-radius: 8px 8px 0 0;
+}
+.deck-download a:last-child {
+    border-radius: 0 0 8px 8px;
 }
 .dl-hotzone {
     display: none;
@@ -2541,7 +2547,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 <div class="dl-hotzone" title="下载资料"></div>
 <div class="deck-download">
     <a href="Push.pdf" id="dlPdf" download>PDF</a>
-    <a href="Push.pptx" id="dlPptx" download>↓ PPTX</a>
+    <a href="Push.pptx" id="dlPptx" download>PPTX</a>
 </div>
 <div class="edit-toast" id="editToast">已保存</div>
 
