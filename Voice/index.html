@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>语音通信服务解决方案 · 2026</title>
+<!-- 字体：Archivo(西文/数字) + Noto Sans SC(中文兜底)，本地优先 PingFang SC -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* === THEME TOKENS + COMPONENTS（与 UMC 同一设计体系） === */
+:root {
+    --navy: #0B3D2E;
+    --navy-2: #11543D;
+    --blue: #16A34A;
+    --red: #F59E0B;
+    --bg: #F5FAF7;
+    --ink: #1B2A4A;
+    --muted: #5A6B85;
+    --faint: #8A94A6;
+
+    --font-body: "Archivo", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    --font-num: "Archivo", "Helvetica Neue", "PingFang SC", "Noto Sans SC", sans-serif;
+
+    --fs-cover: 96px;
+    --fs-section: 84px;
+    --fs-giant: 120px;
+    --fs-title: 45px;
+    --fs-card: 31px;
+    --fs-body: 23px;
+    --fs-note: 20px;
+    --fs-pageno: 18px;
+
+    --pad-x: 96px;
+    --head-top: 44px;
+
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur: 0.7s;
+
+    --slide-bg: var(--bg);
+    --stage-bg: #04150E;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { font-family: var(--font-body); color: var(--ink); }
+
+/* 内容页骨架：标题块 + 红色短条 + 页码 */
+.slide-head { position: absolute; left: var(--pad-x); top: var(--head-top); z-index: 5; }
+.kicker {
+    font-size: 20px; font-weight: 600; color: #D97706;
+    letter-spacing: 3px; font-family: var(--font-num);
+}
+.slide-title {
+    font-size: var(--fs-title); font-weight: 700; color: var(--navy);
+    margin-top: 14px; line-height: 1.2; letter-spacing: 0.5px;
+}
+.title-bar { width: 60px; height: 5px; background: var(--red); border-radius: 3px; margin-top: 16px; }
+
+.pageno {
+    position: absolute; right: 20px; bottom: 20px; z-index: 5;
+    font-size: var(--fs-pageno); color: var(--faint);
+    font-family: var(--font-num); letter-spacing: 1px;
+}
+
+/* 卡片与图标 */
+.card {
+    background: #fff; border-radius: 18px;
+    box-shadow: 0 12px 32px rgba(11,61,46, 0.08);
+}
+.icon-tile {
+    width: 72px; height: 72px; border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(22,163,74, 0.08);
+}
+.icon-tile.red { background: rgba(245,158,11, 0.08); }
+.icon-tile.navy { background: rgba(11,61,46, 0.07); }
+.icon-tile.dark { background: rgba(255, 255, 255, 0.10); }
+.icon-tile img { width: 40px; height: 40px; object-fit: contain; }
+
+/* 深色页（封面/章节/封底） */
+.slide.dark { background: var(--navy); color: #fff; }
+.dark-grad { background: linear-gradient(135deg, #0B3D2E 0%, #11543D 60%, #16A34A 100%); }
+.glass-card { background: rgba(255, 255, 255, 0.06); border-radius: 18px; }
+.on-dark-sub { color: rgba(255, 255, 255, 0.72); }
+
+.num { font-family: var(--font-num); font-weight: 800; letter-spacing: -1px; }
+
+/* 入场动效：.reveal + --d 延迟变量 */
+.reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity var(--dur) var(--ease-out-expo),
+                transform var(--dur) var(--ease-out-expo);
+    transition-delay: var(--d, 0s);
+}
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+
+.reveal-left { transform: translateX(-48px); }
+.reveal-right { transform: translateX(48px); }
+.reveal-zoom { transform: scale(0.92); }
+.slide.visible .reveal-left,
+.slide.visible .reveal-right,
+.slide.visible .reveal-zoom { transform: none; }
+
+@keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+}
+.floaty { animation: floaty 7s ease-in-out infinite; }
+
+@keyframes gradient-drift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* === VIEWPORT BASE === */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* === PLAYER CHROME（舞台之外） === */
+.deck-progress {
+    position: fixed; left: 0; bottom: 0; width: 100%; height: 4px;
+    background: rgba(255,255,255,0.12); z-index: 1000;
+}
+.deck-progress-bar {
+    height: 100%; width: 4%; background: var(--red, #F59E0B);
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.edit-hotzone {
+    position: fixed; top: 0; left: 0; width: 80px; height: 80px;
+    z-index: 10000; cursor: pointer;
+}
+.edit-toggle {
+    position: fixed; top: 18px; left: 18px; z-index: 10001;
+    width: 44px; height: 44px; border-radius: 12px; border: none;
+    background: rgba(11,61,46,0.85); color: #fff; font-size: 20px;
+    cursor: pointer; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
+.edit-toggle.active { background: #F59E0B; }
+.edit-toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(8px);
+    background: rgba(11,61,46,0.9); color: #fff; font-size: 14px;
+    padding: 8px 20px; border-radius: 20px; z-index: 10001;
+    opacity: 0; transition: opacity 0.3s, transform 0.3s;
+}
+.edit-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+body.editing .slide.active { cursor: text; }
+body.editing [contenteditable="true"] { outline: 2px dashed #F59E0B; outline-offset: 2px; }
+
+/* ==================== 私有样式（#sN 前缀） ==================== */
+/* ==================== s1 封面 ==================== */
+#s1 .s1-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+#s1 .s1-mask { position:absolute; inset:0; background:linear-gradient(90deg, rgba(11,61,46,0.92) 0%, rgba(11,61,46,0.55) 45%, rgba(11,61,46,0.15) 100%); }
+#s1 .s1-inner { position:absolute; inset:0; z-index:1; display:flex; flex-direction:column; justify-content:space-between; padding:72px 96px; }
+#s1 .s1-top { display:flex; justify-content:space-between; align-items:center; }
+#s1 .s1-logo { width:225px; height:57px; object-fit:contain; }
+#s1 .s1-en-top { font-size:21px; color:rgba(255,255,255,0.6); letter-spacing:6px; }
+#s1 .s1-main { display:flex; flex-direction:column; gap:26px; }
+#s1 .s1-bar { width:84px; height:6px; background:var(--red); border-radius:3px; }
+#s1 .s1-title { font-size:93px; font-weight:700; color:#FFFFFF; line-height:1.2; letter-spacing:6px; }
+#s1 .s1-tag { font-size:36px; color:#FFFFFF; font-weight:600; margin-top:3px; }
+#s1 .s1-desc { font-size:22.5px; color:rgba(255,255,255,0.65); line-height:1.9; letter-spacing:1.5px; }
+#s1 .s1-chips { display:flex; gap:15px; margin-top:9px; flex-wrap:wrap; }
+#s1 .s1-chip { padding:9px 24px; border-radius:999px; border:1.5px solid rgba(255,255,255,0.35); background:rgba(255,255,255,0.06); font-size:19.5px; color:rgba(255,255,255,0.85); letter-spacing:3px; }
+
+/* ==================== s2 目录 ==================== */
+#s2 .s2-inner { position:absolute; inset:0; display:flex; }
+#s2 .s2-panel { position:relative; width:630px; height:100%; flex:none; overflow:hidden; }
+#s2 .s2-panel-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+#s2 .s2-panel-mask { position:absolute; inset:0; background:linear-gradient(160deg, rgba(11,61,46,0.88) 0%, rgba(17,84,61,0.80) 100%); }
+#s2 .s2-panel-body { position:relative; z-index:1; height:100%; display:flex; flex-direction:column; justify-content:space-between; padding:84px 72px; }
+#s2 .s2-logo { width:210px; height:54px; object-fit:contain; }
+#s2 .s2-panel-main { display:flex; flex-direction:column; gap:27px; }
+#s2 .s2-bar { width:72px; height:6px; background:var(--red); border-radius:3px; }
+#s2 .s2-h { font-size:81px; font-weight:700; color:#FFFFFF; letter-spacing:6px; }
+#s2 .s2-en { font-size:24px; color:rgba(255,255,255,0.6); letter-spacing:9px; font-family:var(--font-num); }
+#s2 .s2-right { flex:1; display:flex; flex-direction:column; justify-content:center; gap:6px; padding:96px 108px; }
+#s2 .s2-row { display:flex; align-items:center; gap:48px; padding:34px 12px; }
+#s2 .s2-row.with-line { border-bottom:1.5px solid #DCE9DF; }
+#s2 .s2-num { font-size:66px; font-weight:700; color:var(--red); font-family:var(--font-num); width:120px; flex:none; line-height:1.1; }
+#s2 .s2-mid { flex:1; display:flex; flex-direction:column; gap:9px; }
+#s2 .s2-trow { display:flex; align-items:baseline; gap:21px; }
+#s2 .s2-t { font-size:37px; font-weight:700; color:var(--navy); }
+#s2 .s2-d { font-size:21px; color:var(--muted); }
+#s2 .s2-p { font-size:21px; color:var(--faint); font-family:var(--font-num); }
+
+/* ==================== 章节页（s3 / s6 / s12 / s15 共用结构） ==================== */
+.sec-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.sec-visual { position:absolute; right:90px; top:210px; width:620px; z-index:1; }
+.sec-visual img { width:100%; display:block; mix-blend-mode:screen; }
+.sec-visual-pill { position:absolute; right:120px; top:390px; width:600px; height:250px; z-index:1; border-radius:125px; overflow:hidden; background:rgba(255,255,255,0.06); box-shadow:0 30px 80px rgba(0,0,0,0.35); }
+.sec-visual-pill img { width:100%; height:100%; object-fit:cover; display:block; }
+.sec-inner { position:absolute; inset:0; z-index:2; display:flex; flex-direction:column; justify-content:space-between; padding:84px 108px; }
+.sec-top { display:flex; justify-content:space-between; align-items:center; }
+.sec-logo { width:195px; height:49.5px; object-fit:contain; }
+.sec-part { font-size:19.5px; color:rgba(255,255,255,0.5); letter-spacing:6px; font-family:var(--font-num); }
+.sec-mid { display:flex; align-items:flex-end; gap:72px; }
+.sec-bignum { font-size:300px; font-weight:800; color:rgba(255,255,255,0.12); font-family:var(--font-num); line-height:1; }
+.sec-block { display:flex; flex-direction:column; gap:24px; padding-bottom:36px; }
+.sec-bar { width:72px; height:6px; background:var(--red); border-radius:3px; }
+.sec-h { font-size:84px; font-weight:700; color:#FFFFFF; letter-spacing:6px; line-height:1.1; }
+.sec-en { font-size:24px; color:rgba(255,255,255,0.6); letter-spacing:7.5px; font-family:var(--font-num); }
+.sec-desc { font-size:21px; color:rgba(255,255,255,0.5); line-height:1.8; margin-top:12px; }
+.sec-bottom { height:27px; }
+.slide.dark .pageno { color:rgba(255,255,255,0.45); }
+/* s3 标题较长，收缩右侧视觉避免相触 */
+#s3 .sec-visual { width:520px; right:60px; top:260px; }
+
+/* ==================== s4 公司/平台简介 ==================== */
+#s4 .s4-body { position:absolute; left:96px; right:96px; top:190px; height:725px; display:flex; gap:54px; }
+#s4 .s4-left { flex:1.35; min-width:0; display:flex; flex-direction:column; justify-content:center; gap:36px; }
+#s4 .s4-p { font-size:24px; color:#3A4A66; line-height:1.9; }
+#s4 .s4-p strong { font-weight:700; color:var(--navy); }
+#s4 .s4-right { flex:1; background:linear-gradient(160deg, #0B3D2E 0%, #11543D 100%); border-radius:24px; padding:54px 52px; display:flex; flex-direction:column; }
+#s4 .s4-r-head { display:flex; align-items:center; gap:21px; padding-bottom:30px; border-bottom:1.5px solid rgba(255,255,255,0.15); }
+#s4 .s4-r-t { font-size:31px; font-weight:700; color:#FFFFFF; }
+#s4 .s4-r-bar { width:48px; height:5px; background:var(--red); border-radius:3px; }
+#s4 .s4-r-rows { flex:1; display:flex; flex-direction:column; justify-content:space-evenly; }
+#s4 .s4-r-row { display:flex; align-items:center; gap:18px; }
+#s4 .s4-r-mark { font-size:22px; color:var(--red); font-weight:700; flex:none; }
+#s4 .s4-r-v { font-size:23px; color:rgba(255,255,255,0.88); font-weight:500; }
+
+/* ==================== s5 平台核心能力总览 ==================== */
+#s5 .s5-body { position:absolute; left:96px; right:96px; top:190px; height:725px; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(2,1fr); gap:27px; }
+#s5 .s5-card { background:#fff; border-radius:21px; padding:40px 38px; box-shadow:0 6px 24px rgba(11,61,46,0.06); display:flex; flex-direction:column; gap:22px; }
+#s5 .s5-card .icon-tile { width:78px; height:78px; }
+#s5 .s5-card .icon-tile img { width:38px; height:38px; }
+#s5 .s5-t { font-size:27px; font-weight:700; color:var(--navy); }
+#s5 .s5-d { font-size:20px; color:var(--muted); line-height:1.7; }
+
+/* ==================== s7 呼出线路 — 通知类 ==================== */
+#s7 .s7-body { position:absolute; left:96px; right:96px; top:190px; height:725px; display:flex; flex-direction:column; }
+#s7 .s7-desc { font-size:22px; color:var(--muted); line-height:1.7; }
+#s7 .s7-cards { flex:1; display:flex; gap:27px; align-items:center; }
+#s7 .s7-card { flex:1; height:430px; background:#fff; border-radius:21px; padding:42px 36px; box-shadow:0 6px 24px rgba(11,61,46,0.06); display:flex; flex-direction:column; gap:22px; }
+#s7 .s7-card .icon-tile { width:78px; height:78px; }
+#s7 .s7-card .icon-tile img { width:38px; height:38px; }
+#s7 .s7-t { font-size:27px; font-weight:700; color:var(--navy); }
+#s7 .s7-d { font-size:20px; color:var(--muted); line-height:1.7; }
+#s7 .s7-band { background:linear-gradient(90deg, #0B3D2E 0%, #11543D 100%); border-radius:18px; padding:28px 42px; display:flex; align-items:center; gap:24px; }
+#s7 .s7-band img { width:40px; height:40px; object-fit:contain; flex:none; }
+#s7 .s7-band-t { font-size:22px; color:#FFFFFF; font-weight:600; letter-spacing:1px; }
+
+/* ==================== s8 呼出线路 — 营销类 & 国际线路 ==================== */
+#s8 .s8-body { position:absolute; left:96px; right:96px; top:190px; height:725px; display:flex; flex-direction:column; gap:27px; }
+#s8 .s8-cards { flex:1; display:flex; gap:36px; }
+#s8 .s8-card { flex:1; background:#fff; border-radius:21px; padding:48px 48px; box-shadow:0 6px 24px rgba(11,61,46,0.06); display:flex; flex-direction:column; gap:24px; }
+#s8 .s8-head { display:flex; align-items:center; gap:21px; }
+#s8 .s8-head .icon-tile { width:72px; height:72px; }
+#s8 .s8-head .icon-tile img { width:36px; height:36px; }
+#s8 .s8-t { font-size:30px; font-weight:700; color:var(--navy); }
+#s8 .s8-desc { font-size:20.5px; color:var(--muted); line-height:1.75; }
+#s8 .s8-list { display:flex; flex-direction:column; gap:16px; margin-top:6px; }
+#s8 .s8-li { display:flex; align-items:center; gap:15px; font-size:21.5px; color:var(--ink); font-weight:500; }
+#s8 .s8-dot { width:10px; height:10px; border-radius:5px; background:var(--red); flex:none; }
+#s8 .s8-card.blue .s8-dot { background:var(--blue); }
+#s8 .s8-tip { background:rgba(245,158,11,0.07); border:1.5px solid rgba(245,158,11,0.18); border-radius:15px; padding:20px 30px; display:flex; align-items:center; gap:18px; }
+#s8 .s8-tip img { width:32px; height:32px; object-fit:contain; flex:none; }
+#s8 .s8-tip-t { font-size:19.5px; color:#92400E; line-height:1.6; }
+
+/* ==================== s9 呼入线路 ==================== */
+#s9 .s9-body { position:absolute; left:96px; right:96px; top:190px; height:725px; display:flex; flex-direction:column; gap:30px; }
+#s9 .s9-desc { font-size:22px; color:var(--muted); line-height:1.7; }
+#s9 .s9-cards { display:flex; gap:36px; }
+#s9 .s9-card { flex:1; background:#fff; border-radius:21px; padding:38px 45px; box-shadow:0 6px 24px rgba(11,61,46,0.06); display:flex; align-items:center; gap:27px; }
+#s9 .s9-card .icon-tile { width:84px; height:84px; flex:none; }
+#s9 .s9-card .icon-tile img { width:42px; height:42px; }
+#s9 .s9-t { font-size:30px; font-weight:700; color:var(--navy); }
+#s9 .s9-d { font-size:20.5px; color:var(--muted); line-height:1.65; margin-top:9px; }
+#s9 .s9-scenes { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 24px rgba(11,61,46,0.06); padding:36px 45px; display:flex; flex-direction:column; gap:24px; }
+#s9 .s9-sc-head { display:flex; align-items:center; gap:18px; }
+#s9 .s9-sc-t { font-size:25px; font-weight:700; color:var(--navy); }
+#s9 .s9-sc-bar { width:42px; height:5px; background:var(--red); border-radius:3px; }
+#s9 .s9-sc-grid { flex:1; display:flex; gap:24px; }
+#s9 .s9-sc { flex:1; background:var(--bg); border-radius:15px; display:flex; align-items:center; justify-content:center; gap:15px; padding:0 24px; }
+#s9 .s9-sc img { width:32px; height:32px; object-fit:contain; flex:none; }
+#s9 .s9-sc-tx { font-size:21px; font-weight:600; color:var(--navy); }
+
+/* ==================== s10 人工接听/拨打线路 ==================== */
+#s10 .s10-body { position:absolute; left:96px; right:96px; top:190px; height:725px; display:flex; flex-direction:column; gap:26px; }
+#s10 .s10-desc { font-size:22px; color:var(--muted); line-height:1.7; }
+#s10 .s10-flow { background:#fff; border-radius:21px; box-shadow:0 6px 24px rgba(11,61,46,0.06); padding:34px 48px; display:flex; align-items:center; gap:21px; }
+#s10 .s10-flow-label { font-size:20px; font-weight:700; color:#D97706; letter-spacing:3px; flex:none; margin-right:12px; }
+#s10 .s10-node { flex:1; display:flex; align-items:center; gap:21px; background:var(--bg); border-radius:15px; padding:24px 30px; }
+#s10 .s10-node .icon-tile { width:66px; height:66px; flex:none; }
+#s10 .s10-node .icon-tile img { width:33px; height:33px; }
+#s10 .s10-node-t { font-size:24px; font-weight:700; color:var(--navy); line-height:1.35; }
+#s10 .s10-arrow { width:34px; height:34px; object-fit:contain; flex:none; }
+#s10 .s10-cols { flex:1; display:flex; gap:36px; }
+#s10 .s10-col { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 24px rgba(11,61,46,0.06); padding:36px 45px; display:flex; flex-direction:column; gap:10px; }
+#s10 .s10-col-head { display:flex; align-items:center; gap:18px; padding-bottom:18px; border-bottom:1.5px solid #E7F0E9; margin-bottom:8px; }
+#s10 .s10-col-t { font-size:26px; font-weight:700; color:var(--navy); }
+#s10 .s10-col-bar { width:42px; height:5px; background:var(--red); border-radius:3px; }
+#s10 .s10-li { display:flex; align-items:center; gap:15px; padding:13px 0; font-size:21px; color:var(--ink); font-weight:500; }
+#s10 .s10-mark { font-size:20px; color:#D97706; font-weight:700; flex:none; }
+#s10 .s10-dot { width:10px; height:10px; border-radius:5px; background:var(--blue); flex:none; }
+
+/* ==================== s11 线路资源对比总览 ==================== */
+#s11 .s11-body { position:absolute; left:96px; right:96px; top:190px; height:725px; display:flex; align-items:center; }
+#s11 .s11-table { width:100%; border-collapse:separate; border-spacing:0; border-radius:21px; overflow:hidden; box-shadow:0 12px 40px rgba(11,61,46,0.10); background:#fff; }
+#s11 .s11-table th { background:var(--navy); color:#fff; font-size:23px; font-weight:700; padding:28px 34px; text-align:left; letter-spacing:1px; }
+#s11 .s11-table th:first-child { width:250px; }
+#s11 .s11-table td { font-size:22px; color:var(--ink); padding:28px 34px; border-bottom:1.5px solid #E7F0E9; }
+#s11 .s11-table tbody tr:nth-child(even) td { background:#F0F7F2; }
+#s11 .s11-table tbody tr:last-child td { border-bottom:none; }
+#s11 .s11-table td.s11-dim { font-weight:700; color:var(--navy); }
+#s11 .s11-yes { color:#D97706; font-weight:700; font-family:var(--font-num); }
+#s11 .s11-no { color:var(--faint); font-weight:700; }
+
+/* ==================== s13 VOS3000 线路接入架构 ==================== */
+#s13 .s13-body { position:absolute; left:96px; right:96px; top:190px; height:725px; display:flex; gap:48px; }
+#s13 .s13-main { flex:1; display:flex; flex-direction:column; justify-content:center; }
+#s13 .s13-desc { font-size:22px; color:var(--muted); line-height:1.7; margin-bottom:64px; }
+#s13 .s13-chain { display:flex; align-items:center; gap:14px; }
+#s13 .s13-node { width:252px; height:150px; flex:none; background:#fff; border-radius:18px; box-shadow:0 6px 24px rgba(11,61,46,0.08); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; }
+#s13 .s13-node-t { font-size:24px; font-weight:700; color:var(--navy); }
+#s13 .s13-node-s { font-size:19px; color:var(--muted); }
+#s13 .s13-node.hot { background:linear-gradient(160deg, #0B3D2E 0%, #11543D 100%); }
+#s13 .s13-node.hot .s13-node-t { color:#fff; font-family:var(--font-num); }
+#s13 .s13-node.hot .s13-node-s { color:rgba(255,255,255,0.7); }
+#s13 .s13-arrow { width:34px; height:34px; object-fit:contain; flex:none; }
+#s13 .s13-branch-row { position:relative; margin-top:64px; padding-left:628px; display:flex; gap:40px; }
+#s13 .s13-branch-row::before { content:''; position:absolute; top:-28px; left:754px; width:313px; height:3px; background:var(--blue); opacity:0.55; }
+#s13 .s13-branch-row::after { content:''; position:absolute; top:-64px; left:755px; width:3px; height:36px; background:var(--blue); opacity:0.55; }
+#s13 .s13-branch { width:266px; background:#fff; border:1.5px solid rgba(22,163,74,0.35); border-radius:18px; box-shadow:0 6px 24px rgba(11,61,46,0.06); padding:26px 20px; text-align:center; position:relative; }
+#s13 .s13-branch::before { content:''; position:absolute; top:-28px; left:50%; margin-left:-1.5px; width:3px; height:28px; background:var(--blue); opacity:0.55; }
+#s13 .s13-branch-t { font-size:23px; font-weight:700; color:var(--navy); }
+#s13 .s13-branch-s { font-size:19px; color:var(--blue); font-weight:600; margin-top:6px; }
+#s13 .s13-side { width:430px; flex:none; background:linear-gradient(160deg, #0B3D2E 0%, #11543D 100%); border-radius:24px; padding:52px 46px; display:flex; flex-direction:column; }
+#s13 .s13-side-head { display:flex; align-items:center; gap:21px; padding-bottom:28px; border-bottom:1.5px solid rgba(255,255,255,0.15); }
+#s13 .s13-side-t { font-size:30px; font-weight:700; color:#fff; }
+#s13 .s13-side-bar { width:48px; height:5px; background:var(--red); border-radius:3px; }
+#s13 .s13-side-rows { flex:1; display:flex; flex-direction:column; justify-content:space-evenly; }
+#s13 .s13-side-row { display:flex; align-items:center; gap:16px; }
+#s13 .s13-side-dot { width:10px; height:10px; border-radius:5px; background:var(--red); flex:none; }
+#s13 .s13-side-v { font-size:22px; color:rgba(255,255,255,0.88); font-weight:500; }
+
+/* ==================== s14 平台化接入方式 ==================== */
+#s14 .s14-body { position:absolute; left:96px; right:96px; top:190px; height:725px; display:flex; flex-direction:column; gap:36px; }
+#s14 .s14-cards { display:flex; gap:30px; flex:1; }
+#s14 .s14-card { flex:1; background:#fff; border-radius:21px; padding:45px 42px; box-shadow:0 6px 24px rgba(11,61,46,0.06); display:flex; flex-direction:column; gap:22px; }
+#s14 .s14-card .icon-tile { width:78px; height:78px; }
+#s14 .s14-card .icon-tile img { width:38px; height:38px; }
+#s14 .s14-t { font-size:28px; font-weight:700; color:var(--navy); }
+#s14 .s14-d { font-size:20.5px; color:var(--muted); line-height:1.75; }
+#s14 .s14-flow { background:#fff; border-radius:21px; box-shadow:0 6px 24px rgba(11,61,46,0.06); padding:36px 48px; display:flex; align-items:center; gap:30px; }
+#s14 .s14-flow-label { display:flex; flex-direction:column; gap:8px; flex:none; margin-right:18px; }
+#s14 .s14-flow-t { font-size:26px; font-weight:700; color:var(--navy); }
+#s14 .s14-flow-bar { width:42px; height:5px; background:var(--red); border-radius:3px; }
+#s14 .s14-steps { flex:1; display:flex; align-items:center; justify-content:space-between; }
+#s14 .s14-step { display:flex; align-items:center; gap:18px; }
+#s14 .s14-circle { width:60px; height:60px; border-radius:30px; background:rgba(22,163,74,0.12); display:flex; align-items:center; justify-content:center; flex:none; }
+#s14 .s14-circle .num { font-size:24px; color:var(--blue); }
+#s14 .s14-step:last-child .s14-circle { background:var(--red); }
+#s14 .s14-step:last-child .s14-circle .num { color:#fff; }
+#s14 .s14-step-t { font-size:23px; font-weight:700; color:var(--navy); white-space:nowrap; }
+#s14 .s14-arrow { width:32px; height:32px; object-fit:contain; flex:none; }
+
+/* ==================== s16 典型应用场景 ==================== */
+#s16 .s16-body { position:absolute; left:96px; right:96px; top:190px; height:725px; display:flex; flex-direction:column; gap:27px; }
+#s16 .s16-grid { flex:1; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(2,1fr); gap:27px; }
+#s16 .s16-card { background:#fff; border-radius:21px; padding:0 40px; box-shadow:0 6px 24px rgba(11,61,46,0.06); display:flex; align-items:center; gap:27px; }
+#s16 .s16-card .icon-tile { width:78px; height:78px; flex:none; }
+#s16 .s16-card .icon-tile img { width:38px; height:38px; }
+#s16 .s16-t { font-size:27px; font-weight:700; color:var(--navy); }
+#s16 .s16-d { font-size:20px; color:var(--muted); margin-top:9px; }
+#s16 .s16-band { background:linear-gradient(90deg, #0B3D2E 0%, #11543D 100%); border-radius:18px; padding:30px 42px; display:flex; align-items:center; justify-content:center; gap:24px; }
+#s16 .s16-band img { width:38px; height:38px; object-fit:contain; flex:none; }
+#s16 .s16-band-t { font-size:22.5px; color:#FFFFFF; font-weight:600; letter-spacing:1px; }
+
+/* ==================== s17 封底 ==================== */
+#s17 .s17-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+#s17 .s17-veil { position:absolute; inset:0; background:rgba(11,61,46,0.72); }
+#s17 .s17-wrap { position:relative; z-index:1; width:100%; height:100%; padding:96px 108px; display:flex; flex-direction:column; align-items:center; justify-content:space-between; }
+#s17 .s17-logo { width:255px; height:64.5px; object-fit:contain; }
+#s17 .s17-mid { display:flex; flex-direction:column; align-items:center; gap:28px; }
+#s17 .s17-ghost { font-size:114px; font-weight:700; color:rgba(255,255,255,0.13); letter-spacing:21px; font-family:var(--font-num); line-height:1; }
+#s17 .s17-hello { font-size:66px; font-weight:700; color:#fff; letter-spacing:9px; margin-top:-45px; }
+#s17 .s17-bar { width:84px; height:6px; background:var(--red); border-radius:3px; }
+#s17 .s17-sub { font-size:22.5px; color:rgba(255,255,255,0.7); letter-spacing:3px; }
+#s17 .s17-hope { font-size:27px; color:#fff; font-weight:600; letter-spacing:6px; }
+#s17 .s17-bot { display:flex; flex-direction:column; align-items:center; gap:12px; }
+#s17 .s17-co { font-size:24px; color:#fff; font-weight:600; letter-spacing:3px; }
+#s17 .s17-site { font-size:22px; color:var(--red); font-weight:700; letter-spacing:2px; font-family:var(--font-num); }
+#s17 .s17-en { font-size:18px; color:rgba(255,255,255,0.45); letter-spacing:3px; }
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- ============ s1 · 封面 ============ -->
+<section class="slide dark" id="s1">
+  <img class="s1-bg" src="assets/cover_hero.png" alt="" />
+  <div class="s1-mask"></div>
+  <div class="s1-inner">
+    <div class="s1-top reveal">
+      <img class="s1-logo" src="assets/logo_white.png" alt="微网通联" />
+      <div class="s1-en-top">语音业务产品资料</div>
+    </div>
+    <div class="s1-main">
+      <div class="s1-bar reveal" style="--d:0.10s"></div>
+      <div class="s1-title reveal" style="--d:0.15s">语音通信服务</div>
+      <div class="s1-tag reveal" style="--d:0.22s">全场景语音线路 · 一站式平台解决方案</div>
+      <div class="s1-desc reveal" style="--d:0.30s">覆盖国内国际 · 呼出呼入 · 人工系统全链路<br />TTS 文本转语音 · 智能录音 · VOS3000 无缝对接</div>
+      <div class="s1-chips reveal" style="--d:0.38s">
+        <div class="s1-chip">呼出</div>
+        <div class="s1-chip">呼入</div>
+        <div class="s1-chip">人工</div>
+        <div class="s1-chip">国际</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ s2 · 目录 ============ -->
+<section class="slide" id="s2" style="background:var(--bg)">
+  <div class="s2-inner">
+    <div class="s2-panel">
+      <img class="s2-panel-img" src="assets/gen-toc-panel-flip.png" alt="" />
+      <div class="s2-panel-mask"></div>
+      <div class="s2-panel-body">
+        <img class="s2-logo reveal" src="assets/logo_white.png" alt="微网通联" />
+        <div class="s2-panel-main">
+          <div class="s2-bar reveal" style="--d:0.10s"></div>
+          <div class="s2-h reveal" style="--d:0.15s">目录</div>
+          <div class="s2-en reveal" style="--d:0.22s">CONTENTS</div>
+        </div>
+      </div>
+    </div>
+    <div class="s2-right">
+      <div class="s2-row with-line reveal" style="--d:0.15s">
+        <div class="s2-num">01</div>
+        <div class="s2-mid">
+          <div class="s2-trow">
+            <div class="s2-t">平台简介与核心能力</div>
+          </div>
+          <div class="s2-d">公司定位 · TTS · 录音 · 技术优势</div>
+        </div>
+        <div class="s2-p">03 - 05</div>
+      </div>
+      <div class="s2-row with-line reveal" style="--d:0.25s">
+        <div class="s2-num">02</div>
+        <div class="s2-mid">
+          <div class="s2-trow">
+            <div class="s2-t">线路资源体系</div>
+          </div>
+          <div class="s2-d">呼出 · 呼入 · 人工 · 国际线路</div>
+        </div>
+        <div class="s2-p">06 - 11</div>
+      </div>
+      <div class="s2-row with-line reveal" style="--d:0.35s">
+        <div class="s2-num">03</div>
+        <div class="s2-mid">
+          <div class="s2-trow">
+            <div class="s2-t">技术接入方案</div>
+          </div>
+          <div class="s2-d">VOS3000 · API · SDK 对接</div>
+        </div>
+        <div class="s2-p">12 - 14</div>
+      </div>
+      <div class="s2-row reveal" style="--d:0.45s">
+        <div class="s2-num">04</div>
+        <div class="s2-mid">
+          <div class="s2-trow">
+            <div class="s2-t">应用场景与合作</div>
+          </div>
+          <div class="s2-d">业务场景 · 合作流程 · 联系我们</div>
+        </div>
+        <div class="s2-p">15 - 17</div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">02 / 17</div>
+</section>
+
+<!-- ============ s3 · 章节页 01 平台简介与核心能力 ============ -->
+<section class="slide dark" id="s3">
+  <img class="sec-bg" src="assets/section_bg.png" alt="" />
+  <div class="sec-visual reveal reveal-zoom" style="--d:0.25s">
+    <img class="floaty" src="assets/gen-ch1-globe.png" alt="" />
+  </div>
+  <div class="sec-inner">
+    <div class="sec-top reveal">
+      <img class="sec-logo" src="assets/logo_white.png" alt="微网通联" />
+      <div class="sec-part">PART 01</div>
+    </div>
+    <div class="sec-mid">
+      <div class="sec-bignum reveal" style="--d:0.10s">01</div>
+      <div class="sec-block">
+        <div class="sec-bar reveal" style="--d:0.15s"></div>
+        <div class="sec-h reveal" style="--d:0.20s">平台简介与核心能力</div>
+        <div class="sec-en reveal" style="--d:0.28s">PLATFORM &amp; CAPABILITIES</div>
+        <div class="sec-desc reveal" style="--d:0.36s">公司定位 · 技术优势 · 核心能力全景</div>
+      </div>
+    </div>
+    <div class="sec-bottom"></div>
+  </div>
+  <div class="pageno">03 / 17</div>
+</section>
+
+<!-- ============ s4 · 公司/平台简介 ============ -->
+<section class="slide" id="s4" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">01 · PLATFORM INTRO</div>
+    <div class="slide-title">公司 / 平台简介</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s4-body">
+    <div class="s4-left">
+      <div class="s4-p reveal" style="--d:0.10s">我们是一家专注于<strong>语音通信服务</strong>的技术平台，致力于为企业提供稳定、高效、合规的一站式语音解决方案。</div>
+      <div class="s4-p reveal" style="--d:0.20s">平台覆盖<strong>国内与国际</strong>双线路体系，支持呼出、呼入及人工客服全场景，满足不同业务形态的通信需求。</div>
+      <div class="s4-p reveal" style="--d:0.30s">通过自研核心技术与主流接入协议，我们帮助客户快速构建语音通知、智能外呼、客户回访等业务能力。</div>
+    </div>
+    <div class="s4-right reveal reveal-right" style="--d:0.20s">
+      <div class="s4-r-head">
+        <div class="s4-r-t">平台核心优势</div>
+        <div class="s4-r-bar"></div>
+      </div>
+      <div class="s4-r-rows">
+        <div class="s4-r-row"><div class="s4-r-mark">▸</div><div class="s4-r-v">国内 + 国际双线覆盖</div></div>
+        <div class="s4-r-row"><div class="s4-r-mark">▸</div><div class="s4-r-v">呼出 / 呼入 / 人工全链路</div></div>
+        <div class="s4-r-row"><div class="s4-r-mark">▸</div><div class="s4-r-v">VOS3000 标准对接</div></div>
+        <div class="s4-r-row"><div class="s4-r-mark">▸</div><div class="s4-r-v">API / SDK 灵活接入</div></div>
+        <div class="s4-r-row"><div class="s4-r-mark">▸</div><div class="s4-r-v">TTS 文本转语音</div></div>
+        <div class="s4-r-row"><div class="s4-r-mark">▸</div><div class="s4-r-v">全程录音可追溯</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">04 / 17</div>
+</section>
+
+<!-- ============ s5 · 平台核心能力总览 ============ -->
+<section class="slide" id="s5" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">01 · CORE CAPABILITIES</div>
+    <div class="slide-title">平台核心能力总览</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s5-body">
+    <div class="s5-card reveal" style="--d:0.10s">
+      <div class="icon-tile"><img src="assets/icons/comment-dots-2E6FE8.png" alt="" /></div>
+      <div class="s5-t">文本转语音 (TTS)</div>
+      <div class="s5-d">将任意文本实时转换为自然流畅的语音，支持多音色、多语种，适用于验证码播报、通知播报等场景。</div>
+    </div>
+    <div class="s5-card reveal" style="--d:0.16s">
+      <div class="icon-tile navy"><img src="assets/icons/database-0A1F44.png" alt="" /></div>
+      <div class="s5-t">全程录音</div>
+      <div class="s5-d">通话全程自动录音并安全存储，支持按需检索与下载，满足业务留痕与合规审计需求。</div>
+    </div>
+    <div class="s5-card reveal" style="--d:0.22s">
+      <div class="icon-tile"><img src="assets/icons/headset-2E6FE8.png" alt="" /></div>
+      <div class="s5-t">人工坐席支持</div>
+      <div class="s5-d">通过 VOS3000 对接人工坐席线路，支持客服回访、主动外呼等人工业务场景。</div>
+    </div>
+    <div class="s5-card reveal" style="--d:0.28s">
+      <div class="icon-tile"><img src="assets/icons/tower-broadcast-2E6FE8.png" alt="" /></div>
+      <div class="s5-t">国际线路覆盖</div>
+      <div class="s5-d">覆盖多国语音通信线路，支持跨境语音通知与海外客户服务，助力企业出海。</div>
+    </div>
+    <div class="s5-card reveal" style="--d:0.34s">
+      <div class="icon-tile red"><img src="assets/icons/gauge-high-F02D4E.png" alt="" /></div>
+      <div class="s5-t">高并发与稳定性</div>
+      <div class="s5-d">平台具备高并发处理能力，线路冗余备份，保障业务高峰期的稳定运行。</div>
+    </div>
+    <div class="s5-card reveal" style="--d:0.40s">
+      <div class="icon-tile navy"><img src="assets/icons/network-wired-0A1F44.png" alt="" /></div>
+      <div class="s5-t">灵活接入方式</div>
+      <div class="s5-d">支持 VOS3000 标准对接、API 调用、SDK 集成，满足不同技术栈客户的接入需求。</div>
+    </div>
+  </div>
+  <div class="pageno">05 / 17</div>
+</section>
+
+<!-- ============ s6 · 章节页 02 线路资源体系 ============ -->
+<section class="slide dark" id="s6">
+  <img class="sec-bg" src="assets/section_bg.png" alt="" />
+  <div class="sec-visual reveal reveal-zoom" style="--d:0.25s">
+    <img class="floaty" src="assets/gen-ch2-phone.png" alt="" />
+  </div>
+  <div class="sec-inner">
+    <div class="sec-top reveal">
+      <img class="sec-logo" src="assets/logo_white.png" alt="微网通联" />
+      <div class="sec-part">PART 02</div>
+    </div>
+    <div class="sec-mid">
+      <div class="sec-bignum reveal" style="--d:0.10s">02</div>
+      <div class="sec-block">
+        <div class="sec-bar reveal" style="--d:0.15s"></div>
+        <div class="sec-h reveal" style="--d:0.20s">线路资源体系</div>
+        <div class="sec-en reveal" style="--d:0.28s">LINE RESOURCES</div>
+        <div class="sec-desc reveal" style="--d:0.36s">呼出 · 呼入 · 人工 · 国际 — 全场景线路覆盖</div>
+      </div>
+    </div>
+    <div class="sec-bottom"></div>
+  </div>
+  <div class="pageno">06 / 17</div>
+</section>
+
+<!-- ============ s7 · 呼出线路 — 通知类 ============ -->
+<section class="slide" id="s7" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">02 · OUTBOUND — NOTIFICATION</div>
+    <div class="slide-title">呼出线路 — 通知类</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s7-body">
+    <div class="s7-desc reveal" style="--d:0.08s">面向高到达率、合规性要求高的业务通知场景，确保信息精准触达用户。</div>
+    <div class="s7-cards">
+      <div class="s7-card reveal" style="--d:0.14s">
+        <div class="icon-tile"><img src="assets/icons/fingerprint-2E6FE8.png" alt="" /></div>
+        <div class="s7-t">验证码语音播报</div>
+        <div class="s7-d">登录、支付、找回密码等安全场景的语音验证码自动播报。</div>
+      </div>
+      <div class="s7-card reveal" style="--d:0.22s">
+        <div class="icon-tile"><img src="assets/icons/comment-sms-2E6FE8.png" alt="" /></div>
+        <div class="s7-t">订单状态通知</div>
+        <div class="s7-d">订单确认、发货提醒、签收通知等电商物流全链路语音触达。</div>
+      </div>
+      <div class="s7-card reveal" style="--d:0.30s">
+        <div class="icon-tile red"><img src="assets/icons/phone-volume-F02D4E.png" alt="" /></div>
+        <div class="s7-t">挪车通知</div>
+        <div class="s7-d">停车场、物业等场景的自动挪车语音呼叫，高效解决车辆占道问题。</div>
+      </div>
+      <div class="s7-card reveal" style="--d:0.38s">
+        <div class="icon-tile navy"><img src="assets/icons/paper-plane-0A1F44.png" alt="" /></div>
+        <div class="s7-t">快递取件通知</div>
+        <div class="s7-d">快递到站、取件码、派送异常等物流节点的自动语音提醒。</div>
+      </div>
+    </div>
+    <div class="s7-band reveal" style="--d:0.45s">
+      <img src="assets/icons/phone-volume-FFFFFF.png" alt="" />
+      <div class="s7-band-t">线路特点：高到达率 · 合规外显号码 · 支持 TTS 自动播报 · 全程录音留痕</div>
+    </div>
+  </div>
+  <div class="pageno">07 / 17</div>
+</section>
+
+<!-- ============ s8 · 呼出线路 — 营销类 & 国际线路 ============ -->
+<section class="slide" id="s8" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">02 · OUTBOUND — MARKETING &amp; INTERNATIONAL</div>
+    <div class="slide-title">呼出线路 — 营销类 &amp; 国际线路</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s8-body">
+    <div class="s8-cards">
+      <div class="s8-card reveal reveal-left" style="--d:0.12s">
+        <div class="s8-head">
+          <div class="icon-tile red"><img src="assets/icons/bullhorn-F02D4E.png" alt="" /></div>
+          <div class="s8-t">营销语音通知</div>
+        </div>
+        <div class="s8-desc">面向会员营销、活动推广、产品推荐等商业场景，支持批量语音外呼与个性化 TTS 内容合成。精准触达目标用户群体，提升营销转化率。</div>
+        <div class="s8-list">
+          <div class="s8-li"><div class="s8-dot"></div>支持批量外呼任务下发</div>
+          <div class="s8-li"><div class="s8-dot"></div>TTS 动态内容合成</div>
+          <div class="s8-li"><div class="s8-dot"></div>外呼结果实时回调</div>
+          <div class="s8-li"><div class="s8-dot"></div>接通率与转化数据追踪</div>
+        </div>
+      </div>
+      <div class="s8-card blue reveal reveal-right" style="--d:0.24s">
+        <div class="s8-head">
+          <div class="icon-tile"><img src="assets/icons/tower-broadcast-2E6FE8.png" alt="" /></div>
+          <div class="s8-t">国际呼出线路</div>
+        </div>
+        <div class="s8-desc">覆盖海外多国语音通信线路，支持跨境业务通知、海外客户服务及国际营销外呼。</div>
+        <div class="s8-list">
+          <div class="s8-li"><div class="s8-dot"></div>覆盖主要海外市场</div>
+          <div class="s8-li"><div class="s8-dot"></div>本地化号码外显</div>
+          <div class="s8-li"><div class="s8-dot"></div>支持多语种 TTS 播报</div>
+          <div class="s8-li"><div class="s8-dot"></div>跨境合规通信保障</div>
+        </div>
+      </div>
+    </div>
+    <div class="s8-tip reveal" style="--d:0.38s">
+      <img src="assets/icons/shield-halved-F02D4E.png" alt="" />
+      <div class="s8-tip-t">提示：营销类外呼需严格遵守当地通信监管法规，平台提供合规外呼策略建议与号码资质审核支持。</div>
+    </div>
+  </div>
+  <div class="pageno">08 / 17</div>
+</section>
+
+<!-- ============ s9 · 呼入线路 ============ -->
+<section class="slide" id="s9" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">02 · INBOUND SERVICE</div>
+    <div class="slide-title">呼入线路</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s9-body">
+    <div class="s9-desc reveal" style="--d:0.08s">为用户提供便捷的语音咨询入口，提升客户服务体验与品牌形象。</div>
+    <div class="s9-cards">
+      <div class="s9-card reveal" style="--d:0.16s">
+        <div class="icon-tile red"><img src="assets/icons/phone-volume-F02D4E.png" alt="" /></div>
+        <div>
+          <div class="s9-t">400 号码</div>
+          <div class="s9-d">全国统一客服热线，支持多路并发接入，企业品牌专属号码。</div>
+        </div>
+      </div>
+      <div class="s9-card reveal" style="--d:0.26s">
+        <div class="icon-tile"><img src="assets/icons/headset-2E6FE8.png" alt="" /></div>
+        <div>
+          <div class="s9-t">固话号码</div>
+          <div class="s9-d">本地化固话接入，增强区域客户信任感与亲切感。</div>
+        </div>
+      </div>
+    </div>
+    <div class="s9-scenes reveal" style="--d:0.36s">
+      <div class="s9-sc-head">
+        <div class="s9-sc-t">典型应用场景</div>
+        <div class="s9-sc-bar"></div>
+      </div>
+      <div class="s9-sc-grid">
+        <div class="s9-sc"><img src="assets/icons/comment-dots-2E6FE8.png" alt="" /><div class="s9-sc-tx">用户业务信息咨询</div></div>
+        <div class="s9-sc"><img src="assets/icons/headset-2E6FE8.png" alt="" /><div class="s9-sc-tx">售后服务与投诉处理</div></div>
+        <div class="s9-sc"><img src="assets/icons/circle-check-0A1F44.png" alt="" /><div class="s9-sc-tx">业务办理与预约登记</div></div>
+        <div class="s9-sc"><img src="assets/icons/arrows-rotate-F02D4E.png" alt="" /><div class="s9-sc-tx">客户满意度回访呼入</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">09 / 17</div>
+</section>
+
+<!-- ============ s10 · 人工接听 / 拨打线路 ============ -->
+<section class="slide" id="s10" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">02 · MANUAL AGENT — VOS3000</div>
+    <div class="slide-title">人工接听 / 拨打线路</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s10-body">
+    <div class="s10-desc reveal" style="--d:0.08s">直接使用 VOS3000 对接线路，用于人工客服回访等业务场景</div>
+    <div class="s10-flow reveal" style="--d:0.16s">
+      <div class="s10-flow-label">接入架构</div>
+      <div class="s10-node">
+        <div class="icon-tile red"><img src="assets/icons/server-F02D4E.png" alt="" /></div>
+        <div class="s10-node-t">VOS3000<br />软交换平台</div>
+      </div>
+      <img class="s10-arrow" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
+      <div class="s10-node">
+        <div class="icon-tile navy"><img src="assets/icons/network-wired-0A1F44.png" alt="" /></div>
+        <div class="s10-node-t">语音平台<br />网关对接</div>
+      </div>
+      <img class="s10-arrow" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
+      <div class="s10-node">
+        <div class="icon-tile"><img src="assets/icons/users-2E6FE8.png" alt="" /></div>
+        <div class="s10-node-t">人工坐席<br />客服团队</div>
+      </div>
+    </div>
+    <div class="s10-cols">
+      <div class="s10-col reveal reveal-left" style="--d:0.26s">
+        <div class="s10-col-head">
+          <div class="s10-col-t">适用场景</div>
+          <div class="s10-col-bar"></div>
+        </div>
+        <div class="s10-li"><div class="s10-mark">▸</div>人工客服回访 — 存量客户关怀与需求挖掘</div>
+        <div class="s10-li"><div class="s10-mark">▸</div>主动外呼 — 高价值客户定向触达</div>
+        <div class="s10-li"><div class="s10-mark">▸</div>复杂业务办理 — 需人工介入的咨询场景</div>
+      </div>
+      <div class="s10-col reveal reveal-right" style="--d:0.36s">
+        <div class="s10-col-head">
+          <div class="s10-col-t">线路特点</div>
+          <div class="s10-col-bar"></div>
+        </div>
+        <div class="s10-li"><div class="s10-dot"></div>标准 SIP 协议对接，兼容主流软交换</div>
+        <div class="s10-li"><div class="s10-dot"></div>坐席状态实时同步</div>
+        <div class="s10-li"><div class="s10-dot"></div>通话录音自动归档</div>
+        <div class="s10-li"><div class="s10-dot"></div>线路冗余，保障接通率</div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">10 / 17</div>
+</section>
+
+<!-- ============ s11 · 线路资源对比总览 ============ -->
+<section class="slide" id="s11" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">02 · LINES OVERVIEW</div>
+    <div class="slide-title">线路资源对比总览</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s11-body">
+    <table class="s11-table reveal" style="--d:0.12s">
+      <thead>
+        <tr>
+          <th>对比维度</th>
+          <th>通知类呼出</th>
+          <th>营销类呼出</th>
+          <th>呼入线路</th>
+          <th>人工/VOS3000</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="s11-dim">线路类型</td>
+          <td>语音通知专线</td>
+          <td>营销外呼线路</td>
+          <td>400 / 固话</td>
+          <td>SIP 中继</td>
+        </tr>
+        <tr>
+          <td class="s11-dim">典型场景</td>
+          <td>验证码、订单、快递</td>
+          <td>会员营销、活动推广</td>
+          <td>客服咨询、售后</td>
+          <td>人工回访、主动外呼</td>
+        </tr>
+        <tr>
+          <td class="s11-dim">接入方式</td>
+          <td>API / SDK</td>
+          <td>API / SDK</td>
+          <td>号码申请 + 绑定</td>
+          <td>VOS3000 对接</td>
+        </tr>
+        <tr>
+          <td class="s11-dim">TTS 支持</td>
+          <td><span class="s11-yes">✓</span> 支持</td>
+          <td><span class="s11-yes">✓</span> 支持</td>
+          <td><span class="s11-no">—</span></td>
+          <td><span class="s11-no">—</span></td>
+        </tr>
+        <tr>
+          <td class="s11-dim">录音功能</td>
+          <td><span class="s11-yes">✓</span> 全程录音</td>
+          <td><span class="s11-yes">✓</span> 全程录音</td>
+          <td><span class="s11-yes">✓</span> 可选录音</td>
+          <td><span class="s11-yes">✓</span> 全程录音</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pageno">11 / 17</div>
+</section>
+
+<!-- ============ s12 · 章节页 03 技术接入方案 ============ -->
+<section class="slide dark" id="s12">
+  <img class="sec-bg" src="assets/section_bg.png" alt="" />
+  <div class="sec-visual reveal reveal-zoom" style="--d:0.25s">
+    <img class="floaty" src="assets/gen-ch3-shield.png" alt="" />
+  </div>
+  <div class="sec-inner">
+    <div class="sec-top reveal">
+      <img class="sec-logo" src="assets/logo_white.png" alt="微网通联" />
+      <div class="sec-part">PART 03</div>
+    </div>
+    <div class="sec-mid">
+      <div class="sec-bignum reveal" style="--d:0.10s">03</div>
+      <div class="sec-block">
+        <div class="sec-bar reveal" style="--d:0.15s"></div>
+        <div class="sec-h reveal" style="--d:0.20s">技术接入方案</div>
+        <div class="sec-en reveal" style="--d:0.28s">TECHNICAL INTEGRATION</div>
+        <div class="sec-desc reveal" style="--d:0.36s">VOS3000 标准对接 · API 调用 · SDK 集成</div>
+      </div>
+    </div>
+    <div class="sec-bottom"></div>
+  </div>
+  <div class="pageno">12 / 17</div>
+</section>
+
+<!-- ============ s13 · VOS3000 线路接入架构 ============ -->
+<section class="slide" id="s13" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">03 · VOS3000 INTEGRATION</div>
+    <div class="slide-title">VOS3000 线路接入架构</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s13-body">
+    <div class="s13-main">
+      <div class="s13-desc reveal" style="--d:0.08s">通过标准 SIP 协议对接 VOS3000 软交换平台，实现人工坐席与系统自动外呼的统一管理。</div>
+      <div class="s13-chain reveal" style="--d:0.16s">
+        <div class="s13-node">
+          <div class="s13-node-t">客户业务系统</div>
+        </div>
+        <img class="s13-arrow" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
+        <div class="s13-node">
+          <div class="s13-node-t">语音平台 API</div>
+        </div>
+        <img class="s13-arrow" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
+        <div class="s13-node hot">
+          <div class="s13-node-t">VOS3000</div>
+          <div class="s13-node-s">软交换平台</div>
+        </div>
+        <img class="s13-arrow" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
+        <div class="s13-node">
+          <div class="s13-node-t">运营商线路</div>
+        </div>
+      </div>
+      <div class="s13-branch-row reveal" style="--d:0.28s">
+        <div class="s13-branch">
+          <div class="s13-branch-t">自动外呼系统</div>
+          <div class="s13-branch-s">TTS + 录音</div>
+        </div>
+        <div class="s13-branch">
+          <div class="s13-branch-t">人工坐席</div>
+          <div class="s13-branch-s">SIP 话机 / 软电话</div>
+        </div>
+      </div>
+    </div>
+    <div class="s13-side reveal reveal-right" style="--d:0.24s">
+      <div class="s13-side-head">
+        <div class="s13-side-t">对接优势</div>
+        <div class="s13-side-bar"></div>
+      </div>
+      <div class="s13-side-rows">
+        <div class="s13-side-row"><div class="s13-side-dot"></div><div class="s13-side-v">标准 SIP 协议，对接成本低</div></div>
+        <div class="s13-side-row"><div class="s13-side-dot"></div><div class="s13-side-v">通话事件实时回调</div></div>
+        <div class="s13-side-row"><div class="s13-side-dot"></div><div class="s13-side-v">录音文件自动推送</div></div>
+        <div class="s13-side-row"><div class="s13-side-dot"></div><div class="s13-side-v">线路冗余自动切换</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">13 / 17</div>
+</section>
+
+<!-- ============ s14 · 平台化接入方式 ============ -->
+<section class="slide" id="s14" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">03 · PLATFORM API ACCESS</div>
+    <div class="slide-title">平台化接入方式</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s14-body">
+    <div class="s14-cards">
+      <div class="s14-card reveal" style="--d:0.12s">
+        <div class="icon-tile"><img src="assets/icons/paper-plane-0A1F44.png" alt="" /></div>
+        <div class="s14-t">API 接口调用</div>
+        <div class="s14-d">RESTful API 标准接口，支持语音下发、状态查询、录音获取等完整功能。</div>
+      </div>
+      <div class="s14-card reveal" style="--d:0.22s">
+        <div class="icon-tile"><img src="assets/icons/microchip-2E6FE8.png" alt="" /></div>
+        <div class="s14-t">SDK 集成</div>
+        <div class="s14-d">提供多语言 SDK（Java / Python / PHP / Node.js），快速集成，降低开发成本。</div>
+      </div>
+      <div class="s14-card reveal" style="--d:0.32s">
+        <div class="icon-tile red"><img src="assets/icons/bolt-F02D4E.png" alt="" /></div>
+        <div class="s14-t">WebSocket 实时推送</div>
+        <div class="s14-d">通话状态、接通结果、录音完成等事件实时推送，便于业务系统即时响应。</div>
+      </div>
+    </div>
+    <div class="s14-flow reveal" style="--d:0.42s">
+      <div class="s14-flow-label">
+        <div class="s14-flow-t">接入流程</div>
+        <div class="s14-flow-bar"></div>
+      </div>
+      <div class="s14-steps">
+        <div class="s14-step">
+          <div class="s14-circle"><span class="num">1</span></div>
+          <div class="s14-step-t">注册账号</div>
+        </div>
+        <img class="s14-arrow" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
+        <div class="s14-step">
+          <div class="s14-circle"><span class="num">2</span></div>
+          <div class="s14-step-t">资质审核</div>
+        </div>
+        <img class="s14-arrow" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
+        <div class="s14-step">
+          <div class="s14-circle"><span class="num">3</span></div>
+          <div class="s14-step-t">获取密钥</div>
+        </div>
+        <img class="s14-arrow" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
+        <div class="s14-step">
+          <div class="s14-circle"><span class="num">4</span></div>
+          <div class="s14-step-t">联调上线</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">14 / 17</div>
+</section>
+
+<!-- ============ s15 · 章节页 04 应用场景与合作 ============ -->
+<section class="slide dark" id="s15">
+  <img class="sec-bg" src="assets/section_bg.png" alt="" />
+  <div class="sec-visual-pill floaty reveal reveal-right" style="--d:0.30s">
+    <img src="assets/gen-voice-wave.png" alt="" />
+  </div>
+  <div class="sec-inner">
+    <div class="sec-top reveal">
+      <img class="sec-logo" src="assets/logo_white.png" alt="微网通联" />
+      <div class="sec-part">PART 04</div>
+    </div>
+    <div class="sec-mid">
+      <div class="sec-bignum reveal" style="--d:0.10s">04</div>
+      <div class="sec-block">
+        <div class="sec-bar reveal" style="--d:0.15s"></div>
+        <div class="sec-h reveal" style="--d:0.20s">应用场景与合作</div>
+        <div class="sec-en reveal" style="--d:0.28s">SCENARIOS &amp; COOPERATION</div>
+        <div class="sec-desc reveal" style="--d:0.36s">业务场景 · 合作流程 · 联系我们</div>
+      </div>
+    </div>
+    <div class="sec-bottom"></div>
+  </div>
+  <div class="pageno">15 / 17</div>
+</section>
+
+<!-- ============ s16 · 典型应用场景 ============ -->
+<section class="slide" id="s16" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">04 · APPLICATION SCENARIOS</div>
+    <div class="slide-title">典型应用场景</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s16-body">
+    <div class="s16-grid">
+      <div class="s16-card reveal" style="--d:0.10s">
+        <div class="icon-tile red"><img src="assets/icons/shield-halved-F02D4E.png" alt="" /></div>
+        <div>
+          <div class="s16-t">安全验证</div>
+          <div class="s16-d">语音验证码、身份核验</div>
+        </div>
+      </div>
+      <div class="s16-card reveal" style="--d:0.16s">
+        <div class="icon-tile navy"><img src="assets/icons/paper-plane-0A1F44.png" alt="" /></div>
+        <div>
+          <div class="s16-t">物流通知</div>
+          <div class="s16-d">订单、发货、签收提醒</div>
+        </div>
+      </div>
+      <div class="s16-card reveal" style="--d:0.22s">
+        <div class="icon-tile red"><img src="assets/icons/bullhorn-F02D4E.png" alt="" /></div>
+        <div>
+          <div class="s16-t">营销推广</div>
+          <div class="s16-d">会员通知、活动推广</div>
+        </div>
+      </div>
+      <div class="s16-card reveal" style="--d:0.28s">
+        <div class="icon-tile"><img src="assets/icons/headset-2E6FE8.png" alt="" /></div>
+        <div>
+          <div class="s16-t">客户服务</div>
+          <div class="s16-d">400 咨询、售后回访</div>
+        </div>
+      </div>
+      <div class="s16-card reveal" style="--d:0.34s">
+        <div class="icon-tile"><img src="assets/icons/tower-broadcast-2E6FE8.png" alt="" /></div>
+        <div>
+          <div class="s16-t">跨境业务</div>
+          <div class="s16-d">国际通知、海外客服</div>
+        </div>
+      </div>
+      <div class="s16-card reveal" style="--d:0.40s">
+        <div class="icon-tile"><img src="assets/icons/users-2E6FE8.png" alt="" /></div>
+        <div>
+          <div class="s16-t">人工外呼</div>
+          <div class="s16-d">客户回访、精准营销</div>
+        </div>
+      </div>
+    </div>
+    <div class="s16-band reveal" style="--d:0.46s">
+      <img src="assets/icons/phone-volume-FFFFFF.png" alt="" />
+      <div class="s16-band-t">覆盖金融、电商、物流、政务、教育、医疗等 20+ 行业，满足多样化语音通信需求</div>
+    </div>
+  </div>
+  <div class="pageno">16 / 17</div>
+</section>
+
+<!-- ============ s17 · 封底 ============ -->
+<section class="slide dark" id="s17">
+  <img class="s17-bg" src="assets/cover_hero.png" alt="" />
+  <div class="s17-veil"></div>
+  <div class="s17-wrap">
+    <img class="s17-logo reveal" src="assets/logo_white.png" alt="微网通联" />
+    <div class="s17-mid reveal" style="--d:0.15s">
+      <div class="s17-ghost">VOICE</div>
+      <div class="s17-hello">开启语音通信新体验</div>
+      <div class="s17-bar"></div>
+      <div class="s17-sub">全场景语音线路覆盖 · TTS 智能播报 · VOS3000 无缝对接</div>
+      <div class="s17-hope">期待与您的合作</div>
+    </div>
+    <div class="s17-bot reveal" style="--d:0.30s">
+      <div class="s17-co">联系我们</div>
+      <div class="s17-site">www.51welink.com</div>
+      <div class="s17-en">语音业务产品资料 · 2026</div>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- === 播放器 chrome（舞台之外） === -->
+<div class="deck-progress" id="deckProgress" aria-hidden="true"><div class="deck-progress-bar" id="deckProgressBar"></div></div>
+<div class="edit-hotzone" title="编辑模式 (E)"></div>
+<button class="edit-toggle" id="editToggle" title="编辑模式 (E)">✏️</button>
+<div class="edit-toast" id="editToast">已保存</div>
+
+<script>
+/* === SLIDE PRESENTATION CONTROLLER === */
+class SlidePresentation {
+    constructor() {
+        this.slides = document.querySelectorAll('.slide');
+        this.currentSlide = 0;
+        this.stage = document.getElementById('deckStage');
+        this.wheelLock = false;
+        this.setupStageScale();
+        this.setupKeyboardNav();
+        this.setupTouchNav();
+        this.setupWheelNav();
+        this.showSlide(0);
+    }
+    setupStageScale() {
+        const scale = () => {
+            const factor = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+            const x = (window.innerWidth - 1920 * factor) / 2;
+            const y = (window.innerHeight - 1080 * factor) / 2;
+            this.stage.style.transform = `translate(${x}px, ${y}px) scale(${factor})`;
+        };
+        scale();
+        window.addEventListener('resize', scale);
+    }
+    setupKeyboardNav() {
+        document.addEventListener('keydown', (e) => {
+            if (e.target.getAttribute('contenteditable') === 'true') return;
+            if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); this.next(); }
+            else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); this.prev(); }
+            else if (e.key === 'Home') this.showSlide(0);
+            else if (e.key === 'End') this.showSlide(this.slides.length - 1);
+        });
+    }
+    setupTouchNav() {
+        let sx = 0, sy = 0;
+        document.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+        document.addEventListener('touchend', (e) => {
+            const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+            if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) (dx < 0 ? this.next() : this.prev());
+        }, { passive: true });
+    }
+    setupWheelNav() {
+        document.addEventListener('wheel', (e) => {
+            if (this.wheelLock || Math.abs(e.deltaY) < 24) return;
+            this.wheelLock = true;
+            (e.deltaY > 0 ? this.next() : this.prev());
+            setTimeout(() => this.wheelLock = false, 650);
+        }, { passive: true });
+    }
+    next() { this.showSlide(this.currentSlide + 1); }
+    prev() { this.showSlide(this.currentSlide - 1); }
+    showSlide(index) {
+        this.currentSlide = Math.max(0, Math.min(index, this.slides.length - 1));
+        this.slides.forEach((s, i) => {
+            s.classList.toggle('active', i === this.currentSlide);
+            s.classList.toggle('visible', i === this.currentSlide);
+        });
+        const bar = document.getElementById('deckProgressBar');
+        if (bar) bar.style.width = ((this.currentSlide + 1) / this.slides.length * 100) + '%';
+    }
+}
+
+/* === INLINE EDITOR（E 键 / 左上角热区；Ctrl+S 导出 HTML） === */
+class InlineEditor {
+    constructor() {
+        this.isActive = false;
+        this.current = null;
+        this.toast = document.getElementById('editToast');
+        this.restore();
+        document.addEventListener('click', (e) => {
+            if (!this.isActive) return;
+            const el = e.target.closest('.slide *');
+            if (el && el !== this.current) this.edit(el);
+            else if (!el) this.stop();
+        }, true);
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); this.saveAll(); this.exportFile(); }
+            if (e.key === 'Escape' && this.isActive) this.toggleEditMode();
+        });
+    }
+    toggleEditMode() {
+        this.isActive = !this.isActive;
+        document.body.classList.toggle('editing', this.isActive);
+        document.getElementById('editToggle').classList.toggle('active', this.isActive);
+        if (!this.isActive) this.stop();
+    }
+    edit(el) {
+        this.stop();
+        let target = el;
+        while (target.children.length && ![...target.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) {
+            target = target.children[0];
+        }
+        if (![...target.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) return;
+        this.current = target;
+        target.contentEditable = 'true';
+        target.focus();
+        target.addEventListener('blur', () => { this.saveAll(); }, { once: true });
+    }
+    stop() {
+        if (this.current) { this.current.contentEditable = 'false'; this.current = null; }
+    }
+    saveAll() {
+        document.querySelectorAll('.slide').forEach(s => {
+            try { localStorage.setItem('wwt-slide-' + s.id, s.innerHTML); } catch (e) {}
+        });
+        const t = this.toast;
+        t.classList.add('show');
+        clearTimeout(this._tt);
+        this._tt = setTimeout(() => t.classList.remove('show'), 1200);
+    }
+    restore() {
+        document.querySelectorAll('.slide').forEach(s => {
+            const saved = localStorage.getItem('wwt-slide-' + s.id);
+            if (saved) s.innerHTML = saved;
+        });
+    }
+    exportFile() {
+        const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+        a.download = '语音通信服务解决方案2026.html';
+        a.click();
+    }
+}
+
+const deck = new SlidePresentation();
+const editor = new InlineEditor();
+
+/* 编辑开关：按钮点击 / 热区悬停(400ms 延迟) / 热区点击 / E 键 */
+const hotzone = document.querySelector('.edit-hotzone');
+const editToggle = document.getElementById('editToggle');
+let hideTimeout = null;
+editToggle.addEventListener('click', () => editor.toggleEditMode());
+hotzone.addEventListener('mouseenter', () => { clearTimeout(hideTimeout); editToggle.classList.add('show'); });
+hotzone.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });
+editToggle.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+editToggle.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });
+hotzone.addEventListener('click', () => editor.toggleEditMode());
+document.addEventListener('keydown', (e) => {
+    if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable')) editor.toggleEditMode();
+});
+</script>
+</body>
+</html>
