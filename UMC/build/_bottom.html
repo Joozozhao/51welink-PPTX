@@ -129,7 +129,9 @@ class InlineEditor {
         const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
         const a = document.createElement('a');
         a.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
-        a.download = '微网通联业务介绍2026.html';
+        // 从 <title> 自动获取文件名，去除 · 和多余空格
+        const title = document.title.replace(/\s*[·•]\s*/g, '').replace(/\s+/g, '').trim();
+        a.download = title + '.html';
         a.click();
     }
 }
