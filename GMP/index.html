@@ -1,0 +1,1918 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GMP 本地化部署消息平台 · 2025</title>
+<!-- 字体：Archivo(西文/数字) + Noto Sans SC(中文兜底)，本地优先 PingFang SC -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* === THEME TOKENS + COMPONENTS（与 Push 同一设计体系） === */
+:root {
+    --navy: #0A1F44;
+    --navy-2: #123A7A;
+    --blue: #2E6FE8;
+    --red: #F02D4E;
+    --bg: #F6F8FB;
+    --ink: #1B2A4A;
+    --muted: #5A6B85;
+    --faint: #8A94A6;
+
+    --font-body: "Archivo", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    --font-num: "Archivo", "Helvetica Neue", "PingFang SC", "Noto Sans SC", sans-serif;
+
+    --fs-cover: 96px;
+    --fs-section: 84px;
+    --fs-giant: 120px;
+    --fs-title: 45px;
+    --fs-card: 31px;
+    --fs-body: 23px;
+    --fs-note: 20px;
+    --fs-pageno: 18px;
+
+    --pad-x: 96px;
+    --head-top: 44px;
+
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur: 0.7s;
+
+    --slide-bg: var(--bg);
+    --stage-bg: #060D1F;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { font-family: var(--font-body); color: var(--ink); }
+
+/* 内容页骨架：标题块 + 红色短条 + 页码 */
+.slide-head { position: absolute; left: var(--pad-x); top: var(--head-top); z-index: 5; }
+.kicker {
+    font-size: 20px; font-weight: 600; color: var(--red);
+    letter-spacing: 3px; font-family: var(--font-num);
+}
+.slide-title {
+    font-size: var(--fs-title); font-weight: 700; color: var(--navy);
+    margin-top: 14px; line-height: 1.2; letter-spacing: 0.5px;
+}
+.title-bar { width: 60px; height: 5px; background: var(--red); border-radius: 3px; margin-top: 16px; }
+
+.pageno {
+    position: absolute; right: 20px; bottom: 20px; z-index: 5;
+    font-size: var(--fs-pageno); color: var(--faint);
+    font-family: var(--font-num); letter-spacing: 1px;
+}
+
+/* 卡片与图标 */
+.card {
+    background: #fff; border-radius: 18px;
+    box-shadow: 0 12px 32px rgba(10, 31, 68, 0.08);
+}
+.icon-tile {
+    width: 72px; height: 72px; border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(46, 111, 232, 0.08);
+}
+.icon-tile.red { background: rgba(240, 45, 78, 0.08); }
+.icon-tile.navy { background: rgba(10, 31, 68, 0.07); }
+.icon-tile.dark { background: rgba(255, 255, 255, 0.10); }
+.icon-tile img { width: 40px; height: 40px; object-fit: contain; }
+
+/* 深色页（封面/章节/封底） */
+.slide.dark { background: var(--navy); color: #fff; }
+.dark-grad { background: linear-gradient(135deg, #0A1F44 0%, #123A7A 60%, #2E6FE8 100%); }
+.glass-card { background: rgba(255, 255, 255, 0.06); border-radius: 18px; }
+.on-dark-sub { color: rgba(255, 255, 255, 0.72); }
+
+.num { font-family: var(--font-num); font-weight: 800; letter-spacing: -1px; }
+
+/* 入场动效：.reveal + --d 延迟变量 */
+.reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity var(--dur) var(--ease-out-expo),
+                transform var(--dur) var(--ease-out-expo);
+    transition-delay: var(--d, 0s);
+}
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+
+.reveal-left { transform: translateX(-48px); }
+.reveal-right { transform: translateX(48px); }
+.reveal-zoom { transform: scale(0.92); }
+.slide.visible .reveal-left,
+.slide.visible .reveal-right,
+.slide.visible .reveal-zoom { transform: none; }
+
+@keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+}
+.floaty { animation: floaty 7s ease-in-out infinite; }
+
+@keyframes gradient-drift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* === VIEWPORT BASE === */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+
+    .deck-download {
+        display: none !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* === PLAYER CHROME（舞台之外） === */
+.deck-progress {
+    position: fixed; left: 0; bottom: 0; width: 100%; height: 4px;
+    background: rgba(255,255,255,0.12); z-index: 1000;
+}
+.deck-progress-bar {
+    height: 100%; width: 4%; background: var(--red, #F02D4E);
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.edit-hotzone {
+    position: fixed; top: 0; left: 0; width: 80px; height: 80px;
+    z-index: 10000; cursor: pointer;
+}
+.edit-toggle {
+    position: fixed; top: 18px; left: 18px; z-index: 10001;
+    width: 44px; height: 44px; border-radius: 12px; border: none;
+    background: rgba(10,31,68,0.85); color: #fff; font-size: 20px;
+    cursor: pointer; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
+.edit-toggle.active { background: #F02D4E; }
+.edit-toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(8px);
+    background: rgba(10,31,68,0.9); color: #fff; font-size: 14px;
+    padding: 8px 20px; border-radius: 20px; z-index: 10001;
+    opacity: 0; transition: opacity 0.3s, transform 0.3s;
+}
+.edit-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* 下载按钮：右缘居中、竖排文字、常驻显示（HTML 由后续统一加入） */
+.deck-download {
+    position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 1001;
+    display: flex; flex-direction: column; gap: 1px;
+    opacity: 1; pointer-events: auto;
+}
+.deck-download a {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(10,31,68,0.85); color: #fff;
+    font-size: 14px; font-weight: 600; letter-spacing: 1px;
+    text-decoration: none; font-family: var(--font-num);
+    transition: background 0.25s ease, transform 0.25s ease;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    padding: 16px 8px;
+    border-radius: 0;
+}
+.deck-download a:first-child { border-radius: 8px 8px 0 0; }
+.deck-download a:last-child { border-radius: 0 0 8px 8px; }
+.deck-download a:hover { background: #F02D4E; }
+body.editing .slide.active { cursor: text; }
+body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-offset: 2px; }
+
+/* ==================== 私有样式（#sN 前缀） ==================== */
+/* ==================== s1 封面 ==================== */
+#s1 .s1-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+#s1 .s1-mask { position:absolute; inset:0; background:linear-gradient(90deg, rgba(10,31,68,0.92) 0%, rgba(10,31,68,0.55) 45%, rgba(10,31,68,0.15) 100%); }
+#s1 .s1-inner { position:absolute; inset:0; z-index:1; display:flex; flex-direction:column; justify-content:space-between; padding:72px 96px; }
+#s1 .s1-top { display:flex; justify-content:space-between; align-items:center; }
+#s1 .s1-logo { width:225px; height:57px; object-fit:contain; }
+#s1 .s1-en-top { font-size:21px; color:rgba(255,255,255,0.6); letter-spacing:4px; font-family:var(--font-num); }
+#s1 .s1-main { display:flex; flex-direction:column; gap:28px; max-width:1200px; }
+#s1 .s1-bar { width:84px; height:6px; background:var(--red); border-radius:3px; }
+#s1 .s1-title { font-size:88px; font-weight:700; color:#FFFFFF; line-height:1.25; letter-spacing:3px; }
+#s1 .s1-en { font-size:22.5px; color:rgba(255,255,255,0.65); letter-spacing:4.5px; font-family:var(--font-num); }
+#s1 .s1-tag { font-size:24px; color:rgba(255,255,255,0.85); line-height:1.8; }
+
+/* ==================== s2 目录 ==================== */
+#s2 .s2-inner { position:absolute; inset:0; display:flex; }
+#s2 .s2-panel { position:relative; width:630px; height:100%; flex:none; overflow:hidden; }
+#s2 .s2-panel-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+#s2 .s2-panel-mask { position:absolute; inset:0; background:linear-gradient(160deg, rgba(10,31,68,0.88) 0%, rgba(18,58,122,0.80) 100%); }
+#s2 .s2-panel-body { position:relative; z-index:1; height:100%; display:flex; flex-direction:column; justify-content:space-between; padding:84px 72px; }
+#s2 .s2-logo { width:210px; height:54px; object-fit:contain; }
+#s2 .s2-panel-main { display:flex; flex-direction:column; gap:27px; }
+#s2 .s2-bar { width:72px; height:6px; background:var(--red); border-radius:3px; }
+#s2 .s2-h { font-size:81px; font-weight:700; color:#FFFFFF; letter-spacing:6px; }
+#s2 .s2-en { font-size:24px; color:rgba(255,255,255,0.6); letter-spacing:9px; font-family:var(--font-num); }
+#s2 .s2-intro { font-size:21px; color:rgba(255,255,255,0.55); line-height:1.8; margin-top:15px; }
+#s2 .s2-right { flex:1; display:flex; flex-direction:column; justify-content:center; gap:6px; padding:96px 108px; }
+#s2 .s2-row { display:flex; align-items:center; gap:48px; padding:33px 12px; }
+#s2 .s2-row.with-line { border-bottom:1.5px solid #E3E9F2; }
+#s2 .s2-num { font-size:66px; font-weight:700; color:var(--red); font-family:var(--font-num); width:120px; flex:none; line-height:1.1; }
+#s2 .s2-mid { flex:1; display:flex; flex-direction:column; gap:9px; }
+#s2 .s2-trow { display:flex; align-items:baseline; gap:21px; }
+#s2 .s2-t { font-size:38px; font-weight:700; color:var(--navy); }
+#s2 .s2-e { font-size:19px; color:var(--faint); letter-spacing:4px; font-family:var(--font-num); }
+#s2 .s2-d { font-size:21px; color:var(--muted); }
+#s2 .s2-p { font-size:21px; color:var(--faint); font-family:var(--font-num); }
+
+/* ==================== 章节页（s3 / s9 / s14 / s25 共用） ==================== */
+.sec-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.sec-visual { position:absolute; right:90px; top:210px; width:620px; z-index:1; }
+.sec-visual img { width:100%; display:block; mix-blend-mode:screen; }
+.sec-visual-pill { position:absolute; right:120px; top:390px; width:600px; height:250px; z-index:1; border-radius:125px; overflow:hidden; background:rgba(255,255,255,0.06); box-shadow:0 30px 80px rgba(0,0,0,0.35); }
+.sec-visual-pill img { width:100%; height:100%; object-fit:cover; display:block; }
+.sec-inner { position:absolute; inset:0; z-index:2; display:flex; flex-direction:column; justify-content:space-between; padding:84px 108px; }
+.sec-top { display:flex; justify-content:space-between; align-items:center; }
+.sec-logo { width:195px; height:49.5px; object-fit:contain; }
+.sec-part { font-size:19.5px; color:rgba(255,255,255,0.5); letter-spacing:6px; font-family:var(--font-num); }
+.sec-mid { display:flex; align-items:flex-end; gap:72px; }
+.sec-bignum { font-size:300px; font-weight:800; color:rgba(255,255,255,0.12); font-family:var(--font-num); line-height:1; }
+.sec-block { display:flex; flex-direction:column; gap:24px; padding-bottom:36px; }
+.sec-bar { width:72px; height:6px; background:var(--red); border-radius:3px; }
+.sec-h { font-size:84px; font-weight:700; color:#FFFFFF; letter-spacing:6px; line-height:1.1; }
+.sec-en { font-size:24px; color:rgba(255,255,255,0.6); letter-spacing:7.5px; font-family:var(--font-num); }
+.sec-desc { font-size:21px; color:rgba(255,255,255,0.5); line-height:1.8; margin-top:12px; max-width:900px; }
+.sec-bottom { height:27px; }
+.slide.dark .pageno { color:rgba(255,255,255,0.45); }
+
+/* ==================== s4 GMP 介绍 ==================== */
+#s4 .s4-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; gap:54px; align-items:center; }
+#s4 .s4-left { width:620px; flex:none; display:flex; flex-direction:column; gap:28px; }
+#s4 .s4-gmp { font-size:108px; color:var(--navy); line-height:1; }
+#s4 .s4-eng { font-size:21px; color:var(--red); letter-spacing:6px; font-weight:600; font-family:var(--font-num); }
+#s4 .s4-para { font-size:22px; color:#3A4A66; line-height:1.85; }
+#s4 .s4-stat { display:flex; align-items:center; gap:21px; background:#fff; border-radius:18px; padding:24px 33px; box-shadow:0 6px 24px rgba(10,31,68,0.06); }
+#s4 .s4-stat img { width:36px; height:36px; object-fit:contain; flex:none; }
+#s4 .s4-stat-t { font-size:21px; color:var(--muted); }
+#s4 .s4-stat-v { font-size:30px; color:var(--red); margin-left:auto; }
+#s4 .s4-right { flex:1; display:flex; align-items:center; }
+.shot { width:100%; background:#fff; border-radius:21px; box-shadow:0 18px 60px rgba(10,31,68,0.14); overflow:hidden; border:1.5px solid #E6ECF5; }
+.shot-chrome { display:flex; align-items:center; gap:12px; padding:16px 27px; background:#F0F4FA; border-bottom:1.5px solid #E6ECF5; }
+.shot-dot { width:15px; height:15px; border-radius:7.5px; }
+.shot-t { font-size:18px; color:var(--muted); margin-left:12px; }
+.shot-img { width:100%; height:600px; object-fit:contain; display:block; background:#fff; }
+#s4 .shot-img { height:612px; }
+
+/* ==================== s5 为什么需要 GMP ==================== */
+#s5 .s5-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(2,1fr); gap:24px; }
+#s5 .s5-lead { background:linear-gradient(160deg,#0A1F44 0%,#123A7A 100%); border-radius:21px; padding:42px 39px; display:flex; flex-direction:column; justify-content:space-between; }
+#s5 .s5-lead-icon { width:66px; height:66px; border-radius:18px; background:rgba(240,45,78,0.2); display:flex; align-items:center; justify-content:center; }
+#s5 .s5-lead-icon img { width:33px; height:33px; object-fit:contain; }
+#s5 .s5-lead-t { font-size:33px; font-weight:700; color:#fff; line-height:1.5; }
+#s5 .s5-lead-d { font-size:19.5px; color:rgba(255,255,255,0.65); line-height:1.7; }
+#s5 .s5-card { background:#fff; border-radius:21px; padding:33px 30px; box-shadow:0 6px 24px rgba(10,31,68,0.06); display:flex; flex-direction:column; justify-content:space-evenly; gap:20px; }
+#s5 .s5-card .icon-tile { width:66px; height:66px; }
+#s5 .s5-card .icon-tile img { width:33px; height:33px; }
+#s5 .s5-t { font-size:25px; font-weight:700; color:var(--navy); }
+#s5 .s5-d { font-size:18px; color:var(--muted); line-height:1.65; }
+
+/* ==================== s6 系统结构图 ==================== */
+#s6 .s6-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; flex-direction:column; gap:24px; }
+#s6 .s6-shot { flex:1; background:#fff; border-radius:21px; box-shadow:0 12px 40px rgba(10,31,68,0.10); border:1.5px solid #E6ECF5; display:flex; align-items:center; justify-content:center; padding:24px; min-height:0; }
+#s6 .s6-img { max-width:100%; max-height:100%; object-fit:contain; display:block; }
+#s6 .s6-band { flex:none; background:linear-gradient(90deg,#0A1F44 0%,#123A7A 100%); border-radius:18px; padding:24px 42px; display:flex; align-items:center; justify-content:center; gap:18px; }
+#s6 .s6-chip { font-size:20px; color:#fff; font-weight:600; letter-spacing:1px; padding:9px 24px; border-radius:999px; border:1.5px solid rgba(255,255,255,0.3); background:rgba(255,255,255,0.06); white-space:nowrap; }
+
+/* ==================== s7 数据处理能力（深色大数字） ==================== */
+#s7 { background:linear-gradient(150deg,#0A1F44 0%,#123A7A 70%,#1B4FA0 100%); }
+#s7 .s7-deco1 { position:absolute; right:-180px; top:-180px; width:630px; height:630px; border-radius:315px; background:rgba(240,45,78,0.12); }
+#s7 .s7-deco2 { position:absolute; left:-120px; bottom:-120px; width:450px; height:450px; border-radius:225px; background:rgba(46,111,232,0.15); }
+#s7 .s7-head { position:absolute; left:96px; top:60px; z-index:5; }
+#s7 .s7-head .kicker { letter-spacing:4.5px; }
+#s7 .s7-title { font-size:45px; font-weight:700; color:#fff; line-height:1.2; letter-spacing:0.5px; margin-top:14px; }
+#s7 .s7-bar { width:60px; height:5px; background:var(--red); border-radius:3px; margin-top:16px; }
+#s7 .s7-main { position:absolute; left:96px; top:200px; width:1728px; height:715px; z-index:1; display:flex; flex-direction:column; justify-content:center; gap:54px; }
+#s7 .s7-hero { display:flex; align-items:center; justify-content:space-between; }
+#s7 .s7-stat { display:flex; flex-direction:column; align-items:center; width:480px; }
+#s7 .s7-stat.mid { flex:1; }
+#s7 .s7-numrow { display:flex; align-items:baseline; }
+#s7 .s7-n1 { font-size:200px; color:#fff; line-height:1; }
+#s7 .s7-n1u { font-size:72px; color:var(--red); }
+#s7 .s7-n2 { font-size:120px; color:#fff; line-height:1; }
+#s7 .s7-n2u { font-size:54px; color:var(--red); }
+#s7 .s7-label { margin-top:15px; font-size:27px; font-weight:700; color:#fff; }
+#s7 .s7-label-mid { margin-top:18px; font-size:33px; font-weight:700; color:#fff; letter-spacing:3px; }
+#s7 .s7-divider { height:1.5px; background:rgba(255,255,255,0.15); }
+#s7 .s7-desc { font-size:22px; color:rgba(255,255,255,0.75); line-height:1.9; text-align:center; max-width:1400px; margin:0 auto; }
+#s7 .pageno { color:rgba(255,255,255,0.45); }
+
+/* ==================== s8 版本分类（表格） ==================== */
+#s8 .s8-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; align-items:center; }
+#s8 .s8-table { width:100%; border-collapse:separate; border-spacing:0; border-radius:21px; overflow:hidden; box-shadow:0 12px 40px rgba(10,31,68,0.10); background:#fff; }
+#s8 .s8-table th { background:var(--navy); color:#fff; font-size:19px; font-weight:700; padding:16px 14px; text-align:center; letter-spacing:1px; }
+#s8 .s8-table th.sub { background:var(--navy-2); font-size:16.5px; font-weight:600; padding:12px 10px; }
+#s8 .s8-table td { font-size:18px; color:var(--ink); padding:18px 14px; border-bottom:1.5px solid #EDF1F7; text-align:center; vertical-align:middle; }
+#s8 .s8-table tbody tr:last-child td { border-bottom:none; }
+#s8 .s8-table tbody tr:nth-child(even) td { background:#F3F6FB; }
+#s8 .s8-ver { font-size:22px; font-weight:700; color:var(--navy); white-space:nowrap; }
+#s8 .s8-ver.hot { color:var(--red); }
+#s8 .s8-table td.s8-pt { font-size:16.5px; color:var(--muted); line-height:1.6; text-align:left; width:430px; }
+#s8 .s8-yes { color:var(--red); font-weight:700; font-family:var(--font-num); font-size:19px; }
+#s8 .s8-no { color:#C4CCD9; font-weight:700; }
+#s8 .s8-price { font-family:var(--font-num); font-weight:700; color:var(--navy); white-space:nowrap; }
+#s8 .s8-srv { font-size:17px; line-height:1.5; }
+
+/* ==================== s10 平台价值 ==================== */
+#s10 .s10-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; flex-direction:column; gap:30px; }
+#s10 .s10-cards { flex:1; display:flex; gap:30px; }
+#s10 .s10-card { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 24px rgba(10,31,68,0.06); padding:42px 42px; display:flex; flex-direction:column; gap:24px; }
+#s10 .s10-head { display:flex; align-items:center; gap:21px; }
+#s10 .s10-head .icon-tile { width:72px; height:72px; flex:none; }
+#s10 .s10-head .icon-tile img { width:36px; height:36px; }
+#s10 .s10-t { font-size:30px; font-weight:700; color:var(--navy); }
+#s10 .s10-list { flex:1; display:flex; flex-direction:column; justify-content:space-evenly; }
+#s10 .s10-li { display:flex; align-items:center; gap:15px; font-size:21px; color:var(--ink); font-weight:500; }
+#s10 .s10-n { font-size:19px; font-weight:800; color:var(--blue); font-family:var(--font-num); width:30px; flex:none; }
+#s10 .s10-card:nth-child(2) .s10-n { color:var(--red); }
+#s10 .s10-band { flex:none; height:120px; background:linear-gradient(90deg,#0A1F44 0%,#123A7A 100%); border-radius:18px; display:flex; align-items:center; padding:0 48px; gap:30px; }
+#s10 .s10-band-t { font-size:24px; font-weight:700; color:#fff; flex:none; }
+#s10 .s10-band-arrow { width:34px; height:34px; object-fit:contain; flex:none; }
+#s10 .s10-band-items { flex:1; display:flex; justify-content:space-around; }
+#s10 .s10-bi { display:flex; align-items:center; gap:14px; font-size:22px; color:#fff; font-weight:600; }
+#s10 .s10-bi i { width:10px; height:10px; border-radius:5px; background:var(--red); flex:none; }
+
+/* ==================== s11 技术优势 ==================== */
+#s11 .s11-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; flex-wrap:wrap; gap:21px; align-content:space-between; justify-content:space-between; }
+#s11 .s11-card { width:49.2%; height:364.5px; background:#fff; border-radius:21px; padding:30px 36px; box-shadow:0 6px 30px rgba(10,31,68,0.07); display:flex; flex-direction:column; gap:14px; }
+#s11 .s11-card.dark { background:linear-gradient(160deg,#0A1F44 0%,#123A7A 100%); }
+#s11 .s11-head { display:flex; align-items:center; gap:18px; }
+#s11 .s11-n { font-size:45px; font-weight:700; font-family:var(--font-num); color:rgba(46,111,232,0.3); }
+#s11 .s11-card.dark .s11-n { color:rgba(255,255,255,0.25); }
+#s11 .s11-t { font-size:27px; font-weight:700; color:var(--navy); }
+#s11 .s11-card.dark .s11-t { color:#fff; }
+#s11 .s11-items { flex:1; display:flex; flex-direction:column; justify-content:space-evenly; border-top:1.5px solid #EDF1F7; padding-top:8px; }
+#s11 .s11-card.dark .s11-items { border-top-color:rgba(255,255,255,0.12); }
+#s11 .s11-item { display:flex; align-items:center; gap:14px; }
+#s11 .s11-dot { width:9px; height:9px; border-radius:4.5px; background:var(--blue); flex:none; }
+#s11 .s11-card.dark .s11-dot { background:var(--red); }
+#s11 .s11-it { font-size:20px; color:var(--ink); font-weight:500; }
+#s11 .s11-card.dark .s11-it { color:rgba(255,255,255,0.88); }
+
+/* ==================== s12 灵活的部署能力 ==================== */
+#s12 .s12-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; flex-direction:column; gap:30px; }
+#s12 .s12-cards { flex:1; display:flex; gap:30px; }
+#s12 .s12-card { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 24px rgba(10,31,68,0.06); padding:48px 45px; display:flex; flex-direction:column; gap:22px; }
+#s12 .s12-card.hot { background:linear-gradient(160deg,#0A1F44 0%,#123A7A 100%); }
+#s12 .s12-card .icon-tile { width:84px; height:84px; }
+#s12 .s12-card .icon-tile img { width:42px; height:42px; }
+#s12 .s12-t { font-size:31px; font-weight:700; color:var(--navy); }
+#s12 .s12-card.hot .s12-t { color:#fff; }
+#s12 .s12-d { font-size:20px; color:var(--muted); line-height:1.75; }
+#s12 .s12-card.hot .s12-d { color:rgba(255,255,255,0.75); }
+#s12 .s12-tags { display:flex; gap:12px; flex-wrap:wrap; margin-top:auto; }
+#s12 .s12-tag { padding:8px 20px; border-radius:999px; background:rgba(46,111,232,0.08); font-size:19px; color:var(--blue); font-weight:600; }
+#s12 .s12-card.hot .s12-tag { background:rgba(240,45,78,0.15); color:#fff; }
+#s12 .s12-band { flex:none; background:#fff; border-radius:18px; box-shadow:0 6px 24px rgba(10,31,68,0.06); padding:28px 42px; display:flex; align-items:center; justify-content:center; gap:20px; }
+#s12 .s12-band img { width:34px; height:34px; object-fit:contain; }
+#s12 .s12-band-t { font-size:23px; font-weight:700; color:var(--navy); letter-spacing:1px; }
+
+/* ==================== s13 极致服务（三列） ==================== */
+#s13 .s13-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; gap:30px; }
+#s13 .s13-col { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 30px rgba(10,31,68,0.07); overflow:hidden; display:flex; flex-direction:column; }
+#s13 .s13-col-head { padding:33px 39px; display:flex; align-items:center; gap:21px; }
+#s13 .s13-col-icon { width:39px; height:39px; object-fit:contain; }
+#s13 .s13-col-t { font-size:33px; font-weight:700; color:#fff; line-height:1.2; }
+#s13 .s13-col-e { font-size:18px; color:rgba(255,255,255,0.7); letter-spacing:4.5px; font-family:var(--font-num); margin-top:4px; }
+#s13 .s13-list { flex:1; padding:24px 33px; display:flex; flex-direction:column; justify-content:space-evenly; }
+#s13 .s13-item { display:flex; gap:15px; padding:14px 9px; border-bottom:1.5px solid #F0F4F9; align-items:flex-start; }
+#s13 .s13-item.last { border-bottom:none; }
+#s13 .s13-item-dot { width:9px; height:9px; border-radius:4.5px; flex:none; margin-top:10px; }
+#s13 .s13-item-t { font-size:22px; color:var(--ink); font-weight:600; line-height:1.5; }
+#s13 .s13-item-d { font-size:18.5px; color:var(--muted); line-height:1.6; margin-top:4px; }
+
+/* ==================== s15 平台介绍（三大中心，同 Push s14 版式） ==================== */
+#s15 .s15-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; gap:30px; }
+#s15 .s15-col { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 30px rgba(10,31,68,0.07); overflow:hidden; }
+#s15 .s15-col-head { padding:33px 39px; display:flex; align-items:center; gap:21px; }
+#s15 .s15-col-icon { width:39px; height:39px; object-fit:contain; }
+#s15 .s15-col-t { font-size:33px; font-weight:700; color:#fff; line-height:1.2; }
+#s15 .s15-col-e { font-size:18px; color:rgba(255,255,255,0.7); letter-spacing:4.5px; font-family:var(--font-num); margin-top:4px; }
+#s15 .s15-list { padding:27px 33px; display:flex; flex-direction:column; gap:6px; }
+#s15 .s15-item { display:flex; align-items:center; gap:15px; padding:13.5px 9px; border-bottom:1.5px solid #F0F4F9; }
+#s15 .s15-item.last { border-bottom:none; }
+#s15 .s15-item-dot { width:9px; height:9px; border-radius:4.5px; flex:none; }
+#s15 .s15-item-t { font-size:23px; color:var(--ink); font-weight:500; }
+
+/* ==================== s16–s23 功能页（左文右截图，共用 .fn-） ==================== */
+.fn-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; gap:54px; align-items:center; }
+.fn-left { width:560px; flex:none; display:flex; flex-direction:column; gap:28px; }
+.fn-tag { display:inline-flex; align-self:flex-start; padding:9px 24px; border-radius:999px; background:rgba(240,45,78,0.1); color:var(--red); font-size:20px; font-weight:700; letter-spacing:1.5px; }
+.fn-block { display:flex; flex-direction:column; gap:12px; }
+.fn-h { display:flex; align-items:center; gap:15px; font-size:26px; font-weight:700; color:var(--navy); }
+.fn-h img { width:32px; height:32px; object-fit:contain; flex:none; }
+.fn-p { font-size:20.5px; color:var(--muted); line-height:1.8; }
+.fn-li { display:flex; align-items:flex-start; gap:14px; font-size:20.5px; color:var(--muted); line-height:1.7; }
+.fn-li i { width:10px; height:10px; border-radius:5px; background:var(--blue); flex:none; margin-top:11px; }
+.fn-right { flex:1; display:flex; align-items:center; min-width:0; }
+.fn-right .shot-img { height:600px; padding:10px; }
+
+/* ==================== s24 功能及接口清单 ==================== */
+#s24 .s24-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; gap:27px; }
+#s24 .s24-col { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 24px rgba(10,31,68,0.06); padding:33px 33px; display:flex; flex-direction:column; gap:18px; overflow:hidden; }
+#s24 .s24-col-head { display:flex; align-items:center; gap:16px; padding-bottom:16px; border-bottom:1.5px solid #EDF1F7; }
+#s24 .s24-col-t { font-size:27px; font-weight:700; color:var(--navy); }
+#s24 .s24-col-bar { width:40px; height:5px; background:var(--red); border-radius:3px; }
+#s24 .s24-groups { flex:1; display:flex; flex-direction:column; gap:13px; min-height:0; }
+#s24 .s24-g { display:flex; flex-direction:column; gap:7px; }
+#s24 .s24-gt { font-size:18px; font-weight:700; color:var(--blue); }
+#s24 .s24-gt::before { content:''; display:inline-block; width:8px; height:8px; border-radius:4px; background:var(--red); margin-right:10px; vertical-align:2px; }
+#s24 .s24-chips { display:flex; flex-wrap:wrap; gap:7px; }
+#s24 .s24-chip { padding:4px 13px; border-radius:999px; background:rgba(10,31,68,0.05); font-size:16.5px; color:#3A4A66; white-space:nowrap; }
+
+/* ==================== s26 典型客户·湖南三湘银行 ==================== */
+#s26 .s26-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; flex-direction:column; gap:27px; }
+#s26 .s26-top { display:flex; gap:36px; height:390px; flex:none; }
+#s26 .s26-panel { flex:1.1; background:linear-gradient(160deg,#0A1F44 0%,#123A7A 100%); border-radius:21px; padding:45px 48px; display:flex; flex-direction:column; justify-content:space-between; }
+#s26 .s26-logo-chip { align-self:flex-start; background:#fff; border-radius:15px; padding:15px 27px; }
+#s26 .s26-logo-chip img { height:66px; width:auto; object-fit:contain; display:block; }
+#s26 .s26-name { font-size:34px; font-weight:700; color:#fff; }
+#s26 .s26-desc { font-size:20.5px; color:rgba(255,255,255,0.75); line-height:1.8; }
+#s26 .s26-photo { flex:1; border-radius:21px; overflow:hidden; position:relative; box-shadow:0 12px 40px rgba(10,31,68,0.14); }
+#s26 .s26-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+#s26 .s26-cap { position:absolute; left:0; bottom:0; width:100%; padding:24px 33px; background:linear-gradient(0deg,rgba(10,31,68,0.85) 0%,rgba(10,31,68,0) 100%); font-size:19px; color:rgba(255,255,255,0.9); letter-spacing:2px; }
+#s26 .s26-cards { flex:1; display:flex; gap:27px; }
+#s26 .s26-card { flex:1; background:#fff; border-radius:18px; box-shadow:0 6px 24px rgba(10,31,68,0.06); padding:33px 30px; display:flex; flex-direction:column; gap:16px; }
+#s26 .s26-card .icon-tile { width:66px; height:66px; }
+#s26 .s26-card .icon-tile img { width:33px; height:33px; }
+#s26 .s26-ct { font-size:21px; font-weight:700; color:var(--navy); line-height:1.5; }
+#s26 .s26-cd { font-size:18px; color:var(--muted); line-height:1.65; }
+
+/* ==================== s27 典型应用（三卡） ==================== */
+#s27 .s27-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; gap:30px; }
+#s27 .s27-card { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 24px rgba(10,31,68,0.06); padding:39px 36px; display:flex; flex-direction:column; gap:18px; }
+#s27 .s27-head { display:flex; align-items:center; gap:18px; padding-bottom:18px; border-bottom:1.5px solid #EDF1F7; }
+#s27 .s27-head .icon-tile { width:66px; height:66px; flex:none; }
+#s27 .s27-head .icon-tile img { width:33px; height:33px; }
+#s27 .s27-t { font-size:27px; font-weight:700; color:var(--navy); }
+#s27 .s27-tagline { font-size:18px; color:var(--red); font-weight:600; line-height:1.6; background:rgba(240,45,78,0.07); border-radius:12px; padding:10px 18px; }
+#s27 .s27-li { display:flex; align-items:flex-start; gap:13px; font-size:19px; color:var(--ink); line-height:1.6; }
+#s27 .s27-li i { width:9px; height:9px; border-radius:4.5px; background:var(--blue); flex:none; margin-top:9px; }
+
+/* ==================== s28 行业客户 logo 墙 ==================== */
+#s28 .s28-wrap { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; flex-direction:column; justify-content:center; gap:21px; }
+#s28 .s28-grid { flex:1; display:flex; flex-wrap:wrap; justify-content:space-between; align-content:space-between; }
+#s28 .s28-cell { width:270px; height:156px; background:#fff; border:1.5px solid #EEF2F8; border-radius:15px; box-shadow:0 4.5px 18px rgba(10,31,68,0.05); display:flex; align-items:center; justify-content:center; padding:18px 21px; }
+#s28 .s28-cell img { max-width:195px; max-height:93px; object-fit:contain; }
+#s28 .s28-cap { display:flex; justify-content:center; align-items:center; gap:15px; font-size:19.5px; color:var(--muted); }
+#s28 .s28-dot { width:9px; height:9px; border-radius:4.5px; background:var(--red); }
+
+/* ==================== s29 封底 ==================== */
+#s29 .s29-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+#s29 .s29-veil { position:absolute; inset:0; background:rgba(10,31,68,0.72); }
+#s29 .s29-wrap { position:relative; z-index:1; width:100%; height:100%; padding:96px 108px; display:flex; flex-direction:column; align-items:center; justify-content:space-between; }
+#s29 .s29-logo { width:255px; height:64.5px; object-fit:contain; }
+#s29 .s29-mid { display:flex; flex-direction:column; align-items:center; gap:28px; }
+#s29 .s29-thanks { font-size:110px; font-weight:700; color:rgba(255,255,255,0.16); letter-spacing:18px; font-family:var(--font-num); line-height:1; }
+#s29 .s29-hello { font-size:60px; font-weight:700; color:#fff; letter-spacing:6px; margin-top:-40px; }
+#s29 .s29-bar { width:84px; height:6px; background:var(--red); border-radius:3px; }
+#s29 .s29-sub { font-size:22.5px; color:rgba(255,255,255,0.7); letter-spacing:3px; }
+#s29 .s29-bot { display:flex; flex-direction:column; align-items:center; gap:9px; }
+#s29 .s29-co { font-size:21px; color:#fff; font-weight:600; letter-spacing:4px; font-family:var(--font-num); }
+#s29 .s29-en { font-size:18px; color:rgba(255,255,255,0.45); letter-spacing:3px; }
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+<!-- ============ s1 · 封面 ============ -->
+<section class="slide dark" id="s1">
+  <img class="s1-bg" src="assets/cover_hero.png" alt="" />
+  <div class="s1-mask"></div>
+  <div class="s1-inner">
+    <div class="s1-top reveal">
+      <img class="s1-logo" src="assets/logo_white.png" alt="微网通联" />
+      <div class="s1-en-top">PRESENTED BY 51welink.com</div>
+    </div>
+    <div class="s1-main">
+      <div class="s1-bar reveal" style="--d:0.10s"></div>
+      <div class="s1-title reveal" style="--d:0.15s">GMP 本地化部署消息平台</div>
+      <div class="s1-en reveal" style="--d:0.22s">GLOBAL MESSAGE PLATFORM</div>
+      <div class="s1-tag reveal" style="--d:0.30s">GMP 是一款基于跨平台的 Java 技术开发的消息发送与管理平台，<br />专为满足企业本地化部署的需求而设计。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ s2 · 目录 ============ -->
+<section class="slide" id="s2" style="background:var(--bg)">
+  <div class="s2-inner">
+    <div class="s2-panel">
+      <img class="s2-panel-img" src="assets/gen-toc-panel-flip.png" alt="" />
+      <div class="s2-panel-mask"></div>
+      <div class="s2-panel-body">
+        <img class="s2-logo reveal" src="assets/logo_white.png" alt="微网通联" />
+        <div class="s2-panel-main">
+          <div class="s2-bar reveal" style="--d:0.10s"></div>
+          <div class="s2-h reveal" style="--d:0.15s">目录</div>
+          <div class="s2-en reveal" style="--d:0.22s">CONTENTS</div>
+          <div class="s2-intro reveal" style="--d:0.30s">从产品介绍、产品优势到功能与案例，<br />完整呈现 GMP 本地化部署消息平台。</div>
+        </div>
+      </div>
+    </div>
+    <div class="s2-right">
+      <div class="s2-row with-line reveal" style="--d:0.15s">
+        <div class="s2-num">01</div>
+        <div class="s2-mid">
+          <div class="s2-trow">
+            <div class="s2-t">产品介绍</div>
+            <div class="s2-e">PRODUCT INTRO</div>
+          </div>
+          <div class="s2-d">平台定位 · 系统结构 · 处理能力 · 版本分类</div>
+        </div>
+        <div class="s2-p">03 - 08</div>
+      </div>
+      <div class="s2-row with-line reveal" style="--d:0.25s">
+        <div class="s2-num">02</div>
+        <div class="s2-mid">
+          <div class="s2-trow">
+            <div class="s2-t">产品优势</div>
+            <div class="s2-e">ADVANTAGES</div>
+          </div>
+          <div class="s2-d">平台价值 · 技术优势 · 灵活部署 · 极致服务</div>
+        </div>
+        <div class="s2-p">09 - 13</div>
+      </div>
+      <div class="s2-row with-line reveal" style="--d:0.35s">
+        <div class="s2-num">03</div>
+        <div class="s2-mid">
+          <div class="s2-trow">
+            <div class="s2-t">功能介绍</div>
+            <div class="s2-e">FUNCTIONS</div>
+          </div>
+          <div class="s2-d">三大中心 · 功能演示 · 功能及接口清单</div>
+        </div>
+        <div class="s2-p">14 - 24</div>
+      </div>
+      <div class="s2-row reveal" style="--d:0.45s">
+        <div class="s2-num">04</div>
+        <div class="s2-mid">
+          <div class="s2-trow">
+            <div class="s2-t">案例介绍</div>
+            <div class="s2-e">CASES</div>
+          </div>
+          <div class="s2-d">典型客户 · 典型应用 · 行业客户</div>
+        </div>
+        <div class="s2-p">25 - 28</div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">02 / 29</div>
+</section>
+
+<!-- ============ s3 · 章节页 01 产品介绍 ============ -->
+<section class="slide dark" id="s3">
+  <img class="sec-bg" src="assets/section_bg.png" alt="" />
+  <div class="sec-visual reveal reveal-zoom" style="--d:0.25s">
+    <img class="floaty" src="assets/gen-ch1-globe.png" alt="" />
+  </div>
+  <div class="sec-inner">
+    <div class="sec-top reveal">
+      <img class="sec-logo" src="assets/logo_white.png" alt="微网通联" />
+      <div class="sec-part">PART 01</div>
+    </div>
+    <div class="sec-mid">
+      <div class="sec-bignum reveal" style="--d:0.10s">01</div>
+      <div class="sec-block">
+        <div class="sec-bar reveal" style="--d:0.15s"></div>
+        <div class="sec-h reveal" style="--d:0.20s">产品介绍</div>
+        <div class="sec-en reveal" style="--d:0.28s">PRODUCT INTRO</div>
+        <div class="sec-desc reveal" style="--d:0.36s">适用于各企事业单位、电信运营商、教育机构、学院等安全性、保密性要求更高的企业</div>
+      </div>
+    </div>
+    <div class="sec-bottom"></div>
+  </div>
+  <div class="pageno">03 / 29</div>
+</section>
+
+<!-- ============ s4 · GMP 介绍 ============ -->
+<section class="slide" id="s4" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">01 · 产品介绍</div>
+    <div class="slide-title">GMP 介绍</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s4-body">
+    <div class="s4-left">
+      <div class="s4-gmp num reveal" style="--d:0.10s">GMP</div>
+      <div class="s4-eng reveal" style="--d:0.16s">GLOBAL MESSAGE PLATFORM</div>
+      <div class="s4-para reveal" style="--d:0.22s">GMP 是一款基于跨平台 Java 技术开发的消息发送与管理平台，专为满足企业本地化部署需求而精心打造。该平台提供了安全可靠的解决方案，支持客户在本地部署环境中实现独立自主的部署，同时为企业提供高度定制化和全面性的即时通讯服务，助力企业实现高效沟通和协作。</div>
+      <div class="s4-stat reveal" style="--d:0.30s">
+        <img src="assets/icons/gauge-high-F02D4E.png" alt="" />
+        <div class="s4-stat-t">平台数据处理能力：日处理能力</div>
+        <div class="s4-stat-v num">1 亿条以上</div>
+      </div>
+    </div>
+    <div class="s4-right reveal reveal-right" style="--d:0.25s">
+      <div class="shot">
+        <div class="shot-chrome">
+          <span class="shot-dot" style="background:#F02D4E"></span>
+          <span class="shot-dot" style="background:#F5A623"></span>
+          <span class="shot-dot" style="background:#2E6FE8"></span>
+          <span class="shot-t">GMP 平台 · 发送中心概览</span>
+        </div>
+        <img class="shot-img" src="assets/s04_11.png" alt="GMP 平台界面" />
+      </div>
+    </div>
+  </div>
+  <div class="pageno">04 / 29</div>
+</section>
+
+<!-- ============ s5 · 为什么需要 GMP ============ -->
+<section class="slide" id="s5" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">01 · 产品介绍</div>
+    <div class="slide-title">为什么你需要 GMP 消息平台</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s5-body">
+    <div class="s5-lead reveal reveal-left" style="--d:0.10s">
+      <div class="s5-lead-icon"><img src="assets/icons/shield-halved-F02D4E.png" alt="" /></div>
+      <div class="s5-lead-t">自建平台<br />门槛高</div>
+      <div class="s5-lead-d">从通道对接到系统运维，七大能力缺一不可 —— GMP 一站式覆盖</div>
+    </div>
+    <div class="s5-card reveal" style="--d:0.14s">
+      <div class="icon-tile navy"><img src="assets/icons/network-wired-0A1F44.png" alt="" /></div>
+      <div class="s5-t">通道对接</div>
+      <div class="s5-d">多通道对接流程梳理 · 第三方动态追踪</div>
+    </div>
+    <div class="s5-card reveal" style="--d:0.18s">
+      <div class="icon-tile"><img src="assets/icons/layer-group-2E6FE8.png" alt="" /></div>
+      <div class="s5-t">业务对接</div>
+      <div class="s5-d">多种消息类型整合 · 通道自由组合发送 · 系统调用流程 · 界面操作流程</div>
+    </div>
+    <div class="s5-card reveal" style="--d:0.22s">
+      <div class="icon-tile"><img src="assets/icons/sliders-0A1F44.png" alt="" /></div>
+      <div class="s5-t">产品设计</div>
+      <div class="s5-d">上下游系统管理 · 统一消息发送 · 定时、定速、补发 · 数据埋点 · 审核流</div>
+    </div>
+    <div class="s5-card reveal" style="--d:0.26s">
+      <div class="icon-tile red"><img src="assets/icons/lock-F02D4E.png" alt="" /></div>
+      <div class="s5-t">数据安全</div>
+      <div class="s5-d">账号权限 · API 调用权限 · 数据隔离 ……</div>
+    </div>
+    <div class="s5-card reveal" style="--d:0.30s">
+      <div class="icon-tile"><img src="assets/icons/microchip-2E6FE8.png" alt="" /></div>
+      <div class="s5-t">技术研发</div>
+      <div class="s5-d">协议兼容、可拓展 · 标准化接口设计 · 全面的数据采集 · 可靠的数据分析</div>
+    </div>
+    <div class="s5-card reveal" style="--d:0.34s">
+      <div class="icon-tile red"><img src="assets/icons/gauge-high-F02D4E.png" alt="" /></div>
+      <div class="s5-t">性能保障</div>
+      <div class="s5-d">消息高并发 · 系统稳定性 · 双活容灾</div>
+    </div>
+    <div class="s5-card reveal" style="--d:0.38s">
+      <div class="icon-tile"><img src="assets/icons/arrows-rotate-F02D4E.png" alt="" /></div>
+      <div class="s5-t">系统运维</div>
+      <div class="s5-d">保持通道更新 · 通道随时扩展 · 系统维护</div>
+    </div>
+  </div>
+  <div class="pageno">05 / 29</div>
+</section>
+
+<!-- ============ s6 · GMP 系统结构图 ============ -->
+<section class="slide" id="s6" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">01 · 产品介绍</div>
+    <div class="slide-title">GMP 系统结构图</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s6-body">
+    <div class="s6-shot reveal reveal-zoom" style="--d:0.12s">
+      <img class="s6-img" src="assets/s06_3.png" alt="GMP 系统结构图" />
+    </div>
+    <div class="s6-band reveal" style="--d:0.28s">
+      <div class="s6-chip">中间件（tomcat）</div>
+      <div class="s6-chip">Redis / MySQL / RabbitMQ</div>
+      <div class="s6-chip">后台服务（Spring Boot）</div>
+      <div class="s6-chip">操作系统 OS（Linux，Unix，Windows）</div>
+    </div>
+  </div>
+  <div class="pageno">06 / 29</div>
+</section>
+
+<!-- ============ s7 · 数据处理能力（深色大数字） ============ -->
+<section class="slide dark" id="s7">
+  <div class="s7-deco1"></div>
+  <div class="s7-deco2"></div>
+  <div class="s7-head reveal">
+    <div class="kicker">01 · 产品介绍</div>
+    <div class="s7-title">数据处理能力</div>
+    <div class="s7-bar"></div>
+  </div>
+  <div class="s7-main">
+    <div class="s7-hero reveal" style="--d:0.10s">
+      <div class="s7-stat">
+        <div class="s7-numrow"><span class="num s7-n2">6000</span><span class="num s7-n2u">+/s</span></div>
+        <div class="s7-label">峰值处理能力</div>
+      </div>
+      <div class="s7-stat mid">
+        <div class="s7-numrow"><span class="num s7-n1">1</span><span class="num s7-n1u">亿条以上</span></div>
+        <div class="s7-label-mid">日处理能力</div>
+      </div>
+      <div class="s7-stat">
+        <div class="s7-numrow"><span class="num s7-n2">2000</span><span class="num s7-n2u">万/h</span></div>
+        <div class="s7-label">小时处理能力</div>
+      </div>
+    </div>
+    <div class="s7-divider reveal" style="--d:0.25s"></div>
+    <div class="s7-desc reveal" style="--d:0.35s">我们的系统拥有超过 1 亿条日处理能力，即可以处理每天 1 亿条及以上的数据量，保证数据处理的高效性和准确性，同时支持大规模的数据快速处理和复杂的业务需求，具备高度的扩展性和稳定性，可以为客户提供优质的服务和体验。</div>
+  </div>
+  <div class="pageno">07 / 29</div>
+</section>
+
+<!-- ============ s8 · 版本分类 ============ -->
+<section class="slide" id="s8" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">01 · 产品介绍</div>
+    <div class="slide-title">GMP 版本分类</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s8-body">
+    <table class="s8-table reveal" style="--d:0.12s">
+      <thead>
+        <tr>
+          <th rowspan="2">版本类型</th>
+          <th rowspan="2">版本要点</th>
+          <th colspan="8">功能模块</th>
+          <th rowspan="2">部署服务器要求</th>
+          <th colspan="2">销售指导价</th>
+        </tr>
+        <tr>
+          <th class="sub">短彩信</th>
+          <th class="sub">视频短信</th>
+          <th class="sub">互动信息</th>
+          <th class="sub">邮件消息</th>
+          <th class="sub">微信消息</th>
+          <th class="sub">组合消息</th>
+          <th class="sub">监控告警</th>
+          <th class="sub">信创环境</th>
+          <th class="sub">软件价格/套</th>
+          <th class="sub">维保费/年</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="s8-ver">基础版</td>
+          <td class="s8-pt">支持短彩信、语音短信功能的提交发送和查询功能，后台账户管理、通道管理、数据管理等功能。只需 2 台 16G 内存服务器部署（一台应用、一台数据库），数据库为 MySQL。</td>
+          <td><span class="s8-yes">✓</span></td>
+          <td><span class="s8-no">—</span></td>
+          <td><span class="s8-no">—</span></td>
+          <td><span class="s8-no">—</span></td>
+          <td><span class="s8-no">—</span></td>
+          <td><span class="s8-no">—</span></td>
+          <td><span class="s8-no">—</span></td>
+          <td><span class="s8-no">—</span></td>
+          <td class="s8-srv">2 台<br />8 核 16G 内存</td>
+          <td class="s8-price">¥50,000.00</td>
+          <td class="s8-price">¥7,500.00</td>
+        </tr>
+        <tr>
+          <td class="s8-ver">专业版</td>
+          <td class="s8-pt">支持短彩信、语音短信、视频短信、邮件消息的提交发送，提交与发送明细的查询，消息模板设置，后台账户管理、角色、权限管理、通道管理、统计报表、数据管理、系统设置。需 3 台 16G 内存服务器部署（2 台应用、1 台数据库），数据库支持 MySQL、Oracle。</td>
+          <td><span class="s8-yes">✓</span></td>
+          <td><span class="s8-yes">✓</span></td>
+          <td><span class="s8-yes">✓</span></td>
+          <td><span class="s8-yes">✓</span></td>
+          <td><span class="s8-no">—</span></td>
+          <td><span class="s8-no">—</span></td>
+          <td><span class="s8-no">—</span></td>
+          <td><span class="s8-no">—</span></td>
+          <td class="s8-srv">3 台<br />8 核 16G 内存</td>
+          <td class="s8-price">¥100,000.00</td>
+          <td class="s8-price">¥15,000.00</td>
+        </tr>
+        <tr>
+          <td class="s8-ver hot">旗舰版</td>
+          <td class="s8-pt">支持短彩信、语音短信、视频短信、邮件消息、微信消息、组合消息的提交发送，提交与发送明细的查询，消息审核、消息模板设置，后台账户管理、角色、权限管理、通道管理、统计报表、数据管理、计费管理、监控管理、系统设置功能。支持同城双活高可用部署以及信创环境部署，单机房部署至少需要 4 台 16G 内存服务器（2 台应用、2 台数据库），数据库支持 MySQL、Oracle、达梦数据库。</td>
+          <td><span class="s8-yes">✓</span></td>
+          <td><span class="s8-yes">✓</span></td>
+          <td><span class="s8-yes">✓</span></td>
+          <td><span class="s8-yes">✓</span></td>
+          <td><span class="s8-yes">✓</span></td>
+          <td><span class="s8-yes">✓</span></td>
+          <td><span class="s8-yes">✓</span></td>
+          <td><span class="s8-yes">✓</span></td>
+          <td class="s8-srv">大于 3 台<br />8 核 16G 内存</td>
+          <td class="s8-price">¥198,000.00</td>
+          <td class="s8-price">¥29,700.00</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pageno">08 / 29</div>
+</section>
+
+<!-- ============ s9 · 章节页 02 产品优势 ============ -->
+<section class="slide dark" id="s9">
+  <img class="sec-bg" src="assets/section_bg.png" alt="" />
+  <div class="sec-visual reveal reveal-zoom" style="--d:0.25s">
+    <img class="floaty" src="assets/gen-ch2-phone.png" alt="" />
+  </div>
+  <div class="sec-inner">
+    <div class="sec-top reveal">
+      <img class="sec-logo" src="assets/logo_white.png" alt="微网通联" />
+      <div class="sec-part">PART 02</div>
+    </div>
+    <div class="sec-mid">
+      <div class="sec-bignum reveal" style="--d:0.10s">02</div>
+      <div class="sec-block">
+        <div class="sec-bar reveal" style="--d:0.15s"></div>
+        <div class="sec-h reveal" style="--d:0.20s">产品优势</div>
+        <div class="sec-en reveal" style="--d:0.28s">ADVANTAGES</div>
+        <div class="sec-desc reveal" style="--d:0.36s">灵活的程序设计、多个消息渠道、多维度数据分析，<br />更多提升用户体验的功能设计，为您安全高效运营提供强有力支撑</div>
+      </div>
+    </div>
+    <div class="sec-bottom"></div>
+  </div>
+  <div class="pageno">09 / 29</div>
+</section>
+
+<!-- ============ s10 · 平台价值 ============ -->
+<section class="slide" id="s10" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">02 · 产品优势</div>
+    <div class="slide-title">平台价值</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s10-body">
+    <div class="s10-cards">
+      <div class="s10-card reveal" style="--d:0.12s">
+        <div class="s10-head">
+          <div class="icon-tile"><img src="assets/icons/tower-broadcast-2E6FE8.png" alt="" /></div>
+          <div class="s10-t">多通道，多方达</div>
+        </div>
+        <div class="s10-list">
+          <div class="s10-li"><span class="s10-n">1.</span>主流通道全覆盖</div>
+          <div class="s10-li"><span class="s10-n">2.</span>上下游便捷管理</div>
+          <div class="s10-li"><span class="s10-n">3.</span>建立用户体系</div>
+        </div>
+      </div>
+      <div class="s10-card reveal" style="--d:0.22s">
+        <div class="s10-head">
+          <div class="icon-tile red"><img src="assets/icons/bolt-F02D4E.png" alt="" /></div>
+          <div class="s10-t">高送达，低成本</div>
+        </div>
+        <div class="s10-list">
+          <div class="s10-li"><span class="s10-n">1.</span>消息模板</div>
+          <div class="s10-li"><span class="s10-n">2.</span>补发策略</div>
+          <div class="s10-li"><span class="s10-n">3.</span>统一接口调用</div>
+        </div>
+      </div>
+      <div class="s10-card reveal" style="--d:0.32s">
+        <div class="s10-head">
+          <div class="icon-tile navy"><img src="assets/icons/arrow-trend-up-0A1F44.png" alt="" /></div>
+          <div class="s10-t">多维度，细分析</div>
+        </div>
+        <div class="s10-list">
+          <div class="s10-li"><span class="s10-n">1.</span>消息历史明细</div>
+          <div class="s10-li"><span class="s10-n">2.</span>多通道推送报表</div>
+          <div class="s10-li"><span class="s10-n">3.</span>用户报表</div>
+        </div>
+      </div>
+    </div>
+    <div class="s10-band reveal" style="--d:0.42s">
+      <div class="s10-band-t">GMP 消息平台</div>
+      <img class="s10-band-arrow" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
+      <div class="s10-band-items">
+        <div class="s10-bi"><i></i>触达用户</div>
+        <div class="s10-bi"><i></i>提高收益</div>
+        <div class="s10-bi"><i></i>数据闭环</div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">10 / 29</div>
+</section>
+
+<!-- ============ s11 · 技术优势 ============ -->
+<section class="slide" id="s11" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">02 · 产品优势</div>
+    <div class="slide-title">技术优势</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s11-body">
+    <div class="s11-card dark reveal" style="--d:0.10s">
+      <div class="s11-head">
+        <div class="s11-n">01</div>
+        <div class="s11-t">安全措施 - 多方位</div>
+      </div>
+      <div class="s11-items">
+        <div class="s11-item"><div class="s11-dot"></div><div class="s11-it">私有化部署</div></div>
+        <div class="s11-item"><div class="s11-dot"></div><div class="s11-it">B/S + 微服务安全架构</div></div>
+        <div class="s11-item"><div class="s11-dot"></div><div class="s11-it">加密配置</div></div>
+        <div class="s11-item"><div class="s11-dot"></div><div class="s11-it">底层数据加密，敏感数据加密显示</div></div>
+        <div class="s11-item"><div class="s11-dot"></div><div class="s11-it">支持国密算法</div></div>
+      </div>
+    </div>
+    <div class="s11-card reveal" style="--d:0.18s">
+      <div class="s11-head">
+        <div class="s11-n">02</div>
+        <div class="s11-t">高可用性 - 多重保障</div>
+      </div>
+      <div class="s11-items">
+        <div class="s11-item"><div class="s11-dot"></div><div class="s11-it">系统故障在线自动恢复</div></div>
+        <div class="s11-item"><div class="s11-dot"></div><div class="s11-it">多通道智能路由和并联技术</div></div>
+        <div class="s11-item"><div class="s11-dot"></div><div class="s11-it">任一节点支持负载均衡、热备</div></div>
+        <div class="s11-item"><div class="s11-dot"></div><div class="s11-it">通道自动切换</div></div>
+      </div>
+    </div>
+    <div class="s11-card reveal" style="--d:0.26s">
+      <div class="s11-head">
+        <div class="s11-n">03</div>
+        <div class="s11-t">系统对接 - 易实施</div>
+      </div>
+      <div class="s11-items">
+        <div class="s11-item"><div class="s11-dot"></div><div class="s11-it">预留接口，支持二次开发</div></div>
+        <div class="s11-item"><div class="s11-dot"></div><div class="s11-it">支持集团多系统接入</div></div>
+        <div class="s11-item"><div class="s11-dot"></div><div class="s11-it">支持接口文件、SDK、HTTP、SOCKET 多重接入方式</div></div>
+      </div>
+    </div>
+    <div class="s11-card reveal" style="--d:0.34s">
+      <div class="s11-head">
+        <div class="s11-n">04</div>
+        <div class="s11-t">发送能力 - 大容量</div>
+      </div>
+      <div class="s11-items">
+        <div class="s11-item"><div class="s11-dot"></div><div class="s11-it">亿级日发送能力</div></div>
+        <div class="s11-item"><div class="s11-dot"></div><div class="s11-it">高性能缓存技术</div></div>
+        <div class="s11-item"><div class="s11-dot"></div><div class="s11-it">分布式计算能力</div></div>
+        <div class="s11-item"><div class="s11-dot"></div><div class="s11-it">单次支持 100 万条号码</div></div>
+        <div class="s11-item"><div class="s11-dot"></div><div class="s11-it">支持短彩信、语音短信、微信多重类型信息发送</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">11 / 29</div>
+</section>
+
+<!-- ============ s12 · 灵活的部署能力 ============ -->
+<section class="slide" id="s12" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">02 · 产品优势</div>
+    <div class="slide-title">灵活的部署能力</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s12-body">
+    <div class="s12-cards">
+      <div class="s12-card reveal" style="--d:0.12s">
+        <div class="icon-tile"><img src="assets/icons/network-wired-0A1F44.png" alt="" /></div>
+        <div class="s12-t">分布式部署</div>
+        <div class="s12-d">多节点分布式部署，按业务量灵活扩展，满足持续增长的消息处理需求。</div>
+        <div class="s12-tags"><span class="s12-tag">弹性扩展</span></div>
+      </div>
+      <div class="s12-card reveal" style="--d:0.22s">
+        <div class="icon-tile"><img src="assets/icons/server-0A1F44.png" alt="" /></div>
+        <div class="s12-t">集中式部署</div>
+        <div class="s12-d">单中心集中部署，架构简洁、运维高效，快速上线投入使用。</div>
+        <div class="s12-tags"><span class="s12-tag">快速上线</span></div>
+      </div>
+      <div class="s12-card hot reveal" style="--d:0.32s">
+        <div class="icon-tile dark"><img src="assets/icons/arrows-rotate-FFFFFF.png" alt="" /></div>
+        <div class="s12-t">集群容灾式部署</div>
+        <div class="s12-d">面向高可用要求的集群容灾部署方案，保障业务连续性。</div>
+        <div class="s12-tags"><span class="s12-tag">同城双活</span><span class="s12-tag">两地三中心</span></div>
+      </div>
+    </div>
+    <div class="s12-band reveal" style="--d:0.42s">
+      <img src="assets/icons/sliders-0A1F44.png" alt="" />
+      <div class="s12-band-t">根据业务需求自由部署</div>
+    </div>
+  </div>
+  <div class="pageno">12 / 29</div>
+</section>
+
+<!-- ============ s13 · 极致服务 ============ -->
+<section class="slide" id="s13" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">02 · 产品优势</div>
+    <div class="slide-title">极致服务</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s13-body">
+    <div class="s13-col reveal" style="--d:0.10s">
+      <div class="s13-col-head" style="background:linear-gradient(160deg,#0A1F44 0%,#123A7A 100%)">
+        <img class="s13-col-icon" src="assets/icons/tower-broadcast-2E6FE8.png" alt="" style="filter:brightness(10)" />
+        <div>
+          <div class="s13-col-t">通道服务</div>
+          <div class="s13-col-e">CHANNEL</div>
+        </div>
+      </div>
+      <div class="s13-list">
+        <div class="s13-item"><span class="s13-item-dot" style="background:#0A1F44"></span><div><div class="s13-item-t">通道资源</div><div class="s13-item-d">可提供多种接入形式的通道资源</div></div></div>
+        <div class="s13-item last"><span class="s13-item-dot" style="background:#0A1F44"></span><div><div class="s13-item-t">码号服务</div><div class="s13-item-d">可提供码号资源代申请、落地服务</div></div></div>
+      </div>
+    </div>
+    <div class="s13-col reveal" style="--d:0.25s">
+      <div class="s13-col-head" style="background:linear-gradient(160deg,#2E6FE8 0%,#4A8BF5 100%)">
+        <img class="s13-col-icon" src="assets/icons/headset-FFFFFF.png" alt="" />
+        <div>
+          <div class="s13-col-t">技术支持</div>
+          <div class="s13-col-e">SUPPORT</div>
+        </div>
+      </div>
+      <div class="s13-list">
+        <div class="s13-item"><span class="s13-item-dot" style="background:#2E6FE8"></span><div><div class="s13-item-t">7*24H 远程服务，1H 内响应问题</div></div></div>
+        <div class="s13-item"><span class="s13-item-dot" style="background:#2E6FE8"></span><div><div class="s13-item-t">按合同约定提供系统运维服务、驻场服务</div></div></div>
+        <div class="s13-item"><span class="s13-item-dot" style="background:#2E6FE8"></span><div><div class="s13-item-t">根据业务需求可提供定制开发服务</div></div></div>
+        <div class="s13-item last"><span class="s13-item-dot" style="background:#2E6FE8"></span><div><div class="s13-item-t">定期进行运维检修</div></div></div>
+      </div>
+    </div>
+    <div class="s13-col reveal" style="--d:0.40s">
+      <div class="s13-col-head" style="background:linear-gradient(160deg,#F02D4E 0%,#F76B85 100%)">
+        <img class="s13-col-icon" src="assets/icons/chart-line-FFFFFF.png" alt="" />
+        <div>
+          <div class="s13-col-t">服务报告</div>
+          <div class="s13-col-e">REPORT</div>
+        </div>
+      </div>
+      <div class="s13-list">
+        <div class="s13-item"><span class="s13-item-dot" style="background:#F02D4E"></span><div><div class="s13-item-t">故障报告</div><div class="s13-item-d">故障解决后，24 小时内提供详细故障报告</div></div></div>
+        <div class="s13-item"><span class="s13-item-dot" style="background:#F02D4E"></span><div><div class="s13-item-t">详尽的培训文档</div></div></div>
+        <div class="s13-item"><span class="s13-item-dot" style="background:#F02D4E"></span><div><div class="s13-item-t">清晰直观的演示平台</div></div></div>
+        <div class="s13-item"><span class="s13-item-dot" style="background:#F02D4E"></span><div><div class="s13-item-t">可视化的远程培训</div></div></div>
+        <div class="s13-item last"><span class="s13-item-dot" style="background:#F02D4E"></span><div><div class="s13-item-t">面对面现场培训</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">13 / 29</div>
+</section>
+
+<!-- ============ s14 · 章节页 03 功能介绍 ============ -->
+<section class="slide dark" id="s14">
+  <img class="sec-bg" src="assets/section_bg.png" alt="" />
+  <div class="sec-visual reveal reveal-zoom" style="--d:0.25s">
+    <img class="floaty" src="assets/gen-ch3-shield.png" alt="" />
+  </div>
+  <div class="sec-inner">
+    <div class="sec-top reveal">
+      <img class="sec-logo" src="assets/logo_white.png" alt="微网通联" />
+      <div class="sec-part">PART 03</div>
+    </div>
+    <div class="sec-mid">
+      <div class="sec-bignum reveal" style="--d:0.10s">03</div>
+      <div class="sec-block">
+        <div class="sec-bar reveal" style="--d:0.15s"></div>
+        <div class="sec-h reveal" style="--d:0.20s">功能介绍</div>
+        <div class="sec-en reveal" style="--d:0.28s">FUNCTIONS</div>
+        <div class="sec-desc reveal" style="--d:0.36s">三大中心功能完备，包含短消息管理、微信公众号消息管理等，<br />账号体系支持多层级，满足集团内部个性化的需求</div>
+      </div>
+    </div>
+    <div class="sec-bottom"></div>
+  </div>
+  <div class="pageno">14 / 29</div>
+</section>
+
+<!-- ============ s15 · 平台介绍（三大中心） ============ -->
+<section class="slide" id="s15" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">03 · 功能介绍</div>
+    <div class="slide-title">平台介绍</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s15-body">
+    <div class="s15-col reveal" style="--d:0.10s">
+      <div class="s15-col-head" style="background:linear-gradient(160deg,#0A1F44 0%,#123A7A 100%)">
+        <img class="s15-col-icon" src="assets/icons/paper-plane-FFFFFF.png" alt="" />
+        <div>
+          <div class="s15-col-t">发送</div>
+          <div class="s15-col-e">SEND</div>
+        </div>
+      </div>
+      <div class="s15-list">
+        <div class="s15-item"><span class="s15-item-dot" style="background:#0A1F44"></span><span class="s15-item-t">短信消息</span></div>
+        <div class="s15-item"><span class="s15-item-dot" style="background:#0A1F44"></span><span class="s15-item-t">微信消息</span></div>
+        <div class="s15-item"><span class="s15-item-dot" style="background:#0A1F44"></span><span class="s15-item-t">邮件消息</span></div>
+        <div class="s15-item"><span class="s15-item-dot" style="background:#0A1F44"></span><span class="s15-item-t">APP 消息</span></div>
+        <div class="s15-item"><span class="s15-item-dot" style="background:#0A1F44"></span><span class="s15-item-t">其它消息</span></div>
+        <div class="s15-item last"><span class="s15-item-dot" style="background:#0A1F44"></span><span class="s15-item-t">组合消息</span></div>
+      </div>
+    </div>
+    <div class="s15-col reveal" style="--d:0.25s">
+      <div class="s15-col-head" style="background:linear-gradient(160deg,#2E6FE8 0%,#4A8BF5 100%)">
+        <img class="s15-col-icon" src="assets/icons/sliders-FFFFFF.png" alt="" />
+        <div>
+          <div class="s15-col-t">管理</div>
+          <div class="s15-col-e">MANAGE</div>
+        </div>
+      </div>
+      <div class="s15-list">
+        <div class="s15-item"><span class="s15-item-dot" style="background:#2E6FE8"></span><span class="s15-item-t">账号管理</span></div>
+        <div class="s15-item"><span class="s15-item-dot" style="background:#2E6FE8"></span><span class="s15-item-t">审核管理</span></div>
+        <div class="s15-item"><span class="s15-item-dot" style="background:#2E6FE8"></span><span class="s15-item-t">渠道管理</span></div>
+        <div class="s15-item"><span class="s15-item-dot" style="background:#2E6FE8"></span><span class="s15-item-t">报表管理</span></div>
+        <div class="s15-item"><span class="s15-item-dot" style="background:#2E6FE8"></span><span class="s15-item-t">费用管理</span></div>
+        <div class="s15-item"><span class="s15-item-dot" style="background:#2E6FE8"></span><span class="s15-item-t">基础数据</span></div>
+        <div class="s15-item last"><span class="s15-item-dot" style="background:#2E6FE8"></span><span class="s15-item-t">系统管理</span></div>
+      </div>
+    </div>
+    <div class="s15-col reveal" style="--d:0.40s">
+      <div class="s15-col-head" style="background:linear-gradient(160deg,#F02D4E 0%,#F76B85 100%)">
+        <img class="s15-col-icon" src="assets/icons/chart-line-FFFFFF.png" alt="" />
+        <div>
+          <div class="s15-col-t">监控</div>
+          <div class="s15-col-e">MONITOR</div>
+        </div>
+      </div>
+      <div class="s15-list">
+        <div class="s15-item"><span class="s15-item-dot" style="background:#F02D4E"></span><span class="s15-item-t">业务监控</span></div>
+        <div class="s15-item"><span class="s15-item-dot" style="background:#F02D4E"></span><span class="s15-item-t">渠道监控</span></div>
+        <div class="s15-item"><span class="s15-item-dot" style="background:#F02D4E"></span><span class="s15-item-t">应用程序监控</span></div>
+        <div class="s15-item"><span class="s15-item-dot" style="background:#F02D4E"></span><span class="s15-item-t">服务器监控</span></div>
+        <div class="s15-item last"><span class="s15-item-dot" style="background:#F02D4E"></span><span class="s15-item-t">告警设置</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">15 / 29</div>
+</section>
+
+<!-- ============ s16 · 短信 / 互动消息 ============ -->
+<section class="slide" id="s16" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">03 · 功能介绍</div>
+    <div class="slide-title">短信 / 互动消息</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="fn-body">
+    <div class="fn-left">
+      <div class="fn-tag reveal" style="--d:0.10s">短信 / 互动消息</div>
+      <div class="fn-block reveal" style="--d:0.18s">
+        <div class="fn-h"><img src="assets/icons/comment-sms-2E6FE8.png" alt="" />信息类型</div>
+        <div class="fn-p">针对不同业务情景选择应用不同的信息类型，如通知类、营销类，自由对通道设置分组。</div>
+      </div>
+      <div class="fn-block reveal" style="--d:0.28s">
+        <div class="fn-h"><img src="assets/icons/paper-plane-0A1F44.png" alt="" />消息发送</div>
+        <div class="fn-p">接口、页面、文件多重发送方式，单次支持 100 万条号码；适用各种应用场景（验证码、会员提醒、动账通知、营销推广、金融理财等）。</div>
+      </div>
+    </div>
+    <div class="fn-right reveal reveal-right" style="--d:0.25s">
+      <div class="shot">
+        <div class="shot-chrome">
+          <span class="shot-dot" style="background:#F02D4E"></span>
+          <span class="shot-dot" style="background:#F5A623"></span>
+          <span class="shot-dot" style="background:#2E6FE8"></span>
+          <span class="shot-t">GMP 平台 · 个性短信发送</span>
+        </div>
+        <img class="shot-img" src="assets/s16_10.png" alt="短信 / 互动消息" />
+      </div>
+    </div>
+  </div>
+  <div class="pageno">16 / 29</div>
+</section>
+
+<!-- ============ s17 · 微信消息 ============ -->
+<section class="slide" id="s17" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">03 · 功能介绍</div>
+    <div class="slide-title">微信消息</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="fn-body">
+    <div class="fn-left">
+      <div class="fn-tag reveal" style="--d:0.10s">微信群发 / 模板通知</div>
+      <div class="fn-block reveal" style="--d:0.18s">
+        <div class="fn-h"><img src="assets/icons/comment-dots-2E6FE8.png" alt="" />公众号消息管理</div>
+        <div class="fn-li"><i></i>直接对接多微信公众号，支持图文消息编辑预览、模板消息（接口）推送</div>
+        <div class="fn-li"><i></i>自定义微信菜单、自动回复</div>
+        <div class="fn-li"><i></i>微信用户同步管理</div>
+      </div>
+    </div>
+    <div class="fn-right reveal reveal-right" style="--d:0.25s">
+      <div class="shot">
+        <div class="shot-chrome">
+          <span class="shot-dot" style="background:#F02D4E"></span>
+          <span class="shot-dot" style="background:#F5A623"></span>
+          <span class="shot-dot" style="background:#2E6FE8"></span>
+          <span class="shot-t">GMP 平台 · 微信群发</span>
+        </div>
+        <img class="shot-img" src="assets/s17_5.png" alt="微信消息" />
+      </div>
+    </div>
+  </div>
+  <div class="pageno">17 / 29</div>
+</section>
+
+<!-- ============ s18 · 邮件消息 ============ -->
+<section class="slide" id="s18" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">03 · 功能介绍</div>
+    <div class="slide-title">邮件消息</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="fn-body">
+    <div class="fn-left">
+      <div class="fn-tag reveal" style="--d:0.10s">邮件推送</div>
+      <div class="fn-block reveal" style="--d:0.18s">
+        <div class="fn-h"><img src="assets/icons/paper-plane-0A1F44.png" alt="" />配置即发</div>
+        <div class="fn-p">配置邮箱信息，即可下发邮件。支持发送普通邮件 / 变量邮件，适用于邮件告警、信息通知、营销推广等业务场景。</div>
+      </div>
+    </div>
+    <div class="fn-right reveal reveal-right" style="--d:0.25s">
+      <div class="shot">
+        <div class="shot-chrome">
+          <span class="shot-dot" style="background:#F02D4E"></span>
+          <span class="shot-dot" style="background:#F5A623"></span>
+          <span class="shot-dot" style="background:#2E6FE8"></span>
+          <span class="shot-t">GMP 平台 · 发送邮件</span>
+        </div>
+        <img class="shot-img" src="assets/s18_3.png" alt="邮件消息" />
+      </div>
+    </div>
+  </div>
+  <div class="pageno">18 / 29</div>
+</section>
+
+<!-- ============ s19 · 组合消息 ============ -->
+<section class="slide" id="s19" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">03 · 功能介绍</div>
+    <div class="slide-title">组合消息</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="fn-body">
+    <div class="fn-left">
+      <div class="fn-tag reveal" style="--d:0.10s">组合消息</div>
+      <div class="fn-block reveal" style="--d:0.18s">
+        <div class="fn-h"><img src="assets/icons/layer-group-2E6FE8.png" alt="" />自定义发送策略</div>
+        <div class="fn-p">自定义消息发送策略（消息渠道、发送顺序、发送规则、即时 / 定时），保障消息触达。</div>
+      </div>
+    </div>
+    <div class="fn-right reveal reveal-right" style="--d:0.25s">
+      <div class="shot">
+        <div class="shot-chrome">
+          <span class="shot-dot" style="background:#F02D4E"></span>
+          <span class="shot-dot" style="background:#F5A623"></span>
+          <span class="shot-dot" style="background:#2E6FE8"></span>
+          <span class="shot-t">GMP 平台 · 新增组合消息模板</span>
+        </div>
+        <img class="shot-img" src="assets/s19_5.png" alt="组合消息" />
+      </div>
+    </div>
+  </div>
+  <div class="pageno">19 / 29</div>
+</section>
+
+<!-- ============ s20 · 报表管理 ============ -->
+<section class="slide" id="s20" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">03 · 功能介绍</div>
+    <div class="slide-title">报表管理</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="fn-body">
+    <div class="fn-left">
+      <div class="fn-tag reveal" style="--d:0.10s">报表管理</div>
+      <div class="fn-block reveal" style="--d:0.18s">
+        <div class="fn-h"><img src="assets/icons/arrow-trend-up-0A1F44.png" alt="" />多维度统计分析</div>
+        <div class="fn-p">多维度（机构、用户、汇总、渠道、区域、信息类型）统计报表和发送趋势分析，有效的为管理决策提供依据。</div>
+      </div>
+    </div>
+    <div class="fn-right reveal reveal-right" style="--d:0.25s">
+      <div class="shot">
+        <div class="shot-chrome">
+          <span class="shot-dot" style="background:#F02D4E"></span>
+          <span class="shot-dot" style="background:#F5A623"></span>
+          <span class="shot-dot" style="background:#2E6FE8"></span>
+          <span class="shot-t">GMP 平台 · 用户报表</span>
+        </div>
+        <img class="shot-img" src="assets/s20_5.png" alt="报表管理" />
+      </div>
+    </div>
+  </div>
+  <div class="pageno">20 / 29</div>
+</section>
+
+<!-- ============ s21 · 审核管理 ============ -->
+<section class="slide" id="s21" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">03 · 功能介绍</div>
+    <div class="slide-title">审核管理</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="fn-body">
+    <div class="fn-left">
+      <div class="fn-tag reveal" style="--d:0.10s">自定义审核规则</div>
+      <div class="fn-block reveal" style="--d:0.18s">
+        <div class="fn-h"><img src="assets/icons/circle-check-0A1F44.png" alt="" />模板审核 · 消息审核</div>
+        <div class="fn-p">模板审核、消息审核，支持自定义审核范围、审核流程、审核方式（按角色、按机构），满足企业审核需求。</div>
+      </div>
+    </div>
+    <div class="fn-right reveal reveal-right" style="--d:0.25s">
+      <div class="shot">
+        <div class="shot-chrome">
+          <span class="shot-dot" style="background:#F02D4E"></span>
+          <span class="shot-dot" style="background:#F5A623"></span>
+          <span class="shot-dot" style="background:#2E6FE8"></span>
+          <span class="shot-t">GMP 平台 · 新增审核规则</span>
+        </div>
+        <img class="shot-img" src="assets/s21_3.png" alt="审核管理" />
+      </div>
+    </div>
+  </div>
+  <div class="pageno">21 / 29</div>
+</section>
+
+<!-- ============ s22 · 渠道管理 ============ -->
+<section class="slide" id="s22" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">03 · 功能介绍</div>
+    <div class="slide-title">渠道管理</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="fn-body">
+    <div class="fn-left">
+      <div class="fn-tag reveal" style="--d:0.10s">渠道对接</div>
+      <div class="fn-block reveal" style="--d:0.18s">
+        <div class="fn-h"><img src="assets/icons/network-wired-0A1F44.png" alt="" />界面化渠道资源配置</div>
+        <div class="fn-li"><i></i>多通道的智能调度，轻松应对业务高峰</div>
+        <div class="fn-li"><i></i>支持通道故障自动切换备用资源、实时告警</div>
+        <div class="fn-li"><i></i>支持消息失败重发、人工补发</div>
+      </div>
+    </div>
+    <div class="fn-right reveal reveal-right" style="--d:0.25s">
+      <div class="shot">
+        <div class="shot-chrome">
+          <span class="shot-dot" style="background:#F02D4E"></span>
+          <span class="shot-dot" style="background:#F5A623"></span>
+          <span class="shot-dot" style="background:#2E6FE8"></span>
+          <span class="shot-t">GMP 平台 · 短信渠道管理</span>
+        </div>
+        <img class="shot-img" src="assets/s22_18.png" alt="渠道管理" />
+      </div>
+    </div>
+  </div>
+  <div class="pageno">22 / 29</div>
+</section>
+
+<!-- ============ s23 · 监控管理 ============ -->
+<section class="slide" id="s23" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">03 · 功能介绍</div>
+    <div class="slide-title">监控管理</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="fn-body">
+    <div class="fn-left">
+      <div class="fn-tag reveal" style="--d:0.10s">监控管理</div>
+      <div class="fn-block reveal" style="--d:0.18s">
+        <div class="fn-h"><img src="assets/icons/gauge-high-0A1F44.png" alt="" />故障即时告警</div>
+        <div class="fn-p">业务监控、应用程序监控、服务器监控，故障即时告警，保障平台功能稳定可用。</div>
+      </div>
+    </div>
+    <div class="fn-right reveal reveal-right" style="--d:0.25s">
+      <div class="shot">
+        <div class="shot-chrome">
+          <span class="shot-dot" style="background:#F02D4E"></span>
+          <span class="shot-dot" style="background:#F5A623"></span>
+          <span class="shot-dot" style="background:#2E6FE8"></span>
+          <span class="shot-t">GMP 平台 · 业务监控</span>
+        </div>
+        <img class="shot-img" src="assets/s23_3.png" alt="监控管理" />
+      </div>
+    </div>
+  </div>
+  <div class="pageno">23 / 29</div>
+</section>
+
+<!-- ============ s24 · 功能及接口清单 ============ -->
+<section class="slide" id="s24" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">03 · 功能介绍</div>
+    <div class="slide-title">功能及接口清单</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s24-body">
+    <div class="s24-col reveal" style="--d:0.12s">
+      <div class="s24-col-head">
+        <div class="s24-col-t">发送中心</div>
+        <div class="s24-col-bar"></div>
+      </div>
+      <div class="s24-groups">
+        <div class="s24-g">
+          <div class="s24-gt">短信</div>
+          <div class="s24-chips"><span class="s24-chip">普通短信</span><span class="s24-chip">个性短信</span><span class="s24-chip">互动短信</span><span class="s24-chip">指令短信</span><span class="s24-chip">上行短信</span><span class="s24-chip">短信查询</span><span class="s24-chip">个性查询</span><span class="s24-chip">失败统计</span><span class="s24-chip">重推管理</span></div>
+        </div>
+        <div class="s24-g">
+          <div class="s24-gt">彩信管理 / 视频短信</div>
+          <div class="s24-chips"><span class="s24-chip">发送彩信</span><span class="s24-chip">彩信查询</span><span class="s24-chip">视频模板</span><span class="s24-chip">视频查询</span></div>
+        </div>
+        <div class="s24-g">
+          <div class="s24-gt">微信管理</div>
+          <div class="s24-chips"><span class="s24-chip">微信群发</span><span class="s24-chip">微信消息</span><span class="s24-chip">微信模板</span><span class="s24-chip">微信用户</span><span class="s24-chip">微信设置</span></div>
+        </div>
+        <div class="s24-g">
+          <div class="s24-gt">邮件 / 组合消息</div>
+          <div class="s24-chips"><span class="s24-chip">发送邮件</span><span class="s24-chip">邮件查询</span><span class="s24-chip">消息发送</span><span class="s24-chip">消息查询</span></div>
+        </div>
+        <div class="s24-g">
+          <div class="s24-gt">审核管理 / 账户</div>
+          <div class="s24-chips"><span class="s24-chip">信息审核</span><span class="s24-chip">个人中心</span><span class="s24-chip">会员管理</span><span class="s24-chip">模板管理</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="s24-col reveal" style="--d:0.24s">
+      <div class="s24-col-head">
+        <div class="s24-col-t">管理中心</div>
+        <div class="s24-col-bar"></div>
+      </div>
+      <div class="s24-groups">
+        <div class="s24-g">
+          <div class="s24-gt">账号管理 / 信息管理</div>
+          <div class="s24-chips"><span class="s24-chip">账号管理</span><span class="s24-chip">角色管理</span><span class="s24-chip">部门管理</span><span class="s24-chip">区域管理</span><span class="s24-chip">信息类型</span><span class="s24-chip">通道管理</span><span class="s24-chip">指令管理</span></div>
+        </div>
+        <div class="s24-g">
+          <div class="s24-gt">统计报表</div>
+          <div class="s24-chips"><span class="s24-chip">机构报表</span><span class="s24-chip">用户报表</span><span class="s24-chip">汇总报表</span><span class="s24-chip">通道报表</span><span class="s24-chip">区域报表</span><span class="s24-chip">信息类型报表</span><span class="s24-chip">通道结算报表</span><span class="s24-chip">模板报表</span><span class="s24-chip">业务标识报表</span></div>
+        </div>
+        <div class="s24-g">
+          <div class="s24-gt">费用管理 / 数据管理</div>
+          <div class="s24-chips"><span class="s24-chip">充值管理</span><span class="s24-chip">计费规则</span><span class="s24-chip">审核规则</span><span class="s24-chip">黑名单</span><span class="s24-chip">白名单</span><span class="s24-chip">关键字</span><span class="s24-chip">状态码</span><span class="s24-chip">失败类型管理</span><span class="s24-chip">重发规则</span><span class="s24-chip">业务标识</span><span class="s24-chip">外围系统管理</span><span class="s24-chip">运营商数据</span></div>
+        </div>
+        <div class="s24-g">
+          <div class="s24-gt">监控管理 / 系统管理</div>
+          <div class="s24-chips"><span class="s24-chip">业务监控</span><span class="s24-chip">应用程序监控</span><span class="s24-chip">服务器监控</span><span class="s24-chip">告警设置</span><span class="s24-chip">系统日志</span><span class="s24-chip">其他设置</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="s24-col reveal" style="--d:0.36s">
+      <div class="s24-col-head">
+        <div class="s24-col-t">接口</div>
+        <div class="s24-col-bar"></div>
+      </div>
+      <div class="s24-groups">
+        <div class="s24-g">
+          <div class="s24-gt">消息接口</div>
+          <div class="s24-chips"><span class="s24-chip">信息包查询接口</span><span class="s24-chip">普通短信接口</span><span class="s24-chip">CMPP 接口</span><span class="s24-chip">个性化短信接口</span><span class="s24-chip">彩信接口</span><span class="s24-chip">模版接口</span><span class="s24-chip">发送邮件接口</span><span class="s24-chip">发送组合消息接口</span></div>
+        </div>
+        <div class="s24-g">
+          <div class="s24-gt">系统对接</div>
+          <div class="s24-chips"><span class="s24-chip">外围系统提交接口</span><span class="s24-chip">发送验证码接口</span><span class="s24-chip">验证验证码接口</span></div>
+        </div>
+        <div class="s24-g">
+          <div class="s24-gt">推送与回执</div>
+          <div class="s24-chips"><span class="s24-chip">手机号推送微信消息</span><span class="s24-chip">OpenId 推送微信消息</span><span class="s24-chip">状态报告推送</span><span class="s24-chip">上行推送</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">24 / 29</div>
+</section>
+
+<!-- ============ s25 · 章节页 04 案例介绍 ============ -->
+<section class="slide dark" id="s25">
+  <img class="sec-bg" src="assets/section_bg.png" alt="" />
+  <div class="sec-visual-pill floaty reveal reveal-right" style="--d:0.30s">
+    <img src="assets/gen-voice-wave.png" alt="" />
+  </div>
+  <div class="sec-inner">
+    <div class="sec-top reveal">
+      <img class="sec-logo" src="assets/logo_white.png" alt="微网通联" />
+      <div class="sec-part">PART 04</div>
+    </div>
+    <div class="sec-mid">
+      <div class="sec-bignum reveal" style="--d:0.10s">04</div>
+      <div class="sec-block">
+        <div class="sec-bar reveal" style="--d:0.15s"></div>
+        <div class="sec-h reveal" style="--d:0.20s">案例介绍</div>
+        <div class="sec-en reveal" style="--d:0.28s">CASES</div>
+        <div class="sec-desc reveal" style="--d:0.36s">15 年丰富的行业经验，服务客户上万余家，稳定的运营商关系、强大的技术实力、良好的行业口碑，为您提升更强性能的平台及更极致的服务</div>
+      </div>
+    </div>
+    <div class="sec-bottom"></div>
+  </div>
+  <div class="pageno">25 / 29</div>
+</section>
+
+<!-- ============ s26 · 典型客户 · 湖南三湘银行 ============ -->
+<section class="slide" id="s26" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">04 · 案例介绍</div>
+    <div class="slide-title">典型客户 · 湖南三湘银行</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s26-body">
+    <div class="s26-top">
+      <div class="s26-panel reveal reveal-left" style="--d:0.12s">
+        <div class="s26-logo-chip"><img src="assets/client_16.png" alt="湖南三湘银行" /></div>
+        <div class="s26-name">湖南三湘银行</div>
+        <div class="s26-desc">是中部地区首家开业的民营银行，围绕目标产业生态圈和消费金融，着力打造产业银行、资产管理银行、数字银行、便捷银行。</div>
+      </div>
+      <div class="s26-photo reveal reveal-right" style="--d:0.22s">
+        <img src="assets/s26_75.jpg" alt="" />
+        <div class="s26-cap">同城双活 · 高可用部署</div>
+      </div>
+    </div>
+    <div class="s26-cards">
+      <div class="s26-card reveal" style="--d:0.28s">
+        <div class="icon-tile"><img src="assets/icons/server-0A1F44.png" alt="" /></div>
+        <div class="s26-ct">同城双活部署</div>
+        <div class="s26-cd">保障系统高可用性</div>
+      </div>
+      <div class="s26-card reveal" style="--d:0.34s">
+        <div class="icon-tile"><img src="assets/icons/layer-group-2E6FE8.png" alt="" /></div>
+        <div class="s26-ct">系统统一管理</div>
+        <div class="s26-cd">解决内部客户系统繁杂、不易管理问题</div>
+      </div>
+      <div class="s26-card reveal" style="--d:0.40s">
+        <div class="icon-tile red"><img src="assets/icons/lock-F02D4E.png" alt="" /></div>
+        <div class="s26-ct">数据库对称加密</div>
+        <div class="s26-cd">数据库、数据库对称加密，保障数据安全</div>
+      </div>
+      <div class="s26-card reveal" style="--d:0.46s">
+        <div class="icon-tile red"><img src="assets/icons/headset-2E6FE8.png" alt="" /></div>
+        <div class="s26-ct">客户反馈响应及时</div>
+        <div class="s26-cd">客户服务满意度高</div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">26 / 29</div>
+</section>
+
+<!-- ============ s27 · 典型应用 ============ -->
+<section class="slide" id="s27" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">04 · 案例介绍</div>
+    <div class="slide-title">典型应用</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s27-body">
+    <div class="s27-card reveal" style="--d:0.12s">
+      <div class="s27-head">
+        <div class="icon-tile navy"><img src="assets/icons/building-columns-0A1F44.png" alt="" /></div>
+        <div class="s27-t">银行客户</div>
+      </div>
+      <div class="s27-li"><i></i>私有化部署，支持同城双活、异地容灾、两地三中心等集群容灾式部署，保障系统稳定可靠</div>
+      <div class="s27-li"><i></i>专线直连运营商，保证业务全流程均为内网，保障信息安全</div>
+      <div class="s27-li"><i></i>支持二次开发，满足个性化需求</div>
+    </div>
+    <div class="s27-card reveal" style="--d:0.24s">
+      <div class="s27-head">
+        <div class="icon-tile"><img src="assets/icons/building-columns-2E6FE8.png" alt="" /></div>
+        <div class="s27-t">政企政务事业单位</div>
+      </div>
+      <div class="s27-tagline">政策通知 · 惠民信息 · 灾害预警 · 安全提醒</div>
+      <div class="s27-li"><i></i>客户独立机房部署，支持集中式、分布式、容灾式多种部署形式</div>
+      <div class="s27-li"><i></i>安全架构设计、接口数据算法加密，敏感数据加密</div>
+      <div class="s27-li"><i></i>多级系统均衡、热备，准确及时的告警机制，实时无缝节点切换，保障系统安全稳定</div>
+      <div class="s27-li"><i></i>主业务流程脱离磁盘 / 数据库等 IO，IO 故障或延迟不影响信息及时送达</div>
+      <div class="s27-li"><i></i>丰富的行业解决方案经验，支持多系统快速接入，高效稳定</div>
+    </div>
+    <div class="s27-card reveal" style="--d:0.36s">
+      <div class="s27-head">
+        <div class="icon-tile red"><img src="assets/icons/users-2E6FE8.png" alt="" /></div>
+        <div class="s27-t">集团客户</div>
+      </div>
+      <div class="s27-li"><i></i>机构管理、账号管理、角色管理，多层级企业架构，各区域、部门间独立管理、互不干扰</div>
+      <div class="s27-li"><i></i>多重接入方式，解决集团客户内部系统对接复杂问题</div>
+      <div class="s27-li"><i></i>多维度报表统计，清晰直观，助力高效业务决策</div>
+      <div class="s27-li"><i></i>实时准确监控业务数据、系统状态等，实时发送数据监控，迅速响应异常，保障服务稳定可用</div>
+    </div>
+  </div>
+  <div class="pageno">27 / 29</div>
+</section>
+
+<!-- ============ s28 · 行业客户 logo 墙 ============ -->
+<section class="slide" id="s28" style="background:var(--bg)">
+  <div class="slide-head reveal">
+    <div class="kicker">04 · 案例介绍</div>
+    <div class="slide-title">行业客户</div>
+    <div class="title-bar"></div>
+  </div>
+  <div class="s28-wrap reveal" style="--d:0.15s">
+    <div class="s28-grid">
+      <div class="s28-cell"><img src="assets/s30_11.png" alt="金融客户"></div>
+      <div class="s28-cell"><img src="assets/s30_15.png" alt="金融客户"></div>
+      <div class="s28-cell"><img src="assets/s30_18.png" alt="金融客户"></div>
+      <div class="s28-cell"><img src="assets/s30_24.png" alt="金融客户"></div>
+      <div class="s28-cell"><img src="assets/s30_26.png" alt="金融客户"></div>
+      <div class="s28-cell"><img src="assets/s30_28.png" alt="金融客户"></div>
+      <div class="s28-cell"><img src="assets/s30_34.jpg" alt="潍坊银行"></div>
+      <div class="s28-cell"><img src="assets/s30_35.jpg" alt="齐鲁银行"></div>
+      <div class="s28-cell"><img src="assets/s30_36.jpg" alt="青岛银行"></div>
+      <div class="s28-cell"><img src="assets/s30_38.jpg" alt="烟台银行"></div>
+      <div class="s28-cell"><img src="assets/s30_39.jpg" alt="威海市商业银行"></div>
+      <div class="s28-cell"><img src="assets/s30_40.jpg" alt="临商银行"></div>
+      <div class="s28-cell"><img src="assets/s30_42.jpg" alt="德州银行"></div>
+      <div class="s28-cell"><img src="assets/s30_44.jpg" alt="东营银行"></div>
+      <div class="s28-cell"><img src="assets/s30_47.jpg" alt="长安银行"></div>
+      <div class="s28-cell"><img src="assets/s30_49.jpg" alt="蓝海银行"></div>
+      <div class="s28-cell"><img src="assets/s31_48.png" alt="闪送"></div>
+      <div class="s28-cell"><img src="assets/s31_51.png" alt="申通快递"></div>
+      <div class="s28-cell"><img src="assets/s31_52.png" alt="宅急送"></div>
+      <div class="s28-cell"><img src="assets/s31_53.png" alt="中通快递"></div>
+      <div class="s28-cell"><img src="assets/s31_54.png" alt="圆通速递"></div>
+      <div class="s28-cell"><img src="assets/s31_55.png" alt="德邦快递"></div>
+      <div class="s28-cell"><img src="assets/s31_56.png" alt="中国邮政"></div>
+      <div class="s28-cell"><img src="assets/s31_58.png" alt="京东物流"></div>
+    </div>
+    <div class="s28-cap">
+      <div class="s28-dot"></div>
+      <div>金融类 · 快递物流类等行业客户的共同选择</div>
+      <div class="s28-dot"></div>
+    </div>
+  </div>
+  <div class="pageno">28 / 29</div>
+</section>
+
+<!-- ============ s29 · 封底 ============ -->
+<section class="slide dark" id="s29">
+  <img class="s29-bg" src="assets/cover_hero.png" alt="" />
+  <div class="s29-veil"></div>
+  <div class="s29-wrap">
+    <img class="s29-logo reveal" src="assets/logo_white.png" alt="微网通联" />
+    <div class="s29-mid reveal" style="--d:0.15s">
+      <div class="s29-thanks">THANK YOU</div>
+      <div class="s29-hello">感谢聆听</div>
+      <div class="s29-bar"></div>
+      <div class="s29-sub">GMP 本地化部署消息平台</div>
+    </div>
+    <div class="s29-bot reveal" style="--d:0.3s">
+      <div class="s29-co">PRESENTED BY 51welink.com</div>
+      <div class="s29-en">GLOBAL MESSAGE PLATFORM · 2025</div>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- === 播放器 chrome（舞台之外；下载按钮 HTML 待 PDF 就绪后统一加入） === -->
+<div class="deck-progress" id="deckProgress" aria-hidden="true"><div class="deck-progress-bar" id="deckProgressBar"></div></div>
+<div class="edit-hotzone" title="编辑模式 (E)"></div>
+<div class="deck-download">
+    <a href="GMP.pdf" id="dlPdf" download>PDF</a>
+    <a href="GMP.pptx" id="dlPptx" download>PPTX</a>
+</div>
+<button class="edit-toggle" id="editToggle" title="编辑模式 (E)">✏️</button>
+<div class="edit-toast" id="editToast">已保存</div>
+
+<script>
+/* === SLIDE PRESENTATION CONTROLLER === */
+class SlidePresentation {
+    constructor() {
+        this.slides = document.querySelectorAll('.slide');
+        this.currentSlide = 0;
+        this.stage = document.getElementById('deckStage');
+        this.wheelLock = false;
+        this.setupStageScale();
+        this.setupKeyboardNav();
+        this.setupTouchNav();
+        this.setupWheelNav();
+        this.showSlide(0);
+    }
+    setupStageScale() {
+        const scale = () => {
+            const factor = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+            const x = (window.innerWidth - 1920 * factor) / 2;
+            const y = (window.innerHeight - 1080 * factor) / 2;
+            this.stage.style.transform = `translate(${x}px, ${y}px) scale(${factor})`;
+        };
+        scale();
+        window.addEventListener('resize', scale);
+    }
+    setupKeyboardNav() {
+        document.addEventListener('keydown', (e) => {
+            if (e.target.getAttribute('contenteditable') === 'true') return;
+            if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); this.next(); }
+            else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); this.prev(); }
+            else if (e.key === 'Home') this.showSlide(0);
+            else if (e.key === 'End') this.showSlide(this.slides.length - 1);
+        });
+    }
+    setupTouchNav() {
+        let sx = 0, sy = 0;
+        document.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+        document.addEventListener('touchend', (e) => {
+            const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+            if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) (dx < 0 ? this.next() : this.prev());
+        }, { passive: true });
+    }
+    setupWheelNav() {
+        document.addEventListener('wheel', (e) => {
+            if (this.wheelLock || Math.abs(e.deltaY) < 24) return;
+            this.wheelLock = true;
+            (e.deltaY > 0 ? this.next() : this.prev());
+            setTimeout(() => this.wheelLock = false, 650);
+        }, { passive: true });
+    }
+    next() { this.showSlide(this.currentSlide + 1); }
+    prev() { this.showSlide(this.currentSlide - 1); }
+    showSlide(index) {
+        this.currentSlide = Math.max(0, Math.min(index, this.slides.length - 1));
+        this.slides.forEach((s, i) => {
+            s.classList.toggle('active', i === this.currentSlide);
+            s.classList.toggle('visible', i === this.currentSlide);
+        });
+        const bar = document.getElementById('deckProgressBar');
+        if (bar) bar.style.width = ((this.currentSlide + 1) / this.slides.length * 100) + '%';
+    }
+}
+
+/* === INLINE EDITOR（E 键 / 左上角热区；Ctrl+S 导出 HTML） === */
+class InlineEditor {
+    constructor() {
+        this.isActive = false;
+        this.current = null;
+        this.toast = document.getElementById('editToast');
+        this.restore();
+        document.addEventListener('click', (e) => {
+            if (!this.isActive) return;
+            const el = e.target.closest('.slide *');
+            if (el && el !== this.current) this.edit(el);
+            else if (!el) this.stop();
+        }, true);
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); this.saveAll(); this.exportFile(); }
+            if (e.key === 'Escape' && this.isActive) this.toggleEditMode();
+        });
+    }
+    toggleEditMode() {
+        this.isActive = !this.isActive;
+        document.body.classList.toggle('editing', this.isActive);
+        document.getElementById('editToggle').classList.toggle('active', this.isActive);
+        if (!this.isActive) this.stop();
+    }
+    edit(el) {
+        this.stop();
+        let target = el;
+        while (target.children.length && ![...target.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) {
+            target = target.children[0];
+        }
+        if (![...target.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) return;
+        this.current = target;
+        target.contentEditable = 'true';
+        target.focus();
+        target.addEventListener('blur', () => { this.saveAll(); }, { once: true });
+    }
+    stop() {
+        if (this.current) { this.current.contentEditable = 'false'; this.current = null; }
+    }
+    saveAll() {
+        document.querySelectorAll('.slide').forEach(s => {
+            try { localStorage.setItem('wwt-slide-' + s.id, s.innerHTML); } catch (e) {}
+        });
+        const t = this.toast;
+        t.classList.add('show');
+        clearTimeout(this._tt);
+        this._tt = setTimeout(() => t.classList.remove('show'), 1200);
+    }
+    restore() {
+        document.querySelectorAll('.slide').forEach(s => {
+            const saved = localStorage.getItem('wwt-slide-' + s.id);
+            if (saved) s.innerHTML = saved;
+        });
+    }
+    exportFile() {
+        const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+        const title = document.title.replace(/\s*[·•]\s*/g, '').replace(/\s+/g, '').trim();
+        a.download = title + '.html';
+        a.click();
+    }
+}
+
+const deck = new SlidePresentation();
+const editor = new InlineEditor();
+
+/* 编辑开关：按钮点击 / 热区悬停(400ms 延迟) / 热区点击 / E 键 */
+const hotzone = document.querySelector('.edit-hotzone');
+const editToggle = document.getElementById('editToggle');
+let hideTimeout = null;
+editToggle.addEventListener('click', () => editor.toggleEditMode());
+
+// 下载按钮：标题+日期命名（按钮 HTML 加入后即可用）
+function getDownloadFilename(ext) {
+    const title = document.title.replace(/\s*[·•]\s*/g, '').replace(/\s+/g, '').trim();
+    const now = new Date();
+    const date = now.getFullYear().toString() +
+        (now.getMonth() + 1).toString().padStart(2, '0') +
+        now.getDate().toString().padStart(2, '0');
+    return title + '_' + date + '.' + ext;
+}
+const dlPdf = document.getElementById('dlPdf');
+if (dlPdf) dlPdf.addEventListener('click', function() { this.setAttribute('download', getDownloadFilename('pdf')); });
+const dlPptx = document.getElementById('dlPptx');
+if (dlPptx) dlPptx.addEventListener('click', function() { this.setAttribute('download', getDownloadFilename('pptx')); });
+
+hotzone.addEventListener('mouseenter', () => { clearTimeout(hideTimeout); editToggle.classList.add('show'); });
+hotzone.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });
+editToggle.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+editToggle.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });
+hotzone.addEventListener('click', () => editor.toggleEditMode());
+document.addEventListener('keydown', (e) => {
+    if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable')) editor.toggleEditMode();
+});
+</script>
+</body>
+</html>
