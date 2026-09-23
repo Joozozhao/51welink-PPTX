@@ -1,487 +1,180 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <title>微网通联 Logo 资源下载</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>微网通联 · Logo 资源</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+    --navy: #0A1F44;
+    --blue: #2E6FE8;
+    --red: #F02D4E;
+    --font-body: "Archivo", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    --font-num: "Archivo", "Helvetica Neue", "PingFang SC", "Noto Sans SC", sans-serif;
+}
+body {
+    font-family: var(--font-body);
+    background: var(--navy);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.bg-glow {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+        radial-gradient(60% 50% at 85% 15%, rgba(46,111,232,0.28) 0%, transparent 70%),
+        radial-gradient(50% 45% at 10% 90%, rgba(240,45,78,0.16) 0%, transparent 70%),
+        linear-gradient(150deg, #0A1F44 0%, #123A7A 65%, #1B4FA0 100%);
+}
+.wrap {
+    position: relative; z-index: 1;
+    width: min(1400px, 92vw);
+    margin: 0 auto;
+    padding: 56px 0 72px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.top { display: flex; justify-content: space-between; align-items: center; }
+.top img { height: 34px; }
+.top .en {
+    font-family: var(--font-num); font-size: 13px;
+    letter-spacing: 4px; color: rgba(255,255,255,0.5);
+}
+.top a { color: rgba(255,255,255,0.5); text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; }
+.top a:hover { color: #fff; }
+.hero { margin: 72px 0 56px; }
+.hero .bar { width: 64px; height: 5px; background: var(--blue); border-radius: 3px; margin-bottom: 24px; }
+.hero h1 { font-size: 52px; font-weight: 700; letter-spacing: 2px; }
+.hero p { margin-top: 14px; font-size: 17px; color: rgba(255,255,255,0.6); letter-spacing: 1px; }
 
-        body {
-            font-family: "Archivo", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
-            background: #F6F8FB;
-            min-height: 100vh;
-            padding: 40px 20px;
-        }
+.section { margin-bottom: 56px; }
+.section-header { margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+.section-title { font-size: 24px; font-weight: 700; }
+.section-desc { color: rgba(255,255,255,0.5); font-size: 14px; margin-top: 4px; }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+.logo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 22px;
+}
+.logo-card {
+    display: flex; flex-direction: column;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 18px;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.logo-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255,255,255,0.10);
+    border-color: rgba(255,255,255,0.28);
+}
+.logo-preview {
+    height: 160px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+}
+/* 棋盘格浅色背景，用于深色logo */
+.checkerboard {
+    background-color: #fff;
+    background-image: 
+        linear-gradient(45deg, #f0f0f0 25%, transparent 25%),
+        linear-gradient(-45deg, #f0f0f0 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f0f0f0 75%),
+        linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+/* 深色背景用于浅色logo */
+.dark-bg {
+    background: rgba(0,0,0,0.2);
+}
+.logo-preview img {
+    max-width: 100%; max-height: 100%; object-fit: contain;
+}
 
-        header {
-            text-align: center;
-            color: #0A1F44;
-            margin-bottom: 50px;
-        }
+.logo-info { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+.logo-name {
+    font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.logo-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; font-family: var(--font-num); color: rgba(255,255,255,0.5);
+}
+.file-type {
+    background: rgba(255,255,255,0.1); color: #fff;
+    padding: 4px 10px; border-radius: 12px; font-weight: 700;
+}
+.file-type.ai { background: rgba(245,158,11,0.2); color: #FFC96B; }
+.file-type.png { background: rgba(46,111,232,0.2); color: #8FB4FF; }
 
-        header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            /* removed text-shadow */
-        }
+.download-btn {
+    display: block; width: 100%; text-align: center;
+    padding: 12px; border-radius: 12px;
+    background: rgba(46,111,232,0.15); color: #8FB4FF;
+    text-decoration: none; font-weight: 600; font-size: 14px;
+    transition: all 0.2s; border: 1px solid rgba(46,111,232,0.3);
+}
+.logo-card:hover .download-btn {
+    background: var(--blue); color: #fff; border-color: var(--blue);
+}
 
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
+.download-all { margin: 40px 0; display: flex; justify-content: center; }
+.download-all-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 48px; background: var(--blue); color: #fff;
+    text-decoration: none; font-weight: 700; font-size: 18px;
+    border-radius: 50px; transition: all 0.25s ease;
+    box-shadow: 0 8px 24px rgba(46,111,232,0.3);
+}
+.download-all-btn:hover {
+    transform: translateY(-3px); background: #3c7eff;
+    box-shadow: 0 12px 32px rgba(46,111,232,0.4);
+}
 
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            background: #FFFFFF;
-            border: 1px solid #E2E8F0;
-            color: #0A1F44;
-            padding: 12px 24px;
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-        }
-
-        .stat-item span {
-            font-weight: 600;
-        }
-
-        .section {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        .section-icon {
-            width: 50px;
-            height: 50px;
-            background: #0A1F44;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-size: 24px;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            color: #333;
-            font-weight: 600;
-        }
-
-        .section-desc {
-            color: #666;
-            font-size: 0.9rem;
-            margin-top: 4px;
-        }
-
-        .logo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .logo-card {
-            border: 2px solid #e8e8e8;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            background: #fafafa;
-        }
-
-        .logo-card:hover {
-            border-color: #2E6FE8;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(46, 111, 232, 0.15);
-        }
-
-        .logo-preview {
-            height: 160px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: white;
-            border-bottom: 1px solid #e8e8e8;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .logo-preview.checkerboard {
-            background-image: 
-                linear-gradient(45deg, #f0f0f0 25%, transparent 25%),
-                linear-gradient(-45deg, #f0f0f0 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, #f0f0f0 75%),
-                linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
-            background-size: 20px 20px;
-            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-        }
-
-        .logo-preview.dark-bg {
-            background: #0A1F44;
-        }
-
-        .logo-preview img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        .size-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(0,0,0,0.75);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
-            font-weight: 500;
-            z-index: 10;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
-        .file-icon {
-            font-size: 48px;
-            color: #667eea;
-        }
-
-        .logo-info {
-            padding: 15px;
-        }
-
-        .logo-name {
-            font-weight: 600;
-            color: #333;
-            font-size: 0.95rem;
-            margin-bottom: 8px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: block;
-        }
-
-        .logo-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-            color: #888;
-        }
-
-        .file-type {
-            background: #5A6B85;
-            color: white;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .file-type.ai {
-            background: #ff6b35;
-        }
-
-        .file-type.psd {
-            background: #31a8ff;
-        }
-
-        .file-type.jpg {
-            background: #2ecc71;
-        }
-
-        .download-btn {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background: #0A1F44;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 0.95rem;
-        }
-
-        .download-btn:hover {
-            background: #2E6FE8;
-        }
-
-        .download-all {
-            text-align: center;
-            margin-top: 40px;
-            margin-bottom: 20px;
-        }
-
-        .download-all-btn {
-            display: inline-block;
-            padding: 18px 50px;
-            background: #F02D4E;
-            color: white;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(240, 45, 78, 0.3);
-        }
-
-        .download-all-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(240, 45, 78, 0.4);
-            background: #d91c3d;
-        }
-
-        .tips {
-            background: #FFFFFF;
-            border: 1px solid #E2E8F0;
-            border-left: 4px solid #F02D4E;
-            padding: 20px;
-            border-radius: 0 12px 12px 0;
-            margin-top: 20px;
-        }
-
-        .tips h4 {
-            color: #0A1F44;
-            margin-bottom: 10px;
-        }
-
-        .tips ul {
-            color: #666;
-            padding-left: 20px;
-        }
-
-        .tips li {
-            margin-bottom: 8px;
-            line-height: 1.5;
-        }
-
-        footer {
-            text-align: center;
-            color: #5A6B85;
-            margin-top: 50px;
-            opacity: 0.8;
-        }
-
-        /* 弹窗与确认样式 */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(8px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            padding: 20px;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-card {
-            background: #ffffff;
-            border-radius: 16px;
-            max-width: 520px;
-            width: 100%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
-            overflow: hidden;
-            animation: modalPop 0.25s ease-out forwards;
-        }
-
-        @keyframes modalPop {
-            from { opacity: 0; transform: scale(0.92) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        .modal-header {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-            color: #ffffff;
-            padding: 20px 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .modal-header h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .modal-body {
-            padding: 24px;
-            color: #334155;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .audit-info-box {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 14px 16px;
-            margin: 16px 0;
-            font-size: 0.85rem;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-        }
-
-        .audit-info-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 6px;
-            gap: 10px;
-        }
-
-        .audit-info-row:last-child {
-            margin-bottom: 0;
-        }
-
-        .audit-info-label {
-            color: #64748b;
-            flex-shrink: 0;
-        }
-
-        .audit-info-value {
-            color: #0f172a;
-            font-weight: 600;
-            text-align: right;
-            word-break: break-all;
-        }
-
-        .warn-text-box {
-            background: #fff7ed;
-            border-left: 4px solid #f97316;
-            padding: 12px 14px;
-            border-radius: 0 8px 8px 0;
-            color: #9a3412;
-            font-size: 0.88rem;
-            line-height: 1.5;
-        }
-
-        .modal-footer {
-            padding: 16px 24px;
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-        }
-
-        .btn-cancel {
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: 1px solid #cbd5e1;
-            background: #ffffff;
-            color: #475569;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-cancel:hover {
-            background: #f1f5f9;
-        }
-
-        .btn-confirm {
-            padding: 10px 24px;
-            border-radius: 8px;
-            border: none;
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-            color: #ffffff;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-        }
-
-        .btn-confirm:hover {
-            opacity: 0.95;
-            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
-        }
-
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.8rem;
-            }
-
-            .logo-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stats {
-                gap: 10px;
-            }
-
-            .stat-item {
-                padding: 8px 16px;
-                font-size: 0.9rem;
-            }
-        }
-    </style>
+.foot {
+    margin-top: auto; padding-top: 56px;
+    font-size: 13px; color: rgba(255,255,255,0.38); letter-spacing: 1px; text-align: center;
+}
+@media (max-width: 640px) {
+    .hero h1 { font-size: 34px; }
+    .wrap { padding-top: 36px; }
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🎨 微网通联 Logo 资源中心</h1>
-            <p>统一管理的品牌标识资源，方便团队成员下载使用</p>
-            <div class="stats">
-                <div class="stat-item">📁 共 <span>23</span> 个文件</div>
-                <div class="stat-item">🖼️ <span>17</span> 个图片</div>
-                <div class="stat-item">📐 <span>3</span> 个矢量</div>
-                <div class="stat-item">🎬 <span>3</span> 个源文件</div>
-            </div>
-        </header>
+<div class="bg-glow"></div>
+<div class="wrap">
+    <div class="top">
+        <a href="../index.html">← 返回主页</a>
+        <div class="en">BRAND RESOURCES</div>
+    </div>
+    
+    <div class="hero">
+        <div class="bar"></div>
+        <h1>微网通联 Logo 资源</h1>
+        <p>统一管理的品牌标识资源，包含标准 Logo、反白版本及矢量源文件。</p>
+    </div>
 
-        <!-- 横向 Logo -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon">↔️</div>
-                <div>
-                    <div class="section-title">横向 Logo</div>
-                    <div class="section-desc">适用于网页头部、文档页眉、横幅广告等宽幅场景</div>
-                </div>
+    <div class="section">
+        <div class="section-header">
+            <div>
+                <div class="section-title">横向 Logo</div>
+                <div class="section-desc">适用于网页头部、文档页眉、横幅广告等宽幅场景</div>
             </div>
-            <div class="logo-grid">
+        </div>
+        <div class="logo-grid">
+            
                 <div class="logo-card">
                     <div class="logo-preview checkerboard">
                         <img src="微网通联-logo-horizontal.png" alt="横向Logo">
@@ -490,66 +183,19 @@
                         <div class="logo-name" title="微网通联-logo-horizontal.png">微网通联-logo-horizontal.png</div>
                         <div class="logo-meta">
                             <span>13 KB</span>
-                            <span class="file-type">PNG</span>
-                        </div>
-                    </div>
-                    <a href="微网通联-logo-horizontal.png" download class="download-btn">下载</a>
-                </div>
-
-                <div class="logo-card">
-                    <div class="logo-preview dark-bg">
-                        <img src="微网通联-logo-horizontal-color.png" alt="横向彩色Logo">
-                    </div>
-                    <div class="logo-info">
-                        <div class="logo-name" title="微网通联-logo-horizontal-color.png">微网通联-logo-horizontal-color.png</div>
-                        <div class="logo-meta">
-                            <span>9 KB</span>
-                            <span class="file-type">PNG</span>
-                        </div>
-                    </div>
-                    <a href="微网通联-logo-horizontal-color.png" download class="download-btn">下载</a>
-                </div>
-
-                <div class="logo-card">
-                    <div class="logo-preview dark-bg">
-                        <img src="微网通联-logo-horizontal-white.png" alt="横向白色Logo">
-                    </div>
-                    <div class="logo-info">
-                        <div class="logo-name" title="微网通联-logo-horizontal-white.png">微网通联-logo-horizontal-white.png</div>
-                        <div class="logo-meta">
-                            <span>13 KB</span>
-                            <span class="file-type">PNG</span>
-                        </div>
-                    </div>
-                    <a href="微网通联-logo-horizontal-white.png" download class="download-btn">下载</a>
-                </div>
-
-                <div class="logo-card">
-                    <div class="logo-preview dark-bg">
-                        <img src="微网通联-logo-horizontal-inverse.png" alt="横向反白Logo">
-                    </div>
-                    <div class="logo-info">
-                        <div class="logo-name" title="微网通联-logo-horizontal-inverse.png">微网通联-logo-horizontal-inverse.png</div>
-                        <div class="logo-meta">
-                            <span>11 KB</span>
-                            <span class="file-type">PNG</span>
-                        </div>
-                    </div>
-                    <a href="微网通联-logo-horizontal-inverse.png" download class="download-btn">下载</a>
-                </div>
+                            <span class="file-type png">PNG</span>
+                        
+        </div>
+    </div>
+    <div class="section">
+        <div class="section-header">
+            <div>
+                <div class="section-title">方形 Logo</div>
+                <div class="section-desc">适用于社交媒体头像、App图标、正方形展示场景</div>
             </div>
         </div>
-
-        <!-- 方形 Logo -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon">⬜</div>
-                <div>
-                    <div class="section-title">方形 Logo</div>
-                    <div class="section-desc">适用于社交媒体头像、App图标、正方形展示场景</div>
-                </div>
-            </div>
-            <div class="logo-grid">
+        <div class="logo-grid">
+            
                 <div class="logo-card">
                     <div class="logo-preview checkerboard">
                         <img src="微网通联-logo-square.png" alt="方形Logo">
@@ -558,66 +204,19 @@
                         <div class="logo-name" title="微网通联-logo-square.png">微网通联-logo-square.png</div>
                         <div class="logo-meta">
                             <span>17 KB</span>
-                            <span class="file-type">PNG</span>
-                        </div>
-                    </div>
-                    <a href="微网通联-logo-square.png" download class="download-btn">下载</a>
-                </div>
-
-                <div class="logo-card">
-                    <div class="logo-preview dark-bg">
-                        <img src="微网通联-logo-square-color.png" alt="方形彩色Logo">
-                    </div>
-                    <div class="logo-info">
-                        <div class="logo-name" title="微网通联-logo-square-color.png">微网通联-logo-square-color.png</div>
-                        <div class="logo-meta">
-                            <span>11 KB</span>
-                            <span class="file-type">PNG</span>
-                        </div>
-                    </div>
-                    <a href="微网通联-logo-square-color.png" download class="download-btn">下载</a>
-                </div>
-
-                <div class="logo-card">
-                    <div class="logo-preview dark-bg">
-                        <img src="微网通联-logo-square-white.png" alt="方形白色Logo">
-                    </div>
-                    <div class="logo-info">
-                        <div class="logo-name" title="微网通联-logo-square-white.png">微网通联-logo-square-white.png</div>
-                        <div class="logo-meta">
-                            <span>17 KB</span>
-                            <span class="file-type">PNG</span>
-                        </div>
-                    </div>
-                    <a href="微网通联-logo-square-white.png" download class="download-btn">下载</a>
-                </div>
-
-                <div class="logo-card">
-                    <div class="logo-preview checkerboard">
-                        <img src="微网通联-logo-main.png" alt="主Logo">
-                    </div>
-                    <div class="logo-info">
-                        <div class="logo-name" title="微网通联-logo-main.png">微网通联-logo-main.png</div>
-                        <div class="logo-meta">
-                            <span>107 KB</span>
-                            <span class="file-type">PNG</span>
-                        </div>
-                    </div>
-                    <a href="微网通联-logo-main.png" download class="download-btn">下载</a>
-                </div>
+                            <span class="file-type png">PNG</span>
+                        
+        </div>
+    </div>
+    <div class="section">
+        <div class="section-header">
+            <div>
+                <div class="section-title">特殊版本 & 历史版本</div>
+                <div class="section-desc">包含品牌标识、纪念版本及历史Logo</div>
             </div>
         </div>
-
-        <!-- 特殊版本 -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon">🏷️</div>
-                <div>
-                    <div class="section-title">特殊版本 & 历史版本</div>
-                    <div class="section-desc">包含品牌标识、纪念版本及历史Logo</div>
-                </div>
-            </div>
-            <div class="logo-grid">
+        <div class="logo-grid">
+            
                 <div class="logo-card">
                     <div class="logo-preview dark-bg">
                         <img src="微网通联-logo-brand.png" alt="品牌Logo">
@@ -626,421 +225,111 @@
                         <div class="logo-name" title="微网通联-logo-brand.png">微网通联-logo-brand.png</div>
                         <div class="logo-meta">
                             <span>8 KB</span>
-                            <span class="file-type">PNG</span>
-                        </div>
-                    </div>
-                    <a href="微网通联-logo-brand.png" download class="download-btn">下载</a>
-                </div>
-
-                <div class="logo-card">
-                    <div class="logo-preview checkerboard">
-                        <img src="微网通联-logo-v1.png" alt="Logo V1">
-                    </div>
-                    <div class="logo-info">
-                        <div class="logo-name" title="微网通联-logo-v1.png">微网通联-logo-v1.png</div>
-                        <div class="logo-meta">
-                            <span>15 KB</span>
-                            <span class="file-type">PNG</span>
-                        </div>
-                    </div>
-                    <a href="微网通联-logo-v1.png" download class="download-btn">下载</a>
-                </div>
-
-                <div class="logo-card">
-                    <div class="logo-preview checkerboard">
-                        <img src="微网通联-logo-2025-v1.png" alt="2025版本">
-                    </div>
-                    <div class="logo-info">
-                        <div class="logo-name" title="微网通联-logo-2025-v1.png">微网通联-logo-2025-v1.png</div>
-                        <div class="logo-meta">
-                            <span>14 KB</span>
-                            <span class="file-type">PNG</span>
-                        </div>
-                    </div>
-                    <a href="微网通联-logo-2025-v1.png" download class="download-btn">下载</a>
-                </div>
-
-                <div class="logo-card">
-                    <div class="logo-preview checkerboard">
-                        <img src="微网通联-logo-v1-1-since2008-color.png" alt="Since 2008">
-                    </div>
-                    <div class="logo-info">
-                        <div class="logo-name" title="微网通联-logo-v1-1-since2008-color.png">微网通联-logo-v1-1-since2008-color.png</div>
-                        <div class="logo-meta">
-                            <span>51 KB</span>
-                            <span class="file-type">PNG</span>
-                        </div>
-                    </div>
-                    <a href="微网通联-logo-v1-1-since2008-color.png" download class="download-btn">下载</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 矢量文件 -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon">📐</div>
-                <div>
-                    <div class="section-title">矢量源文件</div>
-                    <div class="section-desc">可无限缩放，适用于印刷、大型广告牌等高质量输出场景</div>
-                </div>
-            </div>
-            <div class="logo-grid">
-                <div class="logo-card">
-                    <div class="logo-preview">
-                        <div class="file-icon">📐</div>
-                    </div>
-                    <div class="logo-info">
-                        <div class="logo-name" title="微网通联-logo-master.ai">微网通联-logo-master.ai</div>
-                        <div class="logo-meta">
-                            <span>413 KB</span>
-                            <span class="file-type ai">AI</span>
-                        </div>
-                    </div>
-                    <a href="微网通联-logo-master.ai" download class="download-btn">下载</a>
-                </div>
-
-                <div class="logo-card">
-                    <div class="logo-preview">
-                        <div class="file-icon">📐</div>
-                    </div>
-                    <div class="logo-info">
-                        <div class="logo-name" title="微网通联-logo-vertical.ai">微网通联-logo-vertical.ai</div>
-                        <div class="logo-meta">
-                            <span>50 KB</span>
-                            <span class="file-type ai">AI</span>
-                        </div>
-                    </div>
-                    <a href="微网通联-logo-vertical.ai" download class="download-btn">下载</a>
-                </div>
-
-                <div class="logo-card">
-                    <div class="logo-preview">
-                        <div class="file-icon">📐</div>
-                    </div>
-                    <div class="logo-info">
-                        <div class="logo-name" title="微网通联-logo-alternative.ai">微网通联-logo-alternative.ai</div>
-                        <div class="logo-meta">
-                            <span>413 KB</span>
-                            <span class="file-type ai">AI</span>
-                        </div>
-                    </div>
-                    <a href="微网通联-logo-alternative.ai" download class="download-btn">下载</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 设计源文件 -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon">🎬</div>
-                <div>
-                    <div class="section-title">设计源文件</div>
-                    <div class="section-desc">Photoshop源文件，可进行深度编辑和自定义修改</div>
-                </div>
-            </div>
-            <div class="logo-grid">
-                <div class="logo-card">
-                    <div class="logo-preview">
-                        <div class="file-icon">🎬</div>
-                    </div>
-                    <div class="logo-info">
-                        <div class="logo-name" title="微网通联-logo-20230131.psd">微网通联-logo-20230131.psd</div>
-                        <div class="logo-meta">
-                            <span>368 KB</span>
-                            <span class="file-type psd">PSD</span>
-                        </div>
-                    </div>
-                    <a href="微网通联-logo-20230131.psd" download class="download-btn">下载</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 使用建议 -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon">💡</div>
-                <div>
-                    <div class="section-title">使用建议</div>
-                    <div class="section-desc">选择合适的Logo版本，确保品牌一致性</div>
-                </div>
-            </div>
-            <div class="tips">
-                <h4>📌 如何选择合适的Logo？</h4>
-                <ul>
-                    <li><strong>网页/屏幕显示：</strong>使用 PNG 格式，文件小、加载快</li>
-                    <li><strong>印刷品/大型广告：</strong>使用 AI 矢量文件，可无限缩放不失真</li>
-                    <li><strong>需要修改设计：</strong>使用 PSD 或 AI 源文件</li>
-                    <li><strong>深色背景：</strong>使用白色或反白版本</li>
-                    <li><strong>浅色背景：</strong>使用彩色或标准版本</li>
-                    <li><strong>社交媒体头像：</strong>使用方形版本</li>
-                    <li><strong>文档/邮件签名：</strong>使用横向版本</li>
-                </ul>
-            </div>
-        </div>
-
-        <footer>
-            <p>© 2024 微网通联品牌部 | 最后更新：2024年</p>
-        </footer>
-    </div>
-
-    <!-- 合规确认与安全审计弹窗 -->
-    <div class="modal-overlay" id="auditModal">
-        <div class="modal-card">
-            <div class="modal-header">
-                <span style="font-size: 1.4rem;">🛡️</span>
-                <h3>微网通联 资产下载审计确认</h3>
-            </div>
-            <div class="modal-body">
-                <p>您正在申请下载公司品牌素材资产，本次下载操作将记录到企业审计日志中：</p>
-                
-                <div class="audit-info-box">
-                    <div class="audit-info-row">
-                        <span class="audit-info-label">下载文件</span>
-                        <span class="audit-info-value" id="auditFileName">-</span>
-                    </div>
-                    <div class="audit-info-row">
-                        <span class="audit-info-label">访问出口/外网 IP</span>
-                        <span class="audit-info-value" id="auditPublicIp">正在解析...</span>
-                    </div>
-                    <div class="audit-info-row">
-                        <span class="audit-info-label">内网局域网 IP</span>
-                        <span class="audit-info-value" id="auditLocalIp">正在检测...</span>
-                    </div>
-                    <div class="audit-info-row">
-                        <span class="audit-info-label">物理 MAC 地址</span>
-                        <span class="audit-info-value" style="color: #94a3b8; font-weight: normal;">[浏览器沙箱权限拦截]</span>
-                    </div>
-                    <div class="audit-info-row">
-                        <span class="audit-info-label">操作时间</span>
-                        <span class="audit-info-value" id="auditTime">-</span>
-                    </div>
-                </div>
-
-                <div class="warn-text-box">
-                    ⚠️ <strong>合规严正提示：</strong><br>
-                    1. 本素材仅限微网通联内部合法业务、公文及指定对外宣传中使用；<br>
-                    2. 严禁擅自修改颜色比例、用于非法用途或流传至外部竞品；<br>
-                    3. 滥用、盗用将追究相关人员岗位责任及法律责任。
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-cancel" id="auditCancelBtn">取消</button>
-                <button class="btn-confirm" id="auditConfirmBtn">确认已知晓，开始下载</button>
-            </div>
+                            <span class="file-type png">PNG</span>
+                        
         </div>
     </div>
-
-    <script>
-        // 客户端网络信息缓存
-        let clientNetworkInfo = {
-            publicIp: '获取中...',
-            localIp: '检测中...',
-            detected: false
-        };
-
-        // 获取公网/出口 IP (优先自有服务，兜底公共 API)
-        async function fetchPublicIp() {
-            try {
-                // 1. 尝试本站自带的 API (server.py 运行时)
-                const res = await fetch('/api/client-info', { cache: 'no-store' });
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.client_ip) {
-                        clientNetworkInfo.publicIp = data.client_ip;
-                        return;
-                    }
-                }
-            } catch (e) {}
-
-            try {
-                // 2. 兜底公网公共出口检测
-                const res2 = await fetch('https://api.ipify.org?format=json', { cache: 'no-store' });
-                if (res2.ok) {
-                    const data2 = await res2.json();
-                    if (data2.ip) {
-                        clientNetworkInfo.publicIp = data2.ip;
-                        return;
-                    }
-                }
-            } catch (e) {}
-
-            clientNetworkInfo.publicIp = '无法获取(离线/局域网部署)';
-        }
-
-        // 尝试通过 WebRTC RTCPeerConnection 探测内网候选 IP
-        function detectLocalIp() {
-            return new Promise((resolve) => {
-                const RTCPeer = window.RTCPeerConnection || window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
-                if (!RTCPeer) {
-                    clientNetworkInfo.localIp = '浏览器不支持WebRTC';
-                    return resolve(clientNetworkInfo.localIp);
-                }
-
-                let found = false;
-                const pc = new RTCPeer({ iceServers: [] });
-                pc.createDataChannel('');
-
-                pc.onicecandidate = (e) => {
-                    if (!e || !e.candidate) {
-                        if (!found) {
-                            clientNetworkInfo.localIp = '已受浏览器 mDNS 隐私保护隐藏';
-                            resolve(clientNetworkInfo.localIp);
-                        }
-                        return;
-                    }
-                    const cand = e.candidate.candidate;
-                    // 正则匹配内网 IP 模式 (192.168.x.x, 10.x.x.x, 172.16-31.x.x)
-                    const ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3})/;
-                    const match = ipRegex.exec(cand);
-                    if (match && match[1]) {
-                        const ip = match[1];
-                        if (ip.startsWith('192.168.') || ip.startsWith('10.') || /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(ip)) {
-                            found = true;
-                            clientNetworkInfo.localIp = ip;
-                            try { pc.close(); } catch(err) {}
-                            resolve(ip);
-                        }
-                    }
-                };
-
-                pc.createOffer().then(offer => pc.setLocalDescription(offer)).catch(() => {});
-
-                // 超时后如果未解析出 IPv4，多数现代浏览器输出 mDNS local 保护
-                setTimeout(() => {
-                    if (!found) {
-                        clientNetworkInfo.localIp = '受系统与浏览器隐私保护 (mDNS 隐藏)';
-                        resolve(clientNetworkInfo.localIp);
-                    }
-                }, 1200);
-            });
-        }
-
-        // 初始化预加载网络信息
-        Promise.all([fetchPublicIp(), detectLocalIp()]).then(() => {
-            clientNetworkInfo.detected = true;
-        });
-
-        // 动态获取图片尺寸并显示
-        document.addEventListener('DOMContentLoaded', function() {
-            const images = document.querySelectorAll('.logo-preview img');
+    <div class="section">
+        <div class="section-header">
+            <div>
+                <div class="section-title">矢量源文件</div>
+                <div class="section-desc">可无限缩放，适用于印刷、大型广告牌等高质量输出场景</div>
+            </div>
+        </div>
+        <div class="logo-grid">
             
-            images.forEach(function(img) {
-                img.onload = function() {
-                    const width = this.naturalWidth;
-                    const height = this.naturalHeight;
-                    
-                    const badge = document.createElement('div');
-                    badge.className = 'size-badge';
-                    badge.textContent = width + ' × ' + height;
-                    this.parentElement.appendChild(badge);
-                };
-                if (img.complete) {
-                    img.onload();
+                <div class="logo-card">
+                    <div class="logo-preview">
+                        <div class="file-icon">📐
+        </div>
+    </div>
+    <div class="section">
+        <div class="section-header">
+            <div>
+                <div class="section-title">设计源文件</div>
+                <div class="section-desc">Photoshop源文件，可进行深度编辑和自定义修改</div>
+            </div>
+        </div>
+        <div class="logo-grid">
+            
+                <div class="logo-card">
+                    <div class="logo-preview">
+                        <div class="file-icon">🎬
+        </div>
+    </div>
+    <div class="download-all">
+        <a href="#" class="download-all-btn" id="downloadAllBtn">打包下载全部资源 (ZIP)</a>
+    </div>
+
+    <div class="foot">
+        &copy; 2025 微网通联. 内部品牌资源，请按规范使用.
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+// 下载全部逻辑 (原有逻辑)
+document.getElementById('downloadAllBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    if(typeof JSZip === 'undefined') { alert('加载 ZIP 库失败，请单个下载。'); return; }
+    
+    const btn = this;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '正在打包...';
+    btn.style.pointerEvents = 'none';
+    btn.style.opacity = '0.8';
+
+    const zip = new JSZip();
+    const links = document.querySelectorAll('.download-btn');
+    let count = 0;
+
+    links.forEach(link => {
+        const url = link.getAttribute('href');
+        const filename = link.getAttribute('download') || url.split('/').pop();
+        
+        fetch(url)
+            .then(res => res.blob())
+            .then(blob => {
+                zip.file(decodeURIComponent(filename), blob);
+                count++;
+                btn.innerHTML = `打包中 (${count}/${links.length})`;
+                if(count === links.length) {
+                    zip.generateAsync({type:'blob'}).then(function(content) {
+                        const a = document.createElement('a');
+                        a.href = URL.createObjectURL(content);
+                        a.download = '微网通联-Logo资源包.zip';
+                        a.click();
+                        btn.innerHTML = originalText;
+                        btn.style.pointerEvents = 'auto';
+                        btn.style.opacity = '1';
+                    });
                 }
+            })
+            .catch(err => {
+                console.error('打包出错:', err);
+                count++;
             });
+    });
+});
 
-            // 弹窗与下载逻辑
-            const modal = document.getElementById('auditModal');
-            const auditFileName = document.getElementById('auditFileName');
-            const auditPublicIp = document.getElementById('auditPublicIp');
-            const auditLocalIp = document.getElementById('auditLocalIp');
-            const auditTime = document.getElementById('auditTime');
-            const cancelBtn = document.getElementById('auditCancelBtn');
-            const confirmBtn = document.getElementById('auditConfirmBtn');
-
-            let currentPendingDownload = null;
-
-            function formatNow() {
-                const now = new Date();
-                const pad = (n) => String(n).padStart(2, '0');
-                return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
-            }
-
-            function openAuditModal(url, filename, btnElem) {
-                currentPendingDownload = { url, filename, btnElem };
-                auditFileName.textContent = decodeURIComponent(filename);
-                auditPublicIp.textContent = clientNetworkInfo.publicIp;
-                auditLocalIp.textContent = clientNetworkInfo.localIp;
-                auditTime.textContent = formatNow();
-                modal.classList.add('active');
-            }
-
-            function closeAuditModal() {
-                modal.classList.remove('active');
-                currentPendingDownload = null;
-            }
-
-            cancelBtn.addEventListener('click', closeAuditModal);
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) closeAuditModal();
+// 单个下载
+document.querySelectorAll('.download-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const url = this.getAttribute('href');
+        let filename = this.getAttribute('download');
+        if(!filename) filename = url.split('/').pop();
+        
+        fetch(url)
+            .then(res => res.blob())
+            .then(blob => {
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = decodeURIComponent(filename);
+                a.click();
             });
-
-            // 点击确认开始下载并记入站点 Log
-            confirmBtn.addEventListener('click', async function() {
-                if (!currentPendingDownload) return;
-                const { url, filename, btnElem } = currentPendingDownload;
-                closeAuditModal();
-
-                // 异步发送审计日志到站点后端 (/api/log-download)
-                try {
-                    fetch('/api/log-download', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            file: decodeURIComponent(filename),
-                            public_ip: clientNetworkInfo.publicIp,
-                            local_ip: clientNetworkInfo.localIp,
-                            screen: `${window.screen.width}x${window.screen.height}`,
-                            platform: navigator.platform || navigator.userAgentData?.platform || 'Unknown'
-                        })
-                    }).catch(() => {});
-                } catch (e) {}
-
-                // 执行强制直接下载 (Blob 方式)
-                try {
-                    const originalText = btnElem.textContent;
-                    btnElem.textContent = '下载中...';
-                    
-                    const response = await fetch(url);
-                    if (!response.ok) throw new Error('网络请求失败');
-                    const blob = await response.blob();
-                    
-                    const blobUrl = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
-                    a.href = blobUrl;
-                    a.download = decodeURIComponent(filename);
-                    document.body.appendChild(a);
-                    a.click();
-                    
-                    setTimeout(() => {
-                        document.body.removeChild(a);
-                        window.URL.revokeObjectURL(blobUrl);
-                        btnElem.textContent = originalText;
-                    }, 300);
-                } catch (err) {
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
-                    a.href = url;
-                    a.download = decodeURIComponent(filename);
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    btnElem.textContent = '下载';
-                }
-            });
-
-            // 绑定下载按钮触发弹窗
-            document.querySelectorAll('.download-btn').forEach(function(btn) {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const url = this.getAttribute('href');
-                    const filename = url.split('/').pop();
-                    openAuditModal(url, filename, this);
-                });
-            });
-        });
-    </script>
+    });
+});
+</script>
 </body>
 </html>
