@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>微网通联 · 产品资料中心</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+    --navy: #0A1F44;
+    --blue: #2E6FE8;
+    --red: #F02D4E;
+    --font-body: "Archivo", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    --font-num: "Archivo", "Helvetica Neue", "PingFang SC", "Noto Sans SC", sans-serif;
+}
+body {
+    font-family: var(--font-body);
+    background: var(--navy);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.bg-glow {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+        radial-gradient(60% 50% at 85% 15%, rgba(46,111,232,0.28) 0%, transparent 70%),
+        radial-gradient(50% 45% at 10% 90%, rgba(240,45,78,0.16) 0%, transparent 70%),
+        linear-gradient(150deg, #0A1F44 0%, #123A7A 65%, #1B4FA0 100%);
+}
+.wrap {
+    position: relative; z-index: 1;
+    width: min(1120px, 92vw);
+    margin: 0 auto;
+    padding: 56px 0 72px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.top { display: flex; justify-content: space-between; align-items: center; }
+.top img { height: 34px; }
+.top .en {
+    font-family: var(--font-num); font-size: 13px;
+    letter-spacing: 4px; color: rgba(255,255,255,0.5);
+}
+.hero { margin: 72px 0 56px; }
+.hero .bar { width: 64px; height: 5px; background: var(--red); border-radius: 3px; margin-bottom: 24px; }
+.hero h1 { font-size: 52px; font-weight: 700; letter-spacing: 2px; }
+.hero p { margin-top: 14px; font-size: 17px; color: rgba(255,255,255,0.6); letter-spacing: 1px; }
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 22px;
+}
+.card {
+    display: flex; flex-direction: column; gap: 12px;
+    padding: 30px 28px 26px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 18px;
+    text-decoration: none; color: #fff;
+    backdrop-filter: blur(8px);
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    background: rgba(255,255,255,0.10);
+    border-color: rgba(255,255,255,0.28);
+}
+.card .tag {
+    align-self: flex-start;
+    font-family: var(--font-num); font-size: 12px; font-weight: 700;
+    letter-spacing: 2px; padding: 5px 12px; border-radius: 12px;
+}
+.card h2 { font-size: 23px; font-weight: 700; }
+.card p { font-size: 14.5px; line-height: 1.7; color: rgba(255,255,255,0.62); flex: 1; }
+.card .go {
+    font-family: var(--font-num); font-size: 13px; letter-spacing: 1px;
+    color: rgba(255,255,255,0.85); display: inline-flex; align-items: center; gap: 8px;
+}
+.card .go::after { content: "→"; transition: transform 0.25s ease; }
+.card:hover .go::after { transform: translateX(4px); }
+.tag-blue  { background: rgba(46,111,232,0.22); color: #8FB4FF; }
+.tag-green { background: rgba(22,163,74,0.25);  color: #7FE0A8; }
+.tag-amber { background: rgba(245,158,11,0.22); color: #FFC96B; }
+.tag-red   { background: rgba(240,45,78,0.22);  color: #FF9DB0; }
+.foot {
+    margin-top: auto; padding-top: 56px;
+    font-size: 13px; color: rgba(255,255,255,0.38); letter-spacing: 1px;
+}
+.foot a { color: rgba(255,255,255,0.55); text-decoration: none; }
+.foot a:hover { color: #fff; }
+@media (max-width: 640px) {
+    .hero h1 { font-size: 34px; }
+    .wrap { padding-top: 36px; }
+}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<div class="wrap">
+    <div class="top">
+        <img src="Push/assets/logo_white.png" alt="微网通联">
+        <div class="en">51WELINK.COM</div>
+    </div>
+    <div class="hero">
+        <div class="bar"></div>
+        <h1>产品资料中心</h1>
+        <p>微网通联 · 云通信平台产品资料与品牌资源</p>
+    </div>
+    <div class="cards">
+        <a class="card" href="Push/">
+            <span class="tag tag-blue">PUSH</span>
+            <h2>微网通联业务介绍</h2>
+            <p>云通信产品服务矩阵：GMP 平台、企业短信、语音验证、语音线路、5G 消息、消息推送、一键认证。</p>
+            <span class="go">查看演示 · PDF / PPTX 下载</span>
+        </a>
+        <a class="card" href="Voice/">
+            <span class="tag tag-green">VOICE</span>
+            <h2>语音通信服务解决方案</h2>
+            <p>全场景语音线路一站式方案：呼出 / 呼入 / 人工 / 国际线路，TTS 播报、智能录音、VOS3000 对接。</p>
+            <span class="go">查看演示 · PDF / PPTX 下载</span>
+        </a>
+        <a class="card" href="GMP/Quote/">
+            <span class="tag tag-amber">GMP</span>
+            <h2>GMP 报价资料</h2>
+            <p>GMP 聚合消息服务平台相关报价与方案资料。</p>
+            <span class="go">查看资料</span>
+        </a>
+        <a class="card" href="Logo/">
+            <span class="tag tag-red">BRAND</span>
+            <h2>品牌 Logo 资源</h2>
+            <p>微网通联品牌标识各版本源文件与导出图，支持在线预览与下载。</p>
+            <span class="go">查看与下载</span>
+        </a>
+    </div>
+    <div class="foot">北京微网通联股份有限公司 · <a href="https://www.51welink.com">www.51welink.com</a></div>
+</div>
+</body>
+</html>
