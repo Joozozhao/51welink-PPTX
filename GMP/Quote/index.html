@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GMP本地化部署消息平台 报价文件 V2021.09 · 北京微网通联</title>
+<title>GMP本地化部署消息平台 报价文件 · 北京微网通联</title>
 <style>
 /* ============================================================
-   GMP 本地化部署消息平台 报价文件 V2021.09 —— HTML 矢量重绘版
+   GMP 本地化部署消息平台 报价文件 —— HTML 矢量重绘版
    依据原 PDF 重绘：封面 / 产品介绍 / 报价明细 / 公司介绍
    ============================================================ */
 :root{
@@ -56,6 +56,10 @@ body{
   position:absolute;bottom:7mm;left:12mm;right:12mm;
   display:flex;justify-content:space-between;align-items:center;
   font-size:10px;color:var(--gray);letter-spacing:.5px;
+}
+/* 页码相对整页居中（不受左右两栏宽度差影响） */
+.page-footer span:nth-child(2){
+  position:absolute;left:50%;transform:translateX(-50%);
 }
 /* ---------- Logo（矢量重绘） ---------- */
 .logo{display:flex;align-items:center;}
@@ -240,13 +244,13 @@ table.price tr.total td.tv{
    第 6 页 · 关于微网通联
    ============================================================ */
 .about-body{position:absolute;top:24mm;left:12mm;right:12mm;bottom:0;}
-.about-deco{position:relative;height:130px;}
+.about-deco{position:relative;height:104px;}
 .about-deco .cc1{position:absolute;left:8px;top:2px;width:76px;height:76px;border-radius:50%;background:var(--teal);opacity:.85;}
 .about-deco .cc2{position:absolute;left:64px;top:34px;width:120px;height:120px;border-radius:50%;background:#EDF1F4;}
 .about-deco .tri{position:absolute;left:118px;top:16px;width:0;height:0;
   border-left:9px solid transparent;border-right:9px solid transparent;border-top:14px solid #F5D020;}
 .about-deco .lg{position:absolute;left:96px;top:70px;}
-.about-title{position:relative;margin:6px 0 0 200px;}
+.about-title{position:relative;margin:0 0 0 200px;}
 .about-title .halftone{
   position:absolute;left:150px;top:-16px;width:250px;height:110px;
   background-image:radial-gradient(#E3B7C6 1.2px,transparent 1.2px);
@@ -255,10 +259,10 @@ table.price tr.total td.tv{
 .about-title .q{position:absolute;left:-56px;top:-8px;}
 .about-title h1{position:relative;font-size:29px;font-weight:800;letter-spacing:4px;}
 .about-title .en{position:relative;font-size:15px;font-weight:700;color:#222;margin-top:6px;letter-spacing:.5px;}
-.about-text{margin-top:22px;}
+.about-text{margin-top:14px;}
 .about-text p{
-  font-size:11.5px;line-height:1.9;color:#333;text-align:justify;
-  margin-bottom:12px;letter-spacing:.3px;
+  font-size:16.1px;line-height:1.9;color:#333;text-align:justify;
+  margin-bottom:8px;letter-spacing:.3px;text-indent:2em;
 }
 .about-text p b{font-weight:700;}
 .about-img{position:absolute;left:-12mm;right:-12mm;bottom:0;height:280px;overflow:hidden;}
@@ -275,12 +279,52 @@ table.price tr.total td.tv{
 }
 .toolbar button:hover{background:#B81E3A;}
 
+/* ---------- 报价编辑模式 ---------- */
+.quote-tools{
+  position:fixed;top:50%;right:16px;transform:translateY(-50%);z-index:99;
+  display:flex;flex-direction:column;gap:10px;
+}
+.quote-tools button{
+  width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
+  background:#fff;color:var(--red);font-size:19px;line-height:1;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);font-family:inherit;
+  transition:background .2s,color .2s,transform .2s;
+}
+.quote-tools button:hover{transform:translateY(-2px);}
+#qeEdit.active{background:var(--red);color:#fff;}
+#qeSave{background:var(--red);color:#fff;}
+body.editing table.price td[contenteditable="true"]{
+  outline:1.5px dashed var(--red);outline-offset:-1.5px;background:#FFF7F8;cursor:text;
+}
+.row-del{display:none;}
+body.editing .row-del{
+  display:inline-block;margin-left:6px;border:none;background:transparent;color:#B81E3A;
+  font-size:11px;cursor:pointer;padding:0 2px;vertical-align:middle;font-family:inherit;
+}
+.add-row-bar{display:none;}
+body.editing .add-row-bar{display:block;text-align:center;margin:8px 0 2px;}
+.add-row-bar button{
+  border:1.5px dashed var(--red);background:#fff;color:var(--red);
+  font-size:12px;letter-spacing:1px;padding:6px 18px;border-radius:18px;cursor:pointer;font-family:inherit;
+}
+.add-row-bar button:hover{background:var(--red);color:#fff;}
+.qe-toast{
+  position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(8px);z-index:100;
+  background:rgba(20,20,25,.88);color:#fff;font-size:13px;letter-spacing:1px;
+  padding:9px 22px;border-radius:22px;opacity:0;pointer-events:none;
+  transition:opacity .25s,transform .25s;
+}
+.qe-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
 /* ---------- 打印 ---------- */
 @page{size:A4;margin:0;}
 @media print{
   body{background:#fff;padding:0;gap:0;display:block;}
   .sheet{box-shadow:none;margin:0 auto;}
   .toolbar{display:none;}
+  .quote-tools,.qe-toast{display:none;}
+  body.editing .add-row-bar,body.editing .row-del{display:none;}
+  body.editing table.price td[contenteditable="true"]{outline:none;background:none;}
 }
 </style>
 </head>
@@ -289,6 +333,12 @@ table.price tr.total td.tv{
 <div class="toolbar no-print">
   <button onclick="window.print()">🖨️ 打印 / 另存为 PDF</button>
 </div>
+
+<div class="quote-tools">
+  <button id="qeEdit" title="编辑报价 (E)">✏️</button>
+  <button id="qeSave" title="下载保存已编辑文件 (Ctrl+S)">⬇️</button>
+</div>
+<div class="qe-toast" id="qeToast">已保存</div>
 
 <!-- ================= 第 1 页 · 封面 ================= -->
 <section class="sheet cover">
@@ -713,6 +763,12 @@ table.price tr.total td.tv{
           <td class="tl">总价</td>
           <td class="tv">440000.00</td>
         </tr>
+        <tr class="total total-cn">
+          <td class="no" style="height:30px"></td>
+          <td></td>
+          <td class="tl">大写金额（人民币）</td>
+          <td class="tv" id="totalCn">肆拾肆万元整</td>
+        </tr>
       </tbody>
     </table>
     <!-- 数据校验：84 项单价累加 = 440000 元，与总价一致 -->
@@ -757,8 +813,8 @@ table.price tr.total td.tv{
       <p>北京微网通联股份有限公司（简称“微网通联”）是国内领先的<b>新媒体及智慧车场运营商</b>，新媒体矩阵包括：<b>云通信平台（UMC）</b>、<b>本地化部署消息平台（GMP）</b>和智慧出行场景的自媒体平台<b>（泊聚量）</b>。</p>
       <p>其中，UMC和GMP是基于移动信息服务生态，为企业和政府服务机构（政务）提供短信（验证码、会员通知等）、<b>5G消息</b>（智能短信、视频短信、Chatbot消息）、语音通知/验证，闪信等服务。</p>
       <p>智慧车场业务包括：<b>智慧车场SaaS服务</b>，<b>智慧车场综合体2.0运营服务</b>。</p>
-      <p>公司自2008年开始运营，至今已建立了覆盖全国的客户服务网络，在北京、上海、山东、深圳、成都、长沙等地设有本地化运营和客服团队。</p>
-      <p>微网通联以资源整合和价值营销为双驱动力，凭借平台运营能力和“极致服务”理念等综合竞争力，荣获<b>高新技术企业认证</b>、ISO 27001信息安全管理体系认证、ISO 27701隐私信息管理体系认证证书、ISO 9001质量管理体系认证、公安部信息系统安全三级等保评测认证、<b>“专精特新”企业认证</b>，获得企业信用最高等级3A认证、中国互联网协会最具价值产品服务、最佳移动即时通信平台、中国移动互联网领域最佳运营支撑服务奖和中国最佳客户体验平台等多项殊荣。此外，于2016年成功登陆<b>新三板</b>（证券简称：微网通联，证券代码：870213），并于2021年荣获新三板治理性优质企业认证。</p>
+      <p>公司自成立以来，已建立了覆盖全国的客户服务网络，在北京、上海、山东、深圳、成都、长沙等地设有本地化运营和客服团队。</p>
+      <p>微网通联以资源整合和价值营销为双驱动力，凭借平台运营能力和“极致服务”理念等综合竞争力，荣获<b>高新技术企业认证</b>、ISO 27001信息安全管理体系认证、ISO 27701隐私信息管理体系认证证书、ISO 9001质量管理体系认证、公安部信息系统安全三级等保评测认证、<b>“专精特新”企业认证</b>，获得企业信用最高等级3A认证、中国互联网协会最具价值产品服务、最佳移动即时通信平台、中国移动互联网领域最佳运营支撑服务奖和中国最佳客户体验平台等多项殊荣。此外，已成功登陆<b>新三板</b>（证券简称：微网通联，证券代码：870213），并荣获新三板治理性优质企业认证。</p>
     </div>
 
     <!-- 大楼插画（矢量重绘） -->
@@ -830,5 +886,143 @@ table.price tr.total td.tv{
   </div>
 </section>
 
+<script>
+/* 报价编辑模式：行内改内容/改价、增删行、序号重排、总价自动重算、导出为 HTML 文件 */
+(function(){
+  var editBtn=document.getElementById('qeEdit'),
+      saveBtn=document.getElementById('qeSave'),
+      toast=document.getElementById('qeToast'),tt=null;
+  function toastMsg(m){toast.textContent=m;toast.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('show');},1600);}
+  function parsePrice(t){var n=parseFloat(String(t==null?'':t).replace(/[^0-9.\-]/g,''));return isNaN(n)?0:n;}
+  function fmt(n){return n.toFixed(2);}
+  /* 数字金额 → 中文大写（如 440000 → 肆拾肆万元整） */
+  function toChineseUpper(n){
+    var fraction=['角','分'],
+        digit=['零','壹','贰','叁','肆','伍','陆','柒','捌','玖'],
+        unit=[['元','万','亿'],['','拾','佰','仟']],
+        head=n<0?'负':'';
+    n=Math.abs(n);
+    var s='';
+    for(var i=0;i<fraction.length;i++){
+      s+=(digit[Math.floor(n*10*Math.pow(10,i))%10]+fraction[i]).replace(/零./,'');
+    }
+    s=s||'整';n=Math.floor(n);
+    for(var i=0;i<unit[0].length&&n>0;i++){
+      var p='';
+      for(var j=0;j<unit[1].length&&n>0;j++){p=digit[n%10]+unit[1][j]+p;n=Math.floor(n/10);}
+      s=p.replace(/(零.)*零$/,'').replace(/^$/,'零')+unit[0][i]+s;
+    }
+    return head+s.replace(/(零.)*零元/,'元').replace(/(零.)+/g,'零').replace(/^整$/,'零元整');
+  }
+  function isEditing(){return document.body.classList.contains('editing');}
+  function priceRows(){
+    return Array.prototype.slice.call(document.querySelectorAll('table.price tbody tr'))
+      .filter(function(tr){return !tr.classList.contains('total');});
+  }
+  function setNo(cell,n){
+    var t=cell.firstChild;
+    if(!t||t.nodeType!==3){t=document.createTextNode('');cell.insertBefore(t,cell.firstChild);}
+    t.nodeValue=String(n);
+  }
+  function renumber(){priceRows().forEach(function(tr,i){var no=tr.querySelector('td.no');if(no)setNo(no,i+1);});}
+  function recalc(){
+    var sum=0;
+    Array.prototype.forEach.call(document.querySelectorAll('table.price td.pr'),function(td){sum+=parsePrice(td.textContent);});
+    var tv=document.querySelector('table.price tr.total td.tv');
+    if(tv)tv.textContent=fmt(sum);
+    var cn=document.getElementById('totalCn');
+    if(cn)cn.textContent=toChineseUpper(sum);
+    return sum;
+  }
+  function markEditable(scope){
+    Array.prototype.forEach.call(scope.querySelectorAll('td'),function(td){
+      if(td.classList.contains('no'))return;
+      if(td.closest('tr').classList.contains('total'))return;
+      td.setAttribute('contenteditable','true');
+    });
+  }
+  function unmarkEditable(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.price td[contenteditable]'),function(td){td.removeAttribute('contenteditable');});
+  }
+  function setEditing(on){
+    document.body.classList.toggle('editing',on);
+    editBtn.classList.toggle('active',on);
+    editBtn.textContent=on?'\u2714\uFE0F':'\u270F\uFE0F';
+    if(on){markEditable(document);toastMsg('已进入编辑模式：可改内容/改价，可增删行');}
+    else{unmarkEditable();renumber();var s=recalc();toastMsg('已退出编辑，总价已重算：'+fmt(s));}
+  }
+  function addRow(table){
+    var tbody=table.querySelector('tbody');if(!tbody)return;
+    var total=tbody.querySelector('tr.total');
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td class="no"></td><td class="mod"></td><td></td><td class="pr">0.00</td>';
+    if(total)tbody.insertBefore(tr,total);else tbody.appendChild(tr);
+    attachDelBtn(tr.querySelector('td.no'));
+    if(isEditing())markEditable(tr);
+    renumber();recalc();
+    var fn=tr.cells[2];if(fn)fn.focus();
+  }
+  function attachDelBtn(noCell){
+    if(!noCell||noCell.querySelector('.row-del'))return;
+    var b=document.createElement('button');
+    b.type='button';b.className='row-del';b.title='删除本行';b.textContent='\u2715';
+    noCell.appendChild(b);
+  }
+  /* 初始化：每张报价表后加“添加行”工具条，每行序号格注入删除按钮 */
+  Array.prototype.forEach.call(document.querySelectorAll('table.price'),function(table){
+    var bar=document.createElement('div');
+    bar.className='add-row-bar';
+    bar.innerHTML='<button type="button">\uFF0B 添加报价行</button>';
+    bar.querySelector('button').addEventListener('click',function(){addRow(table);});
+    table.parentNode.insertBefore(bar,table.nextSibling);
+  });
+  priceRows().forEach(function(tr){attachDelBtn(tr.querySelector('td.no'));});
+  recalc();
+  /* 事件委托：删行 / 价格输入即时重算 / 粘贴纯文本 */
+  document.addEventListener('click',function(e){
+    var del=e.target.closest?e.target.closest('.row-del'):null;
+    if(del){
+      var tr=del.closest('tr');
+      if(tr&&tr.parentNode.childElementCount>1){tr.parentNode.removeChild(tr);renumber();recalc();}
+      else toastMsg('至少保留一行');
+      return;
+    }
+  });
+  document.addEventListener('input',function(e){
+    var td=e.target.closest?e.target.closest('td.pr'):null;
+    if(td&&td.isContentEditable)recalc();
+  });
+  document.addEventListener('paste',function(e){
+    var td=e.target.closest?e.target.closest('table.price td[contenteditable]'):null;
+    if(!td)return;
+    e.preventDefault();
+    var text=(e.clipboardData||window.clipboardData).getData('text/plain');
+    document.execCommand('insertText',false,text);
+  });
+  /* 导出：克隆文档，剥离编辑态痕迹后下载为 HTML */
+  function exportFile(){
+    var clone=document.documentElement.cloneNode(true);
+    Array.prototype.forEach.call(clone.querySelectorAll('.add-row-bar,.row-del'),function(el){el.remove();});
+    Array.prototype.forEach.call(clone.querySelectorAll('[contenteditable]'),function(el){el.removeAttribute('contenteditable');});
+    clone.querySelector('body').classList.remove('editing');
+    var html='<!DOCTYPE html>\n'+clone.outerHTML;
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));
+    var title=(document.title||'报价文件').replace(/\s*[·•]\s*/g,'').replace(/\s+/g,'').trim();
+    var d=new Date(),pad=function(n){return String(n).padStart(2,'0');};
+    a.download=title+'_'+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+'.html';
+    document.body.appendChild(a);a.click();a.remove();
+    setTimeout(function(){URL.revokeObjectURL(a.href);},4000);
+    toastMsg('已下载：'+a.download);
+  }
+  editBtn.addEventListener('click',function(){setEditing(!isEditing());});
+  saveBtn.addEventListener('click',exportFile);
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();exportFile();}
+    else if(e.key==='Escape'&&isEditing())setEditing(false);
+    else if((e.key==='e'||e.key==='E')&&e.target&&!e.target.isContentEditable)editBtn.click();
+  });
+})();
+</script>
 </body>
 </html>

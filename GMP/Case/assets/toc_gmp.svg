@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 630 1080">
+  <defs>
+    <linearGradient id="tbg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#0C2450"/>
+      <stop offset="1" stop-color="#081226"/>
+    </linearGradient>
+    <linearGradient id="trackG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2A4F96"/>
+      <stop offset="1" stop-color="#1E3A70"/>
+    </linearGradient>
+    <radialGradient id="tglowB" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#2E6FE8" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#2E6FE8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="tglowR" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#F02D4E" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#F02D4E" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="tdots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#2E6FE8" opacity="0.42"/>
+    </pattern>
+  </defs>
+
+  <rect width="630" height="1080" fill="url(#tbg)"/>
+  <rect width="630" height="1080" fill="url(#tdots)"/>
+
+  <!-- 氛围光 -->
+  <ellipse cx="315" cy="560" rx="330" ry="360" fill="url(#tglowB)"/>
+  <ellipse cx="480" cy="200" rx="200" ry="180" fill="url(#tglowR)"/>
+
+  <!-- 轨道环 -->
+  <g fill="none">
+    <ellipse cx="315" cy="600" rx="250" ry="72" transform="rotate(-14 315 600)" stroke="#2E6FE8" stroke-opacity="0.45" stroke-width="2" stroke-dasharray="8 7"/>
+    <ellipse cx="315" cy="600" rx="190" ry="54" transform="rotate(-14 315 600)" stroke="#F02D4E" stroke-opacity="0.4" stroke-width="1.8"/>
+  </g>
+
+  <!-- 底座阴影 -->
+  <ellipse cx="315" cy="760" rx="160" ry="22" fill="#000000" opacity="0.4"/>
+
+  <!-- 服务器机柜 -->
+  <g>
+    <rect x="205" y="400" width="220" height="340" rx="14" fill="#1B3A72" stroke="#2E6FE8" stroke-opacity="0.55" stroke-width="2.5"/>
+    <rect x="205" y="400" width="220" height="10" rx="5" fill="#2E6FE8" opacity="0.5"/>
+    <g>
+      <rect x="223" y="424" width="184" height="60" rx="7" fill="url(#trackG)"/>
+      <rect x="223" y="500" width="184" height="60" rx="7" fill="url(#trackG)"/>
+      <rect x="223" y="576" width="184" height="60" rx="7" fill="url(#trackG)"/>
+      <rect x="223" y="652" width="184" height="60" rx="7" fill="url(#trackG)"/>
+    </g>
+    <g fill="#2E6FE8">
+      <circle cx="243" cy="454" r="4.5"/><circle cx="243" cy="530" r="4.5"/><circle cx="243" cy="682" r="4.5"/>
+      <circle cx="243" cy="454" r="9" opacity="0.3"/><circle cx="243" cy="530" r="9" opacity="0.3"/><circle cx="243" cy="682" r="9" opacity="0.3"/>
+      <rect x="262" y="442" width="88" height="7" rx="3.5" opacity="0.65"/>
+      <rect x="262" y="462" width="62" height="7" rx="3.5" opacity="0.65"/>
+      <rect x="262" y="518" width="88" height="7" rx="3.5" opacity="0.65"/>
+      <rect x="262" y="538" width="62" height="7" rx="3.5" opacity="0.65"/>
+      <rect x="262" y="594" width="88" height="7" rx="3.5" opacity="0.65"/>
+      <rect x="262" y="614" width="62" height="7" rx="3.5" opacity="0.65"/>
+      <rect x="262" y="670" width="88" height="7" rx="3.5" opacity="0.65"/>
+      <rect x="262" y="690" width="62" height="7" rx="3.5" opacity="0.65"/>
+    </g>
+    <circle cx="243" cy="606" r="4.5" fill="#F02D4E"/><circle cx="243" cy="606" r="9" fill="#F02D4E" opacity="0.3"/>
+  </g>
+
+  <!-- 上升虚线轨迹 -->
+  <g fill="none" stroke="#2E6FE8" stroke-opacity="0.6" stroke-width="2" stroke-dasharray="3 7" stroke-linecap="round">
+    <path d="M300,396 C300,360 296,352 292,342"/>
+    <path d="M360,396 C368,360 384,340 398,326"/>
+    <path d="M255,396 C248,366 240,352 232,340"/>
+  </g>
+
+  <!-- 消息气泡：对话 -->
+  <g>
+    <rect x="222" y="258" width="140" height="76" rx="16" fill="rgba(255,255,255,0.13)" stroke="#2E6FE8" stroke-width="2"/>
+    <polygon points="246,330 246,352 270,330" fill="rgba(255,255,255,0.13)" stroke="#2E6FE8" stroke-width="2"/>
+    <circle cx="262" cy="296" r="6" fill="#2E6FE8"/>
+    <circle cx="292" cy="296" r="6" fill="#F02D4E"/>
+    <circle cx="322" cy="296" r="6" fill="#2E6FE8"/>
+  </g>
+
+  <!-- 消息气泡：邮件 -->
+  <g>
+    <rect x="380" y="240" width="104" height="70" rx="10" fill="rgba(255,255,255,0.13)" stroke="#2E6FE8" stroke-width="2"/>
+    <polyline points="385,251 432,285 479,251" fill="none" stroke="#2E6FE8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="476" cy="248" r="11" fill="#F02D4E"/>
+  </g>
+
+  <!-- 小铃铛 -->
+  <g>
+    <rect x="172" y="300" width="56" height="56" rx="12" fill="rgba(255,255,255,0.13)" stroke="#2E6FE8" stroke-width="2"/>
+    <path d="M190,328 a10,10 0 0 1 20,0 l4,9 h-28 z" fill="none" stroke="#F02D4E" stroke-width="2.2" stroke-linejoin="round"/>
+    <circle cx="200" cy="342" r="3" fill="#F02D4E"/>
+  </g>
+
+  <!-- 盾牌小图标 -->
+  <g>
+    <path d="M480,380 L510,392 L510,430 Q510,458 480,472 Q450,458 450,430 L450,392 Z"
+          fill="rgba(240,45,78,0.10)" stroke="#F02D4E" stroke-width="2"/>
+    <polyline points="464,428 477,442 498,410" fill="none" stroke="#F02D4E" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- 漂浮粒子 -->
+  <g>
+    <circle cx="130" cy="480" r="4" fill="#2E6FE8" opacity="0.7"/>
+    <circle cx="520" cy="520" r="4" fill="#F02D4E" opacity="0.7"/>
+    <circle cx="100" cy="700" r="4" fill="#2E6FE8" opacity="0.5"/>
+    <circle cx="540" cy="760" r="4" fill="#2E6FE8" opacity="0.5"/>
+    <circle cx="150" cy="200" r="3.5" fill="#2E6FE8" opacity="0.6"/>
+    <circle cx="500" cy="880" r="4" fill="#F02D4E" opacity="0.5"/>
+    <circle cx="90" cy="900" r="3.5" fill="#2E6FE8" opacity="0.4"/>
+  </g>
+
+  <!-- 左侧竖向电路线 -->
+  <g stroke="#2E6FE8" stroke-opacity="0.25" stroke-width="2" fill="none">
+    <polyline points="40,880 110,880 110,790 180,790"/>
+    <polyline points="30,300 90,300 90,380"/>
+  </g>
+  <g fill="#2E6FE8" fill-opacity="0.4">
+    <circle cx="40" cy="880" r="3.5"/><circle cx="180" cy="790" r="3.5"/>
+    <circle cx="30" cy="300" r="3.5"/><circle cx="90" cy="380" r="3.5"/>
+  </g>
+</svg>
