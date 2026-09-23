@@ -705,6 +705,9 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 /* ==================== s1 封面说明行 ==================== */
 #s1 .s1-desc { font-size:20px; color:rgba(255,255,255,0.62); line-height:1.9; max-width:1000px; }
 
+/* s9 章节页 02：引言较长，收窄避免压到右侧插画 pill */
+#s9 .sec-desc { max-width:640px; }
+
 /* ==================== s30 技术优势（5 组） ==================== */
 #s30 .s30-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(2,1fr); gap:24px; }
 #s30 .s30-lead { background:linear-gradient(160deg,#0A1F44 0%,#123A7A 100%); border-radius:21px; padding:42px 39px; display:flex; flex-direction:column; justify-content:space-between; }
@@ -1494,9 +1497,9 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 <button class="edit-toggle" id="editToggle" title="编辑模式 (E)">✏️</button>
 <div class="edit-toast" id="editToast">已保存</div>
 <div class="deck-download">
-    <a href="../GMP.pdf" id="dlPdf">PDF</a>
-    <a href="../GMP.pptx" id="dlPptx">PPTX</a>
-    <a href="../GMP.zip" id="dlZip">ZIP</a>
+    <a href="GMP_Case.pdf" id="dlPdf" download>PDF</a>
+    <a href="GMP_Case.pptx" id="dlPptx" download>PPTX</a>
+    <a href="GMP_Case.zip" id="dlZip" download>ZIP</a>
 </div>
 
 <script>
