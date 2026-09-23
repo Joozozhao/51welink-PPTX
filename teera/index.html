@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>医院数字化通信解决方案 · GMP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+    --navy: #0A1F44;
+    --navy-2: #123A7A;
+    --blue: #2E6FE8;
+    --red: #F02D4E;
+    --bg: #F6F8FB;
+    --ink: #1B2A4A;
+    --muted: #5A6B85;
+    --faint: #8A94A6;
+    --font-body: "Archivo", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    --font-num: "Archivo", "Helvetica Neue", "PingFang SC", "Noto Sans SC", sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: var(--font-body);
+    background: #000;
+    color: var(--ink);
+    overflow: hidden;
+    touch-action: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+.deck-viewport { position: fixed; inset: 0; overflow: hidden; background: #111; }
+.deck-stage {
+    position: absolute; left: 0; top: 0;
+    width: 1920px; height: 1080px;
+    transform-origin: 0 0;
+    background: var(--bg);
+}
+.slide {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.slide.active { opacity: 1; visibility: visible; pointer-events: auto; }
+.slide.dark { background: var(--navy); color: #fff; }
+
+/* === Reveal Animations === */
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); transition-delay: var(--d, 0s); }
+.slide.active .reveal { opacity: 1; transform: translateY(0); }
+.reveal-zoom { opacity: 0; transform: scale(0.9); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); transition-delay: var(--d, 0s); }
+.slide.active .reveal-zoom { opacity: 1; transform: scale(1); }
+
+/* === Common Layout === */
+.slide-head { position: absolute; left: 96px; top: 72px; right: 96px; }
+.slide-head.dark { color: #fff; }
+.kicker { font-size: 21px; color: var(--muted); letter-spacing: 4px; font-family: var(--font-num); text-transform: uppercase; }
+.slide.dark .kicker { color: rgba(255,255,255,0.5); }
+.head-line { display: flex; align-items: center; gap: 24px; margin-top: 14px; }
+.slide-title { font-size: 54px; font-weight: 700; color: var(--navy); letter-spacing: 2px; }
+.slide.dark .slide-title { color: #fff; }
+.title-bar { width: 64px; height: 6px; background: var(--red); border-radius: 3px; }
+
+.slide-body { position: absolute; left: 96px; right: 96px; top: 220px; height: 740px; }
+
+/* Chrome */
+.deck-progress { position: fixed; left: 0; bottom: 0; width: 100%; height: 4px; background: rgba(255,255,255,0.12); z-index: 1000; }
+.deck-progress-bar { height: 100%; width: 0%; background: var(--red); transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.deck-download { position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 1001; display: flex; flex-direction: column; gap: 1px; }
+.deck-download a { display: inline-flex; align-items: center; gap: 6px; background: rgba(10,31,68,0.85); color: #fff; font-size: 14px; font-weight: 600; text-decoration: none; writing-mode: vertical-rl; text-orientation: mixed; padding: 16px 8px; transition: background 0.25s ease; }
+.deck-download a:hover { background: var(--red); }
+.edit-hotzone { position: fixed; right: 0; bottom: 0; width: 300px; height: 300px; z-index: 1000; cursor: pointer; }
+.edit-toggle { position: fixed; right: 22px; bottom: 22px; width: 44px; height: 44px; border-radius: 50%; background: #F02D4E; color: #fff; border: none; font-size: 20px; cursor: pointer; z-index: 1001; opacity: 0; pointer-events: none; transition: all 0.3s; box-shadow: 0 4px 12px rgba(240,45,78,0.4); }
+.edit-toggle.show { opacity: 1; pointer-events: auto; transform: scale(1); }
+.edit-toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(8px); background: rgba(10,31,68,0.9); color: #fff; padding: 8px 20px; border-radius: 20px; z-index: 10001; opacity: 0; transition: all 0.3s; }
+.edit-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+body.editing [contenteditable="true"] { outline: 2px dashed var(--red); outline-offset: 4px; }
+
+/* === Slide 1: Cover === */
+#s1 { background: radial-gradient(circle at 70% 30%, #123A7A 0%, #0A1F44 100%); overflow:hidden; }
+#s1::after { content:""; position:absolute; inset:0; background:linear-gradient(90deg, rgba(10,31,68,.97) 0%, rgba(10,31,68,.88) 42%, rgba(10,31,68,.20) 100%); z-index:0; }
+#s1 .cover-building { position:absolute; right:-40px; bottom:-60px; width:900px; height:900px; object-fit:cover; object-position:center; border-radius:50%; opacity:.78; filter:saturate(.72) contrast(1.08); }
+#s1 .wrap { position:relative; z-index:1; padding:96px; height:100%; display: flex; flex-direction: column; justify-content: space-between; }
+#s1 .top { display:flex; align-items:center; gap:22px; font-size: 24px; color: rgba(255,255,255,0.6); letter-spacing: 4px; font-family: var(--font-num); }
+#s1 .brand-logo { width:250px; height:auto; object-fit:contain; filter:brightness(0) invert(1); }
+#s1 .mid { display: flex; flex-direction: column; gap: 24px; }
+#s1 .title { font-size: 96px; font-weight: 700; letter-spacing: 4px; }
+#s1 .sub { font-size: 42px; color: rgba(255,255,255,0.8); }
+#s1 .desc { font-size: 24px; color: rgba(255,255,255,0.6); line-height: 1.6; max-width: 800px; margin-top: 20px; }
+#s1 .bot { display: flex; gap: 64px; align-items: flex-end; }
+#s1 .stat { display: flex; flex-direction: column; gap: 8px; }
+#s1 .stat-val { font-size: 64px; font-weight: 700; color: var(--red); font-family: var(--font-num); }
+#s1 .stat-lbl { font-size: 20px; color: rgba(255,255,255,0.6); }
+
+/* === Slide 2: TOC === */
+#s2 .wrap { display: flex; height: 100%; }
+#s2 .left { flex: 0 0 600px; background: var(--navy); color: #fff; padding: 96px; display: flex; flex-direction: column; justify-content: center; }
+#s2 .right { flex: 1; padding: 96px 120px; display: flex; flex-direction: column; justify-content: center; gap: 48px; }
+#s2 .left-title { font-size: 84px; font-weight: 700; }
+#s2 .left-sub { font-size: 24px; color: rgba(255,255,255,0.5); letter-spacing: 8px; margin-top: 24px; }
+#s2 .item { display: flex; gap: 48px; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 32px; }
+#s2 .item:last-child { border-bottom: none; }
+#s2 .num { font-size: 64px; font-weight: 700; color: var(--red); font-family: var(--font-num); width: 80px; }
+#s2 .text-wrap { display: flex; flex-direction: column; gap: 8px; }
+#s2 .item-title { font-size: 32px; font-weight: 700; color: var(--navy); }
+#s2 .item-desc { font-size: 20px; color: var(--muted); }
+
+/* === Slide 3: Challenges === */
+#s3 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; height: 100%; align-items: center; }
+#s3 .card { background: #fff; border-radius: 24px; padding: 48px; box-shadow: 0 20px 40px rgba(10,31,68,0.06); height: 500px; display: flex; flex-direction: column; gap: 24px; }
+#s3 .card-title { font-size: 32px; font-weight: 700; color: var(--navy); }
+#s3 .card-desc { font-size: 22px; color: var(--muted); line-height: 1.8; }
+#s3 .intro { font-size: 24px; color: var(--ink); line-height: 1.6; margin-bottom: 48px; max-width: 1400px; }
+
+/* === Slide 4: Overview === */
+#s4 .intro { font-size: 24px; line-height: 1.8; color: var(--ink); margin-bottom: 48px; max-width: 1400px; }
+#s4 .boxes { display: flex; gap: 32px; margin-bottom: 64px; }
+#s4 .box { flex: 1; background: var(--navy); color: #fff; padding: 32px; border-radius: 16px; text-align: center; font-size: 24px; font-weight: 600; }
+#s4 .stats { display: flex; gap: 96px; }
+#s4 .stat { display: flex; align-items: baseline; gap: 16px; }
+#s4 .s-val { font-size: 72px; font-weight: 700; color: var(--red); }
+#s4 .s-lbl { font-size: 24px; color: var(--muted); }
+
+/* === Slide 5/6/7: Scenarios === */
+.scenario-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; height: 100%; align-items: center; }
+.scenario-left { display: flex; flex-direction: column; gap: 32px; }
+.scenario-right { background: #fff; border-radius: 24px; padding: 64px; box-shadow: 0 20px 40px rgba(10,31,68,0.06); display: flex; flex-direction: column; gap: 24px; }
+.scenario-desc { font-size: 24px; color: var(--ink); line-height: 1.8; }
+.scenario-item { background: var(--bg); padding: 24px; border-radius: 12px; border-left: 6px solid var(--blue); font-size: 22px; font-weight: 600; }
+
+/* === Slide 8/9: Core Advantages === */
+.adv-list { display: flex; flex-direction: column; gap: 48px; }
+.adv-item { display: flex; flex-direction: column; gap: 16px; }
+.adv-title { font-size: 36px; font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 16px; }
+.adv-title::before { content: ""; width: 12px; height: 36px; background: var(--blue); border-radius: 6px; }
+.adv-desc { font-size: 24px; color: var(--muted); line-height: 1.8; padding-left: 28px; }
+.adv-tags { display: flex; gap: 16px; padding-left: 28px; margin-top: 16px; }
+.adv-tag { background: rgba(46,111,232,0.1); color: var(--blue); padding: 12px 24px; border-radius: 50px; font-size: 20px; font-weight: 600; }
+
+/* === Slide 10: Versions === */
+#s10 .intro { font-size: 24px; color: var(--ink); margin-bottom: 48px; }
+#s10 .pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
+#s10 .plan { background: #fff; border-radius: 24px; box-shadow: 0 20px 40px rgba(10,31,68,0.06); overflow: hidden; display: flex; flex-direction: column; border: 2px solid transparent; transition: border-color 0.3s; }
+#s10 .plan:hover { border-color: var(--blue); }
+#s10 .plan.pro { border-color: var(--red); transform: scale(1.05); }
+#s10 .plan-head { padding: 40px; background: var(--bg); text-align: center; border-bottom: 1px solid #E2E8F0; }
+#s10 .plan.pro .plan-head { background: var(--red); color: #fff; }
+#s10 .p-title { font-size: 36px; font-weight: 700; margin-bottom: 8px; }
+#s10 .p-sub { font-size: 20px; color: var(--muted); }
+#s10 .plan.pro .p-sub { color: rgba(255,255,255,0.8); }
+#s10 .plan-body { padding: 40px; flex: 1; display: flex; flex-direction: column; gap: 32px; }
+#s10 .p-section { display: flex; flex-direction: column; gap: 16px; }
+#s10 .p-lbl { font-size: 18px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 2px; }
+#s10 .p-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+#s10 .p-list li { font-size: 20px; color: var(--ink); display: flex; gap: 12px; }
+#s10 .p-list li::before { content: "✓"; color: var(--blue); font-weight: 700; }
+
+/* === Slide 11: Cases === */
+#s11 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; height: 100%; }
+#s11 .col { display: flex; flex-direction: column; gap: 32px; }
+#s11 .h3 { font-size: 32px; font-weight: 700; color: var(--navy); border-bottom: 2px solid var(--red); padding-bottom: 16px; display: inline-block; }
+#s11 .list { display: flex; flex-direction: column; gap: 16px; }
+#s11 .item { background: #fff; padding: 24px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+#s11 .i-name { font-size: 24px; font-weight: 600; color: var(--ink); }
+#s11 .i-desc { font-size: 18px; color: var(--muted); }
+#s11 .stats { display: flex; gap: 48px; background: var(--navy); color: #fff; padding: 48px; border-radius: 24px; margin-top: auto; }
+#s11 .stat { flex: 1; text-align: center; }
+#s11 .s-val { font-size: 64px; font-weight: 700; color: var(--red); margin-bottom: 8px; }
+
+/* === Slide 12: Closing === */
+#s12 { background: var(--navy); color: #fff; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 96px; }
+#s12 .title { font-size: 64px; font-weight: 700; margin-bottom: 24px; }
+#s12 .desc { font-size: 32px; color: rgba(255,255,255,0.7); margin-bottom: 96px; max-width: 1200px; line-height: 1.6; }
+#s12 .features { display: flex; gap: 64px; margin-bottom: 96px; }
+#s12 .f-item { display: flex; flex-direction: column; gap: 16px; align-items: center; }
+#s12 .f-title { font-size: 32px; font-weight: 700; color: var(--blue); }
+#s12 .f-desc { font-size: 20px; color: rgba(255,255,255,0.6); }
+#s12 .bot { font-size: 36px; font-weight: 700; letter-spacing: 4px; }
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- S1 -->
+<section class="slide dark" id="s1">
+    <img class="cover-building" src="assets/slide1_img1.jpg" alt="现代化医院建筑">
+    <div class="wrap">
+        <div class="top reveal"><img class="brand-logo" src="assets/slide5_img1.png" alt="微网通联">医院数字化-通信解决方案</div>
+        <div class="mid">
+            <div class="title reveal" style="--d:0.1s">本地化部署消息管理平台【GMP】</div>
+            <div class="sub reveal" style="--d:0.2s">构建安全、高效、智能的医疗通信新引擎</div>
+            <div class="desc reveal" style="--d:0.3s">助力医院数字化转型与信创升级</div>
+        </div>
+        <div class="bot reveal" style="--d:0.4s">
+            <div class="stat"><div class="stat-val">56+</div><div class="stat-lbl">服务医院</div></div>
+            <div class="stat"><div class="stat-val">10+</div><div class="stat-lbl">行业经验</div></div>
+            <div class="stat"><div class="stat-val">99%</div><div class="stat-lbl">客户满意度</div></div>
+            <div style="margin-left:auto; text-align:right;">
+                <div style="font-size:32px; font-weight:700;">微网通联</div>
+                <div style="font-size:20px; color:rgba(255,255,255,0.5); margin-top:8px;">51welink.com</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- S2 -->
+<section class="slide" id="s2">
+    <div class="wrap">
+        <div class="left reveal">
+            <div class="left-title">目录</div>
+            <div class="left-sub">CONTENTS</div>
+        </div>
+        <div class="right">
+            <div class="item reveal" style="--d:0.1s">
+                <div class="num">01</div>
+                <div class="text-wrap">
+                    <div class="item-title">医院通信现状</div>
+                    <div class="item-desc">系统孤岛、成本高昂、安全合规、信创需求四大挑战</div>
+                </div>
+            </div>
+            <div class="item reveal" style="--d:0.2s">
+                <div class="num">02</div>
+                <div class="text-wrap">
+                    <div class="item-title">本地化部署消息管理平台【GMP】</div>
+                    <div class="item-desc">专为医院打造的统一管理通信枢纽</div>
+                </div>
+            </div>
+            <div class="item reveal" style="--d:0.3s">
+                <div class="num">03</div>
+                <div class="text-wrap">
+                    <div class="item-title">结合医院场景的核心应用方案</div>
+                    <div class="item-desc">患者服务、临床协同、运营管理的全场景覆盖</div>
+                </div>
+            </div>
+            <div class="item reveal" style="--d:0.4s">
+                <div class="num">04</div>
+                <div class="text-wrap">
+                    <div class="item-title">GMP平台核心产品优势</div>
+                    <div class="item-desc">数据安全、信创适配、高性能、高可用架构</div>
+                </div>
+            </div>
+            <div class="item reveal" style="--d:0.5s">
+                <div class="num">05</div>
+                <div class="text-wrap">
+                    <div class="item-title">产品版本与部署建议</div>
+                    <div class="item-desc">基础版、专业版、旗舰版满足不同规模医院需求</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- S3 -->
+<section class="slide" id="s3">
+    <div class="slide-head reveal">
+        <div class="kicker">CHALLENGES</div>
+        <div class="head-line"><div class="slide-title">医院通信现状</div><div class="title-bar"></div></div>
+    </div>
+    <div class="slide-body reveal" style="--d:0.1s">
+        <div class="intro">在医疗信息化、数字化转型的快速推进下，医院内部建立了海量的业务系统（HIS、LIS、PACS、EMR、OA等），但在通信和消息触达方面面临显著挑战：</div>
+        <div class="grid">
+            <div class="card">
+                <div class="card-title">系统对接繁琐，形成"消息孤岛"</div>
+                <div class="card-desc">临床服务、医院管理等各子系统独立运作，每增加一个消息渠道（短信、微信、邮件）都需要各业务系统重复对接，导致接口复杂、研发及运维成本高昂。</div>
+            </div>
+            <div class="card">
+                <div class="card-title">信创改造需求与数据安全</div>
+                <div class="card-desc">医疗数据涉及国家安全与公民隐私，底层软硬件需满足全面国产化适配。传统的公有云SaaS消息服务无法满足医院数据"不出域"的合规要求（等保三级）。</div>
+            </div>
+            <div class="card">
+                <div class="card-title">极高的可用性需求</div>
+                <div class="card-desc">系统必须满足7×24小时不间断运行的严苛要求，具备故障自动切换、数据实时备份与秒级恢复能力，确保门急诊、重症监护等关键业务持续可用。</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- S4 -->
+<section class="slide" id="s4">
+    <div class="slide-head reveal">
+        <div class="kicker">PLATFORM OVERVIEW</div>
+        <div class="head-line"><div class="slide-title">本地化部署消息管理平台【GMP】</div><div class="title-bar"></div></div>
+    </div>
+    <div class="slide-body reveal" style="--d:0.1s">
+        <div class="intro">微网通联【GMP】是一款基于跨平台Java技术开发的消息发送与管理平台，专为满足安全性、保密性要求极高的企事业单位（如医院）的本地化部署需求而精心打造。<br><br>平台通过<strong>一次API接口调用</strong>，即可为医院打通短信、微信公众号、小程序、富媒体、语音通知、5G消息等全渠道通信能力。</div>
+        <div class="boxes">
+            <div class="box">短信</div><div class="box">微信生态</div><div class="box">语音通知</div><div class="box">富媒体</div><div class="box">5G消息</div>
+        </div>
+        <div class="stats">
+            <div class="stat"><div class="s-val">1亿+</div><div class="s-lbl">日处理能力</div></div>
+            <div class="stat"><div class="s-val">2000+</div><div class="s-lbl">秒级并发</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- S5 -->
+<section class="slide" id="s5">
+    <div class="slide-head reveal">
+        <div class="kicker">PATIENT SERVICE SCENARIOS</div>
+        <div class="head-line"><div class="slide-title">患者公众服务场景：全流程就医提醒</div><div class="title-bar"></div></div>
+    </div>
+    <div class="slide-body reveal" style="--d:0.1s">
+        <div class="scenario-grid">
+            <div class="scenario-left">
+                <div class="scenario-desc">通过平台将门急诊各类通知精准发送至患者手机或微信，提升患者体验与满意度。结合患者标签（老年人、慢病患者），实现精准化医疗服务。</div>
+                <div style="display:flex; gap:24px;">
+                    <div class="scenario-item">挂号成功通知</div>
+                    <div class="scenario-item">排队叫号提醒</div>
+                    <div class="scenario-item">检验报告出具</div>
+                </div>
+            </div>
+            <div class="scenario-right">
+                <div style="font-size:28px; font-weight:700; color:var(--navy);">策略化路由降低成本</div>
+                <div style="font-size:20px; color:var(--muted); line-height:1.6;">微信优先，短信托底的组合消息策略，在保障100%触达的同时，为医院大幅节省短信通信成本。</div>
+                <div style="display:flex; gap:32px; margin-top:24px;">
+                    <div><div style="font-size:48px; font-weight:700; color:var(--red);">60%</div><div style="font-size:18px; color:var(--muted);">成本节省</div></div>
+                    <div><div style="font-size:48px; font-weight:700; color:var(--blue);">100%</div><div style="font-size:18px; color:var(--muted);">消息触达</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- S6 -->
+<section class="slide" id="s6">
+    <div class="slide-head reveal">
+        <div class="kicker">CLINICAL COLLABORATION</div>
+        <div class="head-line"><div class="slide-title">临床与业务协同场景：内部高效流转</div><div class="title-bar"></div></div>
+    </div>
+    <div class="slide-body reveal" style="--d:0.1s">
+        <div class="scenario-grid">
+            <div class="scenario-left">
+                <div style="font-size:32px; font-weight:700; color:var(--navy);">危急值与临床预警</div>
+                <div class="scenario-desc">当LIS或重症监护系统产生危急值时，GMP平台可瞬间通过短信、语音通知等渠道将预警信息推送到主治医生与护士的终端，确保医疗干预的及时性。</div>
+                <div style="display:flex; gap:32px; margin-top:12px;">
+                    <div><div style="font-size:48px; font-weight:700; color:var(--red);">&lt;3秒</div><div style="font-size:18px; color:var(--muted);">预警推送时效</div></div>
+                    <div><div style="font-size:48px; font-weight:700; color:var(--blue);">24/7</div><div style="font-size:18px; color:var(--muted);">全天候监控</div></div>
+                </div>
+            </div>
+            <div class="scenario-right">
+                <div style="font-size:32px; font-weight:700; color:var(--navy);">会诊与手术通知</div>
+                <div class="scenario-desc" style="font-size:20px;">医生工作站（CIS）和手术麻醉系统可通过GMP平台，向跨科室专家自动发送远程会诊邀请、手术安排时间等协同信息，提升医疗团队协作效率。</div>
+                <div class="scenario-item" style="font-size:18px;">多学科协作（MDT）：复杂病例讨论、专家联合会诊</div>
+                <div class="scenario-item" style="font-size:18px;">手术安排通知：术前提醒、术中协调、术后跟进</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- S7 -->
+<section class="slide" id="s7">
+    <div class="slide-head reveal">
+        <div class="kicker">OPERATIONS & IT MANAGEMENT</div>
+        <div class="head-line"><div class="slide-title">医院运营与IT管理场景</div><div class="title-bar"></div></div>
+    </div>
+    <div class="slide-body reveal" style="--d:0.1s">
+        <div class="scenario-grid">
+            <div class="scenario-left">
+                <div style="font-size:32px; font-weight:700; color:var(--navy);">IT系统与机房监控告警</div>
+                <div class="scenario-desc">医院信息中心的服务器、网络设备出现异常时，GMP平台通过邮件告警或短信通知运维人员，实现故障的快速响应与处理。</div>
+                <div style="display:flex; flex-wrap:wrap; gap:16px;">
+                    <div class="scenario-item" style="font-size:18px; padding:16px;">服务器监控</div>
+                    <div class="scenario-item" style="font-size:18px; padding:16px;">网络设备</div>
+                    <div class="scenario-item" style="font-size:18px; padding:16px;">机房环境</div>
+                </div>
+            </div>
+            <div class="scenario-right">
+                <div style="display:flex; gap:32px; text-align:center;">
+                    <div style="flex:1;"><div style="font-size:48px; font-weight:700; color:var(--blue);">80%</div><div style="font-size:18px; color:var(--muted);">响应时间缩短</div></div>
+                    <div style="flex:1;"><div style="font-size:48px; font-weight:700; color:var(--blue);">70%</div><div style="font-size:18px; color:var(--muted);">人工干预减少</div></div>
+                    <div style="flex:1;"><div style="font-size:48px; font-weight:700; color:var(--red);">99.99%</div><div style="font-size:18px; color:var(--muted);">系统可用性</div></div>
+                </div>
+                <div style="font-size:24px; font-weight:700; color:var(--navy); margin-top:24px;">告警分级机制</div>
+                <div style="font-size:18px; color:var(--muted); line-height:1.8;">
+                    <strong>紧急告警：</strong>短信+电话<br>
+                    <strong>重要告警：</strong>短信+语音通知+企业微信<br>
+                    <strong>一般告警：</strong>短信+企业微信
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- S8 -->
+<section class="slide" id="s8">
+    <div class="slide-head reveal">
+        <div class="kicker">CORE ADVANTAGES (1/2)</div>
+        <div class="head-line"><div class="slide-title">核心产品优势（一）：数据安全与信创适配</div><div class="title-bar"></div></div>
+    </div>
+    <div class="slide-body reveal" style="--d:0.1s">
+        <div class="adv-list">
+            <div class="adv-item">
+                <div class="adv-title">极高的数据安全与隐私保护</div>
+                <div class="adv-desc">纯私有化本地部署：系统、数据库完全部署在医院内部机房，保障核心医疗数据绝对不出域，从物理和网络层面隔绝外部风险，满足等保三级要求。</div>
+            </div>
+            <div class="adv-item">
+                <div class="adv-title">全面支持国密算法</div>
+                <div class="adv-desc">平台支持 SM2、SM3、SM4 国密加密算法，针对患者手机号、敏感病历数据等实行底层数据加密及脱敏显示。</div>
+                <div class="adv-tags"><div class="adv-tag">SM2</div><div class="adv-tag">SM3</div><div class="adv-tag">SM4</div></div>
+            </div>
+            <div class="adv-item">
+                <div class="adv-title">全栈信创环境适配支持</div>
+                <div class="adv-desc">全面适配信创软硬件环境，满足公立医院的国产化采购及合规要求。支持银河麒麟、统信UOS、东方通、达梦、OceanBase 等全栈国产化生态。</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- S9 -->
+<section class="slide" id="s9">
+    <div class="slide-head reveal">
+        <div class="kicker">CORE ADVANTAGES (2/2)</div>
+        <div class="head-line"><div class="slide-title">核心产品优势（二）：高性能与高可用</div><div class="title-bar"></div></div>
+    </div>
+    <div class="slide-body reveal" style="--d:0.1s">
+        <div class="adv-list">
+            <div class="adv-item">
+                <div class="adv-title">亿级并发处理与高可用架构</div>
+                <div class="adv-desc">日处理能力 1亿+，秒级并发 2000+。轻松应对早高峰挂号、集中出具检验报告等消息迸发场景，保障不宕机，业务零中断。</div>
+            </div>
+            <div class="adv-item">
+                <div class="adv-title">集群容灾式部署</div>
+                <div class="adv-desc">支持同城双活部署（双中心同时运行，互为备份）、两地三中心架构、智能故障切换（主通道故障自动切换至备用资源）、在线自动恢复。</div>
+            </div>
+            <div class="adv-item">
+                <div class="adv-title">易于与医院信息总线（HSB）集成</div>
+                <div class="adv-desc">提供标准化接口设计，支持 HTTP/HTTPS、CMPP、TCP、SDK/API 等多种协议，轻松对接医院的集成平台（ESB/HSB/HIS等系统），无缝融入医院现有的信息化生态。</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- S10 -->
+<section class="slide" id="s10" style="background:var(--bg)">
+    <div class="slide-head reveal">
+        <div class="kicker">PRODUCT VERSIONS</div>
+        <div class="head-line"><div class="slide-title">产品版本与部署建议</div><div class="title-bar"></div></div>
+    </div>
+    <div class="slide-body reveal" style="--d:0.1s">
+        <div class="intro">针对不同规模医院的信息化发展阶段，微网通联提供灵活的版本分类，满足从中小型医院到三甲医院的差异化需求。</div>
+        <div class="pricing">
+            <div class="plan">
+                <div class="plan-head">
+                    <div class="p-title">基础版</div>
+                    <div class="p-sub">适合中小型医院</div>
+                </div>
+                <div class="plan-body">
+                    <div class="p-section"><div class="p-lbl">核心功能</div><ul class="p-list"><li>短彩信收发与查询</li><li>语音短信功能</li><li>后台账户管理</li><li>通道及数据管理</li></ul></div>
+                    <div class="p-section"><div class="p-lbl">部署配置</div><ul class="p-list"><li>2台服务器 (8核16G)</li><li>MySQL数据库</li></ul></div>
+                </div>
+            </div>
+            <div class="plan pro">
+                <div class="plan-head">
+                    <div class="p-title">专业版</div>
+                    <div class="p-sub">适合中大型医院</div>
+                </div>
+                <div class="plan-body">
+                    <div class="p-section"><div class="p-lbl">核心功能</div><ul class="p-list"><li>包含基础版全部功能</li><li>视频短信与邮件消息</li><li>角色权限管理</li><li>统计报表与模板设置</li></ul></div>
+                    <div class="p-section"><div class="p-lbl">部署配置</div><ul class="p-list"><li>3台服务器 (8核16G)</li><li>MySQL / Oracle</li></ul></div>
+                </div>
+            </div>
+            <div class="plan">
+                <div class="plan-head">
+                    <div class="p-title">旗舰版</div>
+                    <div class="p-sub">适合三甲及大型医院</div>
+                </div>
+                <div class="plan-body">
+                    <div class="p-section"><div class="p-lbl">核心功能</div><ul class="p-list"><li>包含专业版全部功能</li><li>微信消息 (公众号/小程序)</li><li>组合消息策略与 5G消息</li><li>同城双活高可用 / 信创</li></ul></div>
+                    <div class="p-section"><div class="p-lbl">部署配置</div><ul class="p-list"><li>≥4台服务器</li><li>MySQL / Oracle / 达梦</li></ul></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- S11 -->
+<section class="slide" id="s11">
+    <div class="slide-head reveal">
+        <div class="kicker">SUCCESS STORIES</div>
+        <div class="head-line"><div class="slide-title">医院客户成功案例</div><div class="title-bar"></div></div>
+    </div>
+    <div class="slide-body reveal" style="--d:0.1s">
+        <div class="grid">
+            <div class="col">
+                <div class="h3">典型三甲医院与区域医疗中心</div>
+                <div class="list">
+                    <div class="item"><div class="i-name">内蒙古自治区人民医院</div><div class="i-desc">省级三甲医院</div></div>
+                    <div class="item"><div class="i-name">北京清华长庚医院</div><div class="i-desc">清华大学附属医院</div></div>
+                    <div class="item"><div class="i-name">长沙市中心医院</div><div class="i-desc">市级三甲医院</div></div>
+                    <div class="item"><div class="i-name">首都医科大学附属北京安定医院</div><div class="i-desc">精神专科医院</div></div>
+                    <div class="item"><div class="i-name">中南大学湘雅三医院</div><div class="i-desc">湘雅系三甲医院</div></div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="h3">专科医院与多元化医疗机构</div>
+                <div class="list">
+                    <div class="item"><div class="i-name">爱尔眼科</div><div class="i-desc">全国多家分院</div></div>
+                    <div class="item"><div class="i-name">美年大健康</div><div class="i-desc">大型体检中心</div></div>
+                    <div class="item"><div class="i-name">绍兴市口腔医院</div><div class="i-desc">口腔专科医院</div></div>
+                </div>
+                <div class="stats">
+                    <div class="stat"><div class="s-val">56</div><div style="font-size:18px;">服务医院客户</div></div>
+                    <div class="stat"><div class="s-val">10+</div><div style="font-size:18px;">深耕医疗领域年限</div></div>
+                    <div class="stat"><div class="s-val">99%</div><div style="font-size:18px;">客户满意续约</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- S12 -->
+<section class="slide dark" id="s12">
+    <div class="title reveal" style="--d:0.1s">微网通联深耕企业级通信十八余年</div>
+    <div class="desc reveal" style="--d:0.2s">已成功助力多家医院、银行、政务类客户，实现通信架构的数字化升级</div>
+    <div class="features reveal" style="--d:0.3s">
+        <div class="f-item"><div class="f-title">安全可靠</div><div class="f-desc">私有化部署，国密加密</div></div>
+        <div class="f-item"><div class="f-title">稳定高效</div><div class="f-desc">亿级并发，99.99%可用</div></div>
+        <div class="f-item"><div class="f-title">极致服务</div><div class="f-desc">7×24H全天候技术支持</div></div>
+    </div>
+    <div class="bot reveal" style="--d:0.4s">51welink.com</div>
+</section>
+
+</main>
+</div>
+
+<div class="deck-progress" id="deckProgress" aria-hidden="true"><div class="deck-progress-bar" id="deckProgressBar"></div></div>
+<div class="edit-hotzone" title="编辑模式 (E)"></div>
+<button class="edit-toggle" id="editToggle" title="编辑模式 (E)">✏️</button>
+<div class="edit-toast" id="editToast">已保存</div>
+<div class="deck-download">
+    <a href="teera.pdf" id="dlPdf">PDF</a>
+    <a href="teera.pptx" id="dlPptx">PPTX</a>
+</div>
+
+<script>
+class SlidePresentation {
+    constructor() {
+        this.slides = document.querySelectorAll('.slide');
+        this.currentSlide = 0;
+        this.stage = document.getElementById('deckStage');
+        this.wheelLock = false;
+        this.setupStageScale();
+        this.setupKeyboardNav();
+        this.setupTouchNav();
+        this.setupWheelNav();
+        this.showSlide(0);
+        window.addEventListener('resize', () => this.setupStageScale());
+    }
+    setupStageScale() {
+        const factor = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+        const x = (window.innerWidth - 1920 * factor) / 2;
+        const y = (window.innerHeight - 1080 * factor) / 2;
+        this.stage.style.transform = `translate(${x}px, ${y}px) scale(${factor})`;
+    }
+    showSlide(n) {
+        this.slides[this.currentSlide].classList.remove('active');
+        this.currentSlide = Math.max(0, Math.min(n, this.slides.length - 1));
+        this.slides[this.currentSlide].classList.add('active');
+        document.getElementById('deckProgressBar').style.width = `${(this.currentSlide / (this.slides.length - 1)) * 100}%`;
+    }
+    next() { if (this.currentSlide < this.slides.length - 1) this.showSlide(this.currentSlide + 1); }
+    prev() { if (this.currentSlide > 0) this.showSlide(this.currentSlide - 1); }
+    setupKeyboardNav() {
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); this.next(); }
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); this.prev(); }
+        });
+    }
+    setupTouchNav() {
+        let tsX = 0;
+        document.addEventListener('touchstart', e => tsX = e.changedTouches[0].screenX, {passive: true});
+        document.addEventListener('touchend', e => {
+            const dx = e.changedTouches[0].screenX - tsX;
+            if (dx < -50) this.next();
+            if (dx > 50) this.prev();
+        }, {passive: true});
+    }
+    setupWheelNav() {
+        document.addEventListener('wheel', e => {
+            if (this.wheelLock) return;
+            if (Math.abs(e.deltaY) > 40) {
+                e.deltaY > 0 ? this.next() : this.prev();
+                this.wheelLock = true;
+                setTimeout(() => this.wheelLock = false, 800);
+            }
+        }, {passive: true});
+    }
+}
+
+class InlineEditor {
+    constructor() {
+        this.isActive = false;
+        this.current = null;
+        this.toast = document.getElementById('editToast');
+    }
+    toggleEditMode() {
+        this.isActive = !this.isActive;
+        document.body.classList.toggle('editing', this.isActive);
+        document.getElementById('editToggle').classList.toggle('active', this.isActive);
+        if (!this.isActive) this.stop();
+        else this.initEvents();
+    }
+    initEvents() {
+        document.querySelectorAll('.slide.active').forEach(slide => {
+            slide.addEventListener('click', e => {
+                if (this.isActive && !e.target.closest('a')) this.edit(e.target);
+            });
+        });
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); this.saveAll(); }
+            if (e.key === 'Escape' && this.isActive) this.toggleEditMode();
+        });
+    }
+    edit(el) {
+        this.stop();
+        let target = el;
+        while (target.children.length && ![...target.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) {
+            target = target.children[0];
+        }
+        if (![...target.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) return;
+        this.current = target;
+        target.contentEditable = 'true';
+        target.focus();
+        target.addEventListener('blur', () => this.saveAll(), { once: true });
+    }
+    stop() {
+        if (this.current) { this.current.contentEditable = 'false'; this.current = null; }
+    }
+    saveAll() {
+        document.querySelectorAll('.slide').forEach(s => {
+            try { localStorage.setItem('wwt-teera-' + s.id, s.innerHTML); } catch (e) {}
+        });
+        this.toast.classList.add('show');
+        setTimeout(() => this.toast.classList.remove('show'), 1200);
+    }
+    restore() {
+        document.querySelectorAll('.slide').forEach(s => {
+            const saved = localStorage.getItem('wwt-teera-' + s.id);
+            if (saved) s.innerHTML = saved;
+        });
+    }
+}
+
+const deck = new SlidePresentation();
+const editor = new InlineEditor();
+editor.restore();
+
+const editToggle = document.getElementById('editToggle');
+const hotzone = document.querySelector('.edit-hotzone');
+let hideTimeout = null;
+editToggle.addEventListener('click', () => editor.toggleEditMode());
+hotzone.addEventListener('mouseenter', () => { clearTimeout(hideTimeout); editToggle.classList.add('show'); });
+hotzone.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });
+editToggle.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+editToggle.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });
+hotzone.addEventListener('click', () => editor.toggleEditMode());
+document.addEventListener('keydown', (e) => {
+    if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable')) editor.toggleEditMode();
+});
+
+function getDownloadFilename(ext) {
+    const title = document.title.replace(/\s*[·•]\s*/g, '').replace(/\s+/g, '').trim();
+    const now = new Date();
+    const date = now.getFullYear().toString() +
+        (now.getMonth() + 1).toString().padStart(2, '0') +
+        now.getDate().toString().padStart(2, '0');
+    return title + '_' + date + '.' + ext;
+}
+document.getElementById('dlPdf').addEventListener('click', function() { this.setAttribute('download', getDownloadFilename('pdf')); });
+document.getElementById('dlPptx').addEventListener('click', function() { this.setAttribute('download', getDownloadFilename('pptx')); });
+</script>
+</body>
+</html>
