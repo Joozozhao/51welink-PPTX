@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>医院数字化通信解决方案 · GMP 本地化部署</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+    --navy: #0A1F44;
+    --red: #F02D4E;
+    --font-body: "Archivo", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    --font-num: "Archivo", "Helvetica Neue", "PingFang SC", "Noto Sans SC", sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: var(--font-body);
+    background: #000;
+    color: #fff;
+    overflow: hidden;
+    touch-action: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+.deck-viewport {
+    position: fixed; inset: 0;
+    overflow: hidden;
+    background: #111;
+}
+
+.deck-stage {
+    position: absolute; left: 0; top: 0;
+    width: 1920px; height: 1080px;
+    transform-origin: 0 0;
+    background: #fff;
+}
+
+.slide {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.slide.active {
+    opacity: 1; visibility: visible; pointer-events: auto;
+}
+
+/* === Chrome === */
+.deck-progress { position: fixed; left: 0; bottom: 0; width: 100%; height: 4px; background: rgba(255,255,255,0.12); z-index: 1000; }
+.deck-progress-bar { height: 100%; width: 0%; background: var(--red); transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
+.deck-download {
+    position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 1001;
+    display: flex; flex-direction: column; gap: 1px;
+    opacity: 1; pointer-events: auto;
+}
+.deck-download a {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(10,31,68,0.85); color: #fff;
+    font-size: 14px; font-weight: 600; letter-spacing: 1px;
+    text-decoration: none; font-family: var(--font-num);
+    transition: background 0.25s ease, transform 0.25s ease;
+    writing-mode: vertical-rl; text-orientation: mixed;
+    padding: 16px 8px; border-radius: 0;
+}
+.deck-download a:first-child { border-radius: 8px 0 0 0; }
+.deck-download a:last-child { border-radius: 0 0 0 8px; }
+.deck-download a:hover { background: var(--red); }
+
+@media print {
+    body, html { width: 1920px; height: auto; overflow: visible; background: #fff; }
+    .deck-viewport { position: static; overflow: visible; }
+    .deck-stage { position: static; transform: none !important; width: 1920px; height: auto; }
+    .slide { position: relative; opacity: 1; visibility: visible; page-break-after: always; height: 1080px; }
+    .deck-progress, .deck-download { display: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+    <section class="slide" id="s1" style="background-image: url('build/shots/slide-01.png')"></section>
+    <section class="slide" id="s2" style="background-image: url('build/shots/slide-02.png')"></section>
+    <section class="slide" id="s3" style="background-image: url('build/shots/slide-03.png')"></section>
+    <section class="slide" id="s4" style="background-image: url('build/shots/slide-04.png')"></section>
+    <section class="slide" id="s5" style="background-image: url('build/shots/slide-05.png')"></section>
+    <section class="slide" id="s6" style="background-image: url('build/shots/slide-06.png')"></section>
+    <section class="slide" id="s7" style="background-image: url('build/shots/slide-07.png')"></section>
+    <section class="slide" id="s8" style="background-image: url('build/shots/slide-08.png')"></section>
+    <section class="slide" id="s9" style="background-image: url('build/shots/slide-09.png')"></section>
+    <section class="slide" id="s10" style="background-image: url('build/shots/slide-10.png')"></section>
+    <section class="slide" id="s11" style="background-image: url('build/shots/slide-11.png')"></section>
+    <section class="slide" id="s12" style="background-image: url('build/shots/slide-12.png')"></section>
+
+</main>
+</div>
+
+<div class="deck-progress" id="deckProgress" aria-hidden="true"><div class="deck-progress-bar" id="deckProgressBar"></div></div>
+
+<div class="deck-download">
+    <a href="GMP_Hospital.pdf" id="dlPdf">PDF</a>
+    <a href="GMP_Hospital.pptx" id="dlPptx">PPTX</a>
+</div>
+
+<script>
+class SlidePresentation {
+    constructor() {
+        this.slides = document.querySelectorAll('.slide');
+        this.currentSlide = 0;
+        this.stage = document.getElementById('deckStage');
+        this.wheelLock = false;
+        this.setupStageScale();
+        this.setupKeyboardNav();
+        this.setupTouchNav();
+        this.setupWheelNav();
+        this.showSlide(0);
+        window.addEventListener('resize', () => this.setupStageScale());
+    }
+    setupStageScale() {
+        const factor = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+        const x = (window.innerWidth - 1920 * factor) / 2;
+        const y = (window.innerHeight - 1080 * factor) / 2;
+        this.stage.style.transform = `translate(${x}px, ${y}px) scale(${factor})`;
+    }
+    showSlide(n) {
+        this.slides[this.currentSlide].classList.remove('active');
+        this.currentSlide = Math.max(0, Math.min(n, this.slides.length - 1));
+        this.slides[this.currentSlide].classList.add('active');
+        document.getElementById('deckProgressBar').style.width = `${(this.currentSlide / (this.slides.length - 1)) * 100}%`;
+    }
+    next() { if (this.currentSlide < this.slides.length - 1) this.showSlide(this.currentSlide + 1); }
+    prev() { if (this.currentSlide > 0) this.showSlide(this.currentSlide - 1); }
+    setupKeyboardNav() {
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') this.next();
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') this.prev();
+        });
+    }
+    setupTouchNav() {
+        let tsX = 0;
+        document.addEventListener('touchstart', e => tsX = e.changedTouches[0].screenX, {passive: true});
+        document.addEventListener('touchend', e => {
+            const dx = e.changedTouches[0].screenX - tsX;
+            if (dx < -50) this.next();
+            if (dx > 50) this.prev();
+        }, {passive: true});
+    }
+    setupWheelNav() {
+        document.addEventListener('wheel', e => {
+            if (this.wheelLock) return;
+            if (Math.abs(e.deltaY) > 40) {
+                e.deltaY > 0 ? this.next() : this.prev();
+                this.wheelLock = true;
+                setTimeout(() => this.wheelLock = false, 800);
+            }
+        }, {passive: true});
+    }
+}
+const deck = new SlidePresentation();
+
+function getDownloadFilename(ext) {
+    const title = document.title.replace(/\s*[·•]\s*/g, '').replace(/\s+/g, '').trim();
+    const now = new Date();
+    const date = now.getFullYear().toString() +
+        (now.getMonth() + 1).toString().padStart(2, '0') +
+        now.getDate().toString().padStart(2, '0');
+    return title + '_' + date + '.' + ext;
+}
+document.getElementById('dlPdf').addEventListener('click', function() { this.setAttribute('download', getDownloadFilename('pdf')); });
+document.getElementById('dlPptx').addEventListener('click', function() { this.setAttribute('download', getDownloadFilename('pptx')); });
+</script>
+</body>
+</html>
