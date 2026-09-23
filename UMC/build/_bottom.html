@@ -1,0 +1,157 @@
+
+</main>
+</div>
+
+<!-- === 播放器 chrome（舞台之外） === -->
+<div class="deck-progress" id="deckProgress" aria-hidden="true"><div class="deck-progress-bar" id="deckProgressBar"></div></div>
+<div class="edit-hotzone" title="编辑模式 (E)"></div>
+<button class="edit-toggle" id="editToggle" title="编辑模式 (E)">✏️</button>
+<div class="edit-toast" id="editToast">已保存</div>
+
+<script>
+/* === SLIDE PRESENTATION CONTROLLER === */
+class SlidePresentation {
+    constructor() {
+        this.slides = document.querySelectorAll('.slide');
+        this.currentSlide = 0;
+        this.stage = document.getElementById('deckStage');
+        this.wheelLock = false;
+        this.setupStageScale();
+        this.setupKeyboardNav();
+        this.setupTouchNav();
+        this.setupWheelNav();
+        this.showSlide(0);
+    }
+    setupStageScale() {
+        const scale = () => {
+            const factor = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+            const x = (window.innerWidth - 1920 * factor) / 2;
+            const y = (window.innerHeight - 1080 * factor) / 2;
+            this.stage.style.transform = `translate(${x}px, ${y}px) scale(${factor})`;
+        };
+        scale();
+        window.addEventListener('resize', scale);
+    }
+    setupKeyboardNav() {
+        document.addEventListener('keydown', (e) => {
+            if (e.target.getAttribute('contenteditable') === 'true') return;
+            if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); this.next(); }
+            else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); this.prev(); }
+            else if (e.key === 'Home') this.showSlide(0);
+            else if (e.key === 'End') this.showSlide(this.slides.length - 1);
+        });
+    }
+    setupTouchNav() {
+        let sx = 0, sy = 0;
+        document.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+        document.addEventListener('touchend', (e) => {
+            const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+            if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) (dx < 0 ? this.next() : this.prev());
+        }, { passive: true });
+    }
+    setupWheelNav() {
+        document.addEventListener('wheel', (e) => {
+            if (this.wheelLock || Math.abs(e.deltaY) < 24) return;
+            this.wheelLock = true;
+            (e.deltaY > 0 ? this.next() : this.prev());
+            setTimeout(() => this.wheelLock = false, 650);
+        }, { passive: true });
+    }
+    next() { this.showSlide(this.currentSlide + 1); }
+    prev() { this.showSlide(this.currentSlide - 1); }
+    showSlide(index) {
+        this.currentSlide = Math.max(0, Math.min(index, this.slides.length - 1));
+        this.slides.forEach((s, i) => {
+            s.classList.toggle('active', i === this.currentSlide);
+            s.classList.toggle('visible', i === this.currentSlide);
+        });
+        const bar = document.getElementById('deckProgressBar');
+        if (bar) bar.style.width = ((this.currentSlide + 1) / this.slides.length * 100) + '%';
+    }
+}
+
+/* === INLINE EDITOR（E 键 / 左上角热区；Ctrl+S 导出 HTML） === */
+class InlineEditor {
+    constructor() {
+        this.isActive = false;
+        this.current = null;
+        this.toast = document.getElementById('editToast');
+        this.restore();
+        document.addEventListener('click', (e) => {
+            if (!this.isActive) return;
+            const el = e.target.closest('.slide *');
+            if (el && el !== this.current) this.edit(el);
+            else if (!el) this.stop();
+        }, true);
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); this.saveAll(); this.exportFile(); }
+            if (e.key === 'Escape' && this.isActive) this.toggleEditMode();
+        });
+    }
+    toggleEditMode() {
+        this.isActive = !this.isActive;
+        document.body.classList.toggle('editing', this.isActive);
+        document.getElementById('editToggle').classList.toggle('active', this.isActive);
+        if (!this.isActive) this.stop();
+    }
+    edit(el) {
+        this.stop();
+        // 找含直接文本的最深元素
+        let target = el;
+        while (target.children.length && ![...target.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) {
+            target = target.children[0];
+        }
+        if (![...target.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) return;
+        this.current = target;
+        target.contentEditable = 'true';
+        target.focus();
+        target.addEventListener('blur', () => { this.saveAll(); }, { once: true });
+    }
+    stop() {
+        if (this.current) { this.current.contentEditable = 'false'; this.current = null; }
+    }
+    saveAll() {
+        document.querySelectorAll('.slide').forEach(s => {
+            try { localStorage.setItem('wwt-slide-' + s.id, s.innerHTML); } catch (e) {}
+        });
+        const t = this.toast;
+        t.classList.add('show');
+        clearTimeout(this._tt);
+        this._tt = setTimeout(() => t.classList.remove('show'), 1200);
+    }
+    restore() {
+        document.querySelectorAll('.slide').forEach(s => {
+            const saved = localStorage.getItem('wwt-slide-' + s.id);
+            if (saved) s.innerHTML = saved;
+        });
+    }
+    exportFile() {
+        const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+        // 从 <title> 自动获取文件名，去除 · 和多余空格
+        const title = document.title.replace(/\s*[·•]\s*/g, '').replace(/\s+/g, '').trim();
+        a.download = title + '.html';
+        a.click();
+    }
+}
+
+const deck = new SlidePresentation();
+const editor = new InlineEditor();
+
+/* 编辑开关：按钮点击 / 热区悬停(400ms 延迟) / 热区点击 / E 键 */
+const hotzone = document.querySelector('.edit-hotzone');
+const editToggle = document.getElementById('editToggle');
+let hideTimeout = null;
+editToggle.addEventListener('click', () => editor.toggleEditMode());
+hotzone.addEventListener('mouseenter', () => { clearTimeout(hideTimeout); editToggle.classList.add('show'); });
+hotzone.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });
+editToggle.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+editToggle.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });
+hotzone.addEventListener('click', () => editor.toggleEditMode());
+document.addEventListener('keydown', (e) => {
+    if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable')) editor.toggleEditMode();
+});
+</script>
+</body>
+</html>
