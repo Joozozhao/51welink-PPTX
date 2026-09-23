@@ -582,6 +582,124 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s29 .s29-bot { display:flex; flex-direction:column; align-items:center; gap:9px; }
 #s29 .s29-co { font-size:21px; color:#fff; font-weight:600; letter-spacing:4px; font-family:var(--font-num); }
 #s29 .s29-en { font-size:18px; color:rgba(255,255,255,0.45); letter-spacing:3px; }
+
+/* ==================== Mock UI（纯 HTML/CSS 后台界面效果图，替代旧截图） ==================== */
+.shot-body { height:600px; background:#F1F5FA; overflow:hidden; }
+#s4 .shot-body { height:612px; }
+.mu { width:100%; height:100%; display:flex; background:#F1F5FA; font-size:14px; color:var(--ink); }
+.mu-side { width:172px; flex:none; background:linear-gradient(180deg,#0A1F44 0%,#123A7A 100%); padding:18px 0; display:flex; flex-direction:column; }
+.mu-brand { display:flex; align-items:center; gap:9px; padding:0 18px 15px; border-bottom:1px solid rgba(255,255,255,0.12); margin-bottom:10px; }
+.mu-brand-logo { width:26px; height:26px; border-radius:7px; background:var(--red); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:13px; font-family:var(--font-num); }
+.mu-brand-t { color:#fff; font-weight:700; font-size:14.5px; letter-spacing:1px; }
+.mu-nav { padding:0 10px; display:flex; flex-direction:column; gap:2px; }
+.mu-nav-i { display:flex; align-items:center; gap:10px; padding:8.5px 12px; border-radius:8px; color:rgba(255,255,255,0.62); font-size:13px; }
+.mu-nav-i.on { background:rgba(255,255,255,0.13); color:#fff; font-weight:600; }
+.mu-nav-i .mu-ni-dot { width:6px; height:6px; border-radius:3px; background:rgba(255,255,255,0.38); flex:none; }
+.mu-nav-i.on .mu-ni-dot { background:var(--red); }
+.mu-main { flex:1; display:flex; flex-direction:column; min-width:0; }
+.mu-top { height:46px; flex:none; background:#fff; border-bottom:1px solid #E6ECF5; display:flex; align-items:center; padding:0 20px; gap:12px; }
+.mu-crumb { font-size:13px; color:#8A94A6; }
+.mu-crumb b { color:var(--navy); font-weight:600; }
+.mu-top-right { margin-left:auto; display:flex; align-items:center; gap:10px; }
+.mu-avatar { width:27px; height:27px; border-radius:14px; background:linear-gradient(135deg,#2E6FE8,#0A1F44); flex:none; }
+.mu-user { font-size:12.5px; color:#5A6B85; }
+.mu-content { flex:1; padding:16px 18px; display:flex; flex-direction:column; gap:13px; min-height:0; overflow:hidden; }
+.mu-row { display:flex; gap:13px; min-height:0; }
+.mu-card { background:#fff; border-radius:12px; box-shadow:0 2px 10px rgba(10,31,68,0.05); padding:15px 17px; }
+.mu-card-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:11px; }
+.mu-card-t { font-size:14px; font-weight:700; color:var(--navy); }
+.mu-card-e { font-size:11px; color:#8A94A6; letter-spacing:1px; font-family:var(--font-num); }
+.mu-tabs { display:flex; gap:3px; background:#F1F5FA; padding:3px; border-radius:8px; }
+.mu-tab { padding:3.5px 12px; border-radius:6px; font-size:12px; color:#5A6B85; }
+.mu-tab.on { background:#fff; color:var(--navy); font-weight:600; box-shadow:0 1px 4px rgba(10,31,68,0.10); }
+/* 统计卡 */
+.mu-stat { flex:1; background:#fff; border-radius:12px; padding:13px 15px; display:flex; align-items:center; gap:12px; box-shadow:0 2px 10px rgba(10,31,68,0.05); }
+.mu-stat-ic { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex:none; background:rgba(46,111,232,0.10); }
+.mu-stat-ic img { width:19px; height:19px; object-fit:contain; }
+.mu-stat-ic.red { background:rgba(240,45,78,0.10); }
+.mu-stat-ic.navy { background:rgba(10,31,68,0.07); }
+.mu-stat-v { font-size:21px; font-weight:800; font-family:var(--font-num); color:var(--navy); line-height:1.1; }
+.mu-stat-l { font-size:11.5px; color:#8A94A6; margin-top:3px; }
+.mu-stat-sub { font-size:11px; font-weight:700; font-family:var(--font-num); margin-left:auto; }
+.mu-stat-sub.up { color:var(--blue); }
+.mu-stat-sub.down { color:var(--red); }
+/* 表单控件 */
+.mu-field { display:flex; flex-direction:column; gap:6px; min-width:0; }
+.mu-label { font-size:12.5px; color:#5A6B85; font-weight:600; }
+.mu-label .req { color:var(--red); margin-right:2px; }
+.mu-input { background:#F6F8FB; border:1.5px solid #E3E9F2; border-radius:8px; padding:8px 12px; font-size:13px; color:var(--ink); display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.mu-input .ph { color:#9AA5B8; }
+.mu-caret { color:#8A94A6; font-size:10px; }
+.mu-textarea { align-items:flex-start; line-height:1.7; }
+.mu-check, .mu-radio { display:inline-flex; align-items:center; gap:7px; font-size:13px; color:var(--ink); }
+.mu-box { width:15px; height:15px; border-radius:4px; border:1.5px solid #C4CCD9; background:#fff; flex:none; display:flex; align-items:center; justify-content:center; }
+.mu-box.on { background:var(--blue); border-color:var(--blue); }
+.mu-box.on::after { content:'✓'; color:#fff; font-size:10.5px; font-weight:700; line-height:1; }
+.mu-rdo { width:15px; height:15px; border-radius:8px; border:1.5px solid #C4CCD9; background:#fff; flex:none; display:flex; align-items:center; justify-content:center; }
+.mu-rdo.on { border-color:var(--blue); }
+.mu-rdo.on::after { content:''; width:7px; height:7px; border-radius:4px; background:var(--blue); }
+.mu-switch { width:34px; height:19px; border-radius:10px; background:#D7DEE9; position:relative; flex:none; }
+.mu-switch::after { content:''; position:absolute; left:2.5px; top:2.5px; width:14px; height:14px; border-radius:7px; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,0.2); }
+.mu-switch.on { background:var(--blue); }
+.mu-switch.on::after { left:17.5px; }
+.mu-btn { display:inline-flex; align-items:center; justify-content:center; padding:8px 18px; border-radius:8px; background:var(--blue); color:#fff; font-size:13px; font-weight:600; white-space:nowrap; }
+.mu-btn.ghost { background:#fff; border:1.5px solid #E3E9F2; color:var(--ink); }
+.mu-btn.red { background:var(--red); }
+.mu-btn.sm { padding:5px 12px; font-size:12px; border-radius:6px; }
+/* 表格 */
+.mu-table { width:100%; border-collapse:collapse; font-size:12.5px; }
+.mu-table th { color:#8A94A6; font-weight:600; text-align:left; padding:7px 10px; border-bottom:1.5px solid #EDF1F7; background:#F8FAFD; }
+.mu-table td { padding:7.5px 10px; border-bottom:1px solid #F0F4F9; color:var(--ink); }
+.mu-table tr:last-child td { border-bottom:none; }
+.mu-badge { display:inline-flex; padding:2.5px 9px; border-radius:999px; font-size:11px; font-weight:600; white-space:nowrap; }
+.mu-badge.b { background:rgba(46,111,232,0.10); color:var(--blue); }
+.mu-badge.r { background:rgba(240,45,78,0.10); color:var(--red); }
+.mu-badge.n { background:rgba(10,31,68,0.07); color:var(--navy); }
+.mu-link { color:var(--blue); font-size:12px; font-weight:600; margin-right:8px; }
+/* 柱状图 */
+.mu-bars { flex:1; display:flex; align-items:flex-end; gap:12px; padding:6px 4px 0; min-height:0; }
+.mu-bar { flex:1; background:linear-gradient(180deg,#4A8BF5,#2E6FE8); border-radius:5px 5px 0 0; position:relative; min-height:8px; }
+.mu-bar.hot { background:linear-gradient(180deg,#F76B85,#F02D4E); }
+.mu-bar-x { position:absolute; left:0; right:0; top:100%; margin-top:6px; text-align:center; font-size:10.5px; color:#8A94A6; font-family:var(--font-num); white-space:nowrap; }
+.mu-bar-v { position:absolute; left:0; right:0; bottom:100%; margin-bottom:4px; text-align:center; font-size:10.5px; font-weight:700; color:var(--navy); font-family:var(--font-num); }
+/* 工具栏（富文本） */
+.mu-toolbar { display:flex; align-items:center; gap:3px; border:1.5px solid #E3E9F2; border-bottom:none; border-radius:8px 8px 0 0; padding:6px 10px; background:#F8FAFD; }
+.mu-tool { min-width:24px; height:24px; padding:0 6px; border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:12px; color:#5A6B85; font-weight:600; }
+.mu-tool:hover { background:#EDF1F7; }
+.mu-tool.sep { width:1px; min-width:1px; height:16px; background:#E3E9F2; padding:0; margin:0 4px; }
+.mu-editor { border:1.5px solid #E3E9F2; border-radius:0 0 8px 8px; padding:12px; font-size:13px; color:#9AA5B8; min-height:110px; line-height:1.8; }
+/* 步骤/流程 */
+.mu-step { display:flex; align-items:center; gap:10px; }
+.mu-step-node { display:flex; align-items:center; gap:8px; background:#F6F8FB; border:1.5px solid #E3E9F2; border-radius:8px; padding:7px 12px; font-size:12.5px; color:var(--ink); font-weight:600; }
+.mu-step-node .mu-step-n { width:18px; height:18px; border-radius:9px; background:var(--blue); color:#fff; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; font-family:var(--font-num); }
+.mu-arrow-r { width:22px; height:2px; background:#C4CCD9; position:relative; flex:none; }
+.mu-arrow-r::after { content:''; position:absolute; right:-1px; top:-3.5px; border-left:8px solid #C4CCD9; border-top:4.5px solid transparent; border-bottom:4.5px solid transparent; }
+.mu-arrow-d { width:2px; height:18px; background:#C4CCD9; position:relative; flex:none; margin-left:20px; }
+.mu-arrow-d::after { content:''; position:absolute; bottom:-1px; left:-3.5px; border-top:8px solid #C4CCD9; border-left:4.5px solid transparent; border-right:4.5px solid transparent; }
+
+/* ==================== s6 架构图（纯 HTML/CSS） ==================== */
+#s6 .arch { width:100%; height:100%; display:flex; align-items:center; gap:0; }
+#s6 .arch-side { width:218px; flex:none; display:flex; flex-direction:column; gap:10px; }
+#s6 .arch-box { background:#F6F8FB; border:1.5px solid #E3E9F2; border-radius:12px; padding:12px 14px; }
+#s6 .arch-box-t { font-size:13.5px; font-weight:700; color:var(--navy); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+#s6 .arch-box-t i { width:8px; height:8px; border-radius:4px; background:var(--red); flex:none; }
+#s6 .arch-mini { background:#fff; border:1.5px solid #E3E9F2; border-radius:8px; padding:7px 11px; font-size:12.5px; color:var(--ink); font-weight:500; margin-top:6px; }
+#s6 .arch-arrows { flex:none; display:flex; flex-direction:column; justify-content:center; gap:26px; padding:0 14px; }
+#s6 .arch-flow { flex:none; width:26px; height:2.5px; background:var(--blue); position:relative; opacity:0.65; }
+#s6 .arch-flow::after { content:''; position:absolute; right:-1px; top:-4px; border-left:9px solid var(--blue); border-top:5px solid transparent; border-bottom:5px solid transparent; }
+#s6 .arch-flow.up::after { right:auto; left:-1px; border-left:none; border-right:9px solid var(--blue); }
+#s6 .arch-core { flex:1; min-width:0; border:2px dashed rgba(46,111,232,0.45); border-radius:16px; padding:14px 16px; display:flex; flex-direction:column; gap:9px; background:#FBFCFE; }
+#s6 .arch-core-h { display:flex; align-items:center; gap:10px; }
+#s6 .arch-core-logo { width:26px; height:26px; border-radius:7px; background:var(--navy); color:#fff; font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center; font-family:var(--font-num); }
+#s6 .arch-core-t { font-size:15px; font-weight:700; color:var(--navy); }
+#s6 .arch-layer { display:flex; align-items:center; gap:12px; }
+#s6 .arch-ltag { width:78px; flex:none; text-align:center; font-size:12px; font-weight:700; color:#fff; background:var(--blue); border-radius:7px; padding:6px 0; }
+#s6 .arch-layer:nth-child(3) .arch-ltag { background:var(--navy); }
+#s6 .arch-layer:nth-child(4) .arch-ltag { background:var(--red); }
+#s6 .arch-layer:nth-child(5) .arch-ltag { background:#5A6B85; }
+#s6 .arch-cells { flex:1; display:flex; gap:8px; }
+#s6 .arch-cell { flex:1; background:#fff; border:1.5px solid #E3E9F2; border-radius:9px; padding:9px 8px; font-size:12.5px; color:var(--ink); font-weight:600; text-align:center; display:flex; align-items:center; justify-content:center; line-height:1.4; }
+#s6 .arch-down { display:flex; justify-content:center; }
 </style>
 </head>
 <body>
@@ -722,7 +840,91 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
           <span class="shot-dot" style="background:#2E6FE8"></span>
           <span class="shot-t">GMP 平台 · 发送中心概览</span>
         </div>
-        <img class="shot-img" src="assets/s04_11.png" alt="GMP 平台界面" />
+        <div class="shot-body">
+          <div class="mu">
+            <div class="mu-side">
+              <div class="mu-brand"><div class="mu-brand-logo">G</div><div class="mu-brand-t">GMP 平台</div></div>
+              <div class="mu-nav">
+                <div class="mu-nav-i on"><i class="mu-ni-dot"></i>概览</div>
+                <div class="mu-nav-i"><i class="mu-ni-dot"></i>发送</div>
+                <div class="mu-nav-i"><i class="mu-ni-dot"></i>查询</div>
+                <div class="mu-nav-i"><i class="mu-ni-dot"></i>账户</div>
+                <div class="mu-nav-i"><i class="mu-ni-dot"></i>报表</div>
+                <div class="mu-nav-i"><i class="mu-ni-dot"></i>监控</div>
+              </div>
+            </div>
+            <div class="mu-main">
+              <div class="mu-top">
+                <div class="mu-crumb">发送中心 / <b>概览</b></div>
+                <div class="mu-top-right"><div class="mu-user">admin</div><div class="mu-avatar"></div></div>
+              </div>
+              <div class="mu-content">
+                <div class="mu-row">
+                  <div class="mu-stat">
+                    <div class="mu-stat-ic navy"><img src="assets/icons/database-0A1F44.png" alt="" /></div>
+                    <div><div class="mu-stat-v">1.01B</div><div class="mu-stat-l">账户余量（条）</div></div>
+                  </div>
+                  <div class="mu-stat">
+                    <div class="mu-stat-ic"><img src="assets/icons/paper-plane-0A1F44.png" alt="" /></div>
+                    <div><div class="mu-stat-v">12,847,960</div><div class="mu-stat-l">今日发送条数</div></div>
+                    <div class="mu-stat-sub up">▲ 4.2%</div>
+                  </div>
+                  <div class="mu-stat">
+                    <div class="mu-stat-ic"><img src="assets/icons/circle-check-0A1F44.png" alt="" /></div>
+                    <div><div class="mu-stat-v">98.92%</div><div class="mu-stat-l">成功率 · 周</div></div>
+                    <div class="mu-stat-sub up">▲ 0.4%</div>
+                  </div>
+                  <div class="mu-stat">
+                    <div class="mu-stat-ic red"><img src="assets/icons/gauge-high-F02D4E.png" alt="" /></div>
+                    <div><div class="mu-stat-v">0.21%</div><div class="mu-stat-l">失败率 · 周</div></div>
+                    <div class="mu-stat-sub down">▼ 0.1%</div>
+                  </div>
+                </div>
+                <div class="mu-row" style="flex:1">
+                  <div class="mu-card" style="flex:1.6; display:flex; flex-direction:column">
+                    <div class="mu-card-head">
+                      <div class="mu-card-t">到达率统计</div>
+                      <div class="mu-tabs"><div class="mu-tab on">周</div><div class="mu-tab">月</div></div>
+                    </div>
+                    <svg viewBox="0 0 560 230" style="flex:1; width:100%" preserveAspectRatio="none">
+                      <line x1="34" y1="20" x2="34" y2="190" stroke="#EDF1F7" stroke-width="1.5"/>
+                      <line x1="34" y1="190" x2="548" y2="190" stroke="#EDF1F7" stroke-width="1.5"/>
+                      <line x1="34" y1="62" x2="548" y2="62" stroke="#F2F5FA" stroke-width="1"/>
+                      <line x1="34" y1="105" x2="548" y2="105" stroke="#F2F5FA" stroke-width="1"/>
+                      <line x1="34" y1="148" x2="548" y2="148" stroke="#F2F5FA" stroke-width="1"/>
+                      <text x="26" y="66" font-size="10" fill="#8A94A6" text-anchor="end" font-family="Archivo">120万</text>
+                      <text x="26" y="109" font-size="10" fill="#8A94A6" text-anchor="end" font-family="Archivo">80万</text>
+                      <text x="26" y="152" font-size="10" fill="#8A94A6" text-anchor="end" font-family="Archivo">40万</text>
+                      <text x="26" y="194" font-size="10" fill="#8A94A6" text-anchor="end" font-family="Archivo">0</text>
+                      <path d="M60,150 L145,168 L230,128 L315,60 L400,140 L485,110 L540,96 L540,190 L60,190 Z" fill="rgba(46,111,232,0.10)"/>
+                      <polyline points="60,150 145,168 230,128 315,60 400,140 485,110 540,96" fill="none" stroke="#2E6FE8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <g fill="#2E6FE8"><circle cx="60" cy="150" r="3.5"/><circle cx="145" cy="168" r="3.5"/><circle cx="230" cy="128" r="3.5"/><circle cx="315" cy="60" r="3.5"/><circle cx="400" cy="140" r="3.5"/><circle cx="485" cy="110" r="3.5"/><circle cx="540" cy="96" r="3.5"/></g>
+                      <circle cx="315" cy="60" r="7" fill="none" stroke="#F02D4E" stroke-width="2"/>
+                      <g font-size="10" fill="#8A94A6" text-anchor="middle" font-family="Archivo">
+                        <text x="60" y="208">04-19</text><text x="145" y="208">04-20</text><text x="230" y="208">04-21</text><text x="315" y="208">04-22</text><text x="400" y="208">04-23</text><text x="485" y="208">04-24</text><text x="540" y="208">04-25</text>
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="mu-card" style="flex:1; display:flex; flex-direction:column">
+                    <div class="mu-card-head">
+                      <div class="mu-card-t">短信发送量</div>
+                      <div class="mu-tabs"><div class="mu-tab on">周</div><div class="mu-tab">月</div></div>
+                    </div>
+                    <div class="mu-bars" style="padding-bottom:22px">
+                      <div class="mu-bar" style="height:78%"><span class="mu-bar-v">234万</span><span class="mu-bar-x">19</span></div>
+                      <div class="mu-bar" style="height:34%"><span class="mu-bar-x">20</span></div>
+                      <div class="mu-bar" style="height:52%"><span class="mu-bar-x">21</span></div>
+                      <div class="mu-bar hot" style="height:92%"><span class="mu-bar-v">276万</span><span class="mu-bar-x">22</span></div>
+                      <div class="mu-bar" style="height:41%"><span class="mu-bar-x">23</span></div>
+                      <div class="mu-bar" style="height:63%"><span class="mu-bar-x">24</span></div>
+                      <div class="mu-bar" style="height:48%"><span class="mu-bar-x">25</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -790,7 +992,75 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
   </div>
   <div class="s6-body">
     <div class="s6-shot reveal reveal-zoom" style="--d:0.12s">
-      <img class="s6-img" src="assets/s06_3.png" alt="GMP 系统结构图" />
+      <div class="arch">
+        <div class="arch-side">
+          <div class="arch-box">
+            <div class="arch-box-t"><i></i>运营用户</div>
+            <div class="arch-mini">配置 · 账号 / 渠道 / 监控策略</div>
+            <div class="arch-mini">提交消息 · 页面 / 接口 / 文件</div>
+            <div class="arch-mini">操作 · 查询 / 报表 / 审核</div>
+          </div>
+          <div class="arch-box">
+            <div class="arch-box-t"><i style="background:var(--blue)"></i>客户内部系统</div>
+            <div class="arch-mini">客户应用 1 / 2 / 3</div>
+            <div class="arch-mini">对接协议：HTTP / CMPP / 文件</div>
+          </div>
+        </div>
+        <div class="arch-arrows"><div class="arch-flow"></div><div class="arch-flow up"></div></div>
+        <div class="arch-core">
+          <div class="arch-core-h"><div class="arch-core-logo">G</div><div class="arch-core-t">GMP 平台</div></div>
+          <div class="arch-layer">
+            <div class="arch-ltag">接入层</div>
+            <div class="arch-cells">
+              <div class="arch-cell">netty 提交模块</div>
+              <div class="arch-cell">文件提交模块</div>
+              <div class="arch-cell">个性提交模块</div>
+              <div class="arch-cell">HTTP 提交模块</div>
+            </div>
+          </div>
+          <div class="arch-down"><div class="mu-arrow-d" style="margin-left:0"></div></div>
+          <div class="arch-layer">
+            <div class="arch-ltag">服务层</div>
+            <div class="arch-cells">
+              <div class="arch-cell">消息处理模块</div>
+              <div class="arch-cell">智能调度模块</div>
+              <div class="arch-cell">个性消息模块</div>
+              <div class="arch-cell">消息发送容器</div>
+            </div>
+          </div>
+          <div class="arch-down"><div class="mu-arrow-d" style="margin-left:0"></div></div>
+          <div class="arch-layer">
+            <div class="arch-ltag">数据层</div>
+            <div class="arch-cells">
+              <div class="arch-cell">数据库 MySQL</div>
+              <div class="arch-cell">Redis 缓存</div>
+              <div class="arch-cell">消息队列 RabbitMQ</div>
+            </div>
+          </div>
+          <div class="arch-down"><div class="mu-arrow-d" style="margin-left:0"></div></div>
+          <div class="arch-layer">
+            <div class="arch-ltag">支撑层</div>
+            <div class="arch-cells">
+              <div class="arch-cell">数据加载 · 数据入库 · 业务统计</div>
+              <div class="arch-cell">监控告警 · 日志操作</div>
+              <div class="arch-cell">任务扫描 · 数据推送</div>
+            </div>
+          </div>
+        </div>
+        <div class="arch-arrows"><div class="arch-flow"></div><div class="arch-flow up"></div></div>
+        <div class="arch-side">
+          <div class="arch-box">
+            <div class="arch-box-t"><i style="background:var(--blue)"></i>通道接口</div>
+            <div class="arch-mini">消息通道服务端</div>
+            <div class="arch-mini">发送 / 回执消息</div>
+          </div>
+          <div class="arch-box" style="background:linear-gradient(160deg,#0A1F44 0%,#123A7A 100%); border:none">
+            <div class="arch-box-t" style="color:#fff"><i></i>运营商通道</div>
+            <div class="arch-mini" style="border:none">短信 · 彩信</div>
+            <div class="arch-mini" style="border:none">微信 · 邮件</div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="s6-band reveal" style="--d:0.28s">
       <div class="s6-chip">中间件（tomcat）</div>
@@ -1263,7 +1533,39 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
           <span class="shot-dot" style="background:#2E6FE8"></span>
           <span class="shot-t">GMP 平台 · 个性短信发送</span>
         </div>
-        <img class="shot-img" src="assets/s16_10.png" alt="短信 / 互动消息" />
+        <div class="shot-body">
+          <div class="mu">
+            <div class="mu-main">
+              <div class="mu-top">
+                <div class="mu-crumb">发送 / <b>个性短信</b></div>
+                <div class="mu-top-right"><div class="mu-user">admin</div><div class="mu-avatar"></div></div>
+              </div>
+              <div class="mu-content">
+                <div class="mu-row" style="flex:1">
+                  <div class="mu-card" style="flex:1; display:flex; flex-direction:column; gap:13px">
+                    <div class="mu-card-head" style="margin-bottom:0"><div class="mu-card-t">导入号码数据</div></div>
+                    <div class="mu-tabs" style="align-self:flex-start"><div class="mu-tab on">导入 Excel 数据</div><div class="mu-tab">导入通讯录</div></div>
+                    <div class="mu-btn ghost" style="align-self:flex-start">选择文件</div>
+                    <div style="font-size:12px; color:#8A94A6; line-height:1.7">可导入 XLS / XLSX 格式文件，每次最多提交不超过 100,000 个号码</div>
+                    <div class="mu-field"><div class="mu-label">选择工作簿</div><div class="mu-input"><span class="ph">营销名单-Q2.xlsx</span><span class="mu-caret">▾</span></div></div>
+                    <div class="mu-field"><div class="mu-label">号码所在列</div><div class="mu-input"><span class="ph">B 列 · 手机号</span><span class="mu-caret">▾</span></div></div>
+                    <div class="mu-field"><div class="mu-label">插入个性字段</div><div class="mu-row" style="gap:8px"><div class="mu-input" style="flex:1"><span class="ph">姓名 / 订单号…</span><span class="mu-caret">▾</span></div><div class="mu-btn sm">插入</div></div></div>
+                  </div>
+                  <div class="mu-card" style="flex:1.1; display:flex; flex-direction:column; gap:13px">
+                    <div class="mu-card-head" style="margin-bottom:0"><div class="mu-card-t">编辑内容</div><div class="mu-btn ghost sm">检测关键字</div></div>
+                    <div class="mu-field"><div class="mu-label"><span class="req">*</span>信息类型</div><div class="mu-input"><span>普通短信</span><span class="mu-caret">▾</span></div></div>
+                    <div class="mu-field" style="flex:1"><div class="mu-label"><span class="req">*</span>短信正文<span style="color:#8A94A6; font-weight:400">（最长 500 字，含签名）</span></div><div class="mu-input mu-textarea" style="flex:1"><span>【微网通联】尊敬的{name}，您尾号{order}的订单已发货，预计 2 日内送达，请保持手机畅通。退订回 T</span></div></div>
+                    <div class="mu-row" style="align-items:center; justify-content:space-between">
+                      <div class="mu-check"><div class="mu-box on"></div>退订贴尾</div>
+                      <div class="mu-check">定时发送<div class="mu-switch on"></div></div>
+                    </div>
+                    <div class="mu-row" style="justify-content:flex-end; gap:10px"><div class="mu-btn ghost">存为草稿</div><div class="mu-btn">立即发送</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1295,7 +1597,45 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
           <span class="shot-dot" style="background:#2E6FE8"></span>
           <span class="shot-t">GMP 平台 · 微信群发</span>
         </div>
-        <img class="shot-img" src="assets/s17_5.png" alt="微信消息" />
+        <div class="shot-body">
+          <div class="mu">
+            <div class="mu-main">
+              <div class="mu-top">
+                <div class="mu-crumb">微信 / <b>微信群发</b></div>
+                <div class="mu-top-right"><div class="mu-user">admin</div><div class="mu-avatar"></div></div>
+              </div>
+              <div class="mu-content">
+                <div class="mu-row" style="align-items:center">
+                  <div class="mu-field" style="width:300px"><div class="mu-label"><span class="req">*</span>信息类型</div><div class="mu-input"><span>服务通知</span><span class="mu-caret">▾</span></div></div>
+                  <div class="mu-field" style="flex:1"><div class="mu-label">微信名称</div><div class="mu-input"><span>GMP 服务号（已认证）</span></div></div>
+                </div>
+                <div class="mu-card" style="flex:1; display:flex; flex-direction:column; min-height:0">
+                  <div class="mu-tabs" style="align-self:flex-start; margin-bottom:13px"><div class="mu-tab on">图文</div><div class="mu-tab">文字</div><div class="mu-tab">图片</div></div>
+                  <div class="mu-row" style="flex:1; min-height:0">
+                    <div style="width:250px; flex:none; display:flex; flex-direction:column; gap:10px">
+                      <div style="border:1.5px solid #E3E9F2; border-radius:10px; overflow:hidden">
+                        <div style="height:120px; background:linear-gradient(135deg,#0A1F44 0%,#2E6FE8 100%); display:flex; align-items:flex-end; padding:12px; color:#fff; font-size:13px; font-weight:600">封面图 · 900×383</div>
+                        <div style="padding:10px 12px; font-size:13px; font-weight:600; color:var(--navy)">本月账单已出，点击查看详情</div>
+                      </div>
+                      <div style="border:1.5px dashed #C4CCD9; border-radius:10px; padding:14px; text-align:center; color:#9AA5B8; font-size:13px">+ 新增图文</div>
+                    </div>
+                    <div style="flex:1; display:flex; flex-direction:column; gap:10px; min-width:0">
+                      <div class="mu-row" style="gap:10px">
+                        <div class="mu-field" style="flex:1"><div class="mu-input"><span>本月账单已出，点击查看详情</span></div></div>
+                        <div class="mu-field" style="width:170px"><div class="mu-input"><span class="ph">作者</span></div></div>
+                      </div>
+                      <div>
+                        <div class="mu-toolbar"><span class="mu-tool">B</span><span class="mu-tool"><i>I</i></span><span class="mu-tool"><u>U</u></span><span class="mu-tool sep"></span><span class="mu-tool">链接</span><span class="mu-tool">图片</span><span class="mu-tool sep"></span><span class="mu-tool">左对齐</span><span class="mu-tool">居中</span></div>
+                        <div class="mu-editor" style="flex:1">请在这里写下您的内容，支持图文混排、变量字段与模板消息（接口）推送…</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mu-row" style="justify-content:flex-end; gap:10px; margin-top:13px"><div class="mu-btn ghost">预览</div><div class="mu-btn">确认群发</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1325,7 +1665,36 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
           <span class="shot-dot" style="background:#2E6FE8"></span>
           <span class="shot-t">GMP 平台 · 发送邮件</span>
         </div>
-        <img class="shot-img" src="assets/s18_3.png" alt="邮件消息" />
+        <div class="shot-body">
+          <div class="mu">
+            <div class="mu-main">
+              <div class="mu-top">
+                <div class="mu-crumb">邮件管理 / <b>发送邮件</b></div>
+                <div class="mu-top-right"><div class="mu-user">admin</div><div class="mu-avatar"></div></div>
+              </div>
+              <div class="mu-content">
+                <div class="mu-row" style="flex:1">
+                  <div class="mu-card" style="flex:1; display:flex; flex-direction:column; gap:13px">
+                    <div class="mu-card-head" style="margin-bottom:0"><div class="mu-card-t">输入收信人</div><div class="mu-btn ghost sm">清空</div></div>
+                    <div class="mu-input mu-textarea" style="flex:1"><span class="ph">请输入收信邮箱，每个邮箱一行</span></div>
+                    <div class="mu-row" style="gap:8px"><div class="mu-btn ghost sm">通信录</div><div class="mu-btn ghost sm">上传</div></div>
+                    <div style="font-size:12px; color:#8A94A6; line-height:1.7">可导入 TXT / CSV / XLS / XLSX 格式文件，超过 10 万邮箱请导入单行邮箱文件</div>
+                  </div>
+                  <div class="mu-card" style="flex:1.2; display:flex; flex-direction:column; gap:11px">
+                    <div class="mu-card-head" style="margin-bottom:0"><div class="mu-card-t">编辑内容</div></div>
+                    <div class="mu-field"><div class="mu-label">信息类型</div><div class="mu-input"><span>GMP 邮箱</span><span class="mu-caret">▾</span></div></div>
+                    <div class="mu-field"><div class="mu-label">邮件主题</div><div class="mu-input"><span>【账单提醒】您本月的账单已生成</span></div></div>
+                    <div style="flex:1; display:flex; flex-direction:column">
+                      <div class="mu-toolbar"><span class="mu-tool">B</span><span class="mu-tool"><i>I</i></span><span class="mu-tool"><u>U</u></span><span class="mu-tool sep"></span><span class="mu-tool">链接</span><span class="mu-tool">图片</span><span class="mu-tool sep"></span><span class="mu-tool">HTML</span></div>
+                      <div class="mu-editor" style="flex:1">尊敬的 {name}：您 2025 年 4 月账单金额为 ¥{amount}，请登录查看详情…</div>
+                    </div>
+                    <div class="mu-row" style="justify-content:flex-end"><div class="mu-btn">发送邮件</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1355,7 +1724,54 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
           <span class="shot-dot" style="background:#2E6FE8"></span>
           <span class="shot-t">GMP 平台 · 新增组合消息模板</span>
         </div>
-        <img class="shot-img" src="assets/s19_5.png" alt="组合消息" />
+        <div class="shot-body">
+          <div class="mu">
+            <div class="mu-main">
+              <div class="mu-top">
+                <div class="mu-crumb">消息发送 / <b>新增组合消息模板</b></div>
+                <div class="mu-top-right"><div class="mu-user">admin</div><div class="mu-avatar"></div></div>
+              </div>
+              <div class="mu-content" style="justify-content:center">
+                <div class="mu-card" style="width:82%; margin:0 auto; display:flex; flex-direction:column; gap:15px; padding:22px 26px">
+                  <div class="mu-row">
+                    <div class="mu-field" style="width:260px"><div class="mu-label"><span class="req">*</span>消息编码</div><div class="mu-input"><span class="ph">a001</span></div></div>
+                    <div class="mu-field" style="flex:1"><div class="mu-label"><span class="req">*</span>消息主题</div><div class="mu-input"><span>消费通知</span></div></div>
+                  </div>
+                  <div class="mu-row" style="align-items:center">
+                    <div class="mu-label" style="width:130px; flex:none">选择消息模板类型</div>
+                    <div class="mu-row" style="gap:22px">
+                      <div class="mu-check"><div class="mu-box on"></div>短信</div>
+                      <div class="mu-check"><div class="mu-box on"></div>微信</div>
+                      <div class="mu-check"><div class="mu-box on"></div>邮件</div>
+                    </div>
+                  </div>
+                  <div class="mu-row" style="align-items:center">
+                    <div class="mu-label" style="width:130px; flex:none">发送规则</div>
+                    <div class="mu-row" style="gap:22px">
+                      <div class="mu-radio"><div class="mu-rdo"></div>同时发送</div>
+                      <div class="mu-radio"><div class="mu-rdo on"></div>失败补发</div>
+                    </div>
+                  </div>
+                  <div class="mu-row" style="align-items:center">
+                    <div class="mu-label" style="width:130px; flex:none">发送顺序</div>
+                    <div class="mu-step">
+                      <div class="mu-step-node"><span class="mu-step-n">1</span>短信</div>
+                      <div class="mu-arrow-r"></div>
+                      <div class="mu-step-node"><span class="mu-step-n">2</span>微信</div>
+                      <div class="mu-arrow-r"></div>
+                      <div class="mu-step-node"><span class="mu-step-n">3</span>邮件</div>
+                    </div>
+                  </div>
+                  <div class="mu-row" style="align-items:center">
+                    <div class="mu-label" style="width:130px; flex:none">备注</div>
+                    <div class="mu-input" style="flex:1"><span class="ph">选填</span></div>
+                  </div>
+                  <div class="mu-row" style="justify-content:flex-end; gap:10px"><div class="mu-btn ghost">取消</div><div class="mu-btn">保存模板</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1385,7 +1801,48 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
           <span class="shot-dot" style="background:#2E6FE8"></span>
           <span class="shot-t">GMP 平台 · 用户报表</span>
         </div>
-        <img class="shot-img" src="assets/s20_5.png" alt="报表管理" />
+        <div class="shot-body">
+          <div class="mu">
+            <div class="mu-main">
+              <div class="mu-top">
+                <div class="mu-crumb">报表管理 / <b>用户报表</b></div>
+                <div class="mu-top-right"><div class="mu-user">admin</div><div class="mu-avatar"></div></div>
+              </div>
+              <div class="mu-content">
+                <div class="mu-card" style="padding:11px 17px; display:flex; align-items:center; gap:12px">
+                  <div class="mu-tabs"><div class="mu-tab on">历史统计</div><div class="mu-tab">今日统计</div></div>
+                  <div class="mu-input" style="width:180px; padding:6px 12px"><span class="ph">消息类型：全部</span><span class="mu-caret">▾</span></div>
+                  <div class="mu-btn sm">查询</div>
+                  <div class="mu-btn ghost sm">导出</div>
+                </div>
+                <div class="mu-card" style="display:flex; flex-direction:column; height:255px">
+                  <div class="mu-card-head"><div class="mu-card-t">账号发送成功量 TOP10</div><div class="mu-card-e">WEEK</div></div>
+                  <div class="mu-bars" style="padding-bottom:20px">
+                    <div class="mu-bar hot" style="height:96%"><span class="mu-bar-v">261</span><span class="mu-bar-x">运营一部</span></div>
+                    <div class="mu-bar" style="height:78%"><span class="mu-bar-x">运营二部</span></div>
+                    <div class="mu-bar" style="height:54%"><span class="mu-bar-x">客服中心</span></div>
+                    <div class="mu-bar" style="height:50%"><span class="mu-bar-x">市场部</span></div>
+                    <div class="mu-bar" style="height:20%"><span class="mu-bar-x">渠道组</span></div>
+                    <div class="mu-bar" style="height:8%"><span class="mu-bar-x">华东区</span></div>
+                    <div class="mu-bar" style="height:6%"><span class="mu-bar-x">华南区</span></div>
+                    <div class="mu-bar" style="height:5%"><span class="mu-bar-x">华西区</span></div>
+                  </div>
+                </div>
+                <div class="mu-card" style="flex:1; padding:6px 17px; min-height:0">
+                  <table class="mu-table">
+                    <thead><tr><th>#</th><th>账号</th><th>总量</th><th>发送成功</th><th>发送失败</th><th>回执成功</th><th>回执成功率</th></tr></thead>
+                    <tbody>
+                      <tr><td>1</td><td>运营一部</td><td>348</td><td>261</td><td>87</td><td>243</td><td><span class="mu-badge b">93.1%</span></td></tr>
+                      <tr><td>2</td><td>运营二部</td><td>208</td><td>208</td><td>0</td><td>196</td><td><span class="mu-badge b">94.2%</span></td></tr>
+                      <tr><td>3</td><td>客服中心</td><td>145</td><td>142</td><td>3</td><td>131</td><td><span class="mu-badge b">92.3%</span></td></tr>
+                      <tr><td>4</td><td>市场部</td><td>144</td><td>132</td><td>12</td><td>118</td><td><span class="mu-badge n">89.4%</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1415,7 +1872,68 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
           <span class="shot-dot" style="background:#2E6FE8"></span>
           <span class="shot-t">GMP 平台 · 新增审核规则</span>
         </div>
-        <img class="shot-img" src="assets/s21_3.png" alt="审核管理" />
+        <div class="shot-body">
+          <div class="mu">
+            <div class="mu-main">
+              <div class="mu-top">
+                <div class="mu-crumb">数据管理 / <b>新增审核规则</b></div>
+                <div class="mu-top-right"><div class="mu-user">admin</div><div class="mu-avatar"></div></div>
+              </div>
+              <div class="mu-content">
+                <div class="mu-row" style="flex:1">
+                  <div class="mu-card" style="flex:1.5; display:flex; flex-direction:column; gap:16px; padding:20px 24px">
+                    <div class="mu-row" style="align-items:center">
+                      <div class="mu-label" style="width:96px; flex:none">审核范围</div>
+                      <div class="mu-row" style="gap:20px">
+                        <div class="mu-check"><div class="mu-box on"></div>短信</div>
+                        <div class="mu-check"><div class="mu-box on"></div>彩信</div>
+                        <div class="mu-check"><div class="mu-box"></div>语音</div>
+                        <div class="mu-check"><div class="mu-box on"></div>模板</div>
+                      </div>
+                    </div>
+                    <div class="mu-row" style="align-items:center">
+                      <div class="mu-label" style="width:96px; flex:none">被审核人</div>
+                      <div class="mu-row" style="gap:20px; align-items:center">
+                        <div class="mu-radio"><div class="mu-rdo"></div>所有需审账号</div>
+                        <div class="mu-radio"><div class="mu-rdo on"></div>指定账号</div>
+                        <div class="mu-input" style="width:180px; padding:6px 12px"><span class="ph">运营一部 · 张经理</span></div>
+                      </div>
+                    </div>
+                    <div class="mu-row" style="align-items:center">
+                      <div class="mu-label" style="width:96px; flex:none">审核方式</div>
+                      <div class="mu-row" style="gap:20px">
+                        <div class="mu-radio"><div class="mu-rdo on"></div>按角色</div>
+                        <div class="mu-radio"><div class="mu-rdo"></div>按机构</div>
+                      </div>
+                    </div>
+                    <div class="mu-row" style="align-items:center">
+                      <div class="mu-label" style="width:96px; flex:none">审核流程</div>
+                      <div class="mu-row" style="gap:10px; align-items:center">
+                        <span style="font-size:12.5px; color:#5A6B85; white-space:nowrap">第 1 级审核</span>
+                        <div class="mu-input" style="width:190px; padding:6px 12px"><span>运营主管</span><span class="mu-caret">▾</span></div>
+                        <span style="font-size:12.5px; color:#5A6B85; white-space:nowrap">第 2 级审核</span>
+                        <div class="mu-input" style="width:190px; padding:6px 12px"><span>财务主管</span><span class="mu-caret">▾</span></div>
+                      </div>
+                    </div>
+                    <div class="mu-row" style="justify-content:flex-end; gap:10px; margin-top:auto"><div class="mu-btn ghost">取消</div><div class="mu-btn">保存规则</div></div>
+                  </div>
+                  <div class="mu-card" style="flex:1; display:flex; flex-direction:column; padding:20px 24px">
+                    <div class="mu-card-head"><div class="mu-card-t">审核流程预览</div><div class="mu-card-e">FLOW</div></div>
+                    <div style="flex:1; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:0">
+                      <div class="mu-step-node"><span class="mu-step-n" style="background:var(--navy)">起</span>提交人 · 发起发送</div>
+                      <div class="mu-arrow-d"></div>
+                      <div class="mu-step-node"><span class="mu-step-n">1</span>运营主管 · 一级审核</div>
+                      <div class="mu-arrow-d"></div>
+                      <div class="mu-step-node"><span class="mu-step-n">2</span>财务主管 · 二级审核</div>
+                      <div class="mu-arrow-d"></div>
+                      <div class="mu-step-node" style="border-color:rgba(240,45,78,0.4); background:rgba(240,45,78,0.06)"><span class="mu-step-n" style="background:var(--red)">发</span>审核通过 · 放行发送</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1447,7 +1965,38 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
           <span class="shot-dot" style="background:#2E6FE8"></span>
           <span class="shot-t">GMP 平台 · 短信渠道管理</span>
         </div>
-        <img class="shot-img" src="assets/s22_18.png" alt="渠道管理" />
+        <div class="shot-body">
+          <div class="mu">
+            <div class="mu-main">
+              <div class="mu-top">
+                <div class="mu-crumb">信息管理 / <b>短信管理</b></div>
+                <div class="mu-top-right"><div class="mu-user">admin</div><div class="mu-avatar"></div></div>
+              </div>
+              <div class="mu-content">
+                <div class="mu-card" style="padding:11px 17px; display:flex; align-items:center; gap:10px">
+                  <div class="mu-input" style="width:130px; padding:6px 12px"><span class="ph">类型</span><span class="mu-caret">▾</span></div>
+                  <div class="mu-input" style="width:130px; padding:6px 12px"><span class="ph">运营商</span><span class="mu-caret">▾</span></div>
+                  <div class="mu-input" style="width:130px; padding:6px 12px"><span class="ph">全部</span><span class="mu-caret">▾</span></div>
+                  <div class="mu-input" style="flex:1; padding:6px 12px"><span class="ph">请输入资源编号</span></div>
+                  <div class="mu-btn sm">查询</div>
+                  <div class="mu-btn red sm">新建渠道</div>
+                </div>
+                <div class="mu-card" style="flex:1; padding:8px 17px; min-height:0">
+                  <table class="mu-table">
+                    <thead><tr><th>#</th><th>资源编号</th><th>类型</th><th>运营商</th><th>主端口号</th><th>发送时段</th><th>资源状态</th><th>运行状态</th><th>备用资源</th><th>操作</th></tr></thead>
+                    <tbody>
+                      <tr><td>1</td><td>2500</td><td>短信</td><td>第三方（CMPP）</td><td>1065753216088</td><td>00:00-23:59</td><td><div class="mu-switch on"></div></td><td><span class="mu-badge b">运行中</span></td><td><span class="mu-badge n">2 条</span></td><td><span class="mu-link">编辑</span><span class="mu-link">详情</span></td></tr>
+                      <tr><td>2</td><td>8004</td><td>短信</td><td>第三方（CMPP）</td><td>1065753216088</td><td>00:00-23:59</td><td><div class="mu-switch"></div></td><td><span class="mu-badge r">已停用</span></td><td><span class="mu-badge n">1 条</span></td><td><span class="mu-link">编辑</span><span class="mu-link">详情</span></td></tr>
+                      <tr><td>3</td><td>8005</td><td>短信</td><td>第三方（HTTPS）</td><td>1065753216088</td><td>00:00-23:59</td><td><div class="mu-switch on"></div></td><td><span class="mu-badge b">运行中</span></td><td><span class="mu-badge n">1 条</span></td><td><span class="mu-link">编辑</span><span class="mu-link">详情</span></td></tr>
+                      <tr><td>4</td><td>8012</td><td>语音</td><td>自有通道</td><td>1069009888</td><td>08:00-21:00</td><td><div class="mu-switch on"></div></td><td><span class="mu-badge b">运行中</span></td><td><span class="mu-badge n">—</span></td><td><span class="mu-link">编辑</span><span class="mu-link">详情</span></td></tr>
+                      <tr><td>5</td><td>8020</td><td>微信</td><td>服务号通道</td><td>—</td><td>00:00-23:59</td><td><div class="mu-switch on"></div></td><td><span class="mu-badge b">运行中</span></td><td><span class="mu-badge n">1 条</span></td><td><span class="mu-link">编辑</span><span class="mu-link">详情</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1477,7 +2026,61 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
           <span class="shot-dot" style="background:#2E6FE8"></span>
           <span class="shot-t">GMP 平台 · 业务监控</span>
         </div>
-        <img class="shot-img" src="assets/s23_3.png" alt="监控管理" />
+        <div class="shot-body">
+          <div class="mu">
+            <div class="mu-main">
+              <div class="mu-top">
+                <div class="mu-crumb">监控管理 / <b>业务监控</b></div>
+                <div class="mu-top-right"><div class="mu-user">admin</div><div class="mu-avatar"></div></div>
+              </div>
+              <div class="mu-content">
+                <div class="mu-row">
+                  <div class="mu-stat"><div><div class="mu-stat-v">1,024</div><div class="mu-stat-l">资源发送总量（万条）</div></div></div>
+                  <div class="mu-stat"><div><div class="mu-stat-v" style="color:var(--blue)">986</div><div class="mu-stat-l">发送成功量（万条）</div></div></div>
+                  <div class="mu-stat"><div><div class="mu-stat-v" style="color:var(--blue)">972</div><div class="mu-stat-l">回执成功量（万条）</div></div></div>
+                  <div class="mu-stat"><div><div class="mu-stat-v" style="color:var(--red)">3</div><div class="mu-stat-l">回执失败量（条）</div></div></div>
+                  <div class="mu-stat">
+                    <svg width="44" height="44" viewBox="0 0 44 44">
+                      <circle cx="22" cy="22" r="18" fill="none" stroke="#EDF1F7" stroke-width="5"/>
+                      <circle cx="22" cy="22" r="18" fill="none" stroke="#2E6FE8" stroke-width="5" stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="1.6" transform="rotate(-90 22 22)"/>
+                    </svg>
+                    <div><div class="mu-stat-v">98.6%</div><div class="mu-stat-l">回执成功率</div></div>
+                  </div>
+                </div>
+                <div class="mu-card" style="padding:11px 17px; display:flex; align-items:center; gap:14px">
+                  <div class="mu-check" style="font-weight:600">自动刷新</div>
+                  <div class="mu-switch on"></div>
+                  <div class="mu-label">浏览范围</div>
+                  <div class="mu-input" style="width:170px; padding:6px 12px"><span>最近 30 分钟</span><span class="mu-caret">▾</span></div>
+                  <div class="mu-btn sm">查询</div>
+                </div>
+                <div class="mu-card" style="flex:1; display:flex; flex-direction:column; min-height:0">
+                  <div class="mu-card-head">
+                    <div class="mu-card-t">实时发送情况</div>
+                    <div style="display:flex; gap:16px; font-size:11.5px; color:#5A6B85; align-items:center">
+                      <span><i style="display:inline-block; width:8px; height:8px; border-radius:4px; background:#2E6FE8; margin-right:5px"></i>发送成功</span>
+                      <span><i style="display:inline-block; width:8px; height:8px; border-radius:4px; background:#F02D4E; margin-right:5px"></i>发送失败</span>
+                      <span><i style="display:inline-block; width:8px; height:8px; border-radius:4px; background:#0A1F44; margin-right:5px"></i>回执成功</span>
+                    </div>
+                  </div>
+                  <svg viewBox="0 0 900 210" style="flex:1; width:100%" preserveAspectRatio="none">
+                    <line x1="40" y1="16" x2="40" y2="176" stroke="#EDF1F7" stroke-width="1.5"/>
+                    <line x1="40" y1="176" x2="890" y2="176" stroke="#EDF1F7" stroke-width="1.5"/>
+                    <line x1="40" y1="56" x2="890" y2="56" stroke="#F2F5FA" stroke-width="1"/>
+                    <line x1="40" y1="96" x2="890" y2="96" stroke="#F2F5FA" stroke-width="1"/>
+                    <line x1="40" y1="136" x2="890" y2="136" stroke="#F2F5FA" stroke-width="1"/>
+                    <polyline points="60,120 140,96 220,108 300,72 380,84 460,60 540,78 620,52 700,66 780,44 860,56" fill="none" stroke="#2E6FE8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <polyline points="60,140 140,132 220,138 300,124 380,130 460,118 540,124 620,112 700,118 780,106 860,112" fill="none" stroke="#0A1F44" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 0"/>
+                    <polyline points="60,168 140,166 220,170 300,164 380,168 460,162 540,166 620,160 700,164 780,158 860,162" fill="none" stroke="#F02D4E" stroke-width="2" stroke-linecap="round"/>
+                    <g font-size="10.5" fill="#8A94A6" text-anchor="middle" font-family="Archivo">
+                      <text x="60" y="196">19:10</text><text x="220" y="196">19:20</text><text x="380" y="196">19:30</text><text x="540" y="196">19:40</text><text x="700" y="196">19:50</text><text x="860" y="196">20:00</text>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
