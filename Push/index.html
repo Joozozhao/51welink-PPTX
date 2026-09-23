@@ -2044,16 +2044,16 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 /* ================= P25 封底 THANKS ================= */
 #s27 .s25-bg { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover; }
 #s27 .s25-veil { position: absolute; inset: 0; background: rgba(10,31,68,0.72); }
-#s27 .s25-wrap { position: relative; z-index: 1; width: 100%; height: 100%; padding: 96px 108px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
-#s27 .s25-logo { width: 255px; height: 64.5px; object-fit: contain; }
+#s27 .s25-wrap { position: relative; z-index: 1; width: 100%; height: 100%; padding: 96px 108px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 130px; }
+#s27 .s25-logo { position: absolute; top: 96px; left: 50%; transform: translateX(-50%); width: 255px; height: 64.5px; object-fit: contain; }
 #s27 .s25-mid { display: flex; flex-direction: column; align-items: center; gap: 30px; }
 #s27 .s25-thanks { font-size: 114px; font-weight: 700; color: rgba(255,255,255,0.16); letter-spacing: 21px; font-family: var(--font-num); line-height: 1; }
 #s27 .s25-hello { font-size: 66px; font-weight: 700; color: #fff; letter-spacing: 9px; margin-top: -45px; }
 #s27 .s25-bar { width: 84px; height: 6px; background: var(--red); border-radius: 3px; }
 #s27 .s25-sub { font-size: 22.5px; color: rgba(255,255,255,0.7); letter-spacing: 3px; }
-#s27 .s25-bot { display: flex; flex-direction: column; align-items: center; gap: 9px; }
-#s27 .s25-co { font-size: 22.5px; color: #fff; font-weight: 600; letter-spacing: 3px; }
-#s27 .s25-en { font-size: 18px; color: rgba(255,255,255,0.45); letter-spacing: 3px; font-family: var(--font-num); }
+#s27 .s25-bot { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+#s27 .s25-co { font-size: 32px; color: #fff; font-weight: 600; letter-spacing: 4px; }
+#s27 .s25-en { font-size: 21px; color: rgba(255,255,255,0.45); letter-spacing: 3px; font-family: var(--font-num); }
 </style>
 
 <!-- P19 富媒体消息 -->
@@ -2548,6 +2548,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 <div class="deck-download">
     <a href="Push.pdf" id="dlPdf" download>PDF</a>
     <a href="Push.pptx" id="dlPptx" download>PPTX</a>
+    <a href="Push.zip" id="dlZip" download>ZIP</a>
 </div>
 <div class="edit-toast" id="editToast">已保存</div>
 
@@ -2702,6 +2703,9 @@ document.getElementById('dlPdf').addEventListener('click', function(e) {
 });
 document.getElementById('dlPptx').addEventListener('click', function(e) {
     this.setAttribute('download', getDownloadFilename('pptx'));
+});
+document.getElementById('dlZip').addEventListener('click', function(e) {
+    this.setAttribute('download', getDownloadFilename('zip'));
 });
 hotzone.addEventListener('mouseenter', () => { clearTimeout(hideTimeout); editToggle.classList.add('show'); });
 hotzone.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });

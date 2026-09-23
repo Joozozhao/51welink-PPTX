@@ -572,16 +572,16 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 /* ==================== s29 封底 ==================== */
 #s29 .s29-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
 #s29 .s29-veil { position:absolute; inset:0; background:rgba(10,31,68,0.72); }
-#s29 .s29-wrap { position:relative; z-index:1; width:100%; height:100%; padding:96px 108px; display:flex; flex-direction:column; align-items:center; justify-content:space-between; }
-#s29 .s29-logo { width:255px; height:64.5px; object-fit:contain; }
+#s29 .s29-wrap { position:relative; z-index:1; width:100%; height:100%; padding:96px 108px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:130px; }
+#s29 .s29-logo { position:absolute; top:96px; left:50%; transform:translateX(-50%); width:255px; height:64.5px; object-fit:contain; }
 #s29 .s29-mid { display:flex; flex-direction:column; align-items:center; gap:28px; }
 #s29 .s29-thanks { font-size:110px; font-weight:700; color:rgba(255,255,255,0.16); letter-spacing:18px; font-family:var(--font-num); line-height:1; }
 #s29 .s29-hello { font-size:60px; font-weight:700; color:#fff; letter-spacing:6px; margin-top:-40px; }
 #s29 .s29-bar { width:84px; height:6px; background:var(--red); border-radius:3px; }
 #s29 .s29-sub { font-size:22.5px; color:rgba(255,255,255,0.7); letter-spacing:3px; }
-#s29 .s29-bot { display:flex; flex-direction:column; align-items:center; gap:9px; }
-#s29 .s29-co { font-size:21px; color:#fff; font-weight:600; letter-spacing:4px; font-family:var(--font-num); }
-#s29 .s29-en { font-size:18px; color:rgba(255,255,255,0.45); letter-spacing:3px; }
+#s29 .s29-bot { display:flex; flex-direction:column; align-items:center; gap:12px; }
+#s29 .s29-co { font-size:28px; color:#fff; font-weight:600; letter-spacing:4px; font-family:var(--font-num); }
+#s29 .s29-en { font-size:21px; color:rgba(255,255,255,0.45); letter-spacing:3px; }
 
 /* ==================== Mock UI（纯 HTML/CSS 后台界面效果图，替代旧截图） ==================== */
 .shot-body { height:600px; background:#F1F5FA; overflow:hidden; }
@@ -2355,6 +2355,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 <div class="deck-download">
     <a href="GMP.pdf" id="dlPdf" download>PDF</a>
     <a href="GMP.pptx" id="dlPptx" download>PPTX</a>
+    <a href="GMP.zip" id="dlZip" download>ZIP</a>
 </div>
 <button class="edit-toggle" id="editToggle" title="编辑模式 (E)">✏️</button>
 <div class="edit-toast" id="editToast">已保存</div>
@@ -2507,6 +2508,8 @@ const dlPdf = document.getElementById('dlPdf');
 if (dlPdf) dlPdf.addEventListener('click', function() { this.setAttribute('download', getDownloadFilename('pdf')); });
 const dlPptx = document.getElementById('dlPptx');
 if (dlPptx) dlPptx.addEventListener('click', function() { this.setAttribute('download', getDownloadFilename('pptx')); });
+const dlZip = document.getElementById('dlZip');
+if (dlZip) dlZip.addEventListener('click', function() { this.setAttribute('download', getDownloadFilename('zip')); });
 
 hotzone.addEventListener('mouseenter', () => { clearTimeout(hideTimeout); editToggle.classList.add('show'); });
 hotzone.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });
