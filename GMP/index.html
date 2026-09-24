@@ -2463,7 +2463,7 @@ class InlineEditor {
     }
     saveAll() {
         document.querySelectorAll('.slide').forEach(s => {
-            try { localStorage.setItem('wwt-slide-' + s.id, s.innerHTML); } catch (e) {}
+            try { localStorage.setItem('wwt:GMP:slide:' + s.id, s.innerHTML); } catch (e) {}
         });
         const t = this.toast;
         t.classList.add('show');
@@ -2472,7 +2472,7 @@ class InlineEditor {
     }
     restore() {
         document.querySelectorAll('.slide').forEach(s => {
-            const saved = localStorage.getItem('wwt-slide-' + s.id);
+            const saved = localStorage.getItem('wwt:GMP:slide:' + s.id);
             if (saved) s.innerHTML = saved;
         });
     }
