@@ -1192,6 +1192,109 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s17 .s17-card { overflow:hidden; }
 #s17 .s17-fig { display:block; width:calc(100% + 72px); height:190px; object-fit:cover; margin:-40px -36px 24px; border-radius:18px 18px 0 0; }
 
+
+/* ==================== P8 服务网络（重设计） ==================== */
+#s8 .s8-body { top:195px !important; height:750px !important; display:flex; gap:48px; }
+#s8 .s8-panel { width:470px; padding:54px 45px; }
+#s8 .s8-pills { display:flex; flex-direction:column; gap:15px; }
+#s8 .s8-foot { font-size:18px; color:rgba(255,255,255,0.4); letter-spacing:4.5px; font-family:var(--font-num); }
+#s8 .s8-right { flex:1; display:flex; flex-direction:column; gap:27px; }
+#s8 .s8-nums { display:flex; gap:27px; flex:none; }
+#s8 .s8-numcard { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 30px rgba(10,31,68,0.06); padding:30px 33px; display:flex; flex-direction:column; gap:10px; justify-content:center; }
+#s8 .s8-num { font-size:78px; line-height:1; }
+#s8 .s8-num.red { color:var(--red); }
+#s8 .s8-num.blue { color:var(--blue); }
+#s8 .s8-unit { font-size:28px; font-weight:700; color:var(--navy); }
+#s8 .s8-nh { font-size:21px; font-weight:700; color:var(--navy); }
+#s8 .s8-np { font-size:16.5px; color:var(--muted); line-height:1.6; }
+#s8 .s8-cities { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 30px rgba(10,31,68,0.06); padding:30px 39px; display:flex; flex-direction:column; gap:18px; }
+#s8 .s8-cities-t { font-size:22px; font-weight:700; color:var(--navy); display:flex; align-items:center; gap:14px; }
+#s8 .s8-ct-bar { width:44px; height:5px; background:var(--red); border-radius:3px; flex:none; }
+#s8 .s8-chips { display:flex; flex-wrap:wrap; gap:14px; }
+#s8 .s8-legend { margin-top:auto; display:flex; gap:26px; font-size:15px; color:var(--faint); }
+#s8 .s8-legend i { display:inline-block; width:10px; height:10px; border-radius:5px; background:var(--blue); margin-right:8px; }
+#s8 .s8-legend i.hq { background:var(--red); }
+#s8 .s8-band { flex:none; background:linear-gradient(90deg,#0A1F44 0%,#123A7A 100%); border-radius:18px; padding:24px 40px; display:flex; align-items:center; gap:20px; }
+#s8 .s8-band img { width:36px; height:36px; object-fit:contain; flex:none; }
+#s8 .s8-band-t { font-size:20.5px; color:#fff; font-weight:600; letter-spacing:1px; }
+
+/* ==================== P13 新媒体矩阵（重设计） ==================== */
+#s13 .s13-hero { margin:-44px -36px 22px; height:175px; border-radius:18px 18px 0 0; background:linear-gradient(135deg,#0A1F44 0%,#123A7A 58%,#2E6FE8 100%); position:relative; display:flex; align-items:center; padding:0 36px; gap:18px; overflow:hidden; flex:none; }
+#s13 .s13-hero::after { content:''; position:absolute; right:-48px; top:-48px; width:190px; height:190px; border-radius:95px; background:rgba(255,255,255,0.07); }
+#s13 .s13-hero::before { content:''; position:absolute; right:70px; bottom:-64px; width:140px; height:140px; border-radius:70px; background:rgba(240,45,78,0.18); }
+#s13 .s13-hero-ic { width:66px; height:66px; border-radius:17px; background:rgba(255,255,255,0.12); display:flex; align-items:center; justify-content:center; position:relative; z-index:1; flex:none; }
+#s13 .s13-hero-ic img { width:33px; height:33px; object-fit:contain; }
+#s13 .s13-hero-e { position:relative; z-index:1; font-size:18px; color:rgba(255,255,255,0.78); letter-spacing:3px; font-family:var(--font-num); font-weight:600; }
+#s13 .s13-list { display:flex; flex-direction:column; gap:9px; margin-top:14px; }
+#s13 .s13-li { display:flex; align-items:center; gap:11px; font-size:16.5px; color:var(--ink); font-weight:500; }
+#s13 .s13-li::before { content:''; width:8px; height:8px; border-radius:4px; background:var(--blue); flex:none; }
+
+/* ==================== P19 泊聚量闭环流程（重设计） ==================== */
+#s19 .s19-body { top:195px !important; height:750px !important; display:flex !important; flex-direction:column; gap:27px; }
+#s19 .s19-flowcard { flex:1; padding:48px 54px 34px; display:flex; flex-direction:column; justify-content:center; }
+#s19 .s19-nodes { display:flex; align-items:flex-start; }
+#s19 .s19-node { flex:1; display:flex; flex-direction:column; align-items:center; gap:13px; padding:0 12px; }
+#s19 .s19-n-icon { width:88px; height:88px; border-radius:22px; display:flex; align-items:center; justify-content:center; position:relative; }
+#s19 .s19-n-icon img { width:40px; height:40px; object-fit:contain; }
+#s19 .s19-n-num { position:absolute; top:-13px; right:-13px; width:34px; height:34px; border-radius:17px; background:var(--red); color:#fff; font-family:var(--font-num); font-weight:800; font-size:16px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(240,45,78,0.35); }
+#s19 .s19-n-t { font-size:25px; font-weight:700; color:var(--navy); }
+#s19 .s19-n-d { font-size:15.5px; color:var(--muted); line-height:1.7; text-align:center; }
+#s19 .s19-n-d b { color:var(--navy); }
+#s19 .s19-arr { width:36px; height:36px; object-fit:contain; flex:none; margin-top:26px; }
+#s19 .s19-loop { position:relative; margin-top:42px; height:44px; }
+#s19 .s19-loop-line { position:absolute; top:6px; left:12.5%; right:12.5%; border-top:2.5px dashed rgba(46,111,232,0.5); }
+#s19 .s19-loop-line::before { content:''; position:absolute; left:-2px; top:-6px; border-right:12px solid rgba(46,111,232,0.85); border-top:5px solid transparent; border-bottom:5px solid transparent; }
+#s19 .s19-loop-t { position:absolute; top:18px; left:0; right:0; text-align:center; font-size:15px; color:var(--blue); font-weight:600; letter-spacing:2px; }
+#s19 .s19-highlight-bar { margin-top:0; flex:none; }
+
+/* ==================== P20 聚 We（重设计） ==================== */
+#s20 .s20-body { display:flex !important; flex-direction:column; gap:27px; top:195px !important; height:750px !important; }
+#s20 .s20-grid { flex:1; display:grid; grid-template-columns:repeat(2,1fr); grid-template-rows:repeat(2,1fr); gap:27px; }
+#s20 .s20-card { padding:34px 38px !important; display:flex !important; flex-direction:column !important; gap:12px !important; justify-content:flex-start !important; }
+#s20 .s20-card .icon-tile { width:66px; height:66px; flex:none; }
+#s20 .s20-card .icon-tile img { width:33px; height:33px; }
+#s20 .s20-t { font-size:25px !important; margin:4px 0 0 !important; }
+#s20 .s20-d { font-size:16.5px !important; flex:none !important; line-height:1.7 !important; }
+#s20 .s20-d b { color:var(--navy); }
+#s20 .s20-list { margin-top:auto; display:flex; flex-direction:column; gap:10px; border-top:1.5px solid #EDF1F7; padding-top:15px; }
+#s20 .s20-li { display:flex; align-items:center; gap:11px; font-size:16px; color:var(--ink); font-weight:500; }
+#s20 .s20-li::before { content:''; width:8px; height:8px; border-radius:4px; background:var(--blue); flex:none; }
+#s20 .s20-band { position:static; width:auto; height:auto; left:auto; top:auto; flex:none; background:linear-gradient(90deg,#0A1F44 0%,#123A7A 100%); border-radius:18px; padding:24px 42px; display:flex; align-items:center; gap:30px; }
+#s20 .s20-band-t { font-size:21px; font-weight:700; color:#fff; flex:none; letter-spacing:1px; }
+#s20 .s20-steps { flex:1; display:flex; align-items:center; justify-content:space-between; }
+#s20 .s20-step { display:flex; align-items:center; gap:11px; font-size:18px; color:rgba(255,255,255,0.9); font-weight:600; white-space:nowrap; }
+#s20 .s20-step i { width:10px; height:10px; border-radius:5px; background:var(--red); flex:none; }
+#s20 .s20-arr { width:30px; height:30px; object-fit:contain; flex:none; }
+
+
+/* ==================== 重设计微调（第 2 轮） ==================== */
+/* P19：节点与回流放大，填充流程卡 */
+#s19 .s19-n-icon { width:100px; height:100px; }
+#s19 .s19-n-icon img { width:46px; height:46px; }
+#s19 .s19-n-t { font-size:27px; }
+#s19 .s19-n-d { font-size:16.5px; max-width:340px; }
+#s19 .s19-arr { margin-top:32px; }
+#s19 .s19-loop { margin-top:64px; }
+
+/* P20：压缩内容避免横带溢出 */
+#s20 .s20-grid { gap:24px; }
+#s20 .s20-card { padding:28px 34px !important; gap:10px !important; }
+#s20 .s20-card .icon-tile { width:60px; height:60px; }
+#s20 .s20-card .icon-tile img { width:30px; height:30px; }
+#s20 .s20-t { font-size:24px !important; }
+#s20 .s20-d { font-size:16px !important; }
+#s20 .s20-list { gap:8px; padding-top:12px; }
+#s20 .s20-li { font-size:15.5px; }
+#s20 .s20-band { padding:18px 42px; }
+
+/* P13：内容字号上调填充卡片 */
+#s13 .s13-hero { height:190px; }
+#s13 .s13-t { font-size:30px; }
+#s13 .s13-d { font-size:17.5px; }
+#s13 .s13-list { gap:12px; margin-top:16px; }
+#s13 .s13-li { font-size:17px; }
+#s13 .s13-pill { font-size:15px; padding:11px 20px; }
+
 </style>
 </head>
 <body>
@@ -1521,29 +1624,50 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
         <div class="s8-h">全网营销和<br />客户服务网络</div>
       </div>
       <div class="s8-p">依托覆盖全国的服务网络，建立本地化服务快速响应机制——全国动销车场 3.5万+，客户在哪里，服务团队就在哪里。</div>
+      <div class="s8-pills">
+        <div class="s8-pill"><img src="assets/icons/location-dot-FFFFFF.png" alt="" /><div class="s8-pill-t">本地化驻点 · 快速响应</div></div>
+        <div class="s8-pill"><img src="assets/icons/users-FFFFFF.png" alt="" /><div class="s8-pill-t">客户在哪里，服务团队就在哪里</div></div>
+      </div>
       <div class="s8-foot">NATIONWIDE TEAM</div>
     </div>
     <div class="s8-right">
-      <div class="s8-stat-card card reveal" style="--d:0.18s">
-        <div class="s8-stat-num num">3.5<span class="s8-stat-u">万+</span></div>
-        <div class="s8-stat-meta"><div class="s8-stat-t">全国动销车场</div><div class="s8-stat-d">深度链接全国核心商业综合体、交通枢纽与中高档社区</div></div>
-      </div>
-      <div class="s8-stat-card card reveal" style="--d:0.24s">
-        <div class="s8-stat-num num">34<span class="s8-stat-u">个</span></div>
-        <div class="s8-stat-meta"><div class="s8-stat-t">省级行政区全覆盖</div><div class="s8-stat-d">服务团队遍布全国 34 个省级行政区，本地化服务快速响应机制</div></div>
-      </div>
-      <div class="s8-stat-card card reveal" style="--d:0.30s">
-        <div class="s8-stat-num num">6<span class="s8-stat-u">大</span></div>
-        <div class="s8-stat-meta"><div class="s8-stat-t">分公司覆盖全国</div><div class="s8-stat-d">北京（总部）、山东、上海、长沙、成都、深圳</div></div>
-      </div>
-      <div class="s8-city-card card reveal" style="--d:0.36s">
-        <div class="s8-city-t">核心驻点服务团队</div>
-        <div class="s8-city-row">
-          <div class="s8-city-badge">北京</div><div class="s8-city-badge">山东</div><div class="s8-city-badge">上海</div>
-          <div class="s8-city-badge">长沙</div><div class="s8-city-badge">成都</div><div class="s8-city-badge">深圳</div>
-          <div class="s8-city-badge">石家庄</div><div class="s8-city-badge">重庆</div><div class="s8-city-badge">合肥</div>
-          <div class="s8-city-badge">武汉</div><div class="s8-city-badge">天津</div>
+      <div class="s8-nums">
+        <div class="s8-numcard reveal" style="--d:0.16s">
+          <div class="s8-numrow"><span class="num s8-num red">3.5</span><span class="s8-unit">万+</span></div>
+          <div class="s8-nh">全国动销车场</div>
+          <div class="s8-np">深度链接全国核心商业综合体、交通枢纽与中高档社区</div>
         </div>
+        <div class="s8-numcard reveal" style="--d:0.22s">
+          <div class="s8-numrow"><span class="num s8-num blue">34</span><span class="s8-unit">个</span></div>
+          <div class="s8-nh">省级行政区全覆盖</div>
+          <div class="s8-np">服务团队遍布全国 34 个省级行政区，本地化服务快速响应机制</div>
+        </div>
+        <div class="s8-numcard reveal" style="--d:0.28s">
+          <div class="s8-numrow"><span class="num s8-num red">6</span><span class="s8-unit">大</span></div>
+          <div class="s8-nh">分公司覆盖全国</div>
+          <div class="s8-np">北京（总部）、山东、上海、长沙、成都、深圳</div>
+        </div>
+      </div>
+      <div class="s8-cities reveal" style="--d:0.34s">
+        <div class="s8-cities-t"><span class="s8-ct-bar"></span>核心驻点服务团队</div>
+        <div class="s8-chips">
+          <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">北京 · 总部</div></div>
+          <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">山东</div></div>
+          <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">上海</div></div>
+          <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">长沙</div></div>
+          <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">成都</div></div>
+          <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">深圳</div></div>
+          <div class="s8-chip"><div class="s8-dot"></div><div class="s8-ct">石家庄</div></div>
+          <div class="s8-chip"><div class="s8-dot"></div><div class="s8-ct">重庆</div></div>
+          <div class="s8-chip"><div class="s8-dot"></div><div class="s8-ct">合肥</div></div>
+          <div class="s8-chip"><div class="s8-dot"></div><div class="s8-ct">武汉</div></div>
+          <div class="s8-chip"><div class="s8-dot"></div><div class="s8-ct">天津</div></div>
+        </div>
+        <div class="s8-legend"><span><i class="hq"></i>分公司（6 大）</span><span><i></i>驻点服务团队（5 城）</span></div>
+      </div>
+      <div class="s8-band reveal" style="--d:0.42s">
+        <img src="assets/icons/headset-FFFFFF.png" alt="" />
+        <div class="s8-band-t">客户在哪里，服务团队就在哪里 — 依托 3.5万+ 动销车场构建本地化服务快速响应机制</div>
       </div>
     </div>
   </div>
@@ -1744,27 +1868,39 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
   </div>
     <div class="s13-body">
         <div class="s13-card card reveal" style="--d:0.1s">
-            <img class="s13-fig" src="images/image20.png" alt="" />
-            <div class="icon-tile red"><img src="assets/icons/comment-sms-2E6FE8.png" alt="" /></div>
+            <div class="s13-hero"><div class="s13-hero-ic"><img src="assets/icons/comment-sms-2E6FE8.png" alt="" style="filter:brightness(10)" /></div><div class="s13-hero-e">UMC SMS PLATFORM</div></div>
             <div class="s13-t">UMC 短信平台</div>
             <div class="s13-s">国内短信 · 国际短信</div>
             <p class="s13-d">国内短信、国际短信、验证码、行业通知、会员营销。具备三大运营商全网直连通道与多路由调度能力，保障每一条消息即发即达。</p>
+            <div class="s13-list">
+              <div class="s13-li">三大运营商全网直连通道</div>
+              <div class="s13-li">多路由调度能力，消息即发即达</div>
+              <div class="s13-li">验证码 · 行业通知 · 会员营销全场景</div>
+            </div>
             <div class="s13-pill">验证码 · 行业通知 · 会员营销</div>
         </div>
         <div class="s13-card card reveal" style="--d:0.25s">
-            <img class="s13-fig" src="images/image71.jpeg" alt="" />
-            <div class="icon-tile navy"><img src="assets/icons/database-0A1F44.png" alt="" /></div>
+            <div class="s13-hero"><div class="s13-hero-ic"><img src="assets/icons/database-0A1F44.png" alt="" style="filter:brightness(10)" /></div><div class="s13-hero-e">GMP ON-PREMISE</div></div>
             <div class="s13-t">GMP 本地化部署平台</div>
             <div class="s13-s">跨平台 Java 技术开发</div>
             <p class="s13-d">GMP 是一款基于跨平台的 Java 技术开发的消息发送与管理平台，专为满足企业本地化独立部署的需求而设计，提供高度安全与定制化通讯能力。</p>
+            <div class="s13-list">
+              <div class="s13-li">跨平台 Java 技术开发</div>
+              <div class="s13-li">本地化独立部署，数据自主可控</div>
+              <div class="s13-li">高度安全与定制化通讯能力</div>
+            </div>
             <div class="s13-pill">本地化独立部署 · 安全兼容</div>
         </div>
         <div class="s13-card card reveal" style="--d:0.4s">
-            <img class="s13-fig" src="assets/gen-5g-card.png" alt="" />
-            <div class="icon-tile blue"><img src="assets/icons/bolt-2E6FE8.png" alt="" /></div>
+            <div class="s13-hero"><div class="s13-hero-ic"><img src="assets/icons/bolt-2E6FE8.png" alt="" style="filter:brightness(10)" /></div><div class="s13-hero-e">5G MESSAGE</div></div>
             <div class="s13-t">5G 消息 / 视频短信</div>
             <div class="s13-s">手机终端原生新生态</div>
             <p class="s13-d">5G 行业消息是手机终端原生短信的新升级、新服务、新生态；集影、音、文字一体的手机消息形式新媒体服务，以 Chatbot 形式实现业务闭环。</p>
+            <div class="s13-list">
+              <div class="s13-li">手机终端原生消息入口</div>
+              <div class="s13-li">集影、音、文字一体的新媒体服务</div>
+              <div class="s13-li">Chatbot 交互实现业务闭环</div>
+            </div>
             <div class="s13-pill">集影音文字一体 · 交互服务</div>
         </div>
     </div>
@@ -2028,29 +2164,35 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
     </div>
   </div>
     <div class="s19-body">
-        <div class="s19-flow">
-            <div class="s19-card card reveal" style="--d:0.1s">
-                <div class="s19-step">01</div>
-                <div class="s19-t">分发</div>
-                <div class="s19-d"><b>线上投放渠道：</b>整合线上线下出行流量资源，通过车主用户属性构建出行媒体数据链。</div>
+        <div class="s19-flowcard card reveal" style="--d:0.1s">
+            <div class="s19-nodes">
+                <div class="s19-node">
+                    <div class="s19-n-icon" style="background:rgba(10,31,68,0.07)"><img src="assets/icons/paper-plane-0A1F44.png" alt="" /><div class="s19-n-num">1</div></div>
+                    <div class="s19-n-t">分发</div>
+                    <div class="s19-n-d"><b>线上投放渠道：</b>整合线上线下出行流量资源，通过车主用户属性构建出行媒体数据链。</div>
+                </div>
+                <img class="s19-arr" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
+                <div class="s19-node">
+                    <div class="s19-n-icon" style="background:rgba(46,111,232,0.10)"><img src="assets/icons/comment-dots-2E6FE8.png" alt="" /><div class="s19-n-num">2</div></div>
+                    <div class="s19-n-t">反馈</div>
+                    <div class="s19-n-d"><b>广告投放资源：</b>出入口扫码台、场内优惠券交互，实时采集用户互动与停留反馈。</div>
+                </div>
+                <img class="s19-arr" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
+                <div class="s19-node">
+                    <div class="s19-n-icon" style="background:rgba(10,31,68,0.07)"><img src="assets/icons/arrow-trend-up-0A1F44.png" alt="" /><div class="s19-n-num">3</div></div>
+                    <div class="s19-n-t">分析</div>
+                    <div class="s19-n-d"><b>数据链建模：</b>深度分析车主画像与消费偏好，优化营销策略与转化路径。</div>
+                </div>
+                <img class="s19-arr" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
+                <div class="s19-node">
+                    <div class="s19-n-icon" style="background:rgba(240,45,78,0.10)"><img src="assets/icons/arrows-rotate-F02D4E.png" alt="" /><div class="s19-n-num">4</div></div>
+                    <div class="s19-n-t">运营</div>
+                    <div class="s19-n-d"><b>闭环全链路：</b>实现分发 - 反馈 - 分析 - 运营的闭环全链路平台，最大化商业变现。</div>
+                </div>
             </div>
-            <div class="s19-card card reveal" style="--d:0.2s">
-                <div class="s19-step">02</div>
-                <div class="s19-t">反馈</div>
-                <div class="s19-d"><b>广告投放资源：</b>出入口扫码台、场内优惠券交互，实时采集用户互动与停留反馈。</div>
-            </div>
-            <div class="s19-card card reveal" style="--d:0.3s">
-                <div class="s19-step">03</div>
-                <div class="s19-t">分析</div>
-                <div class="s19-d"><b>数据链建模：</b>深度分析车主画像与消费偏好，优化营销策略与转化路径。</div>
-            </div>
-            <div class="s19-card card reveal" style="--d:0.4s">
-                <div class="s19-step">04</div>
-                <div class="s19-t">运营</div>
-                <div class="s19-d"><b>闭环全链路：</b>实现分发 - 反馈 - 分析 - 运营的闭环全链路平台，最大化商业变现。</div>
-            </div>
+            <div class="s19-loop"><div class="s19-loop-line"></div><div class="s19-loop-t">数据回流 · 闭环迭代 · 最大化商业变现</div></div>
         </div>
-        <div class="s19-highlight-bar card reveal" style="--d:0.5s">
+        <div class="s19-highlight-bar card reveal" style="--d:0.4s">
             <div class="s19-hl-left">
                 <div class="s19-hl-t">整合线上线下出行流量资源 · 构建出行媒体数据链</div>
                 <div class="s19-hl-d">实现分发 - 反馈 - 分析 - 运营的闭环全链路平台</div>
@@ -2069,31 +2211,65 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
     <div class="slide-head reveal">
     <div class="kicker">02 · 聚 We 平台</div>
     <div class="head-line">
-      <div class="slide-title">2.2：媒体增值平台 — 泊聚量</div>
+      <div class="slide-title">1.4：社媒运营平台 — 聚 We</div>
       <div class="title-bar"></div>
       <div class="head-sub">聚 We 平台 · 提供一站式全方位的社媒运营和营销解决方案</div>
     </div>
   </div>
     <div class="s20-body">
-        <div class="s20-card card reveal" style="--d:0.1s">
-            <div class="icon-tile navy"><img src="assets/icons/users-FFFFFF.png" alt="" /></div>
-            <div class="s20-t">专业技术运营团队</div>
-            <div class="s20-d">专业的 <b>技术</b> 团队、优秀的运营经理为您量身定制合适的微信 <b>小程序</b> 运营策略。微商城、微会员、CRM等，高度匹配营销需求。</div>
+        <div class="s20-grid">
+            <div class="s20-card card reveal" style="--d:0.1s">
+                <div class="icon-tile"><img src="assets/icons/users-2E6FE8.png" alt="" /></div>
+                <div class="s20-t">专业技术运营团队</div>
+                <div class="s20-d">专业的 <b>技术</b> 团队、优秀的运营经理为您量身定制合适的微信 <b>小程序</b> 运营策略。微商城、微会员、CRM 等，高度匹配营销需求。</div>
+                <div class="s20-list">
+                    <div class="s20-li">微信小程序运营策略量身定制</div>
+                    <div class="s20-li">微商城 / 微会员 / CRM 体系搭建</div>
+                    <div class="s20-li">技术 + 运营双团队协同交付</div>
+                </div>
+            </div>
+            <div class="s20-card card reveal" style="--d:0.2s">
+                <div class="icon-tile red"><img src="assets/icons/bullhorn-F02D4E.png" alt="" /></div>
+                <div class="s20-t">内容策划与运营</div>
+                <div class="s20-d">专业创意团队量身定制原创图文咨询，竭力为您输出高品质的文案创意，抢占车主心智与关注时长。</div>
+                <div class="s20-list">
+                    <div class="s20-li">原创图文咨询与文案创意</div>
+                    <div class="s20-li">高品质内容持续输出</div>
+                    <div class="s20-li">抢占车主心智与关注时长</div>
+                </div>
+            </div>
+            <div class="s20-card card reveal" style="--d:0.3s">
+                <div class="icon-tile"><img src="assets/icons/award-2E6FE8.png" alt="" /></div>
+                <div class="s20-t">营销活动策划</div>
+                <div class="s20-d">小而美的营销活动与大而广的整合微信 <b>小程序</b> 营销完美搭配，实现粉丝裂变式增长与高效拉新。</div>
+                <div class="s20-list">
+                    <div class="s20-li">小而美活动与大而广整合营销</div>
+                    <div class="s20-li">微信小程序营销全链路策划</div>
+                    <div class="s20-li">粉丝裂变增长与高效拉新</div>
+                </div>
+            </div>
+            <div class="s20-card card reveal" style="--d:0.4s">
+                <div class="icon-tile red"><img src="assets/icons/medal-F02D4E.png" alt="" /></div>
+                <div class="s20-t">优化品牌推广</div>
+                <div class="s20-d">整合微信传播资源，高效益提升您的 <b>品牌</b> 曝光率，打造强势品牌，提高销售转化与商业回报。</div>
+                <div class="s20-list">
+                    <div class="s20-li">整合微信传播资源</div>
+                    <div class="s20-li">高效益提升品牌曝光率</div>
+                    <div class="s20-li">提高销售转化与商业回报</div>
+                </div>
+            </div>
         </div>
-        <div class="s20-card card reveal" style="--d:0.2s">
-            <div class="icon-tile red"><img src="assets/icons/bullhorn-F02D4E.png" alt="" /></div>
-            <div class="s20-t">内容策划与运营</div>
-            <div class="s20-d">专业创意团队量身定制原创图文咨询，竭力为您输出高品质的文案创意，抢占车主心智与关注时长。</div>
-        </div>
-        <div class="s20-card card reveal" style="--d:0.3s">
-            <div class="icon-tile blue"><img src="assets/icons/award-2E6FE8.png" alt="" /></div>
-            <div class="s20-t">营销活动策划</div>
-            <div class="s20-d">小而美的营销活动与大而广的整合微信 <b>小程序</b> 营销完美搭配，实现粉丝裂变式增长与高效拉新。</div>
-        </div>
-        <div class="s20-card card reveal" style="--d:0.4s">
-            <div class="icon-tile red"><img src="assets/icons/gem-FFFFFF.png" alt="" /></div>
-            <div class="s20-t">优化品牌推广</div>
-            <div class="s20-d">整合微信传播资源，高效益提升您的 <b>品牌</b> 曝光率，打造强势品牌，提高销售转化与商业回报。</div>
+        <div class="s20-band reveal" style="--d:0.5s">
+            <div class="s20-band-t">一站式社媒运营</div>
+            <div class="s20-steps">
+                <div class="s20-step"><i></i>需求诊断</div>
+                <img class="s20-arr" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
+                <div class="s20-step"><i></i>策略定制</div>
+                <img class="s20-arr" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
+                <div class="s20-step"><i></i>内容与活动执行</div>
+                <img class="s20-arr" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
+                <div class="s20-step"><i></i>数据复盘优化</div>
+            </div>
         </div>
     </div>
     <div class="pageno">20 / 31</div>
