@@ -1295,6 +1295,85 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s13 .s13-li { font-size:17px; }
 #s13 .s13-pill { font-size:15px; padding:11px 20px; }
 
+
+/* ==================== P8 服务网络（真实图片版） ==================== */
+#s8 .s8-visual { width:560px; flex:none; border-radius:24px; overflow:hidden; position:relative; box-shadow:0 18px 60px rgba(10,31,68,0.18); }
+#s8 .s8-visual-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+#s8 .s8-visual-veil { position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,31,68,0.28) 0%, rgba(10,31,68,0.60) 55%, rgba(10,31,68,0.92) 100%); }
+#s8 .s8-visual-body { position:relative; z-index:1; height:100%; padding:54px 45px; display:flex; flex-direction:column; justify-content:flex-end; gap:22px; }
+#s8 .s8-visual-body .s8-en { font-size:19px; color:rgba(255,255,255,0.62); letter-spacing:4.5px; font-family:var(--font-num); }
+#s8 .s8-visual-body .s8-h { font-size:42px; font-weight:700; color:#fff; line-height:1.45; }
+#s8 .s8-visual-body .s8-p { font-size:19.5px; color:rgba(255,255,255,0.80); line-height:1.85; }
+#s8 .s8-visual-body .s8-pill { background:rgba(255,255,255,0.10); border:1.5px solid rgba(255,255,255,0.18); }
+#s8 .s8-cities-t { display:flex; align-items:center; gap:14px; }
+#s8 .s8-ct-badge { margin-left:auto; font-size:15px; font-weight:600; color:var(--blue); background:rgba(46,111,232,0.08); border-radius:999px; padding:8px 18px; letter-spacing:1px; }
+#s8 .s8-chip { padding:13px 26px; }
+#s8 .s8-ct { font-size:20px; }
+
+/* ==================== P13 产品矩阵（真实图片版） ==================== */
+#s13 .s13-fig { display:block; width:calc(100% + 72px); height:192px; margin:-44px -36px 22px; border-radius:18px 18px 0 0; overflow:hidden; position:relative; flex:none; }
+#s13 .s13-fig img { width:100%; height:100%; object-fit:cover; display:block; }
+#s13 .s13-fig::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,31,68,0) 55%, rgba(10,31,68,0.26) 100%); }
+#s13 .s13-d { flex:none; }
+#s13 .s13-list { margin-top:14px; }
+#s13 .s13-pill { margin-top:auto; }
+
+/* ==================== P19 左图右时间线（真实图片版） ==================== */
+#s19 .s19-main { flex:1; display:flex; gap:36px; min-height:0; }
+#s19 .s19-photo { width:800px; flex:none; border-radius:24px; overflow:hidden; background:#fff; box-shadow:0 12px 40px rgba(10,31,68,0.12); display:flex; flex-direction:column; }
+#s19 .s19-photo-img { flex:1; width:100%; object-fit:contain; display:block; min-height:0; background:#fff; }
+#s19 .s19-photo-bar { flex:none; padding:24px 40px; background:linear-gradient(90deg,#0A1F44 0%,#123A7A 100%); display:flex; align-items:center; gap:26px; }
+#s19 .s19-photo-k { font-size:15px; color:rgba(255,255,255,0.55); letter-spacing:4px; font-family:var(--font-num); flex:none; }
+#s19 .s19-photo-t { font-size:21px; color:#fff; font-weight:600; }
+#s19 .s19-tl { flex:1; display:flex; flex-direction:column; gap:18px; min-height:0; }
+#s19 .s19-vstep { flex:1; display:flex; align-items:center; gap:22px; background:#fff; border-radius:18px; box-shadow:0 6px 24px rgba(10,31,68,0.06); padding:0 30px; min-height:0; }
+#s19 .s19-vic { width:64px; height:64px; border-radius:16px; display:flex; align-items:center; justify-content:center; position:relative; flex:none; }
+#s19 .s19-vic img { width:30px; height:30px; object-fit:contain; }
+#s19 .s19-vnum { position:absolute; top:-10px; right:-10px; width:28px; height:28px; border-radius:14px; background:var(--red); color:#fff; font-size:13px; font-weight:800; font-family:var(--font-num); display:flex; align-items:center; justify-content:center; box-shadow:0 3px 10px rgba(240,45,78,0.35); }
+#s19 .s19-vt { font-size:23px; font-weight:700; color:var(--navy); }
+#s19 .s19-vd { font-size:15.5px; color:var(--muted); line-height:1.6; margin-top:5px; }
+#s19 .s19-vd b { color:var(--navy); }
+#s19 .s19-loopchip { flex:none; display:flex; align-items:center; justify-content:center; gap:13px; border:2px dashed rgba(46,111,232,0.45); border-radius:999px; padding:13px 28px; font-size:16.5px; color:var(--blue); font-weight:600; background:rgba(46,111,232,0.05); }
+#s19 .s19-loopchip img { width:22px; height:22px; object-fit:contain; }
+
+/* ==================== P20 左图右卡（真实图片版） ==================== */
+#s20 .s20-main { flex:1; display:flex; gap:36px; min-height:0; }
+#s20 .s20-lead { width:560px; flex:none; border-radius:24px; overflow:hidden; display:flex; flex-direction:column; }
+#s20 .s20-lead-fig { height:296px; flex:none; overflow:hidden; }
+#s20 .s20-lead-fig img { width:100%; height:100%; object-fit:cover; display:block; }
+#s20 .s20-lead-body { flex:1; background:linear-gradient(165deg,#0A1F44 0%,#123A7A 100%); padding:32px 42px; display:flex; flex-direction:column; gap:15px; justify-content:center; }
+#s20 .s20-lead-k { font-size:16px; color:rgba(255,255,255,0.55); letter-spacing:4px; font-family:var(--font-num); }
+#s20 .s20-lead-t { font-size:32px; font-weight:700; color:#fff; line-height:1.4; }
+#s20 .s20-lead-d { font-size:17px; color:rgba(255,255,255,0.74); line-height:1.75; }
+#s20 .s20-lead-tags { display:flex; gap:12px; margin-top:6px; }
+#s20 .s20-lead-tags span { padding:8px 20px; border-radius:999px; border:1.5px solid rgba(255,255,255,0.28); background:rgba(255,255,255,0.08); font-size:16px; color:#fff; }
+#s20 .s20-grid { flex:1; display:grid; grid-template-columns:repeat(2,1fr); grid-template-rows:repeat(2,1fr); gap:24px; min-height:0; }
+#s20 .s20-card { padding:28px 32px !important; gap:8px !important; }
+#s20 .s20-card .icon-tile { width:58px; height:58px; }
+#s20 .s20-card .icon-tile img { width:29px; height:29px; }
+#s20 .s20-d { font-size:15.5px !important; }
+#s20 .s20-list { gap:8px; padding-top:12px; }
+#s20 .s20-ck { display:flex; align-items:center; gap:10px; font-size:15.5px; color:var(--ink); font-weight:500; }
+#s20 .s20-ck img { width:18px; height:18px; object-fit:contain; flex:none; }
+
+
+/* ==================== 第 4 轮微调：消灭残余空洞 ==================== */
+/* P13：卡片改自然流，空洞只保留在 pill 前锚点 */
+#s13 .s13-card { justify-content:flex-start; }
+#s13 .s13-fig { height:200px; }
+#s13 .s13-d { font-size:18px; }
+#s13 .s13-list { gap:14px; margin-top:16px; }
+#s13 .s13-li { font-size:17.5px; }
+#s13 .s13-pill { font-size:15.5px; padding:12px 20px; }
+
+/* P8：城市卡加网点纹理背景 + chips 放大填充 */
+#s8 .s8-cities { background:#fff radial-gradient(rgba(46,111,232,0.10) 1.5px, transparent 1.5px); background-size:26px 26px; }
+#s8 .s8-cities-t { font-size:24px; }
+#s8 .s8-chips { gap:16px; }
+#s8 .s8-chip { padding:15px 30px; }
+#s8 .s8-ct { font-size:21px; }
+#s8 .s8-legend { font-size:16px; justify-content:center; gap:40px; border-top:1.5px dashed #E3E9F2; padding-top:18px; }
+
 </style>
 </head>
 <body>
@@ -1618,17 +1697,18 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
     </div>
   </div>
   <div class="s8-body">
-    <div class="s8-panel reveal reveal-left" style="--d:0.10s">
-      <div class="s8-p-top">
+    <div class="s8-visual reveal reveal-left" style="--d:0.10s">
+      <img class="s8-visual-img" src="images/image3.jpeg" alt="全国服务网络" />
+      <div class="s8-visual-veil"></div>
+      <div class="s8-visual-body">
         <div class="s8-en">SERVICE NETWORK</div>
         <div class="s8-h">全网营销和<br />客户服务网络</div>
+        <div class="s8-p">依托覆盖全国的服务网络，建立本地化服务快速响应机制——全国动销车场 3.5万+，客户在哪里，服务团队就在哪里。</div>
+        <div class="s8-pills">
+          <div class="s8-pill"><img src="assets/icons/location-dot-FFFFFF.png" alt="" /><div class="s8-pill-t">本地化驻点 · 快速响应</div></div>
+          <div class="s8-pill"><img src="assets/icons/users-FFFFFF.png" alt="" /><div class="s8-pill-t">34 省服务团队驻点覆盖</div></div>
+        </div>
       </div>
-      <div class="s8-p">依托覆盖全国的服务网络，建立本地化服务快速响应机制——全国动销车场 3.5万+，客户在哪里，服务团队就在哪里。</div>
-      <div class="s8-pills">
-        <div class="s8-pill"><img src="assets/icons/location-dot-FFFFFF.png" alt="" /><div class="s8-pill-t">本地化驻点 · 快速响应</div></div>
-        <div class="s8-pill"><img src="assets/icons/users-FFFFFF.png" alt="" /><div class="s8-pill-t">客户在哪里，服务团队就在哪里</div></div>
-      </div>
-      <div class="s8-foot">NATIONWIDE TEAM</div>
     </div>
     <div class="s8-right">
       <div class="s8-nums">
@@ -1649,7 +1729,10 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
         </div>
       </div>
       <div class="s8-cities reveal" style="--d:0.34s">
-        <div class="s8-cities-t"><span class="s8-ct-bar"></span>核心驻点服务团队</div>
+        <div class="s8-cities-t">
+          <span class="s8-ct-bar"></span>核心驻点服务团队
+          <span class="s8-ct-badge">6 大分公司 · 5 城驻点</span>
+        </div>
         <div class="s8-chips">
           <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">北京 · 总部</div></div>
           <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">山东</div></div>
@@ -1664,10 +1747,6 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
           <div class="s8-chip"><div class="s8-dot"></div><div class="s8-ct">天津</div></div>
         </div>
         <div class="s8-legend"><span><i class="hq"></i>分公司（6 大）</span><span><i></i>驻点服务团队（5 城）</span></div>
-      </div>
-      <div class="s8-band reveal" style="--d:0.42s">
-        <img src="assets/icons/headset-FFFFFF.png" alt="" />
-        <div class="s8-band-t">客户在哪里，服务团队就在哪里 — 依托 3.5万+ 动销车场构建本地化服务快速响应机制</div>
       </div>
     </div>
   </div>
@@ -1868,10 +1947,10 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
   </div>
     <div class="s13-body">
         <div class="s13-card card reveal" style="--d:0.1s">
-            <div class="s13-hero"><div class="s13-hero-ic"><img src="assets/icons/comment-sms-2E6FE8.png" alt="" style="filter:brightness(10)" /></div><div class="s13-hero-e">UMC SMS PLATFORM</div></div>
+            <div class="s13-fig"><img src="images/image20.png" alt="UMC 短信平台" /></div>
             <div class="s13-t">UMC 短信平台</div>
             <div class="s13-s">国内短信 · 国际短信</div>
-            <p class="s13-d">国内短信、国际短信、验证码、行业通知、会员营销。具备三大运营商全网直连通道与多路由调度能力，保障每一条消息即发即达。</p>
+            <div class="s13-d">国内短信、国际短信、验证码、行业通知、会员营销。具备三大运营商全网直连通道与多路由调度能力，保障每一条消息即发即达。</div>
             <div class="s13-list">
               <div class="s13-li">三大运营商全网直连通道</div>
               <div class="s13-li">多路由调度能力，消息即发即达</div>
@@ -1879,11 +1958,12 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             </div>
             <div class="s13-pill">验证码 · 行业通知 · 会员营销</div>
         </div>
+
         <div class="s13-card card reveal" style="--d:0.25s">
-            <div class="s13-hero"><div class="s13-hero-ic"><img src="assets/icons/database-0A1F44.png" alt="" style="filter:brightness(10)" /></div><div class="s13-hero-e">GMP ON-PREMISE</div></div>
+            <div class="s13-fig"><img src="images/image28.png" alt="GMP 本地化部署平台" /></div>
             <div class="s13-t">GMP 本地化部署平台</div>
             <div class="s13-s">跨平台 Java 技术开发</div>
-            <p class="s13-d">GMP 是一款基于跨平台的 Java 技术开发的消息发送与管理平台，专为满足企业本地化独立部署的需求而设计，提供高度安全与定制化通讯能力。</p>
+            <div class="s13-d">GMP 是一款基于跨平台的 Java 技术开发的消息发送与管理平台，专为满足企业本地化独立部署的需求而设计，提供高度安全与定制化通讯能力。</div>
             <div class="s13-list">
               <div class="s13-li">跨平台 Java 技术开发</div>
               <div class="s13-li">本地化独立部署，数据自主可控</div>
@@ -1891,11 +1971,12 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             </div>
             <div class="s13-pill">本地化独立部署 · 安全兼容</div>
         </div>
+
         <div class="s13-card card reveal" style="--d:0.4s">
-            <div class="s13-hero"><div class="s13-hero-ic"><img src="assets/icons/bolt-2E6FE8.png" alt="" style="filter:brightness(10)" /></div><div class="s13-hero-e">5G MESSAGE</div></div>
+            <div class="s13-fig"><img src="assets/gen-5g-card.png" alt="5G 消息 / 视频短信" /></div>
             <div class="s13-t">5G 消息 / 视频短信</div>
             <div class="s13-s">手机终端原生新生态</div>
-            <p class="s13-d">5G 行业消息是手机终端原生短信的新升级、新服务、新生态；集影、音、文字一体的手机消息形式新媒体服务，以 Chatbot 形式实现业务闭环。</p>
+            <div class="s13-d">5G 行业消息是手机终端原生短信的新升级、新服务、新生态；集影、音、文字一体的手机消息形式新媒体服务，以 Chatbot 形式实现业务闭环。</div>
             <div class="s13-list">
               <div class="s13-li">手机终端原生消息入口</div>
               <div class="s13-li">集影、音、文字一体的新媒体服务</div>
@@ -1903,6 +1984,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             </div>
             <div class="s13-pill">集影音文字一体 · 交互服务</div>
         </div>
+
     </div>
     <div class="pageno">13 / 31</div>
 </section>
@@ -2164,35 +2246,51 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
     </div>
   </div>
     <div class="s19-body">
-        <div class="s19-flowcard card reveal" style="--d:0.1s">
-            <div class="s19-nodes">
-                <div class="s19-node">
-                    <div class="s19-n-icon" style="background:rgba(10,31,68,0.07)"><img src="assets/icons/paper-plane-0A1F44.png" alt="" /><div class="s19-n-num">1</div></div>
-                    <div class="s19-n-t">分发</div>
-                    <div class="s19-n-d"><b>线上投放渠道：</b>整合线上线下出行流量资源，通过车主用户属性构建出行媒体数据链。</div>
-                </div>
-                <img class="s19-arr" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
-                <div class="s19-node">
-                    <div class="s19-n-icon" style="background:rgba(46,111,232,0.10)"><img src="assets/icons/comment-dots-2E6FE8.png" alt="" /><div class="s19-n-num">2</div></div>
-                    <div class="s19-n-t">反馈</div>
-                    <div class="s19-n-d"><b>广告投放资源：</b>出入口扫码台、场内优惠券交互，实时采集用户互动与停留反馈。</div>
-                </div>
-                <img class="s19-arr" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
-                <div class="s19-node">
-                    <div class="s19-n-icon" style="background:rgba(10,31,68,0.07)"><img src="assets/icons/arrow-trend-up-0A1F44.png" alt="" /><div class="s19-n-num">3</div></div>
-                    <div class="s19-n-t">分析</div>
-                    <div class="s19-n-d"><b>数据链建模：</b>深度分析车主画像与消费偏好，优化营销策略与转化路径。</div>
-                </div>
-                <img class="s19-arr" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
-                <div class="s19-node">
-                    <div class="s19-n-icon" style="background:rgba(240,45,78,0.10)"><img src="assets/icons/arrows-rotate-F02D4E.png" alt="" /><div class="s19-n-num">4</div></div>
-                    <div class="s19-n-t">运营</div>
-                    <div class="s19-n-d"><b>闭环全链路：</b>实现分发 - 反馈 - 分析 - 运营的闭环全链路平台，最大化商业变现。</div>
+        <div class="s19-main">
+            <div class="s19-photo reveal reveal-left" style="--d:0.1s">
+                <img class="s19-photo-img" src="images/image39.png" alt="泊聚量媒体触达矩阵" />
+                <div class="s19-photo-bar">
+                    <div class="s19-photo-k">MEDIA MATRIX</div>
+                    <div class="s19-photo-t">支付媒体 · 线下媒体 · 私域流量三大触达阵地</div>
                 </div>
             </div>
-            <div class="s19-loop"><div class="s19-loop-line"></div><div class="s19-loop-t">数据回流 · 闭环迭代 · 最大化商业变现</div></div>
+            <div class="s19-tl reveal reveal-right" style="--d:0.2s">
+                <div class="s19-vstep">
+                    <div class="s19-vic" style="background:rgba(10,31,68,0.07)"><img src="assets/icons/paper-plane-0A1F44.png" alt="" /><div class="s19-vnum">1</div></div>
+                    <div class="s19-vmain">
+                        <div class="s19-vt">分发</div>
+                        <div class="s19-vd"><b>线上投放渠道：</b>整合线上线下出行流量资源，通过车主用户属性构建出行媒体数据链。</div>
+                    </div>
+                </div>
+
+                <div class="s19-vstep">
+                    <div class="s19-vic" style="background:rgba(46,111,232,0.10)"><img src="assets/icons/comment-dots-2E6FE8.png" alt="" /><div class="s19-vnum">2</div></div>
+                    <div class="s19-vmain">
+                        <div class="s19-vt">反馈</div>
+                        <div class="s19-vd"><b>广告投放资源：</b>出入口扫码台、场内优惠券交互，实时采集用户互动与停留反馈。</div>
+                    </div>
+                </div>
+
+                <div class="s19-vstep">
+                    <div class="s19-vic" style="background:rgba(10,31,68,0.07)"><img src="assets/icons/arrow-trend-up-0A1F44.png" alt="" /><div class="s19-vnum">3</div></div>
+                    <div class="s19-vmain">
+                        <div class="s19-vt">分析</div>
+                        <div class="s19-vd"><b>数据链建模：</b>深度分析车主画像与消费偏好，优化营销策略与转化路径。</div>
+                    </div>
+                </div>
+
+                <div class="s19-vstep">
+                    <div class="s19-vic" style="background:rgba(240,45,78,0.10)"><img src="assets/icons/arrows-rotate-F02D4E.png" alt="" /><div class="s19-vnum">4</div></div>
+                    <div class="s19-vmain">
+                        <div class="s19-vt">运营</div>
+                        <div class="s19-vd"><b>闭环全链路：</b>实现分发 - 反馈 - 分析 - 运营的闭环全链路平台，最大化商业变现。</div>
+                    </div>
+                </div>
+
+                <div class="s19-loopchip reveal" style="--d:0.45s"><img src="assets/icons/arrows-rotate-F02D4E.png" alt="" />数据回流分发端，驱动投放策略持续迭代</div>
+            </div>
         </div>
-        <div class="s19-highlight-bar card reveal" style="--d:0.4s">
+        <div class="s19-highlight-bar card reveal" style="--d:0.5s">
             <div class="s19-hl-left">
                 <div class="s19-hl-t">整合线上线下出行流量资源 · 构建出行媒体数据链</div>
                 <div class="s19-hl-d">实现分发 - 反馈 - 分析 - 运营的闭环全链路平台</div>
@@ -2217,46 +2315,61 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
     </div>
   </div>
     <div class="s20-body">
-        <div class="s20-grid">
-            <div class="s20-card card reveal" style="--d:0.1s">
-                <div class="icon-tile"><img src="assets/icons/users-2E6FE8.png" alt="" /></div>
+        <div class="s20-main">
+            <div class="s20-lead card reveal reveal-left" style="--d:0.1s">
+                <div class="s20-lead-fig"><img src="assets/gen-scene-promo.png" alt="社媒营销场景" /></div>
+                <div class="s20-lead-body">
+                    <div class="s20-lead-k">SOCIAL OPERATION</div>
+                    <div class="s20-lead-t">一站式社媒运营和<br />营销解决方案</div>
+                    <div class="s20-lead-d">内容策划与运营 · 营销活动策划 · 优化品牌推广，深耕微信生态，抢占车主心智、实现粉丝裂变与品牌增值。</div>
+                    <div class="s20-lead-tags"><span>内容策划</span><span>营销活动</span><span>品牌推广</span></div>
+                </div>
+            </div>
+            <div class="s20-grid">
+            <div class="s20-card card reveal" style="--d:0.18s">
+                <div class="icon-tile "><img src="assets/icons/users-2E6FE8.png" alt="" /></div>
                 <div class="s20-t">专业技术运营团队</div>
                 <div class="s20-d">专业的 <b>技术</b> 团队、优秀的运营经理为您量身定制合适的微信 <b>小程序</b> 运营策略。微商城、微会员、CRM 等，高度匹配营销需求。</div>
                 <div class="s20-list">
-                    <div class="s20-li">微信小程序运营策略量身定制</div>
-                    <div class="s20-li">微商城 / 微会员 / CRM 体系搭建</div>
-                    <div class="s20-li">技术 + 运营双团队协同交付</div>
+                    <div class="s20-ck"><img src="assets/icons/circle-check-0A1F44.png" alt="" />微信小程序运营策略量身定制</div>
+                    <div class="s20-ck"><img src="assets/icons/circle-check-0A1F44.png" alt="" />微商城 / 微会员 / CRM 体系搭建</div>
+                    <div class="s20-ck"><img src="assets/icons/circle-check-0A1F44.png" alt="" />技术 + 运营双团队协同交付</div>
                 </div>
             </div>
-            <div class="s20-card card reveal" style="--d:0.2s">
+
+            <div class="s20-card card reveal" style="--d:0.26s">
                 <div class="icon-tile red"><img src="assets/icons/bullhorn-F02D4E.png" alt="" /></div>
                 <div class="s20-t">内容策划与运营</div>
                 <div class="s20-d">专业创意团队量身定制原创图文咨询，竭力为您输出高品质的文案创意，抢占车主心智与关注时长。</div>
                 <div class="s20-list">
-                    <div class="s20-li">原创图文咨询与文案创意</div>
-                    <div class="s20-li">高品质内容持续输出</div>
-                    <div class="s20-li">抢占车主心智与关注时长</div>
+                    <div class="s20-ck"><img src="assets/icons/circle-check-0A1F44.png" alt="" />原创图文咨询与文案创意</div>
+                    <div class="s20-ck"><img src="assets/icons/circle-check-0A1F44.png" alt="" />高品质内容持续输出</div>
+                    <div class="s20-ck"><img src="assets/icons/circle-check-0A1F44.png" alt="" />抢占车主心智与关注时长</div>
                 </div>
             </div>
-            <div class="s20-card card reveal" style="--d:0.3s">
-                <div class="icon-tile"><img src="assets/icons/award-2E6FE8.png" alt="" /></div>
+
+            <div class="s20-card card reveal" style="--d:0.34s">
+                <div class="icon-tile "><img src="assets/icons/award-2E6FE8.png" alt="" /></div>
                 <div class="s20-t">营销活动策划</div>
                 <div class="s20-d">小而美的营销活动与大而广的整合微信 <b>小程序</b> 营销完美搭配，实现粉丝裂变式增长与高效拉新。</div>
                 <div class="s20-list">
-                    <div class="s20-li">小而美活动与大而广整合营销</div>
-                    <div class="s20-li">微信小程序营销全链路策划</div>
-                    <div class="s20-li">粉丝裂变增长与高效拉新</div>
+                    <div class="s20-ck"><img src="assets/icons/circle-check-0A1F44.png" alt="" />小而美活动与大而广整合营销</div>
+                    <div class="s20-ck"><img src="assets/icons/circle-check-0A1F44.png" alt="" />微信小程序营销全链路策划</div>
+                    <div class="s20-ck"><img src="assets/icons/circle-check-0A1F44.png" alt="" />粉丝裂变增长与高效拉新</div>
                 </div>
             </div>
-            <div class="s20-card card reveal" style="--d:0.4s">
+
+            <div class="s20-card card reveal" style="--d:0.42s">
                 <div class="icon-tile red"><img src="assets/icons/medal-F02D4E.png" alt="" /></div>
                 <div class="s20-t">优化品牌推广</div>
                 <div class="s20-d">整合微信传播资源，高效益提升您的 <b>品牌</b> 曝光率，打造强势品牌，提高销售转化与商业回报。</div>
                 <div class="s20-list">
-                    <div class="s20-li">整合微信传播资源</div>
-                    <div class="s20-li">高效益提升品牌曝光率</div>
-                    <div class="s20-li">提高销售转化与商业回报</div>
+                    <div class="s20-ck"><img src="assets/icons/circle-check-0A1F44.png" alt="" />整合微信传播资源</div>
+                    <div class="s20-ck"><img src="assets/icons/circle-check-0A1F44.png" alt="" />高效益提升品牌曝光率</div>
+                    <div class="s20-ck"><img src="assets/icons/circle-check-0A1F44.png" alt="" />提高销售转化与商业回报</div>
                 </div>
+            </div>
+
             </div>
         </div>
         <div class="s20-band reveal" style="--d:0.5s">
