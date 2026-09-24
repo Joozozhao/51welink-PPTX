@@ -301,6 +301,23 @@ svg {
 }
 .edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
 .edit-toggle.active { background: #F02D4E; }
+
+.edit-export {
+    position: fixed; right: 72px; bottom: 22px; z-index: 10002;
+    display: none; gap: 8px;
+}
+.edit-export.has-changes { display: flex; }
+.edit-export button {
+    min-height: 42px; padding: 0 15px; border: 1px solid rgba(255,255,255,.25);
+    border-radius: 9px; background: rgba(10,31,68,.9); color: #fff;
+    box-shadow: 0 6px 20px rgba(0,0,0,.2); cursor: pointer;
+    font: 600 14px/1 var(--font-body, "Microsoft YaHei", sans-serif);
+}
+.edit-export button:hover { background: #F02D4E; }
+.edit-export button:disabled { opacity: .6; cursor: wait; }
+@page { size: 20in 11.25in; margin: 0; }
+@media print { .edit-export, .edit-toggle, .edit-hotzone, .edit-toast, .deck-progress { display: none !important; } }
+
 .edit-toast {
     position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(8px);
     background: rgba(10,31,68,0.9); color: #fff; font-size: 14px;
@@ -2550,6 +2567,10 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
     <a href="Push.pptx" id="dlPptx" download>PPTX</a>
     <a href="Push.zip" id="dlZip" download>ZIP</a>
 </div>
+<div class="edit-export" id="editExport" aria-label="导出修改后的文件">
+    <button type="button" id="exportEditedHtml">下载修改后 HTML</button>
+    <button type="button" id="exportEditedPdf">下载修改后 PDF</button>
+</div>
 <div class="edit-toast" id="editToast">已保存</div>
 
 <script>
@@ -2614,23 +2635,48 @@ class SlidePresentation {
     }
 }
 
-/* === INLINE EDITOR（E 键 / 左上角热区；Ctrl+S 导出 HTML） === */
+/* === INLINE EDITOR（独立存储；内容确有变化时显示修改后导出） === */
 class InlineEditor {
     constructor() {
         this.isActive = false;
         this.current = null;
         this.toast = document.getElementById('editToast');
+        this.exportPanel = document.getElementById('editExport');
+        this.storagePrefix = 'wwt:Push:slide:';
+        this.slides = [...document.querySelectorAll('.slide')];
+        this.original = new Map(this.slides.map(s => [s.id, this.normalizedHtml(s)]));
         this.restore();
+        this.updateChangeState();
         document.addEventListener('click', (e) => {
             if (!this.isActive) return;
             const el = e.target.closest('.slide *');
             if (el && el !== this.current) this.edit(el);
             else if (!el) this.stop();
         }, true);
+        document.addEventListener('input', (e) => {
+            if (e.target.closest('.slide')) this.updateChangeState();
+        });
         document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); this.saveAll(); this.exportFile(); }
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); this.saveAll(); }
             if (e.key === 'Escape' && this.isActive) this.toggleEditMode();
         });
+        document.getElementById('exportEditedHtml').addEventListener('click', () => this.exportHtml());
+        document.getElementById('exportEditedPdf').addEventListener('click', () => this.exportPdf());
+    }
+    normalizedHtml(slide) {
+        const clone = slide.cloneNode(true);
+        clone.classList.remove('active', 'visible');
+        clone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+        return clone.innerHTML;
+    }
+    hasChanges() {
+        return this.slides.some(s => this.normalizedHtml(s) !== this.original.get(s.id));
+    }
+    updateChangeState() {
+        const changed = this.hasChanges();
+        this.exportPanel.classList.toggle('has-changes', changed);
+        this.exportPanel.setAttribute('aria-hidden', changed ? 'false' : 'true');
+        return changed;
     }
     toggleEditMode() {
         this.isActive = !this.isActive;
@@ -2640,11 +2686,8 @@ class InlineEditor {
     }
     edit(el) {
         this.stop();
-        // 找含直接文本的最深元素
         let target = el;
-        while (target.children.length && ![...target.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) {
-            target = target.children[0];
-        }
+        while (target.children.length && ![...target.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) target = target.children[0];
         if (![...target.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) return;
         this.current = target;
         target.contentEditable = 'true';
@@ -2653,31 +2696,81 @@ class InlineEditor {
     }
     stop() {
         if (this.current) { this.current.contentEditable = 'false'; this.current = null; }
+        this.updateChangeState();
     }
-    saveAll() {
-        document.querySelectorAll('.slide').forEach(s => {
-            try { localStorage.setItem('wwt:Push:slide:' + s.id, s.innerHTML); } catch (e) {}
+    saveAll(showToast = true) {
+        this.stop();
+        this.slides.forEach(s => {
+            const key = this.storagePrefix + s.id;
+            try {
+                if (this.normalizedHtml(s) === this.original.get(s.id)) localStorage.removeItem(key);
+                else localStorage.setItem(key, s.innerHTML);
+            } catch (e) {}
         });
-        const t = this.toast;
-        t.classList.add('show');
-        clearTimeout(this._tt);
-        this._tt = setTimeout(() => t.classList.remove('show'), 1200);
+        this.updateChangeState();
+        if (showToast) {
+            this.toast.textContent = '已保存';
+            this.toast.classList.add('show');
+            clearTimeout(this._tt);
+            this._tt = setTimeout(() => this.toast.classList.remove('show'), 1200);
+        }
     }
     restore() {
-        document.querySelectorAll('.slide').forEach(s => {
-            const saved = localStorage.getItem('wwt:Push:slide:' + s.id);
+        this.slides.forEach(s => {
+            const saved = localStorage.getItem(this.storagePrefix + s.id);
             if (saved) s.innerHTML = saved;
         });
     }
-    exportFile() {
-        const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
-        // 从 <title> 自动获取文件名，去除 · 和多余空格
+    filename(ext) {
         const title = document.title.replace(/\s*[·•]\s*/g, '').replace(/\s+/g, '').trim();
-        a.download = title + '.html';
-        a.click();
+        const d = new Date();
+        const date = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+        return `${title}_${date}.${ext}`;
     }
+    downloadBlob(blob, name) {
+        const url = URL.createObjectURL(blob), a = document.createElement('a');
+        a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+    }
+    async dataUrl(url) {
+        const blob = await fetch(url).then(r => { if (!r.ok) throw new Error(url); return r.blob(); });
+        return await new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(blob); });
+    }
+    async exportHtml() {
+        this.saveAll(false);
+        if (!this.hasChanges()) return;
+        const button = document.getElementById('exportEditedHtml'), label = button.textContent;
+        button.disabled = true; button.textContent = '正在打包…';
+        try {
+            const clone = document.documentElement.cloneNode(true);
+            clone.querySelector('body').classList.remove('editing');
+            clone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+            clone.querySelector('#editToggle')?.classList.remove('active', 'show');
+            clone.querySelector('#editExport')?.classList.add('has-changes');
+            const sourceImages = [...document.images], cloneImages = [...clone.querySelectorAll('img')], cache = new Map();
+            for (let i = 0; i < sourceImages.length; i++) {
+                const url = sourceImages[i].src;
+                if (!cache.has(url)) cache.set(url, await this.dataUrl(url));
+                cloneImages[i].src = cache.get(url);
+            }
+            this.downloadBlob(new Blob(['<!DOCTYPE html>\n' + clone.outerHTML], {type:'text/html;charset=utf-8'}), this.filename('html'));
+            this.toast.textContent = '已下载修改后的 HTML'; this.toast.classList.add('show');
+            clearTimeout(this._tt); this._tt = setTimeout(() => this.toast.classList.remove('show'), 1800);
+        } catch (e) {
+            console.error(e); this.toast.textContent = 'HTML 导出失败'; this.toast.classList.add('show');
+        } finally { button.disabled = false; button.textContent = label; }
+    }
+    exportPdf() {
+        this.saveAll(false);
+        if (!this.hasChanges()) return;
+        const oldTitle = document.title;
+        document.title = this.filename('pdf').replace(/\.pdf$/, '');
+        this.toast.textContent = '请在打印窗口中选择“另存为 PDF”'; this.toast.classList.add('show');
+        const restore = () => { document.title = oldTitle; removeEventListener('afterprint', restore); };
+        addEventListener('afterprint', restore);
+        setTimeout(() => window.print(), 120);
+    }
+    exportFile() { this.exportHtml(); }
 }
 
 const deck = new SlidePresentation();

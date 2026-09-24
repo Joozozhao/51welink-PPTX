@@ -292,7 +292,8 @@ table.price tr.total td.tv{
 }
 .quote-tools button:hover{transform:translateY(-2px);}
 #qeEdit.active{background:var(--red);color:#fff;}
-#qeSave{background:var(--red);color:#fff;}
+#qeSave,#qePdf{display:none;background:var(--red);color:#fff;}
+body.has-quote-changes #qeSave,body.has-quote-changes #qePdf{display:block;}
 body.editing table.price td[contenteditable="true"]{
   outline:1.5px dashed var(--red);outline-offset:-1.5px;background:#FFF7F8;cursor:text;
 }
@@ -330,13 +331,12 @@ body.editing .add-row-bar{display:block;text-align:center;margin:8px 0 2px;}
 </head>
 <body>
 
-<div class="toolbar no-print">
-  <button onclick="window.print()">🖨️ 打印 / 另存为 PDF</button>
-</div>
+<div class="toolbar no-print"></div>
 
 <div class="quote-tools">
   <button id="qeEdit" title="编辑报价 (E)">✏️</button>
-  <button id="qeSave" title="下载保存已编辑文件 (Ctrl+S)">⬇️</button>
+  <button id="qeSave" title="下载修改后 HTML (Ctrl+S)">H</button>
+  <button id="qePdf" title="下载修改后 PDF">P</button>
 </div>
 <div class="qe-toast" id="qeToast">已保存</div>
 
@@ -891,7 +891,20 @@ body.editing .add-row-bar{display:block;text-align:center;margin:8px 0 2px;}
 (function(){
   var editBtn=document.getElementById('qeEdit'),
       saveBtn=document.getElementById('qeSave'),
-      toast=document.getElementById('qeToast'),tt=null;
+      pdfBtn=document.getElementById('qePdf'),
+      toast=document.getElementById('qeToast'),tt=null,
+      sheets=Array.prototype.slice.call(document.querySelectorAll('.sheet')),
+      original='';
+  function normalized(){
+    var wrap=document.createElement('div');
+    sheets.forEach(function(sheet){wrap.appendChild(sheet.cloneNode(true));});
+    Array.prototype.forEach.call(wrap.querySelectorAll('.add-row-bar,.row-del'),function(el){el.remove();});
+    Array.prototype.forEach.call(wrap.querySelectorAll('[contenteditable]'),function(el){el.removeAttribute('contenteditable');});
+    return wrap.innerHTML;
+  }
+  original=normalized();
+  function hasChanges(){return normalized()!==original;}
+  function updateChangeState(){var changed=hasChanges();document.body.classList.toggle('has-quote-changes',changed);return changed;}
   function toastMsg(m){toast.textContent=m;toast.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('show');},1600);}
   function parsePrice(t){var n=parseFloat(String(t==null?'':t).replace(/[^0-9.\-]/g,''));return isNaN(n)?0:n;}
   function fmt(n){return n.toFixed(2);}
@@ -949,7 +962,7 @@ body.editing .add-row-bar{display:block;text-align:center;margin:8px 0 2px;}
     editBtn.classList.toggle('active',on);
     editBtn.textContent=on?'\u2714\uFE0F':'\u270F\uFE0F';
     if(on){markEditable(document);toastMsg('已进入编辑模式：可改内容/改价，可增删行');}
-    else{unmarkEditable();renumber();var s=recalc();toastMsg('已退出编辑，总价已重算：'+fmt(s));}
+    else{unmarkEditable();renumber();var s=recalc();updateChangeState();toastMsg('已退出编辑，总价已重算：'+fmt(s));}
   }
   function addRow(table){
     var tbody=table.querySelector('tbody');if(!tbody)return;
@@ -959,7 +972,7 @@ body.editing .add-row-bar{display:block;text-align:center;margin:8px 0 2px;}
     if(total)tbody.insertBefore(tr,total);else tbody.appendChild(tr);
     attachDelBtn(tr.querySelector('td.no'));
     if(isEditing())markEditable(tr);
-    renumber();recalc();
+    renumber();recalc();updateChangeState();
     var fn=tr.cells[2];if(fn)fn.focus();
   }
   function attachDelBtn(noCell){
@@ -977,13 +990,13 @@ body.editing .add-row-bar{display:block;text-align:center;margin:8px 0 2px;}
     table.parentNode.insertBefore(bar,table.nextSibling);
   });
   priceRows().forEach(function(tr){attachDelBtn(tr.querySelector('td.no'));});
-  recalc();
+  recalc();updateChangeState();
   /* 事件委托：删行 / 价格输入即时重算 / 粘贴纯文本 */
   document.addEventListener('click',function(e){
     var del=e.target.closest?e.target.closest('.row-del'):null;
     if(del){
       var tr=del.closest('tr');
-      if(tr&&tr.parentNode.childElementCount>1){tr.parentNode.removeChild(tr);renumber();recalc();}
+      if(tr&&tr.parentNode.childElementCount>1){tr.parentNode.removeChild(tr);renumber();recalc();updateChangeState();}
       else toastMsg('至少保留一行');
       return;
     }
@@ -991,6 +1004,7 @@ body.editing .add-row-bar{display:block;text-align:center;margin:8px 0 2px;}
   document.addEventListener('input',function(e){
     var td=e.target.closest?e.target.closest('td.pr'):null;
     if(td&&td.isContentEditable)recalc();
+    if(e.target.closest&&e.target.closest('.sheet'))updateChangeState();
   });
   document.addEventListener('paste',function(e){
     var td=e.target.closest?e.target.closest('table.price td[contenteditable]'):null;
@@ -1001,6 +1015,7 @@ body.editing .add-row-bar{display:block;text-align:center;margin:8px 0 2px;}
   });
   /* 导出：克隆文档，剥离编辑态痕迹后下载为 HTML */
   function exportFile(){
+    if(!updateChangeState())return;
     var clone=document.documentElement.cloneNode(true);
     Array.prototype.forEach.call(clone.querySelectorAll('.add-row-bar,.row-del'),function(el){el.remove();});
     Array.prototype.forEach.call(clone.querySelectorAll('[contenteditable]'),function(el){el.removeAttribute('contenteditable');});
@@ -1015,8 +1030,14 @@ body.editing .add-row-bar{display:block;text-align:center;margin:8px 0 2px;}
     setTimeout(function(){URL.revokeObjectURL(a.href);},4000);
     toastMsg('已下载：'+a.download);
   }
+  function exportPdf(){
+    if(!updateChangeState())return;
+    toastMsg('请在打印窗口中选择“另存为 PDF”');
+    setTimeout(function(){window.print();},120);
+  }
   editBtn.addEventListener('click',function(){setEditing(!isEditing());});
   saveBtn.addEventListener('click',exportFile);
+  pdfBtn.addEventListener('click',exportPdf);
   document.addEventListener('keydown',function(e){
     if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();exportFile();}
     else if(e.key==='Escape'&&isEditing())setEditing(false);
