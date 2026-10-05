@@ -418,6 +418,8 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s4 .s4-card-head img { width:33px; height:33px; object-fit:contain; }
 #s4 .s4-card-t { font-size:24px; font-weight:700; color:var(--navy); }
 #s4 .s4-card-d { font-size:19.5px; color:var(--muted); line-height:1.7; }
+#s4 .s4-fig { height:250px; border-radius:18px; overflow:hidden; box-shadow:0 8px 30px rgba(10,31,68,0.10); background:linear-gradient(160deg,#E8EEF8,#F6F8FB); flex:none; }
+#s4 .s4-fig img { width:100%; height:100%; object-fit:cover; display:block; }
 #s4 .s4-right { flex:1; background:linear-gradient(160deg, #0A1F44 0%, #123A7A 100%); border-radius:24px; padding:54px 48px; display:flex; flex-direction:column; justify-content:space-between; }
 #s4 .s4-r-top { display:flex; flex-direction:column; gap:9px; }
 #s4 .s4-r-en { font-size:19.5px; color:rgba(255,255,255,0.6); letter-spacing:4.5px; font-family:var(--font-num); }
@@ -433,7 +435,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s4 .s4-r-note { background:rgba(240,45,78,0.15); border-radius:15px; padding:18px 24px; font-size:19.5px; color:rgba(255,255,255,0.85); line-height:1.6; }
 
 /* ==================== s5 发展历程 ==================== */
-#s5 .s5-band { position:absolute; left:0; right:0; bottom:0; height:165px; width:100%; object-fit:cover; object-position:center 42%; opacity:0.95; -webkit-mask-image:linear-gradient(180deg, transparent 0%, #000 55%); mask-image:linear-gradient(180deg, transparent 0%, #000 55%); }
+#s5 .s5-band { position:absolute; left:0; right:0; bottom:0; height:300px; width:100%; object-fit:cover; object-position:center 74%; opacity:0.95; -webkit-mask-image:linear-gradient(180deg, transparent 0%, #000 55%); mask-image:linear-gradient(180deg, transparent 0%, #000 55%); }
 #s5 .s5-body { position:absolute; left:96px; right:96px; top:165px; height:750px; z-index:1; display:flex; flex-direction:column; justify-content:center; }
 #s5 .s5-years { display:flex; align-items:flex-end; width:100%; }
 #s5 .s5-ycol { flex:1; display:flex; flex-direction:column; align-items:center; gap:15px; padding-bottom:24px; }
@@ -467,30 +469,32 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s6 .s6-p { font-size:21px; color:rgba(255,255,255,0.65); line-height:1.8; }
 #s6 .s6-en { font-size:18px; color:rgba(255,255,255,0.45); letter-spacing:3px; font-family:var(--font-num); }
 #s6 .s6-grid { flex:1; display:flex; flex-wrap:wrap; gap:21px; align-content:space-between; }
-#s6 .s6-card { width:31.8%; height:231px; background:#FFFFFF; border-radius:18px; padding:27px; box-shadow:0 6px 24px rgba(10,31,68,0.06); display:flex; flex-direction:column; justify-content:space-between; }
-#s6 .s6-tile { width:66px; height:66px; border-radius:15px; display:flex; align-items:center; justify-content:center; background:rgba(46,111,232,0.1); }
+#s6 .s6-card { width:31.8%; height:231px; background:#FFFFFF; border-radius:18px; padding:27px; box-shadow:0 6px 24px rgba(10,31,68,0.06); display:flex; flex-direction:column; justify-content:space-between; position:relative; overflow:hidden; }
+#s6 .s6-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+#s6 .s6-card::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.42) 52%, rgba(255,255,255,0.92) 100%); pointer-events:none; }
+#s6 .s6-card .s6-tile, #s6 .s6-card .s6-t { position:relative; z-index:1; }
+#s6 .s6-tile { width:66px; height:66px; border-radius:15px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.9); box-shadow:0 4px 14px rgba(10,31,68,0.12); }
 #s6 .s6-card.hot .s6-tile { background:rgba(240,45,78,0.1); }
 #s6 .s6-tile img { width:33px; height:33px; object-fit:contain; }
 #s6 .s6-t { font-size:19.5px; font-weight:600; color:var(--ink); line-height:1.5; }
 
 /* ==================== s7 公司资质 ==================== */
-#s7 .s7-body { position:absolute; left:96px; right:96px; top:165px; height:750px; display:flex; flex-direction:column; gap:30px; }
-#s7 .s7-banner { background:linear-gradient(90deg, #0A1F44 0%, #123A7A 100%); border-radius:18px; padding:30px 48px; display:flex; align-items:center; gap:30px; }
-#s7 .s7-banner img { width:45px; height:45px; object-fit:contain; flex:none; }
-#s7 .s7-banner-t { font-size:25.5px; color:#FFFFFF; font-weight:600; line-height:1.6; }
-#s7 .s7-banner-en { font-size:19.5px; color:rgba(255,255,255,0.55); letter-spacing:3px; margin-left:auto; font-family:var(--font-num); }
-#s7 .s7-grid { flex:1; display:flex; flex-wrap:wrap; gap:27px; align-content:space-between; justify-content:space-between; }
-#s7 .s7-card { width:32%; height:279px; background:#FFFFFF; border:1.5px solid #EAEFF6; border-radius:18px; padding:33px; box-shadow:0 6px 24px rgba(10,31,68,0.06); display:flex; align-items:center; gap:24px; }
-#s7 .s7-badge { position:relative; width:108px; height:108px; flex:none; display:flex; align-items:center; justify-content:center; }
-#s7 .s7-badge img { position:absolute; inset:0; width:100%; height:100%; }
-#s7 .s7-badge svg { width:36px; height:36px; position:relative; }
-#s7 .s7-text { flex:1; min-width:0; display:flex; flex-direction:column; gap:9px; }
-#s7 .s7-t { font-size:24px; font-weight:700; color:var(--navy); line-height:1.4; }
-#s7 .s7-s { font-size:18px; font-weight:600; }
+#s7 .s7-body { position:absolute; left:96px; right:96px; top:175px !important; height:810px !important; display:flex; flex-direction:column; gap:20px; }
+#s7 .s7-banner { background:linear-gradient(90deg, #0A1F44 0%, #123A7A 100%); border-radius:16px; padding:18px 36px; display:flex; align-items:center; gap:24px; flex:none; }
+#s7 .s7-banner img { width:38px; height:38px; object-fit:contain; flex:none; }
+#s7 .s7-banner-t { font-size:22px; color:#FFFFFF; font-weight:600; line-height:1.4; }
+#s7 .s7-banner-en { font-size:17px; color:rgba(255,255,255,0.55); letter-spacing:3px; margin-left:auto; font-family:var(--font-num); }
+#s7 .s7-grid { flex:1; min-height:0; display:grid; grid-template-columns:repeat(4, 1fr); grid-template-rows:repeat(2, 1fr); gap:20px; }
+#s7 .s7-card { background:#FFFFFF; border:1.5px solid #EAEFF6; border-radius:18px; padding:22px 20px; box-shadow:0 6px 24px rgba(10,31,68,0.06); display:flex; align-items:center; gap:16px; min-height:0; }
+#s7 .s7-card { background:#FFFFFF; border:1.5px solid #EAEFF6; border-radius:18px; padding:22px 22px; box-shadow:0 6px 24px rgba(10,31,68,0.06); display:flex; align-items:center; gap:18px; min-height:0; }
+#s7 .s7-cert { width:114px; height:114px; object-fit:contain; flex:none; }
+#s7 .s7-text { flex:1; min-width:0; display:flex; flex-direction:column; gap:6px; }
+#s7 .s7-t { font-size:20.5px; font-weight:700; color:var(--navy); line-height:1.3; }
+#s7 .s7-s { font-size:15.5px; font-weight:600; }
 #s7 .s7-s.seal-red { color:#F02D4E; }
 #s7 .s7-s.seal-blue { color:#2E6FE8; }
 #s7 .s7-s.seal-navy { color:#0A1F44; }
-#s7 .s7-d { font-size:18px; color:var(--muted); line-height:1.6; }
+#s7 .s7-d { font-size:14px; color:var(--muted); line-height:1.5; }
 
 /* ==================== s8 服务团队/网络 ==================== */
 #s8 .s8-body { position:absolute; left:96px; right:96px; top:165px; height:750px; display:flex; gap:48px; }
@@ -764,20 +768,9 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s21 .s21-sl { font-size: 18px; color: rgba(255,255,255,0.6); }
 
 /* ================= P22 章节 03 服务客户 ================= */
-#s22 .s22-bg { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover; }
-#s22 .s22-wrap { position: relative; z-index: 1; width: 100%; height: 100%; padding: 84px 108px; display: flex; flex-direction: column; justify-content: space-between; }
-#s22 .s22-top { display: flex; justify-content: space-between; align-items: center; }
-#s22 .s22-logo { width: 195px; height: 49.5px; object-fit: contain; }
-#s22 .s22-part { font-size: 19.5px; color: rgba(255,255,255,0.5); letter-spacing: 6px; font-family: var(--font-num); }
-#s22 .s22-mid { display: flex; align-items: flex-end; gap: 72px; }
-#s22 .s22-no { font-size: 300px; font-weight: 700; color: rgba(255,255,255,0.12); font-family: var(--font-num); line-height: 1; }
-#s22 .s22-tb { display: flex; flex-direction: column; gap: 24px; padding-bottom: 36px; }
-#s22 .s22-bar { width: 72px; height: 6px; background: var(--red); border-radius: 3px; }
-#s22 .s22-title { font-size: 84px; font-weight: 700; color: #fff; letter-spacing: 6px; line-height: 1.1; }
-#s22 .s22-eng { font-size: 24px; color: rgba(255,255,255,0.6); letter-spacing: 7.5px; font-family: var(--font-num); }
-#s22 .s22-sub { font-size: 21px; color: rgba(255,255,255,0.5); line-height: 1.8; margin-top: 12px; }
-#s22 .s22-bspace { height: 27px; }
-#s22 .s22-shield { position: absolute; right: 130px; top: 290px; height: 520px; z-index: 2; }
+/* 注：原 #s22 .s22-bg/.s22-wrap/.s22-bar 等章节页遗留样式已删除——
+   它们与本文件第 22 页内容区 class（s22-bar 等）冲突，导致底部业态条被压成 72px 红条。
+   章节页实际生效的规则已克隆在下方 #s27 作用域（见"错版修复"区）。 */
 #s22 .pageno { color: rgba(255,255,255,0.4); }
 
 /* ================= P23 极致服务 ================= */
@@ -831,8 +824,11 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 /* ==================== 新增页面样式 (s12–s26) · 微网通联 2026 风格规范 ==================== */
 
 /* s12 产品矩阵 */
-#s12 .s12-body { position:absolute; left:96px; right:96px; top:170px; height:780px; display:grid; grid-template-columns:1fr 1fr; gap:40px; }
-#s12 .s12-col { padding:40px 44px; display:flex; flex-direction:column; justify-content:space-between; }
+#s12 .s12-body { position:absolute; left:96px; right:96px; top:170px; height:780px; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:minmax(0, 1fr); gap:40px; }
+#s12 .s12-col { padding:40px 44px; display:flex; flex-direction:column; min-height:0; }
+#s12 .s12-col-head { flex:none; }
+#s12 .s12-fig { flex:1; min-height:0; border-radius:14px; overflow:hidden; margin:22px 0; background:linear-gradient(160deg,#E8EEF8,#F6F8FB); }
+#s12 .s12-fig img { width:100%; height:100%; object-fit:cover; display:block; }
 #s12 .s12-col-tag { font-size:16px; font-weight:700; color:var(--red); font-family:var(--font-num); letter-spacing:2px; margin-bottom:8px; }
 #s12 .s12-col-t { font-size:32px; font-weight:700; color:var(--navy); margin-bottom:8px; }
 #s12 .s12-col-s { font-size:18px; color:var(--muted); line-height:1.5; }
@@ -845,16 +841,16 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s12 .s12-foot { border-top:1.5px solid #E3E9F2; padding-top:18px; font-size:16px; font-weight:600; color:var(--blue); font-family:var(--font-num); }
 
 /* s13 新媒体矩阵 */
-#s13 .s13-body { position:absolute; left:96px; right:96px; top:170px; height:780px; display:grid; grid-template-columns:repeat(3, 1fr); gap:36px; }
-#s13 .s13-card { padding:44px 36px; display:flex; flex-direction:column; justify-content:space-between; }
+#s13 .s13-body { position:absolute; left:96px; right:96px; top:170px; height:780px; display:grid; grid-template-columns:repeat(3, 1fr); grid-template-rows:minmax(0, 1fr); gap:36px; }
+#s13 .s13-card { padding:44px 36px; display:flex; flex-direction:column; justify-content:space-between; min-height:0; }
 #s13 .s13-t { font-size:28px; font-weight:700; color:var(--navy); margin:20px 0 6px 0; }
 #s13 .s13-s { font-size:16px; font-weight:600; color:var(--red); font-family:var(--font-num); letter-spacing:1px; margin-bottom:16px; }
 #s13 .s13-d { font-size:17px; color:var(--muted); line-height:1.7; flex:1; }
 #s13 .s13-pill { background:var(--bg); border:1px solid #E3E9F2; border-radius:999px; padding:10px 20px; font-size:14px; font-weight:600; color:var(--navy); text-align:center; margin-top:20px; font-family:var(--font-num); }
 
 /* s16 智慧车场业务架构 */
-#s16 .s16-body { position:absolute; left:96px; right:96px; top:170px; height:780px; display:grid; grid-template-columns:1fr 1fr; gap:40px; }
-#s16 .s16-card { padding:48px 44px; display:flex; flex-direction:column; justify-content:space-between; }
+#s16 .s16-body { position:absolute; left:96px; right:96px; top:170px; height:780px; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:minmax(0, 1fr); gap:40px; }
+#s16 .s16-card { padding:48px 44px; display:flex; flex-direction:column; justify-content:space-between; min-height:0; }
 #s16 .s16-badge { font-size:16px; font-weight:700; font-family:var(--font-num); letter-spacing:2px; margin-bottom:10px; }
 #s16 .s16-badge.red { color:var(--red); }
 #s16 .s16-badge.blue { color:var(--blue); }
@@ -869,28 +865,33 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s17 .s17-banner { padding:24px 36px; display:flex; align-items:center; gap:24px; border-left:6px solid var(--red); }
 #s17 .s17-banner-tag { background:var(--red); color:#fff; font-size:14px; font-weight:700; padding:4px 12px; border-radius:6px; font-family:var(--font-num); letter-spacing:1px; }
 #s17 .s17-banner-t { font-size:22px; font-weight:700; color:var(--navy); }
-#s17 .s17-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:32px; flex:1; }
-#s17 .s17-card { padding:40px 36px; display:flex; flex-direction:column; justify-content:space-between; }
+#s17 .s17-grid { display:grid; grid-template-columns:repeat(3, 1fr); grid-template-rows:minmax(0, 1fr); gap:32px; flex:1; }
+#s17 .s17-card { padding:40px 36px; display:flex; flex-direction:column; justify-content:space-between; min-height:0; }
 #s17 .s17-n { font-size:42px; font-weight:800; color:var(--blue); font-family:var(--font-num); line-height:1; margin-bottom:12px; }
-#s17 .s17-t { font-size:24px; font-weight:700; color:var(--navy); margin-bottom:14px; }
-#s17 .s17-d { font-size:16px; color:var(--muted); line-height:1.75; flex:1; }
-#s17 .s17-subtag { border-top:1.5px solid #E3E9F2; padding-top:16px; margin-top:20px; font-size:14px; font-weight:600; color:var(--red); font-family:var(--font-num); }
+#s17 .s17-t { font-size:26px; font-weight:700; color:var(--navy); margin-bottom:14px; }
+#s17 .s17-d { font-size:18px; color:var(--muted); line-height:1.75; flex:1; }
+#s17 .s17-subtag { border-top:1.5px solid #E3E9F2; padding-top:16px; margin-top:20px; font-size:15px; font-weight:600; color:var(--red); font-family:var(--font-num); }
 
 /* s18 快停付 SaaS */
-#s18 .s18-body { position:absolute; left:96px; right:96px; top:170px; height:780px; display:grid; grid-template-columns:1fr 1fr; gap:40px; }
-#s18 .s18-col { padding:40px 44px; display:flex; flex-direction:column; justify-content:space-between; }
+#s18 .s18-body { position:absolute; left:96px; right:96px; top:170px; height:780px; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:minmax(0, 1fr); gap:40px; }
+#s18 .s18-col { padding:40px 44px; display:flex; flex-direction:column; justify-content:space-between; min-height:0; }
 #s18 .s18-head { font-size:28px; font-weight:700; margin-bottom:24px; }
 #s18 .s18-head.red { color:var(--red); }
 #s18 .s18-head.blue { color:var(--blue); }
-#s18 .s18-list { display:flex; flex-direction:column; gap:16px; flex:1; }
+#s18 .s18-list { display:flex; flex-direction:column; gap:16px; flex:none; }
+#s18 .s18-fig { flex:1; min-height:0; border-radius:14px; overflow:hidden; margin-top:20px; background:linear-gradient(160deg,#E8EEF8,#F6F8FB); }
+#s18 .s18-fig img { width:100%; height:100%; object-fit:cover; display:block; }
 #s18 .s18-item { background:var(--bg); border-left:4px solid var(--red); border-radius:0 12px 12px 0; padding:16px 20px; }
 #s18 .s18-item-t { font-size:18px; font-weight:700; color:var(--navy); margin-bottom:4px; }
 #s18 .s18-item-d { font-size:14.5px; color:var(--muted); line-height:1.5; }
-#s18 .s18-grid8 { display:grid; grid-template-columns:repeat(2, 1fr); gap:14px; flex:1; }
-#s18 .s18-cell { background:var(--bg); border:1px solid #E3E9F2; border-radius:12px; padding:14px 18px; display:flex; flex-direction:column; justify-content:center; }
-#s18 .s18-cell-t { font-size:17px; font-weight:700; color:var(--blue); margin-bottom:3px; }
-#s18 .s18-cell-d { font-size:12.5px; color:var(--muted); line-height:1.4; }
-#s18 .s18-foot-note { background:rgba(46,111,232,0.08); border-radius:10px; padding:14px 20px; font-size:15px; font-weight:600; color:var(--blue); text-align:center; margin-top:20px; font-family:var(--font-num); }
+#s18 .s18-grid8 { display:grid; grid-template-columns:repeat(2, 1fr); grid-template-rows:repeat(4, 1fr); gap:12px; flex:1; min-height:0; }
+#s18 .s18-cell { background:var(--bg); border:1.5px solid #E3E9F2; border-radius:14px; padding:10px 16px; display:flex !important; flex-direction:row !important; align-items:center !important; gap:14px; min-height:0; }
+#s18 .s18-cell-ico { width:44px; height:44px; border-radius:12px; background:rgba(46,111,232,0.08); display:flex; align-items:center; justify-content:center; flex:none; }
+#s18 .s18-cell-ico img { width:24px; height:24px; max-width:24px; max-height:24px; object-fit:contain; display:block; }
+#s18 .s18-cell-body { flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+#s18 .s18-cell-t { font-size:17px; font-weight:700; color:var(--navy); line-height:1.25; }
+#s18 .s18-cell-d { font-size:12.5px; color:var(--muted); line-height:1.35; }
+#s18 .s18-foot-note { background:rgba(46,111,232,0.08); border-radius:10px; padding:12px 18px; font-size:14px; font-weight:600; color:var(--blue); text-align:center; margin-top:14px; flex:none; font-family:var(--font-num); }
 
 /* s19 泊聚量流量闭环 */
 #s19 .s19-body { position:absolute; left:96px; right:96px; top:170px; height:780px; display:flex; flex-direction:column; justify-content:space-between; }
@@ -919,6 +920,10 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s21 .s21-right { padding:36px 36px; display:flex; flex-direction:column; justify-content:space-between; }
 #s21 .s21-rt { font-size:14px; font-weight:700; color:var(--red); letter-spacing:2px; font-family:var(--font-num); }
 #s21 .s21-rh { font-size:28px; font-weight:700; color:var(--navy); margin:6px 0 20px 0; }
+
+#s21 .s21-fig { width:100%; height:230px; border-radius:14px; overflow:hidden; margin:16px 0; box-shadow:0 8px 24px rgba(10,31,68,0.08); background:linear-gradient(160deg,#E8EEF8,#F6F8FB); flex:none; }
+#s21 .s21-fig img { width:100%; height:100%; object-fit:cover; display:block; }
+
 #s21 .s21-cases { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
 #s21 .s21-case-box { background:var(--bg); border-radius:12px; padding:18px 20px; border-left:4px solid var(--blue); }
 #s21 .s21-case-name { font-size:16px; font-weight:700; color:var(--navy); margin-bottom:6px; }
@@ -929,37 +934,50 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s21 .s21-model-text { font-size:15px; color:var(--ink); line-height:1.6; }
 #s21 .s21-model-text b { color:var(--red); }
 
-/* s22 车场综合体 2.0 */
-#s22 .s22-body { position:absolute; left:96px; right:96px; top:170px; height:780px; display:flex; flex-direction:column; gap:28px; }
-#s22 .s22-top-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:32px; flex:1; }
-#s22 .s22-card { padding:36px 32px; display:flex; flex-direction:column; justify-content:space-between; }
-#s22 .s22-tag { font-size:14px; font-weight:700; color:var(--red); font-family:var(--font-num); letter-spacing:1px; }
-#s22 .s22-num { font-size:64px; color:var(--navy); margin:12px 0 8px 0; line-height:1.1; }
-#s22 .s22-u { font-size:24px; color:var(--muted); margin-left:4px; }
-#s22 .s22-t { font-size:20px; font-weight:700; color:var(--navy); margin-bottom:8px; }
-#s22 .s22-d { font-size:15px; color:var(--muted); line-height:1.65; }
-#s22 .s22-bar { padding:22px 36px; display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; }
-#s22 .s22-bar-item { font-size:15px; color:var(--ink); line-height:1.5; }
-#s22 .s22-bar-item b { color:var(--navy); font-weight:700; }
+/* s22 车场综合体 2.0（重设计：左图右卡 + 底部业态条） */
+#s22 .s22-body { position:absolute; left:96px; right:96px; top:175px; height:810px; display:flex; flex-direction:column; gap:24px; }
+#s22 .s22-main { display:grid; grid-template-columns:640px 1fr; grid-template-rows:minmax(0, 1fr); gap:32px; flex:1; min-height:0; }
+#s22 .s22-fig { border-radius:24px; overflow:hidden; position:relative; box-shadow:0 14px 36px rgba(10,31,68,0.12); background:linear-gradient(160deg,#E8EEF8,#F6F8FB); }
+#s22 .s22-fig img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+#s22 .s22-fig-cap { position:absolute; left:24px; bottom:24px; background:rgba(10,31,68,0.85); color:#fff; font-size:15px; padding:10px 20px; border-radius:10px; letter-spacing:1.5px; }
+#s22 .s22-cards { display:flex; flex-direction:column; gap:24px; min-height:0; }
+#s22 .s22-card { flex:1; padding:26px 36px; display:flex; align-items:center; gap:36px; }
+#s22 .s22-card-info { flex:1; min-width:0; }
+#s22 .s22-tag { font-size:14px; font-weight:700; color:var(--red); font-family:var(--font-num); letter-spacing:1px; margin-bottom:8px; }
+#s22 .s22-t { font-size:21px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+#s22 .s22-d { font-size:14.5px; color:var(--muted); line-height:1.6; }
+#s22 .s22-d b { color:var(--navy); }
+#s22 .s22-num { font-size:54px; color:var(--navy); line-height:1.05; text-align:right; flex:none; }
+#s22 .s22-u { font-size:22px; color:var(--muted); margin-left:4px; }
+#s22 .s22-nsub { display:block; font-size:18px; color:var(--ink); margin-top:2px; }
+#s22 .s22-bar { display:grid; grid-template-columns:repeat(4, 1fr); gap:24px; flex:none; }
+#s22 .s22-bar-item { display:flex; align-items:center; gap:16px; padding:20px 24px; }
+#s22 .s22-bar-no { width:52px; height:52px; border-radius:14px; background:rgba(240,45,78,0.09); color:var(--red); font-size:20px; font-weight:700; font-family:var(--font-num); display:flex; align-items:center; justify-content:center; flex:none; }
+#s22 .s22-bar-t { font-size:16px; font-weight:700; color:var(--navy); margin-bottom:3px; }
+#s22 .s22-bar-d { font-size:13.5px; color:var(--muted); line-height:1.45; }
 
-/* s23 方案优势 */
-#s23 .s23-body { position:absolute; left:96px; right:96px; top:170px; height:780px; display:grid; grid-template-columns:repeat(3, 1fr); gap:32px; }
-#s23 .s23-card { padding:40px 36px; display:flex; flex-direction:column; }
-#s23 .s23-head-tag { font-size:14px; font-weight:700; color:var(--red); font-family:var(--font-num); letter-spacing:1px; margin-bottom:12px; }
-#s23 .s23-t { font-size:28px; font-weight:700; color:var(--navy); margin-bottom:10px; }
-#s23 .s23-d { font-size:16px; color:var(--muted); line-height:1.6; margin-bottom:20px; }
-#s23 .s23-box { background:var(--bg); border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:14px; flex:1; }
-#s23 .s23-item { font-size:14.5px; color:var(--muted); line-height:1.6; }
+/* s23 方案优势（重设计：每卡配图 + 要点盒） */
+#s23 .s23-body { position:absolute; left:96px; right:96px; top:175px; height:810px; display:grid; grid-template-columns:repeat(3, 1fr); grid-template-rows:minmax(0, 1fr); gap:32px; }
+#s23 .s23-card { padding:36px 32px 32px; display:flex; flex-direction:column; min-height:0; }
+#s23 .s23-head-tag { font-size:14px; font-weight:700; color:var(--red); font-family:var(--font-num); letter-spacing:1px; margin-bottom:10px; }
+#s23 .s23-t { font-size:27px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+#s23 .s23-d { font-size:15px; color:var(--muted); line-height:1.6; margin-bottom:18px; }
+#s23 .s23-fig { flex:1; min-height:0; border-radius:14px; overflow:hidden; margin-bottom:18px; background:linear-gradient(160deg,#E8EEF8,#F6F8FB); }
+#s23 .s23-fig img { width:100%; height:100%; object-fit:cover; display:block; }
+#s23 .s23-box { background:var(--bg); border-radius:12px; padding:18px 20px; display:flex; flex-direction:column; gap:12px; flex:none; }
+#s23 .s23-item { font-size:14px; color:var(--muted); line-height:1.55; }
 #s23 .s23-item b { color:var(--navy); font-weight:700; }
 
-/* s24-s26 战略协同通用 */
-#s24 .s24-body, #s25 .s25-body, #s26 .s26-body { position:absolute; left:96px; right:96px; top:170px; height:780px; display:grid; grid-template-columns:1fr 1fr; gap:40px; }
-#s24 .s24-card, #s25 .s25-card, #s26 .s26-card { padding:44px 40px; display:flex; flex-direction:column; justify-content:space-between; }
+/* s24 / s25 / s26 战略协同（卡内配图填充，行高约束防止溢出） */
+#s24 .s24-body, #s25 .s25-body, #s26 .s26-body { position:absolute; left:96px; right:96px; top:175px; height:810px; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:minmax(0, 1fr); gap:40px; }
+#s24 .s24-card, #s25 .s25-card, #s26 .s26-card { padding:40px; display:flex; flex-direction:column; min-height:0; }
 #s24 .s24-tag, #s25 .s25-tag, #s26 .s26-tag { font-size:14px; font-weight:700; color:var(--blue); font-family:var(--font-num); letter-spacing:2px; margin-bottom:10px; }
-#s24 .s24-t, #s25 .s25-t, #s26 .s26-t { font-size:30px; font-weight:700; color:var(--navy); margin-bottom:16px; }
-#s24 .s24-p, #s25 .s25-p, #s26 .s26-p { font-size:17px; color:var(--muted); line-height:1.75; margin-bottom:24px; }
-#s24 .s24-box, #s25 .s25-box, #s26 .s26-box { background:var(--bg); border-radius:14px; padding:24px 28px; display:flex; flex-direction:column; gap:16px; }
-#s24 .s24-item, #s25 .s25-item, #s26 .s26-item { font-size:15.5px; color:var(--ink); line-height:1.6; }
+#s24 .s24-t, #s25 .s25-t, #s26 .s26-t { font-size:29px; font-weight:700; color:var(--navy); margin-bottom:14px; }
+#s24 .s24-p, #s25 .s25-p, #s26 .s26-p { font-size:16.5px; color:var(--muted); line-height:1.7; margin-bottom:22px; }
+#s24 .s24-fig, #s25 .s25-fig, #s26 .s26-fig { flex:1; min-height:0; border-radius:14px; overflow:hidden; margin-bottom:22px; background:linear-gradient(160deg,#E8EEF8,#F6F8FB); }
+#s24 .s24-fig img, #s25 .s25-fig img, #s26 .s26-fig img { width:100%; height:100%; object-fit:cover; display:block; }
+#s24 .s24-box, #s25 .s25-box, #s26 .s26-box { background:var(--bg); border-radius:14px; padding:22px 26px; display:flex; flex-direction:column; gap:14px; flex:none; }
+#s24 .s24-item, #s25 .s25-item, #s26 .s26-item { font-size:15px; color:var(--ink); line-height:1.6; }
 #s24 .s24-item b, #s25 .s25-item b, #s26 .s26-item b { color:var(--navy); font-weight:700; }
 
 
@@ -1133,7 +1151,11 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s28 .s23-lt { font-size: 21px; font-weight: 700; color: #fff; }
 #s28 .s23-ld { font-size: 18px; color: rgba(255,255,255,0.65); line-height: 1.55; margin-top: 3px; }
 #s28 .s23-grid { position: absolute; left: 792px; top: 165px; width: 1032px; height: 750px; display: flex; flex-wrap: wrap; justify-content: space-between; align-content: space-between; }
-#s28 .s23-c { width: 504px; height: 364.5px; background: #fff; border-radius: 21px; padding: 39px; box-shadow: 0 6px 24px rgba(10,31,68,0.06); display: flex; flex-direction: column; gap: 21px; }
+#s28 .s23-c { width: 504px; height: 364.5px; background: #fff; border-radius: 21px; padding: 39px; box-shadow: 0 6px 24px rgba(10,31,68,0.06); display: flex; flex-direction: column; gap: 21px; position: relative; overflow: hidden; }
+#s28 .s23-cbg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+#s28 .s23-c::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.55) 45%, rgba(255,255,255,0.94) 78%); pointer-events: none; }
+#s28 .s23-c > div { position: relative; z-index: 1; }
+#s28 .s23-c > div:last-child { margin-top: auto; }
 #s28 .tile-78 { width: 78px; height: 78px; border-radius: 18px; }
 #s28 .tile-78 img { width: 36px; height: 36px; }
 #s28 .s23-ct { font-size: 27px; font-weight: 700; color: var(--navy); }
@@ -1206,8 +1228,19 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 /* === P13 / P17 卡内配图 === */
 #s13 .s13-card { overflow:hidden; }
 #s13 .s13-fig { display:block; width:calc(100% + 72px); height:200px; object-fit:cover; margin:-44px -36px 26px; border-radius:18px 18px 0 0; }
-#s17 .s17-card { overflow:hidden; }
-#s17 .s17-fig { display:block; width:calc(100% + 72px); height:190px; object-fit:cover; margin:-40px -36px 24px; border-radius:18px 18px 0 0; }
+#s17 .s17-body { position:absolute; left:96px; right:96px; top:175px !important; height:810px !important; display:flex; flex-direction:column; gap:24px; }
+#s17 .s17-banner { padding:20px 36px; display:flex; align-items:center; gap:24px; border-left:6px solid var(--red); flex:none; }
+#s17 .s17-banner-tag { background:var(--red); color:#fff; font-size:14px; font-weight:700; padding:4px 12px; border-radius:6px; font-family:var(--font-num); letter-spacing:1px; flex:none; }
+#s17 .s17-banner-t { font-size:21px; font-weight:700; color:var(--navy); }
+#s17 .s17-grid { display:grid; grid-template-columns:repeat(3, 1fr); grid-template-rows:minmax(0, 1fr); gap:32px; flex:1; min-height:0; }
+#s17 .s17-card { padding:0 !important; overflow:hidden !important; display:flex; flex-direction:column; min-height:0; }
+#s17 .s17-fig-wrap { width:100%; height:320px; overflow:hidden; flex:none; background:linear-gradient(160deg,#E8EEF8,#F6F8FB); }
+#s17 .s17-fig { width:100%; height:100%; object-fit:cover; display:block; }
+#s17 .s17-card-body { padding:26px 36px 32px; display:flex; flex-direction:column; justify-content:space-between; flex:1; min-height:0; }
+#s17 .s17-n { font-size:42px; font-weight:800; color:var(--blue); font-family:var(--font-num); line-height:1; margin-bottom:8px; }
+#s17 .s17-t { font-size:26px; font-weight:700; color:var(--navy); margin-bottom:10px; }
+#s17 .s17-d { font-size:17px; color:var(--muted); line-height:1.75; }
+#s17 .s17-subtag { border-top:1.5px solid #E3E9F2; padding-top:14px; margin-top:14px; font-size:15px; font-weight:600; color:var(--red); font-family:var(--font-num); }
 
 
 /* ==================== P8 服务网络（重设计） ==================== */
@@ -1225,6 +1258,8 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s8 .s8-nh { font-size:21px; font-weight:700; color:var(--navy); }
 #s8 .s8-np { font-size:16.5px; color:var(--muted); line-height:1.6; }
 #s8 .s8-cities { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 30px rgba(10,31,68,0.06); padding:30px 39px; display:flex; flex-direction:column; gap:18px; }
+#s8 .s8-map { flex:1; min-height:0; border-radius:14px; overflow:hidden; background:linear-gradient(160deg,#E8EEF8,#F6F8FB); }
+#s8 .s8-map img { width:100%; height:100%; object-fit:cover; display:block; }
 #s8 .s8-cities-t { font-size:22px; font-weight:700; color:var(--navy); display:flex; align-items:center; gap:14px; }
 #s8 .s8-ct-bar { width:44px; height:5px; background:var(--red); border-radius:3px; flex:none; }
 #s8 .s8-chips { display:flex; flex-wrap:wrap; gap:14px; }
@@ -1328,7 +1363,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s8 .s8-ct { font-size:20px; }
 
 /* ==================== P13 产品矩阵（真实图片版） ==================== */
-#s13 .s13-fig { display:block; width:calc(100% + 72px); height:192px; margin:-44px -36px 22px; border-radius:18px 18px 0 0; overflow:hidden; position:relative; flex:none; }
+#s13 .s13-fig { display:block; width:calc(100% + 72px); height:192px; margin:-44px -36px 22px; border-radius:18px 18px 0 0; overflow:hidden; position:relative; flex:1; min-height:200px; }
 #s13 .s13-fig img { width:100%; height:100%; object-fit:cover; display:block; }
 #s13 .s13-fig::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,31,68,0) 55%, rgba(10,31,68,0.26) 100%); }
 #s13 .s13-d { flex:none; }
@@ -1337,7 +1372,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 
 /* ==================== P19 左图右时间线（真实图片版） ==================== */
 #s19 .s19-main { flex:1; display:flex; gap:36px; min-height:0; }
-#s19 .s19-photo { width:800px; flex:none; border-radius:24px; overflow:hidden; background:#fff; box-shadow:0 12px 40px rgba(10,31,68,0.12); display:flex; flex-direction:column; }
+#s19 .s19-photo { width:1000px; flex:none; border-radius:24px; overflow:hidden; background:#fff; box-shadow:0 12px 40px rgba(10,31,68,0.12); display:flex; flex-direction:column; }
 #s19 .s19-photo-img { flex:1; width:100%; object-fit:contain; display:block; min-height:0; background:#fff; }
 #s19 .s19-photo-bar { flex:none; padding:24px 40px; background:linear-gradient(90deg,#0A1F44 0%,#123A7A 100%); display:flex; align-items:center; gap:26px; }
 #s19 .s19-photo-k { font-size:15px; color:rgba(255,255,255,0.55); letter-spacing:4px; font-family:var(--font-num); flex:none; }
@@ -1384,12 +1419,77 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s13 .s13-pill { font-size:15.5px; padding:12px 20px; }
 
 /* P8：城市卡加网点纹理背景 + chips 放大填充 */
-#s8 .s8-cities { background:#fff radial-gradient(rgba(46,111,232,0.10) 1.5px, transparent 1.5px); background-size:26px 26px; }
-#s8 .s8-cities-t { font-size:24px; }
-#s8 .s8-chips { gap:16px; }
-#s8 .s8-chip { padding:15px 30px; }
-#s8 .s8-ct { font-size:21px; }
-#s8 .s8-legend { font-size:16px; justify-content:center; gap:40px; border-top:1.5px dashed #E3E9F2; padding-top:18px; }
+#s8 .s8-cities {
+    flex: 1;
+    position: relative;
+    border-radius: 21px;
+    box-shadow: 0 6px 30px rgba(10,31,68,0.06);
+    overflow: hidden;
+    background: #FFFFFF;
+    border: 1.5px solid #EAEFF6;
+}
+#s8 .s8-cities-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center bottom;
+    display: block;
+}
+#s8 .s8-cities-veil {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.95) 42%, rgba(255,255,255,0.40) 78%, rgba(255,255,255,0.12) 100%);
+    pointer-events: none;
+}
+#s8 .s8-cities-content {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    padding: 28px 36px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#s8 .s8-cities-t { font-size: 22px; font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 14px; }
+#s8 .s8-ct-bar { width: 44px; height: 5px; background: var(--red); border-radius: 3px; flex: none; }
+#s8 .s8-ct-badge { margin-left: auto; font-size: 14px; font-weight: 600; color: var(--blue); background: rgba(46,111,232,0.08); border-radius: 999px; padding: 6px 16px; letter-spacing: 1px; }
+#s8 .s8-chips { display: flex; flex-wrap: wrap; gap: 12px; }
+#s8 .s8-chip { display: flex; align-items: center; gap: 10px; padding: 10px 22px; border-radius: 999px; background: rgba(255,255,255,0.85); border: 1px solid rgba(46,111,232,0.18); box-shadow: 0 2px 8px rgba(10,31,68,0.04); backdrop-filter: blur(4px); }
+#s8 .s8-chip.hq { background: rgba(255,255,255,0.92); border-color: rgba(240,45,78,0.25); }
+#s8 .s8-dot { width: 10px; height: 10px; border-radius: 5px; background: var(--blue); flex: none; }
+#s8 .s8-chip.hq .s8-dot { background: var(--red); }
+#s8 .s8-ct { font-size: 18px; font-weight: 600; color: var(--navy); }
+#s8 .s8-chip.hq .s8-ct { color: var(--red); }
+#s8 .s8-legend { display: flex; gap: 32px; font-size: 15px; color: var(--ink); font-weight: 600; justify-content: center; background: rgba(255,255,255,0.88); padding: 8px 24px; border-radius: 999px; align-self: center; border: 1px solid rgba(10,31,68,0.08); backdrop-filter: blur(4px); }
+#s8 .s8-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 5px; background: var(--blue); margin-right: 8px; vertical-align: middle; }
+#s8 .s8-legend i.hq { background: var(--red); }
+
+
+/* ==================== S9 & S10 背景图与蒙版 ==================== */
+#s9 .s9-bg, #s10 .s10-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.28;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 0;
+}
+#s9 .s9-veil, #s10 .s10-veil {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 45%, rgba(10,31,68,0.55) 0%, rgba(10,31,68,0.85) 70%, rgba(10,31,68,0.95) 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+#s9 .s10-main, #s10 .s10-main, #s9 .s10-head, #s10 .s10-head {
+    position: relative;
+    z-index: 2;
+}
 
 </style>
 </head>
@@ -1399,12 +1499,12 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 
 
 <section class="slide dark active visible" id="s1">
-  <img class="s1-bg" src="assets/cover_hero.png" alt="" />
+  <img class="s1-bg" src="assets/gen-cover-a.png" alt="" />
   <div class="s1-mask"></div>
   <div class="s1-inner">
     <div class="s1-top reveal">
       <img class="s1-logo" src="assets/logo_white.png" alt="微网通联" />
-      <div class="s1-en-top">2026 · CORP PRESENTATION</div>
+      <div class="s1-en-top">CORP PRESENTATION</div>
     </div>
     <div class="s1-main">
       <div class="s1-bar reveal" style="--d:0.10s"></div>
@@ -1528,6 +1628,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
           <div class="s4-card-d">以快停付SaaS产品为核心，帮助车场降本增效；以大数据为数字基座，推进集充换电、餐饮、洗车于一体的智慧车场综合体(2.0)全场景建设与运营。</div>
         </div>
       </div>
+      <div class="s4-fig reveal" style="--d:0.40s"><img src="assets/gen-p4-company.png" alt="新媒体矩阵 × 智慧车场服务" /></div>
     </div>
     <div class="s4-right reveal reveal-right" style="--d:0.25s">
       <div class="s4-r-top">
@@ -1548,7 +1649,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 
 
 <section class="slide" id="s5" style="background:var(--bg)">
-  <img class="s5-band" src="assets/gen-timeline-band.png" alt="" />
+  <img class="s5-band" src="assets/gen-p05-band-a.png" alt="" />
   <div class="slide-head reveal">
     <div class="kicker">01 · 发展历程</div>
     <div class="head-line">
@@ -1619,15 +1720,15 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       <div class="s6-foot">HONORS & AWARDS</div>
     </div>
     <div class="s6-grid">
-      <div class="s6-card reveal" style="--d:0.12s"><div class="s6-tile"><img src="assets/icons/award-2E6FE8.png" alt="" /></div><div class="s6-t">年度最佳移动即时通信平台</div></div>
-      <div class="s6-card reveal" style="--d:0.16s"><div class="s6-tile"><img src="assets/icons/chart-line-FFFFFF.png" alt="" /></div><div class="s6-t">中国移动互联网领域最佳运营支撑服务</div></div>
-      <div class="s6-card reveal" style="--d:0.20s"><div class="s6-tile"><img src="assets/icons/certificate-F02D4E.png" alt="" /></div><div class="s6-t">互联网信用评价中心最高等级 AAA 级信用企业</div></div>
-      <div class="s6-card reveal" style="--d:0.24s"><div class="s6-tile"><img src="assets/icons/crown-F02D4E.png" alt="" /></div><div class="s6-t">高新技术企业</div></div>
-      <div class="s6-card reveal" style="--d:0.28s"><div class="s6-tile"><img src="assets/icons/gem-FFFFFF.png" alt="" /></div><div class="s6-t">福布斯非上市百强企业</div></div>
-      <div class="s6-card reveal" style="--d:0.32s"><div class="s6-tile"><img src="assets/icons/building-columns-0A1F44.png" alt="" /></div><div class="s6-t">中国通信企业协会增值服务委员会副主任单位</div></div>
-      <div class="s6-card reveal" style="--d:0.36s"><div class="s6-tile"><img src="assets/icons/trophy-2E6FE8.png" alt="" /></div><div class="s6-t">中国移动泉州分公司突出贡献奖</div></div>
-      <div class="s6-card reveal" style="--d:0.40s"><div class="s6-tile"><img src="assets/icons/handshake-2E6FE8.png" alt="" /></div><div class="s6-t">杭州电信年度金牌合作伙伴</div></div>
-      <div class="s6-card reveal" style="--d:0.44s"><div class="s6-tile"><img src="assets/icons/headset-2E6FE8.png" alt="" /></div><div class="s6-t">淮安移动合作伙伴 - 卓越贡献奖</div></div>
+      <div class="s6-card reveal" style="--d:0.12s"><img class="s6-bg" src="assets/gen-p06-1.png" alt="" /><div class="s6-tile"><img src="assets/icons/award-2E6FE8.png" alt="" /></div><div class="s6-t">年度最佳移动即时通信平台</div></div>
+      <div class="s6-card reveal" style="--d:0.16s"><img class="s6-bg" src="assets/gen-p06-2.png" alt="" /><div class="s6-tile"><img src="assets/icons/arrow-trend-up-0A1F44.png" alt="" /></div><div class="s6-t">中国移动互联网领域最佳运营支撑服务</div></div>
+      <div class="s6-card reveal" style="--d:0.20s"><img class="s6-bg" src="assets/gen-p06-3.png" alt="" /><div class="s6-tile"><img src="assets/icons/certificate-F02D4E.png" alt="" /></div><div class="s6-t">互联网信用评价中心最高等级 AAA 级信用企业</div></div>
+      <div class="s6-card reveal" style="--d:0.24s"><img class="s6-bg" src="assets/gen-p06-4.png" alt="" /><div class="s6-tile"><img src="assets/icons/crown-F02D4E.png" alt="" /></div><div class="s6-t">高新技术企业</div></div>
+      <div class="s6-card reveal" style="--d:0.28s"><img class="s6-bg" src="assets/gen-p06-5.png" alt="" /><div class="s6-tile"><img src="assets/icons/medal-F02D4E.png" alt="" /></div><div class="s6-t">福布斯非上市百强企业</div></div>
+      <div class="s6-card reveal" style="--d:0.32s"><img class="s6-bg" src="assets/gen-p06-6.png" alt="" /><div class="s6-tile"><img src="assets/icons/building-columns-0A1F44.png" alt="" /></div><div class="s6-t">中国通信企业协会增值服务委员会副主任单位</div></div>
+      <div class="s6-card reveal" style="--d:0.36s"><img class="s6-bg" src="assets/gen-p06-7.png" alt="" /><div class="s6-tile"><img src="assets/icons/trophy-2E6FE8.png" alt="" /></div><div class="s6-t">中国移动泉州分公司突出贡献奖</div></div>
+      <div class="s6-card reveal" style="--d:0.40s"><img class="s6-bg" src="assets/gen-p06-8.png" alt="" /><div class="s6-tile"><img src="assets/icons/handshake-2E6FE8.png" alt="" /></div><div class="s6-t">杭州电信年度金牌合作伙伴</div></div>
+      <div class="s6-card reveal" style="--d:0.44s"><img class="s6-bg" src="assets/gen-p06-9.png" alt="" /><div class="s6-tile"><img src="assets/icons/headset-2E6FE8.png" alt="" /></div><div class="s6-t">淮安移动合作伙伴 - 卓越贡献奖</div></div>
     </div>
   </div>
   <div class="pageno">06 / 31</div>
@@ -1650,52 +1751,68 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       <div class="s7-banner-en">CERTIFIED</div>
     </div>
     <div class="s7-grid">
-      <div class="s7-card reveal" style="--d:0.16s">
-        <div class="s7-badge"><img src="assets/icons/ring-F02D4E.png" alt="" /><svg viewBox="0 0 448 512"><path fill="#F02D4E" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg></div>
+      <div class="s7-card card reveal" style="--d:0.14s">
+        <img class="s7-cert" src="assets/gen-p07-1.png" alt="ISO/IEC 27001" />
         <div class="s7-text">
           <div class="s7-t">ISO/IEC 27001</div>
           <div class="s7-s seal-red">信息安全管理体系认证</div>
           <div class="s7-d">数据存储与传输全程加密，金融级信息安全标准</div>
         </div>
       </div>
-      <div class="s7-card reveal" style="--d:0.22s">
-        <div class="s7-badge"><img src="assets/icons/ring-2E6FE8.png" alt="" /><svg viewBox="0 0 448 512"><path fill="#2E6FE8" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg></div>
+      <div class="s7-card card reveal" style="--d:0.18s">
+        <img class="s7-cert" src="assets/gen-p07-7.png" alt="ISO 9001" />
+        <div class="s7-text">
+          <div class="s7-t">ISO 9001</div>
+          <div class="s7-s seal-blue">质量管理体系认证</div>
+          <div class="s7-d">标准化质量管控流程，全周期研发交付品质保证</div>
+        </div>
+      </div>
+      <div class="s7-card card reveal" style="--d:0.22s">
+        <img class="s7-cert" src="assets/gen-p07-8.png" alt="ISO/IEC 27701" />
+        <div class="s7-text">
+          <div class="s7-t">ISO/IEC 27701</div>
+          <div class="s7-s seal-navy">隐私信息管理体系认证</div>
+          <div class="s7-d">国际高标准隐私保护规范，筑牢数据合规防线</div>
+        </div>
+      </div>
+      <div class="s7-card card reveal" style="--d:0.26s">
+        <img class="s7-cert" src="assets/gen-p07-2.png" alt="等保三级" />
         <div class="s7-text">
           <div class="s7-t">等保三级</div>
           <div class="s7-s seal-blue">网络安全等级保护三级</div>
-          <div class="s7-d">核心系统通过国家等级保护三级测评</div>
+          <div class="s7-d">核心系统通过国家信息系统等级保护三级测评</div>
         </div>
       </div>
-      <div class="s7-card reveal" style="--d:0.28s">
-        <div class="s7-badge"><img src="assets/icons/ring-0A1F44.png" alt="" /><svg viewBox="0 0 448 512"><path fill="#0A1F44" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg></div>
+      <div class="s7-card card reveal" style="--d:0.30s">
+        <img class="s7-cert" src="assets/gen-p07-3.png" alt="增值电信业务经营许可证" />
         <div class="s7-text">
-          <div class="s7-t">增值电信业务经营许可证</div>
+          <div class="s7-t">增值电信业务许可证</div>
           <div class="s7-s seal-navy">工信部核发</div>
-          <div class="s7-d">合规经营电信增值业务的基础准入资质</div>
+          <div class="s7-d">合规经营电信增值业务的基础准入资质保障</div>
         </div>
       </div>
-      <div class="s7-card reveal" style="--d:0.34s">
-        <div class="s7-badge"><img src="assets/icons/ring-F02D4E.png" alt="" /><svg viewBox="0 0 448 512"><path fill="#F02D4E" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg></div>
+      <div class="s7-card card reveal" style="--d:0.34s">
+        <img class="s7-cert" src="assets/gen-p07-4.png" alt="AAA 级信用企业" />
         <div class="s7-text">
           <div class="s7-t">AAA 级信用企业</div>
           <div class="s7-s seal-red">互联网信用评价中心</div>
-          <div class="s7-d">诚信经营获信用评价最高等级认证</div>
+          <div class="s7-d">诚信守法经营获信用评价最高等级认证</div>
         </div>
       </div>
-      <div class="s7-card reveal" style="--d:0.40s">
-        <div class="s7-badge"><img src="assets/icons/ring-2E6FE8.png" alt="" /><svg viewBox="0 0 448 512"><path fill="#2E6FE8" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg></div>
+      <div class="s7-card card reveal" style="--d:0.38s">
+        <img class="s7-cert" src="assets/gen-p07-5.png" alt="高新技术企业" />
         <div class="s7-text">
           <div class="s7-t">高新技术企业</div>
           <div class="s7-s seal-blue">国家级认定</div>
-          <div class="s7-d">以核心技术自主研发能力获国家级认定</div>
+          <div class="s7-d">以核心技术自主研发与创新转化能力获国家级认定</div>
         </div>
       </div>
-      <div class="s7-card reveal" style="--d:0.46s">
-        <div class="s7-badge"><img src="assets/icons/ring-0A1F44.png" alt="" /><svg viewBox="0 0 448 512"><path fill="#0A1F44" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg></div>
+      <div class="s7-card card reveal" style="--d:0.42s">
+        <img class="s7-cert" src="assets/gen-p07-6.png" alt="5G消息 CSP 资质" />
         <div class="s7-text">
           <div class="s7-t">5G消息 CSP 资质</div>
           <div class="s7-s seal-navy">多省运营商准入</div>
-          <div class="s7-d">获多省 5G消息 CSP 资质，生态服务能力认证</div>
+          <div class="s7-d">获三大运营商多省 5G消息生态服务资质认证</div>
         </div>
       </div>
     </div>
@@ -1746,32 +1863,37 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
         </div>
       </div>
       <div class="s8-cities reveal" style="--d:0.34s">
-        <div class="s8-cities-t">
-          <span class="s8-ct-bar"></span>核心驻点服务团队
-          <span class="s8-ct-badge">6 大分公司 · 5 城驻点</span>
+        <img class="s8-cities-bg" src="assets/gen-p08-network.png" alt="" />
+        <div class="s8-cities-veil"></div>
+        <div class="s8-cities-content">
+          <div class="s8-cities-t">
+            <span class="s8-ct-bar"></span>核心驻点服务团队
+            <span class="s8-ct-badge">6 大分公司 · 5 城驻点</span>
+          </div>
+          <div class="s8-chips">
+            <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">北京 · 总部</div></div>
+            <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">山东</div></div>
+            <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">上海</div></div>
+            <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">长沙</div></div>
+            <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">成都</div></div>
+            <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">深圳</div></div>
+            <div class="s8-chip"><div class="s8-dot"></div><div class="s8-ct">石家庄</div></div>
+            <div class="s8-chip"><div class="s8-dot"></div><div class="s8-ct">重庆</div></div>
+            <div class="s8-chip"><div class="s8-dot"></div><div class="s8-ct">合肥</div></div>
+            <div class="s8-chip"><div class="s8-dot"></div><div class="s8-ct">武汉</div></div>
+            <div class="s8-chip"><div class="s8-dot"></div><div class="s8-ct">天津</div></div>
+          </div>
+          <div class="s8-legend"><span><i class="hq"></i>分公司（6 大）</span><span><i></i>驻点服务团队（5 城）</span></div>
         </div>
-        <div class="s8-chips">
-          <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">北京 · 总部</div></div>
-          <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">山东</div></div>
-          <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">上海</div></div>
-          <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">长沙</div></div>
-          <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">成都</div></div>
-          <div class="s8-chip hq"><div class="s8-dot"></div><div class="s8-ct">深圳</div></div>
-          <div class="s8-chip"><div class="s8-dot"></div><div class="s8-ct">石家庄</div></div>
-          <div class="s8-chip"><div class="s8-dot"></div><div class="s8-ct">重庆</div></div>
-          <div class="s8-chip"><div class="s8-dot"></div><div class="s8-ct">合肥</div></div>
-          <div class="s8-chip"><div class="s8-dot"></div><div class="s8-ct">武汉</div></div>
-          <div class="s8-chip"><div class="s8-dot"></div><div class="s8-ct">天津</div></div>
-        </div>
-        <div class="s8-legend"><span><i class="hq"></i>分公司（6 大）</span><span><i></i>驻点服务团队（5 城）</span></div>
-      </div>
-    </div>
+      </div>    </div>
   </div>
   <div class="pageno">08 / 31</div>
 </section>
 
 
 <section class="slide dark" id="s9" style="background:linear-gradient(150deg,#0A1F44 0%,#123A7A 70%,#1B4FA0 100%)">
+    <img class="s9-bg" src="assets/gen-p09-bg.png" alt="" />
+    <div class="s9-veil"></div>
     <div class="s10-deco1"></div>
     <div class="s10-deco2"></div>
     <div class="s10-head reveal">
@@ -1813,6 +1935,8 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 
 
 <section class="slide dark" id="s10" style="background:linear-gradient(150deg,#0A1F44 0%,#123A7A 70%,#1B4FA0 100%)">
+    <img class="s10-bg" src="assets/gen-p10-bg.png" alt="" />
+    <div class="s10-veil"></div>
     <div class="s10-deco1"></div>
     <div class="s10-deco2"></div>
     <div class="s10-head reveal">
@@ -1892,6 +2016,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
                 <div class="s12-col-t">一、新媒体产品服务矩阵</div>
                 <div class="s12-col-s">致力于为客户提供融合短信、富媒体、5G消息一体化的云通信服务</div>
             </div>
+            <div class="s12-fig"><img src="assets/gen-p12-media.png" alt="新媒体产品服务矩阵示意"></div>
             <div class="s12-items">
                 <div class="s12-item">
                     <div class="s12-num">1.1</div>
@@ -1923,6 +2048,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
                 <div class="s12-col-t">二、智慧停车产品服务矩阵</div>
                 <div class="s12-col-s">全场景一站式智慧停车解决方案与综合体 2.0 运营</div>
             </div>
+            <div class="s12-fig"><img src="assets/gen-p12-parking.png" alt="智慧停车产品服务矩阵示意"></div>
             <div class="s12-items">
                 <div class="s12-item">
                     <div class="s12-num blue">2.1</div>
@@ -1964,7 +2090,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
   </div>
     <div class="s13-body">
         <div class="s13-card card reveal" style="--d:0.1s">
-            <div class="s13-fig"><img src="images/image20.png" alt="UMC 短信平台" /></div>
+            <div class="s13-fig"><img src="assets/gen-p13-umc.png" alt="UMC 短信平台" /></div>
             <div class="s13-t">UMC 短信平台</div>
             <div class="s13-s">国内短信 · 国际短信</div>
             <div class="s13-d">国内短信、国际短信、验证码、行业通知、会员营销。具备三大运营商全网直连通道与多路由调度能力，保障每一条消息即发即达。</div>
@@ -1977,7 +2103,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
         </div>
 
         <div class="s13-card card reveal" style="--d:0.25s">
-            <div class="s13-fig"><img src="images/image28.png" alt="GMP 本地化部署平台" /></div>
+            <div class="s13-fig"><img src="assets/gen-p13-gmp.png" alt="GMP 本地化部署平台" /></div>
             <div class="s13-t">GMP 本地化部署平台</div>
             <div class="s13-s">跨平台 Java 技术开发</div>
             <div class="s13-d">GMP 是一款基于跨平台的 Java 技术开发的消息发送与管理平台，专为满足企业本地化独立部署的需求而设计，提供高度安全与定制化通讯能力。</div>
@@ -1990,7 +2116,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
         </div>
 
         <div class="s13-card card reveal" style="--d:0.4s">
-            <div class="s13-fig"><img src="assets/gen-5g-card.png" alt="5G 消息 / 视频短信" /></div>
+            <div class="s13-fig"><img src="assets/gen-p13-5g.png" alt="5G 消息 / 视频短信" /></div>
             <div class="s13-t">5G 消息 / 视频短信</div>
             <div class="s13-s">手机终端原生新生态</div>
             <div class="s13-d">5G 行业消息是手机终端原生短信的新升级、新服务、新生态；集影、音、文字一体的手机消息形式新媒体服务，以 Chatbot 形式实现业务闭环。</div>
@@ -2016,22 +2142,22 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       <div class="head-sub">跨平台 Java 技术 · 专为满足企业本地化部署需求设计</div>
     </div>
   </div>
-    <div class="s14-body" style="position:absolute;left:96px;right:96px;top:170px;height:780px;display:grid;grid-template-columns:1fr 1.2fr;gap:40px;">
-        <div class="card reveal reveal-left" style="padding:44px 40px;display:flex;flex-direction:column;justify-content:space-between;--d:0.1s">
-            <div>
-                <div style="font-size:16px;font-weight:700;color:var(--red);font-family:var(--font-num);letter-spacing:1px;margin-bottom:12px;">ON-PREMISE DEPLOYMENT</div>
-                <div style="font-size:28px;font-weight:700;color:var(--navy);margin-bottom:20px;line-height:1.3;">安全、兼容、定制化即时通讯服务</div>
-                <p style="font-size:17px;color:var(--ink);line-height:1.8;">GMP 是一款基于跨平台的 Java 技术开发的消息发送与管理平台，专为满足企业本地化部署的需求而设计。</p>
-                <p style="font-size:17px;color:var(--muted);line-height:1.8;margin-top:16px;">该平台提供了安全、兼容的解决方案，使客户能够在本地部署环境下实现独立部署，并为企业提供更具定制化和全面性的即时通讯服务。</p>
+    <div class="s14-body" style="position:absolute;left:96px;right:96px;top:175px;height:810px;display:grid;grid-template-columns:420px 1fr;gap:32px;">
+        <div class="card reveal reveal-left" style="padding:40px 36px;display:flex;flex-direction:column;justify-content:space-between;--d:0.1s">
+            <div style="display:flex;flex-direction:column;gap:14px;">
+                <div style="font-size:16px;font-weight:700;color:var(--red);font-family:var(--font-num);letter-spacing:1px;">ON-PREMISE DEPLOYMENT</div>
+                <div style="font-size:27px;font-weight:700;color:var(--navy);line-height:1.35;">安全、兼容、定制化即时通讯服务</div>
+                <p style="font-size:16.5px;color:var(--ink);line-height:1.75;">GMP 是一款基于跨平台的 Java 技术开发的消息发送与管理平台，专为满足企业本地化部署的需求而设计。</p>
+                <p style="font-size:16.5px;color:var(--muted);line-height:1.75;">该平台提供了安全、兼容的解决方案，使客户能够在本地部署环境下实现独立部署，并为企业提供更具定制化和全面性的即时通讯服务。</p>
             </div>
-            <div style="background:var(--bg);border-radius:14px;padding:24px;border:1px solid #E3E9F2;">
-                <div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:10px;">平台核心优势</div>
-                <div style="font-size:14.5px;color:var(--muted);line-height:1.8;">· 跨平台 Java 微服务架构，支持物理与私有云隔离部署<br>· 数据全程对称与非对称加密，满足金融级合规审计<br>· 支持直连三大运营商协议，支持通道自动容灾热备</div>
+            <div style="background:var(--bg);border-radius:14px;padding:22px 24px;border:1px solid #E3E9F2;">
+                <div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:8px;">平台核心优势</div>
+                <div style="font-size:14px;color:var(--muted);line-height:1.75;">· 跨平台 Java 微服务架构，支持物理与私有云隔离部署<br>· 数据全程对称与非对称加密，满足金融级合规审计<br>· 支持直连三大运营商协议，支持通道自动容灾热备</div>
             </div>
         </div>
-        <div class="card reveal reveal-right" style="padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center;background:#0A1F44;border-radius:18px;--d:0.25s">
-            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:12px;">
-                <img src="assets/gmp_dashboard.png" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;" alt="GMP 控制台大屏" />
+        <div class="card reveal reveal-right" style="padding:10px;display:flex;flex-direction:column;justify-content:center;align-items:center;background:linear-gradient(160deg,#0A1F44 0%,#123A7A 100%);border-radius:20px;box-shadow:0 18px 48px rgba(10,31,68,0.18);--d:0.25s">
+            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:14px;background:#0d2654;">
+                <img src="assets/gmp_dashboard.png" style="width:100%;height:100%;object-fit:contain;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,0.35);" alt="GMP 控制台大屏" />
             </div>
         </div>
     </div>
@@ -2140,9 +2266,9 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
                 <div class="s16-check-row">✓ 多级分账 · 停车优惠券 · 远程云坐席一站式托管</div>
                 <div class="s16-check-row">✓ 现场岗位人员减少 80%，资金回收安全稳定</div>
             </div>
-            <div style="display:flex;gap:12px;margin-top:16px;">
-                <div style="flex:1;height:120px;border-radius:12px;overflow:hidden;"><img src="images/image30.png" alt="无感支付" style="width:100%;height:100%;object-fit:cover;" /></div>
-                <div style="flex:1;height:120px;border-radius:12px;overflow:hidden;"><img src="images/image31.png" alt="车载支付" style="width:100%;height:100%;object-fit:cover;" /></div>
+            <div style="display:flex;gap:12px;margin-top:16px;flex:1;min-height:160px;">
+                <div style="flex:1;border-radius:12px;overflow:hidden;"><img src="images/image30.png" alt="无感支付" style="width:100%;height:100%;object-fit:cover;" /></div>
+                <div style="flex:1;border-radius:12px;overflow:hidden;"><img src="images/image31.png" alt="车载支付" style="width:100%;height:100%;object-fit:cover;" /></div>
             </div>
         </div>
         <div class="s16-card card reveal reveal-right" style="--d:0.25s">
@@ -2154,9 +2280,9 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
                 <div class="s16-check-row">✓ 整合充换电、餐厅休息室、洗车养车多业态协同</div>
                 <div class="s16-check-row">✓ 运营收入达传统车场 5 倍，年化收益 31%，2.3 年回本</div>
             </div>
-            <div style="display:flex;gap:12px;margin-top:16px;">
-                <div style="flex:1;height:120px;border-radius:12px;overflow:hidden;"><img src="images/image32.png" alt="车场入口" style="width:100%;height:100%;object-fit:cover;" /></div>
-                <div style="flex:1;height:120px;border-radius:12px;overflow:hidden;"><img src="images/image34.png" alt="云坐席" style="width:100%;height:100%;object-fit:cover;" /></div>
+            <div style="display:flex;gap:12px;margin-top:16px;flex:1;min-height:160px;">
+                <div style="flex:1;border-radius:12px;overflow:hidden;"><img src="images/image32.png" alt="车场入口" style="width:100%;height:100%;object-fit:cover;" /></div>
+                <div style="flex:1;border-radius:12px;overflow:hidden;"><img src="images/image34.png" alt="云坐席" style="width:100%;height:100%;object-fit:cover;" /></div>
             </div>
         </div>
     </div>
@@ -2180,25 +2306,37 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
         </div>
         <div class="s17-grid">
             <div class="s17-card card reveal" style="--d:0.15s">
-                <img class="s17-fig" src="images/image32.png" alt="" />
-                <div class="s17-n">01</div>
-                <div class="s17-t">提升安全 · 降本增效</div>
-                <p class="s17-d">持续提升车场经营安全性，实现降本增效。通过无人值守、无感通行与智能软硬件替代传统繁琐流程，大幅降低日常运营与管理成本。</p>
-                <div class="s17-subtag">快停付 SaaS 核心能力</div>
+                <div class="s17-fig-wrap"><img class="s17-fig" src="assets/gen-p17-safe.png" alt="无人值守 · 无感通行" /></div>
+                <div class="s17-card-body">
+                    <div>
+                        <div class="s17-n">01</div>
+                        <div class="s17-t">提升安全 · 降本增效</div>
+                        <p class="s17-d">持续提升车场经营安全性，实现降本增效。通过无人值守、无感通行与智能软硬件替代传统繁琐流程，大幅降低日常运营与管理成本。</p>
+                    </div>
+                    <div class="s17-subtag">快停付 SaaS 核心能力</div>
+                </div>
             </div>
             <div class="s17-card card reveal" style="--d:0.25s">
-                <img class="s17-fig" src="images/image21.png" alt="" />
-                <div class="s17-n">02</div>
-                <div class="s17-t">进行多业态资源整合</div>
-                <p class="s17-d">进行多业态资源整合，提升停车产业链增值收入。引入出行媒体曝光变现、充电桩投建与车后综合服务，成倍扩展场站综合盈利空间。</p>
-                <div class="s17-subtag">泊聚量 + 聚微能源</div>
+                <div class="s17-fig-wrap"><img class="s17-fig" src="assets/gen-p17-multi.png" alt="多业态资源整合" /></div>
+                <div class="s17-card-body">
+                    <div>
+                        <div class="s17-n">02</div>
+                        <div class="s17-t">进行多业态资源整合</div>
+                        <p class="s17-d">进行多业态资源整合，提升停车产业链增值收入。引入出行媒体曝光变现、充电桩投建与车后综合服务，成倍扩展场站综合盈利空间。</p>
+                    </div>
+                    <div class="s17-subtag">泊聚量 + 聚微能源</div>
+                </div>
             </div>
             <div class="s17-card card reveal" style="--d:0.35s">
-                <img class="s17-fig" src="images/image67.png" alt="" />
-                <div class="s17-n">03</div>
-                <div class="s17-t">赋能产业链 · 集约发展</div>
-                <p class="s17-d">通过赋能停车行业产业链，打通数据链路，串联行业上下游资源，实现平台化集约发展，形成开放互赢的商业生态。</p>
-                <div class="s17-subtag">打通上下游数据中台</div>
+                <div class="s17-fig-wrap"><img class="s17-fig" src="assets/gen-p17-chain.png" alt="赋能产业链 · 集约发展" /></div>
+                <div class="s17-card-body">
+                    <div>
+                        <div class="s17-n">03</div>
+                        <div class="s17-t">赋能产业链 · 集约发展</div>
+                        <p class="s17-d">通过赋能停车行业产业链，打通数据链路，串联行业上下游资源，实现平台化集约发展，形成开放互赢的商业生态。</p>
+                    </div>
+                    <div class="s17-subtag">打通上下游数据中台</div>
+                </div>
             </div>
         </div>
     </div>
@@ -2232,19 +2370,44 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
                     <div class="s18-item-d">出口排队，找零耗时长，收费标准不统一，存在多收钱风险。</div>
                 </div>
             </div>
+            <div class="s18-fig reveal" style="--d:0.35s"><img src="assets/gen-p18-pay.png" alt="无感支付 · 快速离场"></div>
             <div style="font-size:14px;color:var(--muted);border-top:1px solid #E3E9F2;padding-top:14px;margin-top:10px;">传统模式管理难度大、资金漏洞多、客户投诉高</div>
         </div>
         <div class="s18-col card sol reveal reveal-right" style="--d:0.25s">
             <div class="s18-head blue">解决方案与产品功能</div>
             <div class="s18-grid8">
-                <div class="s18-cell"><span class="s18-cell-t">无感支付</span><span class="s18-cell-d">无感支付提升车主体验</span></div>
-                <div class="s18-cell"><span class="s18-cell-t">车机支付</span><span class="s18-cell-d">原装车机屏直联快缴</span></div>
-                <div class="s18-cell"><span class="s18-cell-t">出口扫码支付</span><span class="s18-cell-d">多种支付工具便捷支付</span></div>
-                <div class="s18-cell"><span class="s18-cell-t">出口被扫支付</span><span class="s18-cell-d">主扫被扫提升效率</span></div>
-                <div class="s18-cell"><span class="s18-cell-t">场内支付</span><span class="s18-cell-d">场内预缴快速离场</span></div>
-                <div class="s18-cell"><span class="s18-cell-t">多级分账</span><span class="s18-cell-d">后台实时对账收款保障</span></div>
-                <div class="s18-cell"><span class="s18-cell-t">停车优惠券</span><span class="s18-cell-d">商户抵扣营销互动</span></div>
-                <div class="s18-cell"><span class="s18-cell-t">云坐席</span><span class="s18-cell-d">远程值守无人化运营</span></div>
+                <div class="s18-cell">
+                    <div class="s18-cell-ico"><img src="assets/icons/bolt-2E6FE8.png" alt="" /></div>
+                    <div class="s18-cell-body"><span class="s18-cell-t">无感支付</span><span class="s18-cell-d">自动扣费秒级抬杆通行</span></div>
+                </div>
+                <div class="s18-cell">
+                    <div class="s18-cell-ico"><img src="assets/icons/microchip-2E6FE8.png" alt="" /></div>
+                    <div class="s18-cell-body"><span class="s18-cell-t">车机支付</span><span class="s18-cell-d">原装车机屏直联快缴</span></div>
+                </div>
+                <div class="s18-cell">
+                    <div class="s18-cell-ico"><img src="assets/icons/mobile-screen-button-2E6FE8.png" alt="" /></div>
+                    <div class="s18-cell-body"><span class="s18-cell-t">出口扫码支付</span><span class="s18-cell-d">微信支付宝聚合扫码</span></div>
+                </div>
+                <div class="s18-cell">
+                    <div class="s18-cell-ico"><img src="assets/icons/comment-dots-2E6FE8.png" alt="" /></div>
+                    <div class="s18-cell-body"><span class="s18-cell-t">出口被扫支付</span><span class="s18-cell-d">主扫被扫提升通行效率</span></div>
+                </div>
+                <div class="s18-cell">
+                    <div class="s18-cell-ico"><img src="assets/icons/clock-0A1F44.png" alt="" /></div>
+                    <div class="s18-cell-body"><span class="s18-cell-t">场内支付</span><span class="s18-cell-d">提前预缴享离场宽限期</span></div>
+                </div>
+                <div class="s18-cell">
+                    <div class="s18-cell-ico"><img src="assets/icons/layer-group-2E6FE8.png" alt="" /></div>
+                    <div class="s18-cell-body"><span class="s18-cell-t">多级分账</span><span class="s18-cell-d">后台实时清分资金直达</span></div>
+                </div>
+                <div class="s18-cell">
+                    <div class="s18-cell-ico"><img src="assets/icons/award-2E6FE8.png" alt="" /></div>
+                    <div class="s18-cell-body"><span class="s18-cell-t">停车优惠券</span><span class="s18-cell-d">商户抵扣营销联动增收</span></div>
+                </div>
+                <div class="s18-cell">
+                    <div class="s18-cell-ico"><img src="assets/icons/headset-2E6FE8.png" alt="" /></div>
+                    <div class="s18-cell-body"><span class="s18-cell-t">云坐席</span><span class="s18-cell-d">远程呼叫值守无人化运营</span></div>
+                </div>
             </div>
             <div class="s18-foot-note">以智慧车场管理系统为核心，提供车位引导等多种服务，实现资金安全回收与经营成本大幅降低</div>
         </div>
@@ -2442,6 +2605,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
         <div class="s21-right card reveal reveal-right" style="--d:0.35s">
             <div class="s21-rt">落地运营成效实证</div>
             <div class="s21-rh">单枪日电量持续稳定 300+ 度</div>
+            <div class="s21-fig"><img src="assets/gen-p21-station.png" alt="聚微能源示范充电站实景" /></div>
             <div class="s21-cases">
                 <div class="s21-case-box">
                     <div class="s21-case-name">石家庄 - 义西街示范站</div>
@@ -2474,31 +2638,55 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
     </div>
   </div>
     <div class="s22-body">
-        <div class="s22-top-grid">
-            <div class="s22-card card reveal" style="--d:0.1s">
-                <div class="s22-tag">一、多种经营收入高</div>
-                <div class="num s22-num">8000<span class="s22-u">万元</span></div>
-                <div class="s22-t">年产出 1000 万，8 年 8000 万</div>
-                <div class="s22-d">运营收入为传统车场运营的 <b>5 倍</b>。项目举例：占地 15 亩，400 个车位，整租 200 万/年，8 年合约。</div>
+        <div class="s22-main">
+            <div class="s22-fig reveal reveal-left" style="--d:0.15s">
+                <img src="assets/gen-p22-complex.png" alt="车场综合体 2.0 示意图">
+                <div class="s22-fig-cap">15 亩 · 400 车位 · 多业态车场综合体</div>
             </div>
-            <div class="s22-card card reveal" style="--d:0.2s">
-                <div class="s22-tag">二、投资回报高</div>
-                <div class="num s22-num">31<span class="s22-u">%</span> <span style="font-size:24px;color:var(--ink)">/ 2.3年</span></div>
-                <div class="s22-t">年化收益超 30% · 两年回本</div>
-                <div class="s22-d">自营投建成本 370 万（设备 220+施工 150，租金 200万/年），8年总产出 4100 万，总利润 <b>910 万元</b>，回收周期 2.3 年。</div>
-            </div>
-            <div class="s22-card card reveal" style="--d:0.3s">
-                <div class="s22-tag">三、储能应用空间大</div>
-                <div class="num s22-num">500<span class="s22-u">万度</span></div>
-                <div class="s22-t">年耗电量 500 万度奠定基础</div>
-                <div class="s22-d">服务新能源汽车 360 车次/日（相当于 36 桩）。单充电站电力消耗 3600 度/天，单换电站电力消耗 1600 度/天。</div>
+            <div class="s22-cards">
+                <div class="s22-card card reveal" style="--d:0.1s">
+                    <div class="s22-card-info">
+                        <div class="s22-tag">一、多种经营收入高</div>
+                        <div class="s22-t">年产出 1000 万，8 年 8000 万</div>
+                        <div class="s22-d">运营收入为传统车场运营的 <b>5 倍</b>。项目举例：占地 15 亩，400 个车位，整租 200 万/年，8 年合约。</div>
+                    </div>
+                    <div class="num s22-num">8000<span class="s22-u">万元</span></div>
+                </div>
+                <div class="s22-card card reveal" style="--d:0.2s">
+                    <div class="s22-card-info">
+                        <div class="s22-tag">二、投资回报高</div>
+                        <div class="s22-t">年化收益超 30% · 两年回本</div>
+                        <div class="s22-d">自营投建成本 370 万（设备 220+施工 150，租金 200万/年），8年总产出 4100 万，总利润 <b>910 万元</b>。</div>
+                    </div>
+                    <div class="num s22-num">31<span class="s22-u">%</span><span class="s22-nsub">/ 2.3 年回本</span></div>
+                </div>
+                <div class="s22-card card reveal" style="--d:0.3s">
+                    <div class="s22-card-info">
+                        <div class="s22-tag">三、储能应用空间大</div>
+                        <div class="s22-t">年耗电量 500 万度奠定基础</div>
+                        <div class="s22-d">服务新能源汽车 360 车次/日（相当于 36 桩）。单充电站电力消耗 3600 度/天，单换电站电力消耗 1600 度/天。</div>
+                    </div>
+                    <div class="num s22-num">500<span class="s22-u">万度</span></div>
+                </div>
             </div>
         </div>
-        <div class="s22-bar card reveal" style="--d:0.4s">
-            <div class="s22-bar-item"><b>充电站 *2：</b>自营 1 个，第三方 1 个</div>
-            <div class="s22-bar-item"><b>换电站 *4：</b>战略合作投建 或 引入第三方</div>
-            <div class="s22-bar-item"><b>小餐厅休息室 *1：</b>预制菜供应资源 + 第三方运营</div>
-            <div class="s22-bar-item"><b>洗车房 *2：</b>引入第三方运营</div>
+        <div class="s22-bar">
+            <div class="s22-bar-item card reveal" style="--d:0.4s">
+                <div class="s22-bar-no">01</div>
+                <div><div class="s22-bar-t">充电站 ×2</div><div class="s22-bar-d">自营 1 个，第三方 1 个</div></div>
+            </div>
+            <div class="s22-bar-item card reveal" style="--d:0.45s">
+                <div class="s22-bar-no">02</div>
+                <div><div class="s22-bar-t">换电站 ×4</div><div class="s22-bar-d">战略合作投建 或 引入第三方</div></div>
+            </div>
+            <div class="s22-bar-item card reveal" style="--d:0.5s">
+                <div class="s22-bar-no">03</div>
+                <div><div class="s22-bar-t">小餐厅休息室 ×1</div><div class="s22-bar-d">预制菜供应资源 + 第三方运营</div></div>
+            </div>
+            <div class="s22-bar-item card reveal" style="--d:0.55s">
+                <div class="s22-bar-no">04</div>
+                <div><div class="s22-bar-t">洗车房 ×2</div><div class="s22-bar-d">引入第三方运营</div></div>
+            </div>
         </div>
     </div>
     <div class="pageno">22 / 31</div>
@@ -2519,6 +2707,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             <div class="s23-head-tag">To B · 好产品</div>
             <div class="s23-t">线上线下生态协同</div>
             <p class="s23-d">基于互联网大数据优势，聚合产业链上下游资源优势，打造多业态经营的车场综合体。</p>
+            <div class="s23-fig"><img src="assets/gen-p23-tob.png" alt="线上线下生态协同"></div>
             <div class="s23-box">
                 <div class="s23-item"><b>线上运营平台资源 SaaS：</b>小桔、T3、快电、新电途；充电 SaaS：达克云、小桔；停车 SaaS：云停</div>
                 <div class="s23-item"><b>场景运营市场策略：</b>电价策略、服务费策略；C端互动：季节营销、节日营销、新站大促、用户关怀</div>
@@ -2529,6 +2718,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             <div class="s23-head-tag">To C · 好服务</div>
             <div class="s23-t">一站式智慧停车服务体验</div>
             <p class="s23-d">满足 C 端一站式服务的同时，大幅提升场站运营收入与车主粘性体验。</p>
+            <div class="s23-fig"><img src="assets/gen-p23-toc.png" alt="一站式智慧停车服务体验"></div>
             <div class="s23-box">
                 <div class="s23-item"><b>一站式服务：</b>出入场无感通行、车位引导、快速寻车</div>
                 <div class="s23-item"><b>充换电综合体：</b>大功率超充快充桩 + 极速电池换电站</div>
@@ -2539,6 +2729,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             <div class="s23-head-tag">INVESTMENT · 好生意</div>
             <div class="s23-t">高收益回报与确定性</div>
             <p class="s23-d">多种经营场景方案，大幅提升综合收益与资金安全性。</p>
+            <div class="s23-fig"><img src="assets/gen-p23-inv.png" alt="高收益回报与确定性"></div>
             <div class="s23-box">
                 <div class="s23-item"><b>多种经营场景：</b>运营收入为传统车场 <b>3 倍</b></div>
                 <div class="s23-item"><b>回收稳定资金安全：</b>投资收益年化超 <b>30%</b>，回本周期快</div>
@@ -2564,6 +2755,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             <div class="s24-tag">PLATFORM LEADER</div>
             <div class="s24-t">滴滴旗下数智化充电运营商</div>
             <p class="s24-p">小桔充电成立于 2018 年，是滴滴旗下数智化充电运营商。依托遍布全国的充电网络，致力于为电车车主打造便捷、可靠、快速、安全的充电服务体验。</p>
+            <div class="s24-fig"><img src="assets/gen-p24-map.png" alt="40 城大数据战略选址"></div>
             <div class="s24-box">
                 <div class="s24-item"><b>40 城大数据战略选址：</b>依托网约车真实轨迹热力大数据，科学测算充电负荷缺口，精准锁定高收益场站点位。</div>
                 <div class="s24-item"><b>数智化能源管控平台：</b>依托智能算法技术，实现场站电能分配最优解，大幅降低运营与调度损耗。</div>
@@ -2573,6 +2765,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             <div class="s24-tag">COOPERATION MODEL</div>
             <div class="s24-t">全方位一站式服务解决方案</div>
             <p class="s24-p">通过品牌授权、平台加盟等多种方式，为合作伙伴提供数智化服务解决方案，汇聚优质充电桩，作为全方位站式的充电服务平台为新能源车主提供快捷、实惠、值得信赖的充电服务。</p>
+            <div class="s24-fig"><img src="assets/gen-p24-station.png" alt="平台流量双重导入"></div>
             <div class="s24-box">
                 <div class="s24-item"><b>精选优质场地：</b>依托微网通联 3.5 万+ 动销车场资源与小桔大数据模型深度结合。</div>
                 <div class="s24-item"><b>保障平台流量：</b>滴滴网约车运力刚需充电与庞大私家车流量双重导入，保障充电桩上线即高负荷运转。</div>
@@ -2597,6 +2790,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             <div class="s25-tag">TECHNICAL ADVANTAGE</div>
             <div class="s25-t">国内领先的新能源 SaaS 管理平台</div>
             <p class="s25-p">专注新能源汽车充电 SaaS 云平台的研发，利用 IOT 算法技术，为合作伙伴精准提供解决方案。高效产品迭代能力，赋能合作伙伴，真正实现“充电自由”。</p>
+            <div class="s25-fig"><img src="assets/gen-p25-iot.png" alt="IOT 智能运维监控"></div>
             <div class="s25-box">
                 <div class="s25-item"><b>智能管理 · 智能运维：</b>通过 IOT 算法实现桩体状态实时监控、异常秒级诊断与远程运维调度。</div>
                 <div class="s25-item"><b>品牌兼容：</b>全面兼容市面上主流充电桩设备品牌，支持各厂商无缝快速平滑接入。</div>
@@ -2606,6 +2800,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             <div class="s25-tag">OPERATION EMPOWERMENT</div>
             <div class="s25-t">稳定高效的管理系统</div>
             <p class="s25-p">稳定高效的管理系统保障高并发计费与运营流畅，敏捷迭代与精细化运营能力深度赋能聚微能源综合体。</p>
+            <div class="s25-fig"><img src="assets/gen-p25-cloud.png" alt="云端计费与多级分账"></div>
             <div class="s25-box">
                 <div class="s25-item"><b>稳定高效：</b>云端微服务架构支持海量场站毫秒级并发交易，订单零漏计。</div>
                 <div class="s25-item"><b>多级分账与清算：</b>支持投资方、场地业主及运维团队灵活配置分账规则，资金安全直达。</div>
@@ -2630,6 +2825,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             <div class="s26-tag">INDUSTRY LEADER</div>
             <div class="s26-t">能源互联网核心电力设备上市企业</div>
             <p class="s26-p">聚焦于电能质量、电动汽车充电桩、储能微网、电池化成与检测、工业电源五大板块，为客户提供从新品研发、生产制造到销售服务的一站式解决方案。</p>
+            <div class="s26-fig"><img src="assets/gen-p26-factory.png" alt="充电桩智能制造产线"></div>
             <div class="s26-box">
                 <div class="s26-item"><b>创业板上市公司：</b>股票代码 300693，在核心电力设备领域拥有深厚技术沉淀。</div>
                 <div class="s26-item"><b>一站式解决方案：</b>具备从新品研发、智能工业制造到全周期售后服务的完整工程能力。</div>
@@ -2639,6 +2835,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
             <div class="s26-tag">INFRASTRUCTURE QUALITY</div>
             <div class="s26-t">优质可靠的硬件基础</div>
             <p class="s26-p">智能管理、智能运维、品牌兼容。为聚微能源智慧车场综合体 2.0 提供高规格充电桩与储能微网硬件支撑。</p>
+            <div class="s26-fig"><img src="assets/gen-p26-storage.png" alt="储能微网与光伏车棚"></div>
             <div class="s26-box">
                 <div class="s26-item"><b>工业级可靠品质：</b>防尘耐腐蚀设计，支持极端宽温环境稳定运行，保障 10 年以上寿命。</div>
                 <div class="s26-item"><b>储能微网平滑演进：</b>模块化硬件天然支持未来光伏车棚与储能系统接入，赋能长期电力运营。</div>
@@ -2710,6 +2907,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
   </div>
   <div class="s23-grid reveal reveal-right" style="--d:0.3s">
     <div class="s23-c">
+      <img class="s23-cbg" src="assets/gen-p28-1.png" alt="" />
       <div class="icon-tile tile-78 bg-navy"><img src="assets/icons/shield-halved-0A1F44.png" alt=""></div>
       <div>
         <div class="s23-ct">平台安全</div>
@@ -2717,6 +2915,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       </div>
     </div>
     <div class="s23-c">
+      <img class="s23-cbg" src="assets/gen-p28-2.png" alt="" />
       <div class="icon-tile tile-78 bg-blue"><img src="assets/icons/tower-broadcast-2E6FE8.png" alt=""></div>
       <div>
         <div class="s23-ct">运营商网关异常</div>
@@ -2724,6 +2923,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       </div>
     </div>
     <div class="s23-c">
+      <img class="s23-cbg" src="assets/gen-p28-3.png" alt="" />
       <div class="icon-tile tile-78 bg-red"><img src="assets/icons/lock-F02D4E.png" alt=""></div>
       <div>
         <div class="s23-ct">其他增值服务</div>
@@ -2731,6 +2931,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       </div>
     </div>
     <div class="s23-c">
+      <img class="s23-cbg" src="assets/gen-p28-4.png" alt="" />
       <div class="icon-tile tile-78 bg-blue"><img src="assets/icons/layer-group-2E6FE8.png" alt=""></div>
       <div>
         <div class="s23-ct">全生命周期护航</div>
@@ -2832,7 +3033,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 </section>
 
 <section class="slide dark" id="s31">
-  <img class="s31-bg" src="assets/cover_hero.png" alt="">
+  <img class="s31-bg" src="assets/gen-p31-closing.png" alt="">
   <div class="s31-veil"></div>
   <div class="s31-wrap">
     <img class="s31-logo reveal" src="assets/logo_white.png" alt="微网通联">
@@ -2844,7 +3045,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
     </div>
     <div class="s31-bot reveal" style="--d:0.3s">
       <div class="s31-co">北京微网通联股份有限公司</div>
-      <div class="s31-en">BEIJING WEIWANG TONGLIAN CO., LTD. · 2026</div>
+      <div class="s31-en">BEIJING WEIWANG TONGLIAN CO., LTD.</div>
     </div>
   </div>
 </section>
