@@ -717,6 +717,156 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s6 .arch-cells { flex:1; display:flex; gap:8px; }
 #s6 .arch-cell { flex:1; background:#fff; border:1.5px solid #E3E9F2; border-radius:9px; padding:9px 8px; font-size:12.5px; color:var(--ink); font-weight:600; text-align:center; display:flex; align-items:center; justify-content:center; line-height:1.4; }
 #s6 .arch-down { display:flex; justify-content:center; }
+
+/* === S7 数据处理背景与蒙版 === */
+#s7 .s7-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.30;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 0;
+}
+#s7 .s7-veil {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 45%, rgba(10,31,68,0.55) 0%, rgba(10,31,68,0.85) 70%, rgba(10,31,68,0.95) 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+#s7 .slide-head, #s7 .s7-main {
+    position: relative;
+    z-index: 2;
+}
+
+/* === S10 / S12 卡片增强 === */
+.s10-tag-pill {
+    display: inline-block;
+    align-self: flex-start;
+    margin-top: auto;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: rgba(46,111,232,0.08);
+    color: var(--blue);
+    font-size: 14.5px;
+    font-weight: 600;
+}
+.s12-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 14px 0 16px 0;
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.55;
+}
+.s12-card.hot .s12-checklist {
+    color: rgba(255,255,255,0.7);
+}
+
+/* === S16-S23 左侧特性规范卡片 === */
+.s-feat-left {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+}
+.s-feat-spec {
+    background: var(--bg);
+    border: 1px solid #E3E9F2;
+    border-radius: 14px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: auto;
+}
+.s-spec-t {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 1px;
+}
+.s-spec-li {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+
+/* === S5 增强 === */
+.s5-d {
+    font-size: 14.5px !important;
+    line-height: 1.65 !important;
+}
+
+/* === S10 列表与卡片微调 === */
+.s10-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 20px 0;
+}
+.s10-li {
+    font-size: 15.5px !important;
+    line-height: 1.65 !important;
+    color: var(--muted);
+}
+.s10-li b {
+    color: var(--navy);
+    font-weight: 700;
+}
+.s10-card {
+    padding: 38px 36px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+}
+
+/* === S12 列表 === */
+.s12-card {
+    padding: 38px 36px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+}
+.s12-checklist div {
+    font-size: 15.5px !important;
+    line-height: 1.7 !important;
+}
+
+/* === S16-S23 左栏自适应与规格卡 === */
+.fn-left {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+}
+.fn-spec {
+    background: #fff;
+    border: 1px solid #E3E9F2;
+    border-radius: 16px;
+    padding: 22px 24px;
+    box-shadow: 0 6px 20px rgba(10,31,68,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: auto;
+}
+.fn-spec-t {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+.fn-spec-li {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.55;
+}
+
 </style>
 </head>
 <body>
@@ -724,7 +874,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 <main class="deck-stage" id="deckStage">
 <!-- ============ s1 · 封面 ============ -->
 <section class="slide dark" id="s1">
-  <img class="s1-bg" src="assets/cover_gmp.svg" alt="" />
+  <img class="s1-bg" src="assets/gen-gmp-cover.png" alt="" />
   <div class="s1-mask"></div>
   <div class="s1-inner">
     <div class="s1-top reveal">
@@ -964,37 +1114,37 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
     <div class="s5-card reveal" style="--d:0.14s">
       <div class="icon-tile navy"><img src="assets/icons/network-wired-0A1F44.png" alt="" /></div>
       <div class="s5-t">通道对接</div>
-      <div class="s5-d">多通道对接流程梳理 · 第三方动态追踪</div>
+      <div class="s5-d">· 三网运营商全协议直连与联调<br>· 通道毫秒级故障监测与流控<br>· 状态报告与上行消息全链路追踪</div>
     </div>
     <div class="s5-card reveal" style="--d:0.18s">
       <div class="icon-tile"><img src="assets/icons/layer-group-2E6FE8.png" alt="" /></div>
       <div class="s5-t">业务对接</div>
-      <div class="s5-d">多种消息类型整合 · 通道自由组合发送 · 系统调用流程 · 界面操作流程</div>
+      <div class="s5-d">· 短信、微信、邮件全渠道整合<br>· 统一标准化报文消除系统壁垒<br>· 通道自由组合分流与智能回落</div>
     </div>
     <div class="s5-card reveal" style="--d:0.22s">
       <div class="icon-tile"><img src="assets/icons/sliders-0A1F44.png" alt="" /></div>
       <div class="s5-t">产品设计</div>
-      <div class="s5-d">上下游系统管理 · 统一消息发送 · 定时、定速、补发 · 数据埋点 · 审核流</div>
+      <div class="s5-d">· 统一网关与消息生命周期治理<br>· 支持定时定速与梯次失败补发<br>· 完善的数据埋点与多级审批流</div>
     </div>
     <div class="s5-card reveal" style="--d:0.26s">
       <div class="icon-tile red"><img src="assets/icons/lock-F02D4E.png" alt="" /></div>
       <div class="s5-t">数据安全</div>
-      <div class="s5-d">账号权限 · API 调用权限 · 数据隔离 ……</div>
+      <div class="s5-d">· 金融级多租户数据隔离与脱敏<br>· 细粒度接口鉴权与敏感字段加密<br>· 严格符合国家三级等保合规要求</div>
     </div>
     <div class="s5-card reveal" style="--d:0.30s">
       <div class="icon-tile"><img src="assets/icons/microchip-2E6FE8.png" alt="" /></div>
       <div class="s5-t">技术研发</div>
-      <div class="s5-d">协议兼容、可拓展 · 标准化接口设计 · 全面的数据采集 · 可靠的数据分析</div>
+      <div class="s5-d">· 跨平台 Java 微服务高内聚架构<br>· 标准化 RESTful/CMPP 规范接口<br>· 分布式消息队列保障零积压</div>
     </div>
     <div class="s5-card reveal" style="--d:0.34s">
       <div class="icon-tile red"><img src="assets/icons/gauge-high-F02D4E.png" alt="" /></div>
       <div class="s5-t">性能保障</div>
-      <div class="s5-d">消息高并发 · 系统稳定性 · 双活容灾</div>
+      <div class="s5-d">· 亿级日吞吐，秒级十万级高并发<br>· 全链路同城双活与自动故障转移<br>· 读写分离与分布式多级缓存加速</div>
     </div>
     <div class="s5-card reveal" style="--d:0.38s">
       <div class="icon-tile"><img src="assets/icons/arrows-rotate-F02D4E.png" alt="" /></div>
       <div class="s5-t">系统运维</div>
-      <div class="s5-d">保持通道更新 · 通道随时扩展 · 系统维护</div>
+      <div class="s5-d">· 运营商网关 7×24H 自动健康巡检<br>· 支持节点动态弹性无感扩容<br>· 专属技术专家团队保障版本迭代</div>
     </div>
   </div>
   <div class="pageno">05 / 29</div>
@@ -1091,6 +1241,8 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 
 <!-- ============ s7 · 数据处理能力（深色大数字） ============ -->
 <section class="slide dark" id="s7">
+  <img class="s7-bg" src="assets/gen-gmp-data-bg.png" alt="" />
+  <div class="s7-veil"></div>
   <div class="s7-deco1"></div>
   <div class="s7-deco2"></div>
   <div class="s7-head reveal">
@@ -1241,10 +1393,11 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
           <div class="s10-t">多通道，多方达</div>
         </div>
         <div class="s10-list">
-          <div class="s10-li"><span class="s10-n">1.</span>主流通道全覆盖</div>
-          <div class="s10-li"><span class="s10-n">2.</span>上下游便捷管理</div>
-          <div class="s10-li"><span class="s10-n">3.</span>建立用户体系</div>
+          <div class="s10-li"><span class="s10-n">1.</span><b>主流通道全覆盖：</b>三大运营商全网直连，支持国内短信、国际短信、视频短信与5G消息一体化接入</div>
+          <div class="s10-li"><span class="s10-n">2.</span><b>上下游便捷管理：</b>多租户账户权限分级，支持集团多级架构独立分配资源与计费管控</div>
+          <div class="s10-li"><span class="s10-n">3.</span><b>建立用户触达体系：</b>多维度客户画像建模，精准匹配最佳触达通道与分发时机</div>
         </div>
+        <div class="s10-tag-pill">多协议兼容 · 统一纳管</div>
       </div>
       <div class="s10-card reveal" style="--d:0.22s">
         <div class="s10-head">
@@ -1252,10 +1405,11 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
           <div class="s10-t">高送达，低成本</div>
         </div>
         <div class="s10-list">
-          <div class="s10-li"><span class="s10-n">1.</span>消息模板</div>
-          <div class="s10-li"><span class="s10-n">2.</span>补发策略</div>
-          <div class="s10-li"><span class="s10-n">3.</span>统一接口调用</div>
+          <div class="s10-li"><span class="s10-n">1.</span><b>智能消息模板：</b>支持变量混排、富媒体图文卡片渲染与防误发模板合规校验</div>
+          <div class="s10-li"><span class="s10-n">2.</span><b>全链路补发策略：</b>短信/微信/邮件梯度梯次重发兜底，保障极端情况下业务零丢失</div>
+          <div class="s10-li"><span class="s10-n">3.</span><b>统一接口高并发调用：</b>标准 RESTful API、SDK、CMPP 多协议毫秒级并发异步处理</div>
         </div>
+        <div class="s10-tag-pill">智能路由 · 成本最优</div>
       </div>
       <div class="s10-card reveal" style="--d:0.32s">
         <div class="s10-head">
@@ -1263,10 +1417,11 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
           <div class="s10-t">多维度，细分析</div>
         </div>
         <div class="s10-list">
-          <div class="s10-li"><span class="s10-n">1.</span>消息历史明细</div>
-          <div class="s10-li"><span class="s10-n">2.</span>多通道推送报表</div>
-          <div class="s10-li"><span class="s10-n">3.</span>用户报表</div>
+          <div class="s10-li"><span class="s10-n">1.</span><b>消息全量历史明细：</b>全量下发流水按秒检索，支持状态回执、失败错误码秒级排查追溯</div>
+          <div class="s10-li"><span class="s10-n">2.</span><b>多通道推送数据看板：</b>按通道、时段、业务类型生成直观图形看板，透视转化与成功率</div>
+          <div class="s10-li"><span class="s10-n">3.</span><b>客户精细化账单报表：</b>提供清分对账明细、费用消耗预警与多级机构消费账单导出</div>
         </div>
+        <div class="s10-tag-pill">全链路透视 · 决策赋能</div>
       </div>
     </div>
     <div class="s10-band reveal" style="--d:0.42s">
@@ -1355,20 +1510,35 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       <div class="s12-card reveal" style="--d:0.12s">
         <div class="icon-tile"><img src="assets/icons/network-wired-0A1F44.png" alt="" /></div>
         <div class="s12-t">分布式部署</div>
-        <div class="s12-d">多节点分布式部署，按业务量灵活扩展，满足持续增长的消息处理需求。</div>
-        <div class="s12-tags"><span class="s12-tag">弹性扩展</span></div>
+        <div class="s12-d">多节点分布式微服务架构，各功能模块物理隔离解耦，支持容器化与私有云无缝演进。</div>
+        <div class="s12-checklist">
+          <div>· 节点弹性横向扩展，按流量峰值秒级扩容</div>
+          <div>· 资源按需调度，微服务高内聚低耦合</div>
+          <div>· 支撑大型金融集团亿级日峰值并发</div>
+        </div>
+        <div class="s12-tags"><span class="s12-tag">弹性扩展</span><span class="s12-tag">亿级并发</span></div>
       </div>
       <div class="s12-card reveal" style="--d:0.22s">
         <div class="icon-tile"><img src="assets/icons/server-0A1F44.png" alt="" /></div>
         <div class="s12-t">集中式部署</div>
-        <div class="s12-d">单中心集中部署，架构简洁、运维高效，快速上线投入使用。</div>
-        <div class="s12-tags"><span class="s12-tag">快速上线</span></div>
+        <div class="s12-d">单中心集中化交付体系，环境依赖高度集成，架构精炼，交付周期压缩至最低。</div>
+        <div class="s12-checklist">
+          <div>· 单机房极简快速交付，即装即用</div>
+          <div>· 硬件占用率低，运维维护成本轻量化</div>
+          <div>· 适合中轻量业务、独立分支快速上线</div>
+        </div>
+        <div class="s12-tags"><span class="s12-tag">极简交付</span><span class="s12-tag">低运维成本</span></div>
       </div>
       <div class="s12-card hot reveal" style="--d:0.32s">
         <div class="icon-tile dark"><img src="assets/icons/arrows-rotate-FFFFFF.png" alt="" /></div>
         <div class="s12-t">集群容灾式部署</div>
-        <div class="s12-d">面向高可用要求的集群容灾部署方案，保障业务连续性。</div>
-        <div class="s12-tags"><span class="s12-tag">同城双活</span><span class="s12-tag">两地三中心</span></div>
+        <div class="s12-d">面向银行金融级高可用要求的集群容灾方案，双中心实时热备，保障核心业务连续性。</div>
+        <div class="s12-checklist">
+          <div>· 同城双活/两地三中心，RPO=0，RTO<30s</div>
+          <div>· 数据库与队列集群实时双向同步</div>
+          <div>· 单点机房或单通道故障无损秒级倒换</div>
+        </div>
+        <div class="s12-tags"><span class="s12-tag">同城双活</span><span class="s12-tag">两地三中心</span><span class="s12-tag">金融高可用</span></div>
       </div>
     </div>
     <div class="s12-band reveal" style="--d:0.42s">
@@ -1541,6 +1711,12 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
         <div class="fn-h"><img src="assets/icons/paper-plane-0A1F44.png" alt="" />消息发送</div>
         <div class="fn-p">接口、页面、文件多重发送方式，单次支持 100 万条号码；适用各种应用场景（验证码、会员提醒、动账通知、营销推广、金融理财等）。</div>
       </div>
+      <div class="fn-spec card reveal" style="--d:0.35s">
+        <div class="fn-spec-t">平台技术指标</div>
+        <div class="fn-spec-li">· 支持 10 万+ 条/秒并发下发调度能力</div>
+        <div class="fn-spec-li">· CMPP / SGIP / SMGP 协议无缝兼容</div>
+        <div class="fn-spec-li">· 验证码通道优先级保障，3秒内极速送达</div>
+      </div>
     </div>
     <div class="fn-right reveal reveal-right" style="--d:0.25s">
       <div class="shot">
@@ -1631,7 +1807,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
                   <div class="mu-row" style="flex:1; min-height:0">
                     <div style="width:250px; flex:none; display:flex; flex-direction:column; gap:10px">
                       <div style="border:1.5px solid #E3E9F2; border-radius:10px; overflow:hidden">
-                        <div style="height:120px; background:linear-gradient(135deg,#0A1F44 0%,#2E6FE8 100%); display:flex; align-items:flex-end; padding:12px; color:#fff; font-size:13px; font-weight:600">封面图 · 900×383</div>
+                        <div style="height:120px; background:linear-gradient(135deg,#0A1F44 0%,#2E6FE8 100%); display:flex; align-items:flex-end; padding:12px; color:#fff; font-size:13px; font-weight:600"><span style="font-weight:700;font-size:12px;">GMP 业务月报</span><br><span style="font-size:10px;opacity:0.75;">微信服务通知</span></div>
                         <div style="padding:10px 12px; font-size:13px; font-weight:600; color:var(--navy)">本月账单已出，点击查看详情</div>
                       </div>
                       <div style="border:1.5px dashed #C4CCD9; border-radius:10px; padding:14px; text-align:center; color:#9AA5B8; font-size:13px">+ 新增图文</div>
@@ -1672,6 +1848,12 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       <div class="fn-block reveal" style="--d:0.18s">
         <div class="fn-h"><img src="assets/icons/paper-plane-0A1F44.png" alt="" />配置即发</div>
         <div class="fn-p">配置邮箱信息，即可下发邮件。支持发送普通邮件 / 变量邮件，适用于邮件告警、信息通知、营销推广等业务场景。</div>
+      </div>
+      <div class="fn-spec card reveal" style="--d:0.35s">
+        <div class="fn-spec-t">邮件交付规格</div>
+        <div class="fn-spec-li">· 单批次支持 10 万+ 邮箱地址批量异步导入</div>
+        <div class="fn-spec-li">· 独立高信誉 IP 发送池，避免进垃圾箱</div>
+        <div class="fn-spec-li">· 打开率与正文链接点击行为全流程追踪</div>
       </div>
     </div>
     <div class="fn-right reveal reveal-right" style="--d:0.25s">
@@ -1731,6 +1913,12 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       <div class="fn-block reveal" style="--d:0.18s">
         <div class="fn-h"><img src="assets/icons/layer-group-2E6FE8.png" alt="" />自定义发送策略</div>
         <div class="fn-p">自定义消息发送策略（消息渠道、发送顺序、发送规则、即时 / 定时），保障消息触达。</div>
+      </div>
+      <div class="fn-spec card reveal" style="--d:0.35s">
+        <div class="fn-spec-t">组合策略效益</div>
+        <div class="fn-spec-li">· 支持短信优先、失败自动补发微信/邮件</div>
+        <div class="fn-spec-li">· 消息综合触达率整体提升 15% 以上</div>
+        <div class="fn-spec-li">· 优先使用低成本通道，通信成本下降超 30%</div>
       </div>
     </div>
     <div class="fn-right reveal reveal-right" style="--d:0.25s">
@@ -1809,6 +1997,12 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
         <div class="fn-h"><img src="assets/icons/arrow-trend-up-0A1F44.png" alt="" />多维度统计分析</div>
         <div class="fn-p">多维度（机构、用户、汇总、渠道、区域、信息类型）统计报表和发送趋势分析，有效的为管理决策提供依据。</div>
       </div>
+      <div class="fn-spec card reveal" style="--d:0.35s">
+        <div class="fn-spec-t">报表分析特性</div>
+        <div class="fn-spec-li">· 发送明细按秒级流水留存与实时检索</div>
+        <div class="fn-spec-li">· 失败原因与运营商错误码智能分类归因</div>
+        <div class="fn-spec-li">· 千万级对账流水支持异步分批导出</div>
+      </div>
     </div>
     <div class="fn-right reveal reveal-right" style="--d:0.25s">
       <div class="shot">
@@ -1879,6 +2073,12 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       <div class="fn-block reveal" style="--d:0.18s">
         <div class="fn-h"><img src="assets/icons/circle-check-0A1F44.png" alt="" />模板审核 · 消息审核</div>
         <div class="fn-p">模板审核、消息审核，支持自定义审核范围、审核流程、审核方式（按角色、按机构），满足企业审核需求。</div>
+      </div>
+      <div class="fn-spec card reveal" style="--d:0.35s">
+        <div class="fn-spec-t">合规风控能力</div>
+        <div class="fn-spec-li">· 金融级敏感词库与违规内容智能语义拦截</div>
+        <div class="fn-spec-li">· 支持「先审后发」与「免审白名单」灵活配置</div>
+        <div class="fn-spec-li">· 审批操作全生命周期留痕，满足等保合规</div>
       </div>
     </div>
     <div class="fn-right reveal reveal-right" style="--d:0.25s">
@@ -2033,6 +2233,12 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       <div class="fn-block reveal" style="--d:0.18s">
         <div class="fn-h"><img src="assets/icons/gauge-high-0A1F44.png" alt="" />故障即时告警</div>
         <div class="fn-p">业务监控、应用程序监控、服务器监控，故障即时告警，保障平台功能稳定可用。</div>
+      </div>
+      <div class="fn-spec card reveal" style="--d:0.35s">
+        <div class="fn-spec-t">立体监控指标</div>
+        <div class="fn-spec-li">· 业务量/成功率/网络时延三层秒级大屏</div>
+        <div class="fn-spec-li">· 异常阈值秒级触达企业微信/钉钉/邮件</div>
+        <div class="fn-spec-li">· 7×24 小时无人值守全链路自动巡检</div>
       </div>
     </div>
     <div class="fn-right reveal reveal-right" style="--d:0.25s">
@@ -2228,7 +2434,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
         <div class="s26-desc">是中部地区首家开业的民营银行，围绕目标产业生态圈和消费金融，着力打造产业银行、资产管理银行、数字银行、便捷银行。</div>
       </div>
       <div class="s26-photo reveal reveal-right" style="--d:0.22s">
-        <img src="assets/s26_75.jpg" alt="" />
+        <img src="assets/gen-bank-cloud.png" alt="同城双活 · 高可用部署" style="width:100%;height:100%;object-fit:cover;display:block;" />
         <div class="s26-cap">同城双活 · 高可用部署</div>
       </div>
     </div>
@@ -2236,22 +2442,22 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       <div class="s26-card reveal" style="--d:0.28s">
         <div class="icon-tile"><img src="assets/icons/server-0A1F44.png" alt="" /></div>
         <div class="s26-ct">同城双活部署</div>
-        <div class="s26-cd">保障系统高可用性</div>
+        <div class="s26-cd">主备数据中心实时同步，RPO=0，RTO<30s</div>
       </div>
       <div class="s26-card reveal" style="--d:0.34s">
         <div class="icon-tile"><img src="assets/icons/layer-group-2E6FE8.png" alt="" /></div>
         <div class="s26-ct">系统统一管理</div>
-        <div class="s26-cd">解决内部客户系统繁杂、不易管理问题</div>
+        <div class="s26-cd">统一收编全行多套业务系统，消除信息孤岛</div>
       </div>
       <div class="s26-card reveal" style="--d:0.40s">
         <div class="icon-tile red"><img src="assets/icons/lock-F02D4E.png" alt="" /></div>
-        <div class="s26-ct">数据库对称加密</div>
-        <div class="s26-cd">数据库、数据库对称加密，保障数据安全</div>
+        <div class="s26-ct">数据全链路加密</div>
+        <div class="s26-cd">国密算法与全链路加密，符合金融三级等保</div>
       </div>
       <div class="s26-card reveal" style="--d:0.46s">
         <div class="icon-tile red"><img src="assets/icons/headset-2E6FE8.png" alt="" /></div>
-        <div class="s26-ct">客户反馈响应及时</div>
-        <div class="s26-cd">客户服务满意度高</div>
+        <div class="s26-ct">专属团队快速响应</div>
+        <div class="s26-cd">7×24H 专家驻场与远程支持，保障极端交易高峰</div>
       </div>
     </div>
   </div>
@@ -2271,9 +2477,12 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
         <div class="icon-tile navy"><img src="assets/icons/building-columns-0A1F44.png" alt="" /></div>
         <div class="s27-t">银行客户</div>
       </div>
-      <div class="s27-li"><i></i>私有化部署，支持同城双活、异地容灾、两地三中心等集群容灾式部署，保障系统稳定可靠</div>
-      <div class="s27-li"><i></i>专线直连运营商，保证业务全流程均为内网，保障信息安全</div>
-      <div class="s27-li"><i></i>支持二次开发，满足个性化需求</div>
+      <div class="s27-tagline" style="background:rgba(10,31,68,0.06);color:var(--navy);">金融通知 · 动账提醒 · 验证码必达 · 风险告警</div>
+      <div class="s27-li"><i></i>私有化部署，支持同城双活、异地容灾与两地三中心等金融级集群容灾部署</div>
+      <div class="s27-li"><i></i>动账提醒、短信验证码、风险交易告警毫秒级必达，保障核心业务平稳运行</div>
+      <div class="s27-li"><i></i>专线直连运营商，全业务流程均在行内金融专网流转，符合监管与审计要求</div>
+      <div class="s27-li"><i></i>敏感数据全链路加密，提供国密算法支持，高标准保障用户账户与资产安全</div>
+      <div class="s27-li"><i></i>支持行内统一服务总线 (ESB) 无缝对接，支持定制化二次开发与多租户分级管理</div>
     </div>
     <div class="s27-card reveal" style="--d:0.24s">
       <div class="s27-head">
@@ -2346,7 +2555,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 
 <!-- ============ s29 · 封底 ============ -->
 <section class="slide dark" id="s29">
-  <img class="s29-bg" src="assets/cover_gmp.svg" alt="" />
+  <img class="s29-bg" src="assets/gen-gmp-closing.png" alt="" />
   <div class="s29-veil"></div>
   <div class="s29-wrap">
     <img class="s29-logo reveal" src="assets/logo_white.png" alt="微网通联" />
