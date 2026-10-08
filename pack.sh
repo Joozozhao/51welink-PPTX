@@ -12,8 +12,10 @@ START_TIME=$(date +%s)
 zip -r -q pptx.zip . \
   -x "./.git/*" \
   -x ".git/*" \
-  -x "./_tools/*" \
-  -x "_tools/*" \
+  -x "./_*/*" \
+  -x "_*/*" \
+  -x "./_*" \
+  -x "_*" \
   -x "*/node_modules/*" \
   -x "*node_modules*" \
   -x "*.DS_Store*" \
