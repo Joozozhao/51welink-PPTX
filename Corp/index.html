@@ -435,7 +435,9 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s4 .s4-r-note { background:rgba(240,45,78,0.15); border-radius:15px; padding:18px 24px; font-size:19.5px; color:rgba(255,255,255,0.85); line-height:1.6; }
 
 /* ==================== s5 发展历程 ==================== */
-#s5 .s5-band { position:absolute; left:0; right:0; bottom:0; height:300px; width:100%; object-fit:cover; object-position:center 74%; opacity:0.95; -webkit-mask-image:linear-gradient(180deg, transparent 0%, #000 55%); mask-image:linear-gradient(180deg, transparent 0%, #000 55%); }
+#s5 .s5-bg-wrap { position:absolute; right:0; top:0; width:72%; height:100%; overflow:hidden; z-index:0; }
+#s5 .s5-bg { width:100%; height:100%; object-fit:cover; object-position:top right; opacity:0.65; }
+#s5 .s5-bg-grad { position:absolute; inset:0; z-index:0; background:linear-gradient(90deg, var(--bg) 0%, rgba(246,248,251,0.92) 35%, rgba(246,248,251,0.35) 70%, transparent 100%); pointer-events:none; }
 #s5 .s5-body { position:absolute; left:96px; right:96px; top:165px; height:750px; z-index:1; display:flex; flex-direction:column; justify-content:center; }
 #s5 .s5-years { display:flex; align-items:flex-end; width:100%; }
 #s5 .s5-ycol { flex:1; display:flex; flex-direction:column; align-items:center; gap:15px; padding-bottom:24px; }
@@ -455,7 +457,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s5 .s5-dwrap.hot .s5-dcard { background:var(--navy); }
 #s5 .s5-dtext { font-size:18px; color:var(--muted); line-height:1.6; text-align:center; width:100%; }
 #s5 .s5-dwrap.hot .s5-dtext { color:rgba(255,255,255,0.85); }
-#s5 .pageno { color:rgba(255,255,255,0.65); }
+#s5 .pageno { color:var(--faint); }
 
 /* ==================== s6 公司荣誉 ==================== */
 #s6 .s6-body { position:absolute; left:96px; right:96px; top:165px; height:750px; display:flex; gap:42px; }
@@ -1652,7 +1654,8 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 
 
 <section class="slide" id="s5" style="background:var(--bg)">
-  <img class="s5-band" src="assets/gen-p05-band-a.png" alt="" />
+  <div class="s5-bg-wrap"><img class="s5-bg" src="assets/gen-p05-bg.png" alt="" /></div>
+  <div class="s5-bg-grad"></div>
   <div class="slide-head reveal">
     <div class="kicker">01 · 发展历程</div>
     <div class="head-line">
@@ -3306,5 +3309,7 @@ document.addEventListener('keydown', (e) => {
     if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable')) editor.toggleEditMode();
 });
 </script>
+<script src="https://sdk.51.la/js-sdk-pro.min.js" charset="UTF-8" id="LA_COLLECT"></script>
+<script>LA.init({id:"3RRThptLKJ4Pr8f4",ck:"3RRThptLKJ4Pr8f4"})</script>
 </body>
 </html>

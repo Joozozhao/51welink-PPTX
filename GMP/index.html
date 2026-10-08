@@ -366,7 +366,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 .slide.dark .pageno { color:rgba(255,255,255,0.45); }
 
 /* ==================== s4 GMP 介绍 ==================== */
-#s4 .s4-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; gap:54px; align-items:center; }
+#s4 .s4-body { position:absolute; left:96px; top:181px; width:1728px; height:734px; display:flex; gap:54px; align-items:center; }
 #s4 .s4-left { width:620px; flex:none; display:flex; flex-direction:column; gap:28px; }
 #s4 .s4-gmp { font-size:108px; color:var(--navy); line-height:1; }
 #s4 .s4-eng { font-size:21px; color:var(--red); letter-spacing:6px; font-weight:600; font-family:var(--font-num); }
@@ -384,7 +384,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s4 .shot-img { height:612px; }
 
 /* ==================== s5 为什么需要 GMP ==================== */
-#s5 .s5-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(2,1fr); gap:24px; }
+#s5 .s5-body { position:absolute; left:96px; top:181px; width:1728px; height:734px; display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(2,1fr); gap:24px; }
 #s5 .s5-lead { background:linear-gradient(160deg,#0A1F44 0%,#123A7A 100%); border-radius:21px; padding:42px 39px; display:flex; flex-direction:column; justify-content:space-between; }
 #s5 .s5-lead-icon { width:66px; height:66px; border-radius:18px; background:rgba(240,45,78,0.2); display:flex; align-items:center; justify-content:center; }
 #s5 .s5-lead-icon img { width:33px; height:33px; object-fit:contain; }
@@ -395,9 +395,18 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s5 .s5-card .icon-tile img { width:33px; height:33px; }
 #s5 .s5-t { font-size:25px; font-weight:700; color:var(--navy); }
 #s5 .s5-d { font-size:18px; color:var(--muted); line-height:1.65; }
+/* 各块配图背景（主题线稿，右下铺底） */
+#s5 .s5-lead { background:url("assets/s5-bg-shield.svg") right bottom / cover no-repeat, linear-gradient(160deg,#0A1F44 0%,#123A7A 100%); }
+#s5 .s5-bg-network  { background:#fff url("assets/s5-bg-network.svg") right bottom / cover no-repeat; }
+#s5 .s5-bg-layers   { background:#fff url("assets/s5-bg-layers.svg") right bottom / cover no-repeat; }
+#s5 .s5-bg-sliders  { background:#fff url("assets/s5-bg-sliders.svg") right bottom / cover no-repeat; }
+#s5 .s5-bg-lock     { background:#fff url("assets/s5-bg-lock.svg") right bottom / cover no-repeat; }
+#s5 .s5-bg-chip     { background:#fff url("assets/s5-bg-chip.svg") right bottom / cover no-repeat; }
+#s5 .s5-bg-gauge    { background:#fff url("assets/s5-bg-gauge.svg") right bottom / cover no-repeat; }
+#s5 .s5-bg-rotate   { background:#fff url("assets/s5-bg-rotate.svg") right bottom / cover no-repeat; }
 
 /* ==================== s6 系统结构图 ==================== */
-#s6 .s6-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; flex-direction:column; gap:24px; }
+#s6 .s6-body { position:absolute; left:96px; top:181px; width:1728px; height:734px; display:flex; flex-direction:column; gap:24px; }
 #s6 .s6-shot { flex:1; background:#fff; border-radius:21px; box-shadow:0 12px 40px rgba(10,31,68,0.10); border:1.5px solid #E6ECF5; display:flex; align-items:center; justify-content:center; padding:24px; min-height:0; }
 #s6 .s6-img { max-width:100%; max-height:100%; object-fit:contain; display:block; }
 #s6 .s6-band { flex:none; background:linear-gradient(90deg,#0A1F44 0%,#123A7A 100%); border-radius:18px; padding:24px 42px; display:flex; align-items:center; justify-content:center; gap:18px; }
@@ -427,7 +436,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s7 .pageno { color:rgba(255,255,255,0.45); }
 
 /* ==================== s8 版本分类（表格） ==================== */
-#s8 .s8-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; align-items:center; }
+#s8 .s8-body { position:absolute; left:96px; top:181px; width:1728px; height:734px; display:flex; align-items:center; }
 #s8 .s8-table { width:100%; border-collapse:separate; border-spacing:0; border-radius:21px; overflow:hidden; box-shadow:0 12px 40px rgba(10,31,68,0.10); background:#fff; }
 #s8 .s8-table th { background:var(--navy); color:#fff; font-size:19px; font-weight:700; padding:16px 14px; text-align:center; letter-spacing:1px; }
 #s8 .s8-table th.sub { background:var(--navy-2); font-size:16.5px; font-weight:600; padding:12px 10px; }
@@ -443,26 +452,42 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s8 .s8-srv { font-size:17px; line-height:1.5; }
 
 /* ==================== s10 平台价值 ==================== */
-#s10 .s10-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; flex-direction:column; gap:30px; }
+#s10 .s10-body { position:absolute; left:96px; top:181px; width:1728px; height:734px; display:flex; flex-direction:column; gap:30px; }
 #s10 .s10-cards { flex:1; display:flex; gap:30px; }
-#s10 .s10-card { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 24px rgba(10,31,68,0.06); padding:42px 42px; display:flex; flex-direction:column; gap:24px; }
-#s10 .s10-head { display:flex; align-items:center; gap:21px; }
-#s10 .s10-head .icon-tile { width:72px; height:72px; flex:none; }
-#s10 .s10-head .icon-tile img { width:36px; height:36px; }
+#s10 .s10-card { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 24px rgba(10,31,68,0.06); overflow:hidden; display:flex; flex-direction:column; }
+#s10 .s10-card-top { position:relative; display:flex; align-items:center; gap:21px; padding:30px 36px 26px; background:rgba(46,111,232,0.08); }
+#s10 .s10-card:nth-child(2) .s10-card-top { background:rgba(240,45,78,0.08); }
+#s10 .s10-card:nth-child(3) .s10-card-top { background:rgba(10,31,68,0.07); }
+#s10 .s10-card-top::before { content:''; position:absolute; left:0; top:0; bottom:0; width:7px; background:var(--blue); }
+#s10 .s10-card:nth-child(2) .s10-card-top::before { background:var(--red); }
+#s10 .s10-card:nth-child(3) .s10-card-top::before { background:var(--navy); }
+#s10 .s10-no { position:absolute; right:30px; top:4px; font-size:88px; font-weight:800; font-family:var(--font-num); line-height:1; color:rgba(46,111,232,0.14); }
+#s10 .s10-card:nth-child(2) .s10-no { color:rgba(240,45,78,0.15); }
+#s10 .s10-card:nth-child(3) .s10-no { color:rgba(10,31,68,0.12); }
+#s10 .s10-card-top .icon-tile { width:72px; height:72px; flex:none; background:var(--blue); }
+#s10 .s10-card:nth-child(2) .s10-card-top .icon-tile { background:var(--red); }
+#s10 .s10-card:nth-child(3) .s10-card-top .icon-tile { background:var(--navy); }
+#s10 .s10-card-top .icon-tile img { width:36px; height:36px; filter:brightness(0) invert(1); }
 #s10 .s10-t { font-size:30px; font-weight:700; color:var(--navy); }
-#s10 .s10-list { flex:1; display:flex; flex-direction:column; justify-content:space-evenly; }
-#s10 .s10-li { display:flex; align-items:center; gap:15px; font-size:21px; color:var(--ink); font-weight:500; }
-#s10 .s10-n { font-size:19px; font-weight:800; color:var(--blue); font-family:var(--font-num); width:30px; flex:none; }
+#s10 .s10-e { font-size:15px; color:var(--faint); letter-spacing:3px; font-family:var(--font-num); margin-top:7px; }
+#s10 .s10-list { flex:1; display:flex; flex-direction:column; padding:8px 36px 0; }
+#s10 .s10-li { display:flex; align-items:flex-start; gap:15px; padding:16px 0; border-bottom:1.5px solid #F0F4F9; font-size:15.5px; line-height:1.65; color:var(--muted); }
+#s10 .s10-li:last-child { border-bottom:none; }
+#s10 .s10-li b { display:block; color:var(--navy); font-size:18px; margin-bottom:3px; }
+#s10 .s10-n { font-size:19px; font-weight:800; color:var(--blue); font-family:var(--font-num); width:30px; flex:none; margin-top:1px; }
 #s10 .s10-card:nth-child(2) .s10-n { color:var(--red); }
+#s10 .s10-card:nth-child(3) .s10-n { color:var(--navy); }
+#s10 .s10-tag-pill { margin:0 36px 28px; }
 #s10 .s10-band { flex:none; height:120px; background:linear-gradient(90deg,#0A1F44 0%,#123A7A 100%); border-radius:18px; display:flex; align-items:center; padding:0 48px; gap:30px; }
 #s10 .s10-band-t { font-size:24px; font-weight:700; color:#fff; flex:none; }
 #s10 .s10-band-arrow { width:34px; height:34px; object-fit:contain; flex:none; }
-#s10 .s10-band-items { flex:1; display:flex; justify-content:space-around; }
+#s10 .s10-band-items { flex:1; display:flex; justify-content:space-around; align-items:center; }
 #s10 .s10-bi { display:flex; align-items:center; gap:14px; font-size:22px; color:#fff; font-weight:600; }
 #s10 .s10-bi i { width:10px; height:10px; border-radius:5px; background:var(--red); flex:none; }
+#s10 .s10-band-sep { color:rgba(255,255,255,0.35); font-size:24px; font-family:var(--font-num); font-weight:300; }
 
 /* ==================== s11 技术优势 ==================== */
-#s11 .s11-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; flex-wrap:wrap; gap:21px; align-content:space-between; justify-content:space-between; }
+#s11 .s11-body { position:absolute; left:96px; top:181px; width:1728px; height:734px; display:flex; flex-wrap:wrap; gap:21px; align-content:space-between; justify-content:space-between; }
 #s11 .s11-card { width:49.2%; height:364.5px; background:#fff; border-radius:21px; padding:30px 36px; box-shadow:0 6px 30px rgba(10,31,68,0.07); display:flex; flex-direction:column; gap:14px; }
 #s11 .s11-card.dark { background:linear-gradient(160deg,#0A1F44 0%,#123A7A 100%); }
 #s11 .s11-head { display:flex; align-items:center; gap:18px; }
@@ -479,7 +504,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s11 .s11-card.dark .s11-it { color:rgba(255,255,255,0.88); }
 
 /* ==================== s12 灵活的部署能力 ==================== */
-#s12 .s12-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; flex-direction:column; gap:30px; }
+#s12 .s12-body { position:absolute; left:96px; top:181px; width:1728px; height:734px; display:flex; flex-direction:column; gap:30px; }
 #s12 .s12-cards { flex:1; display:flex; gap:30px; }
 #s12 .s12-card { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 24px rgba(10,31,68,0.06); padding:48px 45px; display:flex; flex-direction:column; gap:22px; }
 #s12 .s12-card.hot { background:linear-gradient(160deg,#0A1F44 0%,#123A7A 100%); }
@@ -497,7 +522,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s12 .s12-band-t { font-size:23px; font-weight:700; color:var(--navy); letter-spacing:1px; }
 
 /* ==================== s13 极致服务（三列） ==================== */
-#s13 .s13-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; gap:30px; }
+#s13 .s13-body { position:absolute; left:96px; top:181px; width:1728px; height:734px; display:flex; gap:30px; }
 #s13 .s13-col { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 30px rgba(10,31,68,0.07); overflow:hidden; display:flex; flex-direction:column; }
 #s13 .s13-col-head { padding:33px 39px; display:flex; align-items:center; gap:21px; }
 #s13 .s13-col-icon { width:39px; height:39px; object-fit:contain; }
@@ -511,7 +536,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s13 .s13-item-d { font-size:18.5px; color:var(--muted); line-height:1.6; margin-top:4px; }
 
 /* ==================== s15 平台介绍（三大中心，同 Push s14 版式） ==================== */
-#s15 .s15-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; gap:30px; }
+#s15 .s15-body { position:absolute; left:96px; top:181px; width:1728px; height:734px; display:flex; gap:30px; }
 #s15 .s15-col { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 30px rgba(10,31,68,0.07); overflow:hidden; }
 #s15 .s15-col-head { padding:33px 39px; display:flex; align-items:center; gap:21px; }
 #s15 .s15-col-icon { width:39px; height:39px; object-fit:contain; }
@@ -524,7 +549,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s15 .s15-item-t { font-size:23px; color:var(--ink); font-weight:500; }
 
 /* ==================== s16–s23 功能页（左文右截图，共用 .fn-） ==================== */
-.fn-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; gap:54px; align-items:center; }
+.fn-body { position:absolute; left:96px; top:181px; width:1728px; height:734px; display:flex; gap:54px; align-items:center; }
 .fn-left { width:560px; flex:none; display:flex; flex-direction:column; gap:28px; }
 .fn-tag { display:inline-flex; align-self:flex-start; padding:9px 24px; border-radius:999px; background:rgba(240,45,78,0.1); color:var(--red); font-size:20px; font-weight:700; letter-spacing:1.5px; }
 .fn-block { display:flex; flex-direction:column; gap:12px; }
@@ -537,7 +562,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 .fn-right .shot-img { height:600px; padding:10px; }
 
 /* ==================== s24 功能及接口清单 ==================== */
-#s24 .s24-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; gap:27px; }
+#s24 .s24-body { position:absolute; left:96px; top:181px; width:1728px; height:734px; display:flex; gap:27px; }
 #s24 .s24-col { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 24px rgba(10,31,68,0.06); padding:33px 33px; display:flex; flex-direction:column; gap:18px; overflow:hidden; }
 #s24 .s24-col-head { display:flex; align-items:center; gap:16px; padding-bottom:16px; border-bottom:1.5px solid #EDF1F7; }
 #s24 .s24-col-t { font-size:27px; font-weight:700; color:var(--navy); }
@@ -550,7 +575,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s24 .s24-chip { padding:4px 13px; border-radius:999px; background:rgba(10,31,68,0.05); font-size:16.5px; color:#3A4A66; white-space:nowrap; }
 
 /* ==================== s26 典型客户·湖南三湘银行 ==================== */
-#s26 .s26-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; flex-direction:column; gap:27px; }
+#s26 .s26-body { position:absolute; left:96px; top:181px; width:1728px; height:734px; display:flex; flex-direction:column; gap:27px; }
 #s26 .s26-top { display:flex; gap:36px; height:390px; flex:none; }
 #s26 .s26-panel { flex:1.1; background:linear-gradient(160deg,#0A1F44 0%,#123A7A 100%); border-radius:21px; padding:45px 48px; display:flex; flex-direction:column; justify-content:space-between; }
 #s26 .s26-logo-chip { align-self:flex-start; background:#fff; border-radius:15px; padding:15px 27px; }
@@ -568,7 +593,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s26 .s26-cd { font-size:18px; color:var(--muted); line-height:1.65; }
 
 /* ==================== s27 典型应用（三卡） ==================== */
-#s27 .s27-body { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; gap:30px; }
+#s27 .s27-body { position:absolute; left:96px; top:181px; width:1728px; height:734px; display:flex; gap:30px; }
 #s27 .s27-card { flex:1; background:#fff; border-radius:21px; box-shadow:0 6px 24px rgba(10,31,68,0.06); padding:39px 36px; display:flex; flex-direction:column; gap:18px; }
 #s27 .s27-head { display:flex; align-items:center; gap:18px; padding-bottom:18px; border-bottom:1.5px solid #EDF1F7; }
 #s27 .s27-head .icon-tile { width:66px; height:66px; flex:none; }
@@ -579,7 +604,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 #s27 .s27-li i { width:9px; height:9px; border-radius:4.5px; background:var(--blue); flex:none; margin-top:9px; }
 
 /* ==================== s28 行业客户 logo 墙 ==================== */
-#s28 .s28-wrap { position:absolute; left:96px; top:165px; width:1728px; height:750px; display:flex; flex-direction:column; justify-content:center; gap:21px; }
+#s28 .s28-wrap { position:absolute; left:96px; top:181px; width:1728px; height:734px; display:flex; flex-direction:column; justify-content:center; gap:21px; }
 #s28 .s28-grid { flex:1; display:flex; flex-wrap:wrap; justify-content:space-between; align-content:space-between; }
 #s28 .s28-cell { width:270px; height:156px; background:#fff; border:1.5px solid #EEF2F8; border-radius:15px; box-shadow:0 4.5px 18px rgba(10,31,68,0.05); display:flex; align-items:center; justify-content:center; padding:18px 21px; }
 #s28 .s28-cell img { max-width:195px; max-height:93px; object-fit:contain; }
@@ -800,29 +825,6 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
 .s5-d {
     font-size: 14.5px !important;
     line-height: 1.65 !important;
-}
-
-/* === S10 列表与卡片微调 === */
-.s10-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin: 20px 0;
-}
-.s10-li {
-    font-size: 15.5px !important;
-    line-height: 1.65 !important;
-    color: var(--muted);
-}
-.s10-li b {
-    color: var(--navy);
-    font-weight: 700;
-}
-.s10-card {
-    padding: 38px 36px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: space-between !important;
 }
 
 /* === S12 列表 === */
@@ -1111,37 +1113,37 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       <div class="s5-lead-t">自建平台<br />门槛高</div>
       <div class="s5-lead-d">从通道对接到系统运维，七大能力缺一不可 —— GMP 一站式覆盖</div>
     </div>
-    <div class="s5-card reveal" style="--d:0.14s">
+    <div class="s5-card s5-bg-network reveal" style="--d:0.14s">
       <div class="icon-tile navy"><img src="assets/icons/network-wired-0A1F44.png" alt="" /></div>
       <div class="s5-t">通道对接</div>
       <div class="s5-d">· 三网运营商全协议直连与联调<br>· 通道毫秒级故障监测与流控<br>· 状态报告与上行消息全链路追踪</div>
     </div>
-    <div class="s5-card reveal" style="--d:0.18s">
+    <div class="s5-card s5-bg-layers reveal" style="--d:0.18s">
       <div class="icon-tile"><img src="assets/icons/layer-group-2E6FE8.png" alt="" /></div>
       <div class="s5-t">业务对接</div>
       <div class="s5-d">· 短信、微信、邮件全渠道整合<br>· 统一标准化报文消除系统壁垒<br>· 通道自由组合分流与智能回落</div>
     </div>
-    <div class="s5-card reveal" style="--d:0.22s">
+    <div class="s5-card s5-bg-sliders reveal" style="--d:0.22s">
       <div class="icon-tile"><img src="assets/icons/sliders-0A1F44.png" alt="" /></div>
       <div class="s5-t">产品设计</div>
       <div class="s5-d">· 统一网关与消息生命周期治理<br>· 支持定时定速与梯次失败补发<br>· 完善的数据埋点与多级审批流</div>
     </div>
-    <div class="s5-card reveal" style="--d:0.26s">
+    <div class="s5-card s5-bg-lock reveal" style="--d:0.26s">
       <div class="icon-tile red"><img src="assets/icons/lock-F02D4E.png" alt="" /></div>
       <div class="s5-t">数据安全</div>
       <div class="s5-d">· 金融级多租户数据隔离与脱敏<br>· 细粒度接口鉴权与敏感字段加密<br>· 严格符合国家三级等保合规要求</div>
     </div>
-    <div class="s5-card reveal" style="--d:0.30s">
+    <div class="s5-card s5-bg-chip reveal" style="--d:0.30s">
       <div class="icon-tile"><img src="assets/icons/microchip-2E6FE8.png" alt="" /></div>
       <div class="s5-t">技术研发</div>
       <div class="s5-d">· 跨平台 Java 微服务高内聚架构<br>· 标准化 RESTful/CMPP 规范接口<br>· 分布式消息队列保障零积压</div>
     </div>
-    <div class="s5-card reveal" style="--d:0.34s">
+    <div class="s5-card s5-bg-gauge reveal" style="--d:0.34s">
       <div class="icon-tile red"><img src="assets/icons/gauge-high-F02D4E.png" alt="" /></div>
       <div class="s5-t">性能保障</div>
       <div class="s5-d">· 亿级日吞吐，秒级十万级高并发<br>· 全链路同城双活与自动故障转移<br>· 读写分离与分布式多级缓存加速</div>
     </div>
-    <div class="s5-card reveal" style="--d:0.38s">
+    <div class="s5-card s5-bg-rotate reveal" style="--d:0.38s">
       <div class="icon-tile"><img src="assets/icons/arrows-rotate-F02D4E.png" alt="" /></div>
       <div class="s5-t">系统运维</div>
       <div class="s5-d">· 运营商网关 7×24H 自动健康巡检<br>· 支持节点动态弹性无感扩容<br>· 专属技术专家团队保障版本迭代</div>
@@ -1388,38 +1390,50 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
   <div class="s10-body">
     <div class="s10-cards">
       <div class="s10-card reveal" style="--d:0.12s">
-        <div class="s10-head">
+        <div class="s10-card-top">
+          <div class="s10-no num">01</div>
           <div class="icon-tile"><img src="assets/icons/tower-broadcast-2E6FE8.png" alt="" /></div>
-          <div class="s10-t">多通道，多方达</div>
+          <div>
+            <div class="s10-t">多通道，多方达</div>
+            <div class="s10-e">MULTI-CHANNEL REACH</div>
+          </div>
         </div>
         <div class="s10-list">
-          <div class="s10-li"><span class="s10-n">1.</span><b>主流通道全覆盖：</b>三大运营商全网直连，支持国内短信、国际短信、视频短信与5G消息一体化接入</div>
-          <div class="s10-li"><span class="s10-n">2.</span><b>上下游便捷管理：</b>多租户账户权限分级，支持集团多级架构独立分配资源与计费管控</div>
-          <div class="s10-li"><span class="s10-n">3.</span><b>建立用户触达体系：</b>多维度客户画像建模，精准匹配最佳触达通道与分发时机</div>
+          <div class="s10-li"><span class="s10-n">1.</span><div><b>主流通道全覆盖</b>三大运营商全网直连，支持国内短信、国际短信、视频短信与5G消息一体化接入</div></div>
+          <div class="s10-li"><span class="s10-n">2.</span><div><b>上下游便捷管理</b>多租户账户权限分级，支持集团多级架构独立分配资源与计费管控</div></div>
+          <div class="s10-li"><span class="s10-n">3.</span><div><b>建立用户触达体系</b>多维度客户画像建模，精准匹配最佳触达通道与分发时机</div></div>
         </div>
         <div class="s10-tag-pill">多协议兼容 · 统一纳管</div>
       </div>
       <div class="s10-card reveal" style="--d:0.22s">
-        <div class="s10-head">
-          <div class="icon-tile red"><img src="assets/icons/bolt-F02D4E.png" alt="" /></div>
-          <div class="s10-t">高送达，低成本</div>
+        <div class="s10-card-top">
+          <div class="s10-no num">02</div>
+          <div class="icon-tile"><img src="assets/icons/bolt-F02D4E.png" alt="" /></div>
+          <div>
+            <div class="s10-t">高送达，低成本</div>
+            <div class="s10-e">DELIVERY &amp; COST</div>
+          </div>
         </div>
         <div class="s10-list">
-          <div class="s10-li"><span class="s10-n">1.</span><b>智能消息模板：</b>支持变量混排、富媒体图文卡片渲染与防误发模板合规校验</div>
-          <div class="s10-li"><span class="s10-n">2.</span><b>全链路补发策略：</b>短信/微信/邮件梯度梯次重发兜底，保障极端情况下业务零丢失</div>
-          <div class="s10-li"><span class="s10-n">3.</span><b>统一接口高并发调用：</b>标准 RESTful API、SDK、CMPP 多协议毫秒级并发异步处理</div>
+          <div class="s10-li"><span class="s10-n">1.</span><div><b>智能消息模板</b>支持变量混排、富媒体图文卡片渲染与防误发模板合规校验</div></div>
+          <div class="s10-li"><span class="s10-n">2.</span><div><b>全链路补发策略</b>短信/微信/邮件梯度梯次重发兜底，保障极端情况下业务零丢失</div></div>
+          <div class="s10-li"><span class="s10-n">3.</span><div><b>统一接口高并发调用</b>标准 RESTful API、SDK、CMPP 多协议毫秒级并发异步处理</div></div>
         </div>
         <div class="s10-tag-pill">智能路由 · 成本最优</div>
       </div>
       <div class="s10-card reveal" style="--d:0.32s">
-        <div class="s10-head">
-          <div class="icon-tile navy"><img src="assets/icons/arrow-trend-up-0A1F44.png" alt="" /></div>
-          <div class="s10-t">多维度，细分析</div>
+        <div class="s10-card-top">
+          <div class="s10-no num">03</div>
+          <div class="icon-tile"><img src="assets/icons/arrow-trend-up-0A1F44.png" alt="" /></div>
+          <div>
+            <div class="s10-t">多维度，细分析</div>
+            <div class="s10-e">INSIGHT &amp; ANALYSIS</div>
+          </div>
         </div>
         <div class="s10-list">
-          <div class="s10-li"><span class="s10-n">1.</span><b>消息全量历史明细：</b>全量下发流水按秒检索，支持状态回执、失败错误码秒级排查追溯</div>
-          <div class="s10-li"><span class="s10-n">2.</span><b>多通道推送数据看板：</b>按通道、时段、业务类型生成直观图形看板，透视转化与成功率</div>
-          <div class="s10-li"><span class="s10-n">3.</span><b>客户精细化账单报表：</b>提供清分对账明细、费用消耗预警与多级机构消费账单导出</div>
+          <div class="s10-li"><span class="s10-n">1.</span><div><b>消息全量历史明细</b>全量下发流水按秒检索，支持状态回执、失败错误码秒级排查追溯</div></div>
+          <div class="s10-li"><span class="s10-n">2.</span><div><b>多通道推送数据看板</b>按通道、时段、业务类型生成直观图形看板，透视转化与成功率</div></div>
+          <div class="s10-li"><span class="s10-n">3.</span><div><b>客户精细化账单报表</b>提供清分对账明细、费用消耗预警与多级机构消费账单导出</div></div>
         </div>
         <div class="s10-tag-pill">全链路透视 · 决策赋能</div>
       </div>
@@ -1429,7 +1443,9 @@ body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-off
       <img class="s10-band-arrow" src="assets/icons/arrow-right-9AA5B8.png" alt="" />
       <div class="s10-band-items">
         <div class="s10-bi"><i></i>触达用户</div>
+        <span class="s10-band-sep">→</span>
         <div class="s10-bi"><i></i>提高收益</div>
+        <span class="s10-band-sep">→</span>
         <div class="s10-bi"><i></i>数据闭环</div>
       </div>
     </div>
@@ -2824,5 +2840,7 @@ document.addEventListener('keydown', (e) => {
     if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable')) editor.toggleEditMode();
 });
 </script>
+<script src="https://sdk.51.la/js-sdk-pro.min.js" charset="UTF-8" id="LA_COLLECT"></script>
+<script>LA.init({id:"3RRThptLKJ4Pr8f4",ck:"3RRThptLKJ4Pr8f4"})</script>
 </body>
 </html>
