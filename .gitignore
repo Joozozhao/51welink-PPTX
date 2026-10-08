@@ -1,4 +1,5 @@
 .DS_Store
 node_modules/
 _tools/
+_GMP_Case/
 pptx.zip
