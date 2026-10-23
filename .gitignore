@@ -3,3 +3,8 @@ node_modules/
 _tools/
 _GMP_Case/
 pptx.zip
+UMC/build/generated/
+Pages/build/generated/
+Pages/tests/output/
+
+Pages/tests/__pycache__/

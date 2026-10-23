@@ -19,6 +19,8 @@ zip -r -q pptx.zip . \
   -x "*/node_modules/*" \
   -x "*node_modules*" \
   -x "*.DS_Store*" \
+  -x "Pages/build/*" \
+  -x "Pages/tests/*" \
   -x "./pptx.zip" \
   -x "pptx.zip"
 

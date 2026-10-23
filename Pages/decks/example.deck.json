@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "title": "微网通联精选业务汇报（示例方案）",
+  "pages": [
+    "umc-cover",
+    "umc-sec-about",
+    "umc-about-profile",
+    "umc-data-history",
+    "umc-data-honors",
+    "umc-data-scale",
+    "umc-sec-business",
+    "umc-biz-matrix",
+    "umc-biz-gmp",
+    "umc-biz-sms",
+    "umc-biz-voice-line",
+    "corp-biz-smart-parking",
+    "corp-data-complex",
+    "umc-sec-cases",
+    "umc-case-clients",
+    "corp-case-xiaoju",
+    "umc-end-service",
+    "corp-end-thanks"
+  ]
+}

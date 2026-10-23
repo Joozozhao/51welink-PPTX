@@ -10,3 +10,340 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 /* === THEME TOKENS + COMPONENTS（design-system.css 全量） === */
+/* ===========================================
+   微网通联 · DESIGN SYSTEM（1920×1080 舞台）
+   由 1280×720 DSL 按 ×1.5 缩放得到
+   =========================================== */
+
+:root {
+    /* 品牌色 */
+    --navy: #0A1F44;          /* 主色·深海军蓝 */
+    --navy-2: #123A7A;        /* 渐变过渡蓝 */
+    --blue: #2E6FE8;          /* 辅色·通信蓝 */
+    --red: #F02D4E;           /* 强调色·品牌红 */
+    --bg: #F6F8FB;            /* 内容页浅灰白底 */
+    --ink: #1B2A4A;           /* 正文深色 */
+    --muted: #5A6B85;         /* 次要文字 */
+    --faint: #8A94A6;         /* 页码灰 */
+
+    /* 字体：西文/数字 Archivo（近 Helvetica Neue），中文 PingFang SC / Noto Sans SC */
+    --font-body: "Archivo", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    --font-num: "Archivo", "Helvetica Neue", "PingFang SC", "Noto Sans SC", sans-serif;
+
+    /* 字阶（×1.5 后） */
+    --fs-cover: 96px;    /* 封面主标 bold */
+    --fs-section: 84px;  /* 章节大字 bold */
+    --fs-giant: 120px;   /* 巨型数字 108–144 */
+    --fs-title: 45px;    /* 内容页主标 */
+    --fs-card: 31px;     /* 卡片小标 30–33 */
+    --fs-body: 23px;     /* 正文 22.5–24 */
+    --fs-note: 20px;     /* 说明 20–21 */
+    --fs-pageno: 18px;   /* 页码 */
+
+    /* 页面骨架 */
+    --pad-x: 96px;       /* 内容页左右留白 */
+    --head-top: 44px;    /* 标题块顶距 */
+
+    /* 动效 */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur: 0.7s;
+
+    --slide-bg: var(--bg);
+    --stage-bg: #060D1F;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { font-family: var(--font-body); color: var(--ink); }
+
+/* ===========================================
+   内容页骨架：标题块 + 红色短条 + 页码
+   =========================================== */
+.slide-head { position: absolute; left: var(--pad-x); top: var(--head-top); z-index: 5; }
+.kicker {
+    font-size: 20px; font-weight: 600; color: var(--red);
+    letter-spacing: 3px; font-family: var(--font-num);
+}
+.slide-title {
+    font-size: var(--fs-title); font-weight: 700; color: var(--navy);
+    margin-top: 14px; line-height: 1.2; letter-spacing: 0.5px;
+}
+.title-bar { width: 60px; height: 5px; background: var(--red); border-radius: 3px; margin-top: 16px; }
+
+.pageno {
+    position: absolute; right: 20px; bottom: 20px; z-index: 5;
+    font-size: var(--fs-pageno); color: var(--faint);
+    font-family: var(--font-num); letter-spacing: 1px;
+}
+
+/* ===========================================
+   卡片与图标
+   =========================================== */
+.card {
+    background: #fff; border-radius: 18px;
+    box-shadow: 0 12px 32px rgba(10, 31, 68, 0.08);
+}
+.icon-tile {
+    width: 72px; height: 72px; border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(46, 111, 232, 0.08);
+}
+.icon-tile.red { background: rgba(240, 45, 78, 0.08); }
+.icon-tile.navy { background: rgba(10, 31, 68, 0.07); }
+.icon-tile.dark { background: rgba(255, 255, 255, 0.10); }
+.icon-tile img { width: 40px; height: 40px; object-fit: contain; }
+
+/* ===========================================
+   深色页（封面/章节/封底）
+   =========================================== */
+.slide.dark { background: var(--navy); color: #fff; }
+.dark-grad { background: linear-gradient(135deg, #0A1F44 0%, #123A7A 60%, #2E6FE8 100%); }
+.glass-card { background: rgba(255, 255, 255, 0.06); border-radius: 18px; }
+.on-dark-sub { color: rgba(255, 255, 255, 0.72); }
+
+.num { font-family: var(--font-num); font-weight: 800; letter-spacing: -1px; }
+
+/* ===========================================
+   入场动效：.reveal + --d 延迟变量
+   =========================================== */
+.reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity var(--dur) var(--ease-out-expo),
+                transform var(--dur) var(--ease-out-expo);
+    transition-delay: var(--d, 0s);
+}
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+
+.reveal-left { transform: translateX(-48px); }
+.reveal-right { transform: translateX(48px); }
+.reveal-zoom { transform: scale(0.92); }
+.slide.visible .reveal-left,
+.slide.visible .reveal-right,
+.slide.visible .reveal-zoom { transform: none; }
+
+/* 深色页装饰缓浮 */
+@keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+}
+.floaty { animation: floaty 7s ease-in-out infinite; }
+
+/* 渐变光缓慢流动（深色页氛围） */
+@keyframes gradient-drift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* === VIEWPORT BASE（frontend-slides 强制全量） === */
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+
+    .deck-download {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* === PLAYER CHROME（舞台之外） === */
+.deck-progress {
+    position: fixed; left: 0; bottom: 0; width: 100%; height: 4px;
+    background: rgba(255,255,255,0.12); z-index: 1000;
+}
+.deck-progress-bar {
+    height: 100%; width: 4%; background: var(--red, #F02D4E);
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.edit-hotzone {
+    position: fixed; top: 0; left: 0; width: 80px; height: 80px;
+    z-index: 10000; cursor: pointer;
+}
+.edit-toggle {
+    position: fixed; top: 18px; left: 18px; z-index: 10001;
+    width: 44px; height: 44px; border-radius: 12px; border: none;
+    background: rgba(10,31,68,0.85); color: #fff; font-size: 20px;
+    cursor: pointer; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
+.edit-toggle.active { background: #F02D4E; }
+
+.edit-export {
+    position: fixed; right: 72px; bottom: 22px; z-index: 10002;
+    display: none; gap: 8px;
+}
+.edit-export.has-changes { display: flex; }
+.edit-export button {
+    min-height: 42px; padding: 0 15px; border: 1px solid rgba(255,255,255,.25);
+    border-radius: 9px; background: rgba(10,31,68,.9); color: #fff;
+    box-shadow: 0 6px 20px rgba(0,0,0,.2); cursor: pointer;
+    font: 600 14px/1 var(--font-body, "Microsoft YaHei", sans-serif);
+}
+.edit-export button:hover { background: #F02D4E; }
+.edit-export button:disabled { opacity: .6; cursor: wait; }
+@page { size: 20in 11.25in; margin: 0; }
+@media print { .edit-export, .edit-toggle, .edit-hotzone, .edit-toast, .deck-progress { display: none !important; } }
+
+.edit-toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(8px);
+    background: rgba(10,31,68,0.9); color: #fff; font-size: 14px;
+    padding: 8px 20px; border-radius: 20px; z-index: 10001;
+    opacity: 0; transition: opacity 0.3s, transform 0.3s;
+}
+.edit-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.deck-download {
+    position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 1001;
+    display: flex; flex-direction: column; gap: 1px;
+}
+.deck-download a {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    padding: 16px 8px;
+    border-radius: 0;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(10,31,68,0.85); color: #fff;
+    font-size: 14px; font-weight: 600; letter-spacing: 1px;
+    text-decoration: none; font-family: var(--font-num);
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+.deck-download a:first-child { border-radius: 8px 8px 0 0; }
+.deck-download a:last-child { border-radius: 0 0 8px 8px; }
+.deck-download a:hover { background: #F02D4E; }
+body.editing .slide.active { cursor: text; }
+body.editing [contenteditable="true"] { outline: 2px dashed #F02D4E; outline-offset: 2px; }
+
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">

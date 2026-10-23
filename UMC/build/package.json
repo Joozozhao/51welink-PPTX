@@ -1,0 +1,16 @@
+{
+  "name": "umc-presentation-build",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync": "node sync-sources.mjs",
+    "assemble": "node assemble.mjs",
+    "export": "node export-deck.mjs",
+    "pack": "python3 pack.py"
+  },
+  "dependencies": {
+    "playwright": "^1.58.0",
+    "pptxgenjs": "^3.12.0",
+    "pngjs": "^7.0.0"
+  }
+}

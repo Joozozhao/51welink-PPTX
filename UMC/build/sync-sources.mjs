@@ -1,0 +1,16 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const dir=path.dirname(fileURLToPath(import.meta.url));
+const index=fs.readFileSync(path.join(dir,'../index.html'),'utf8');
+const start=index.indexOf('<main class="deck-stage" id="deckStage">')+'<main class="deck-stage" id="deckStage">'.length;
+const end=index.indexOf('</main>',start);
+if(start<40||end<start)throw new Error('Slide container missing');
+const body=index.slice(start,end);
+const slides=[...body.matchAll(/<section\b[\s\S]*?<\/section>/g)].map(m=>m[0]);
+if(slides.length!==25)throw new Error(`Expected 25 slides, found ${slides.length}`);
+fs.writeFileSync(path.join(dir,'_top.html'),index.slice(0,start)+'\n');
+fs.writeFileSync(path.join(dir,'_bottom.html'),index.slice(end));
+fs.writeFileSync(path.join(dir,'slide-styles.html'),[...body.matchAll(/<style\b[^>]*>[\s\S]*?<\/style>/g)].map(m=>m[0]).join('\n')+'\n');
+for(const [n,a,b]of [[1,0,9],[2,9,20],[3,20,25]])fs.writeFileSync(path.join(dir,`part-${n}.html`),slides.slice(a,b).join('\n\n')+'\n');
+console.log('Synced 25 slides, styles, header and footer from index.html');

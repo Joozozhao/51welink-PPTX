@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "title": "混合来源与重复选页验收",
+  "pages": [
+    "umc-cover",
+    "umc-sec-about",
+    "umc-about-profile",
+    "umc-about-profile",
+    "umc-data-history",
+    "umc-case-clients",
+    "umc-end-service",
+    "corp-cover",
+    "push-biz-push"
+  ]
+}

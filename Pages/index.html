@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>公共页面组装站 · 微网通联</title>
+<meta name="description" content="从统一设计的公共页面库选页、排序组装、预览并导出 PDF。">
+<link rel="stylesheet" href="./studio.css">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到页面库</a>
+
+<div class="app" data-testid="app">
+
+  <!-- 品牌左栏：品牌 + 分类 / 来源 / 标签筛选 -->
+  <aside class="side" aria-label="品牌与筛选">
+    <div class="brand">
+      <img class="brand-logo" src="./assets/logo-white.png" alt="微网通联" width="138" height="35">
+      <span class="brand-text">
+        <strong>公共页面组装站</strong>
+        <span>微网通联 · 统一设计页面库</span>
+      </span>
+    </div>
+
+    <nav class="side-nav" aria-label="按分类筛选">
+      <h2 class="side-title">分类</h2>
+      <ul class="cat-list" id="cat-list">
+        <li>
+          <button type="button" class="cat-item is-active" data-testid="filter-category" data-category="all">
+            <span class="cat-label">全部页面</span>
+            <span class="cat-count" id="cat-count-all">–</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="side-group">
+      <label class="side-title" for="filter-source">来源 Deck</label>
+      <select id="filter-source" data-testid="filter-source" disabled>
+        <option value="all">全部来源</option>
+      </select>
+    </div>
+
+    <div class="side-group">
+      <label class="side-title" for="filter-tag">标签</label>
+      <select id="filter-tag" data-testid="filter-tag" disabled>
+        <option value="all">全部标签</option>
+      </select>
+    </div>
+
+    <p class="side-foot">
+      <a href="../index.html">← 返回资料中心</a>
+      <span id="ds-version" aria-label="设计规范版本"></span>
+    </p>
+  </aside>
+
+  <!-- 主区：页面库 -->
+  <main class="main" id="main" tabindex="-1">
+    <header class="toolbar">
+      <div class="toolbar-title">
+        <h1>页面库</h1>
+        <p class="result-count" id="result-count" data-testid="result-count"></p>
+      </div>
+      <div class="toolbar-actions">
+        <div class="search-box">
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+            <circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M11 11l3.2 3.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <input type="search" id="filter-search" data-testid="filter-search"
+                 placeholder="搜索页面标题…" aria-label="搜索页面标题" autocomplete="off">
+        </div>
+        <button type="button" class="btn btn-ghost" id="filter-clear" data-testid="filter-clear" hidden>清空筛选</button>
+      </div>
+    </header>
+
+    <section class="grid-wrap" aria-label="公共页面列表">
+      <!-- 加载态 -->
+      <div class="state-block" id="catalog-loading" data-testid="catalog-loading">
+        <div class="sk-grid" aria-hidden="true">
+          <div class="sk-card"></div><div class="sk-card"></div><div class="sk-card"></div>
+          <div class="sk-card"></div><div class="sk-card"></div><div class="sk-card"></div>
+        </div>
+        <p class="state-text">正在加载页面库…</p>
+      </div>
+
+      <!-- 错误态 -->
+      <div class="state-block" id="catalog-error" data-testid="catalog-error" hidden>
+        <p class="state-title">页面库加载失败</p>
+        <p class="state-text" id="catalog-error-msg" data-testid="catalog-error-msg"></p>
+        <div id="catalog-error-actions" class="catalog-error-actions" style="display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin:4px 0;"></div>
+        <button type="button" class="btn btn-primary" id="catalog-retry" data-testid="catalog-retry">重试</button>
+      </div>
+
+      <!-- 空库 -->
+      <div class="state-block" id="library-empty" data-testid="library-empty" hidden>
+        <p class="state-title">暂无公共页面</p>
+        <p class="state-text">页面库清单 pages.json 中还没有入库页面，请先完成入库。</p>
+      </div>
+
+      <!-- 筛选无结果 -->
+      <div class="state-block" id="filter-empty" data-testid="filter-empty" hidden>
+        <p class="state-title">没有匹配的页面</p>
+        <p class="state-text">试试更换关键词，或清空分类 / 来源 / 标签筛选。</p>
+        <button type="button" class="btn" id="filter-empty-clear" data-testid="filter-empty-clear">清空筛选</button>
+      </div>
+
+      <!-- 缩略图网格 -->
+      <div class="page-grid" id="page-grid" data-testid="page-grid" hidden></div>
+    </section>
+  </main>
+
+  <!-- 右栏：组装清单 -->
+  <aside class="panel" id="deck-panel" data-testid="deck-panel" aria-label="组装方案">
+    <header class="panel-head">
+      <h2>组装方案 <span class="deck-count" id="deck-count" data-testid="deck-count">0</span></h2>
+      <button type="button" class="icon-btn panel-close" id="panel-close" data-testid="panel-close" aria-label="收起组装清单">✕</button>
+    </header>
+
+    <div class="panel-body">
+      <label class="field" for="deck-title">
+        <span class="field-label">方案名称</span>
+        <input type="text" id="deck-title" data-testid="deck-title" placeholder="未命名方案"
+               maxlength="120" autocomplete="off">
+      </label>
+      <p class="autosave" id="autosave-status" data-testid="autosave-status">草稿自动保存在当前浏览器</p>
+
+      <div class="storage-warning" id="storage-warning" data-testid="storage-warning" role="alert" hidden>
+        浏览器阻止了本地存储：方案不会被自动保存，请使用「导出 JSON」备份。
+      </div>
+
+      <div class="deck-empty" id="deck-empty" data-testid="deck-empty">
+        <p class="deck-empty-title">还没有选择页面</p>
+        <p>在页面库点击「加入方案」，所选页面会按顺序列在这里；可重复添加同一页。</p>
+      </div>
+
+      <ol class="deck-list" id="deck-list" data-testid="deck-list"></ol>
+
+      <div class="panel-actions">
+        <button type="button" class="btn btn-primary btn-block" id="export-pdf" data-testid="export-pdf" disabled>导出 PDF</button>
+        <p class="export-mode" id="export-mode" data-testid="export-mode" data-mode="checking">正在检测导出方式…</p>
+        <div class="btn-row">
+          <button type="button" class="btn" id="preview-deck" data-testid="preview-deck" disabled>预览整册</button>
+          <button type="button" class="btn" id="export-json" data-testid="export-json" disabled>导出 JSON</button>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn" id="import-json" data-testid="import-json">导入 JSON</button>
+          <button type="button" class="btn btn-danger-ghost" id="clear-deck" data-testid="clear-deck" disabled>清空</button>
+        </div>
+      </div>
+
+      <section class="schemes" aria-label="命名方案">
+        <div class="schemes-head">
+          <h3>命名方案</h3>
+          <button type="button" class="btn btn-small" id="save-scheme" data-testid="save-scheme" disabled>另存当前方案</button>
+        </div>
+        <form class="scheme-form" id="scheme-form" data-testid="scheme-form" hidden>
+          <label class="visually-hidden" for="scheme-name">方案名称</label>
+          <input type="text" id="scheme-name" data-testid="scheme-name" placeholder="方案名称，如：银行客户汇报"
+                 maxlength="60" autocomplete="off">
+          <div class="btn-row">
+            <button type="submit" class="btn btn-primary btn-small" data-testid="scheme-save-confirm">保存到本浏览器</button>
+            <button type="button" class="btn btn-small" id="scheme-cancel" data-testid="scheme-cancel">取消</button>
+          </div>
+        </form>
+        <ul class="scheme-list" id="scheme-list" data-testid="scheme-list"></ul>
+        <p class="schemes-note">草稿与命名方案仅保存在当前浏览器，不会上传服务器；导出 JSON 可备份或转交同事。</p>
+      </section>
+    </div>
+  </aside>
+</div>
+
+<div class="panel-backdrop" id="panel-backdrop" hidden></div>
+
+<button type="button" class="deck-toggle" id="deck-toggle" data-testid="deck-toggle" aria-expanded="false" aria-controls="deck-panel">
+  组装清单 <span class="toggle-count" id="deck-count-toggle" data-testid="deck-count-toggle">0</span>
+</button>
+
+<!-- 单页大图预览 -->
+<dialog class="preview-dialog" id="page-preview-dialog" data-testid="page-preview-dialog" aria-label="单页预览">
+  <header class="preview-head">
+    <div class="preview-title-wrap">
+      <h3 id="page-preview-title" data-testid="page-preview-title">页面预览</h3>
+      <p class="preview-meta" id="page-preview-meta" data-testid="page-preview-meta"></p>
+    </div>
+    <button type="button" class="icon-btn" data-close aria-label="关闭预览">✕</button>
+  </header>
+  <div class="preview-stage">
+    <iframe id="page-preview-frame" data-testid="page-preview-frame" title="单页预览"></iframe>
+  </div>
+</dialog>
+
+<!-- 整册预览 -->
+<dialog class="preview-dialog" id="deck-preview-dialog" data-testid="deck-preview-dialog" aria-label="整册预览">
+  <header class="preview-head">
+    <div class="preview-title-wrap">
+      <h3 id="deck-preview-title" data-testid="deck-preview-title">整册预览</h3>
+      <p class="preview-meta">顺序与页码即最终导出效果</p>
+    </div>
+    <button type="button" class="icon-btn" data-close aria-label="关闭预览">✕</button>
+  </header>
+  <div class="deck-preview-body" id="deck-preview-body" data-testid="deck-preview-body"></div>
+</dialog>
+
+<input type="file" id="import-json-input" data-testid="import-json-input" accept="application/json,.json" hidden>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<p class="visually-hidden" role="status" aria-live="polite" id="status-live" data-testid="status-live"></p>
+
+<noscript><p style="padding:2em;font-family:sans-serif">此工具需要启用 JavaScript 才能使用。</p></noscript>
+<script src="./studio.js"></script>
+</body>
+</html>

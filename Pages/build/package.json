@@ -1,0 +1,16 @@
+{
+  "name": "pages-build",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node serve.mjs",
+    "scan": "node scan-pages.mjs",
+    "build": "node build-deck.mjs",
+    "export": "node export-deck.mjs",
+    "verify": "python3 verify.py"
+  },
+  "dependencies": {
+    "playwright": "^1.58.0"
+  }
+}

@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const dir=path.dirname(fileURLToPath(import.meta.url));
+const files=['_top.html','slide-styles.html','part-1.html','part-2.html','part-3.html','_bottom.html'];
+const html=files.map(f=>fs.readFileSync(path.join(dir,f),'utf8')).join('\n');
+const slides=[...html.matchAll(/<section\b[\s\S]*?<\/section>/g)];
+if(slides.length!==25)throw new Error('Expected 25 slides');
+slides.forEach((m,i)=>{const n=m[0].match(/class="pageno">(\d+) \/ (\d+)/);if(n&&(+n[1]!==i+1||+n[2]!==slides.length))throw new Error(`Invalid page label on slide ${i+1}`)});
+if(/一[键健]认证|中间号|聚(?:WE|WU)/i.test(html))throw new Error('Removed business content found');
+fs.writeFileSync(path.join(dir,'../index.html'),html);
+console.log('Assembled 25 slides');

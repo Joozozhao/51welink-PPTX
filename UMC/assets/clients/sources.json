@@ -1,0 +1,248 @@
+{
+  "retrieved_at": "2026-10-20",
+  "logos": [
+    {
+      "name": "中国农业银行",
+      "original": "assets/client_14.png",
+      "file": "assets/clients/client_14.svg",
+      "status": "svg",
+      "iconfont_id": 15134640,
+      "iconfont_name": "中国农业银行（组合）",
+      "source": "https://www.iconfont.cn/search/index?searchType=icon&q=中国农业银行&page=1",
+      "collection": "https://www.iconfont.cn/collections/detail?cid=71734",
+      "author_id": 213314,
+      "modifications": "Trimmed SVG viewBox to vector artwork bounds; retained paths and colors"
+    },
+    {
+      "name": "招商银行",
+      "original": "assets/client_15.png",
+      "file": "assets/clients/client_15.svg",
+      "status": "svg",
+      "iconfont_id": 15135206,
+      "iconfont_name": "招商银行（组合）",
+      "source": "https://www.iconfont.cn/search/index?searchType=icon&q=招商银行&page=1",
+      "collection": "https://www.iconfont.cn/collections/detail?cid=71734",
+      "author_id": 213314,
+      "modifications": "Trimmed SVG viewBox to vector artwork bounds; retained paths and colors"
+    },
+    {
+      "name": "上海银行",
+      "original": "assets/client_18.png",
+      "file": "assets/clients/client_18.svg",
+      "status": "svg",
+      "iconfont_id": 15178599,
+      "iconfont_name": "上海银行（组合）",
+      "source": "https://www.iconfont.cn/search/index?searchType=icon&q=上海银行&page=1",
+      "collection": "https://www.iconfont.cn/collections/detail?cid=71734",
+      "author_id": 213314,
+      "modifications": "Trimmed SVG viewBox to vector artwork bounds; retained paths and colors"
+    },
+    {
+      "name": "江苏银行",
+      "original": "assets/client_23.png",
+      "file": "assets/clients/client_23.svg",
+      "status": "svg",
+      "iconfont_id": 15178194,
+      "iconfont_name": "江苏银行（组合）",
+      "source": "https://www.iconfont.cn/search/index?searchType=icon&q=江苏银行&page=1",
+      "collection": "https://www.iconfont.cn/collections/detail?cid=71734",
+      "author_id": 213314,
+      "modifications": "Trimmed SVG viewBox to vector artwork bounds; retained paths and colors"
+    },
+    {
+      "name": "日照银行",
+      "original": "assets/client_28.png",
+      "file": "assets/clients/client_28.svg",
+      "status": "svg",
+      "iconfont_id": 15744697,
+      "iconfont_name": "日照银行（组合）",
+      "source": "https://www.iconfont.cn/search/index?searchType=icon&q=日照银行&page=1",
+      "collection": "https://www.iconfont.cn/collections/detail?cid=71734",
+      "author_id": 213314,
+      "modifications": "Trimmed SVG viewBox to vector artwork bounds; retained paths and colors"
+    },
+    {
+      "name": "湖南三湘银行",
+      "original": "assets/client_16.png",
+      "file": "assets/clients/client_16.svg",
+      "status": "svg",
+      "iconfont_id": 15742490,
+      "iconfont_name": "三湘银行（组合）",
+      "source": "https://www.iconfont.cn/search/index?searchType=icon&q=湖南三湘银行&page=1",
+      "collection": "https://www.iconfont.cn/collections/detail?cid=71734",
+      "author_id": 213314,
+      "modifications": "Trimmed SVG viewBox to vector artwork bounds; retained paths and colors"
+    },
+    {
+      "name": "威海市商业银行",
+      "original": "assets/client_17.png",
+      "file": "assets/clients/client_17.svg",
+      "status": "svg",
+      "iconfont_id": 21603704,
+      "iconfont_name": "威海银行",
+      "source": "https://www.iconfont.cn/search/index?searchType=icon&q=威海市商业银行&page=1",
+      "collection": "https://www.iconfont.cn/collections/detail?cid=284162",
+      "author_id": 4826709,
+      "modifications": "Trimmed SVG viewBox to vector artwork bounds; retained paths and colors"
+    },
+    {
+      "name": "浙江稠州商业银行",
+      "original": "assets/client_22.png",
+      "file": "assets/clients/client_22.svg",
+      "status": "svg",
+      "iconfont_id": 15178233,
+      "iconfont_name": "浙江稠州商业银行（组合）",
+      "source": "https://www.iconfont.cn/search/index?searchType=icon&q=浙江稠州商业银行&page=1",
+      "collection": "https://www.iconfont.cn/collections/detail?cid=71734",
+      "author_id": 213314,
+      "modifications": "Trimmed SVG viewBox to vector artwork bounds; retained paths and colors"
+    },
+    {
+      "name": "沿海银行",
+      "original": "assets/client_21.png",
+      "file": "assets/client_21.png",
+      "status": "original-retained",
+      "reason": "No verified complete logo matching the existing brand name and colors; retain original artwork"
+    },
+    {
+      "name": "国网湖北电力",
+      "original": "assets/client_29.png",
+      "file": "assets/client_29.png",
+      "status": "original-retained",
+      "reason": "No verified complete logo matching the existing brand name and colors; retain original artwork"
+    },
+    {
+      "name": "国网新疆电力",
+      "original": "assets/client_30.png",
+      "file": "assets/client_30.png",
+      "status": "original-retained",
+      "reason": "No verified complete logo matching the existing brand name and colors; retain original artwork"
+    },
+    {
+      "name": "携程旅行",
+      "original": "assets/client_25.png",
+      "file": "assets/clients/client_25.svg",
+      "status": "svg",
+      "iconfont_id": 8032532,
+      "iconfont_name": "携程旅行",
+      "source": "https://www.iconfont.cn/search/index?searchType=icon&q=携程旅行&page=1",
+      "collection": "https://www.iconfont.cn/collections/detail?cid=49423",
+      "author_id": 307228,
+      "modifications": "Trimmed SVG viewBox to vector artwork bounds; retained paths and colors"
+    },
+    {
+      "name": "去哪儿旅行",
+      "original": "assets/client_26.png",
+      "file": "assets/client_26.png",
+      "status": "original-retained",
+      "reason": "No verified complete logo matching the existing brand name and colors; retain original artwork"
+    },
+    {
+      "name": "滴滴",
+      "original": "assets/client_01.png",
+      "file": "assets/clients/client_01.svg",
+      "status": "svg",
+      "iconfont_id": 13635376,
+      "iconfont_name": "滴滴",
+      "source": "https://www.iconfont.cn/search/index?searchType=icon&q=滴滴&page=1",
+      "collection": "https://www.iconfont.cn/collections/detail?cid=40025",
+      "author_id": 56960,
+      "modifications": "Trimmed SVG viewBox to vector artwork bounds; retained paths and colors"
+    },
+    {
+      "name": "曹操出行",
+      "original": "assets/client_04.png",
+      "file": "assets/client_04.png",
+      "status": "original-retained",
+      "reason": "No verified complete logo matching the existing brand name and colors; retain original artwork"
+    },
+    {
+      "name": "海尔",
+      "original": "assets/client_32.png",
+      "file": "assets/clients/client_32.svg",
+      "status": "svg",
+      "iconfont_id": 13788114,
+      "iconfont_name": "海尔",
+      "source": "https://www.iconfont.cn/search/index?searchType=icon&q=海尔&page=1",
+      "collection": "https://www.iconfont.cn/collections/detail?cid=201831",
+      "author_id": 27176,
+      "modifications": "Trimmed SVG viewBox to vector artwork bounds; retained paths and colors"
+    },
+    {
+      "name": "京东",
+      "original": "assets/client_09.png",
+      "file": "assets/client_09.png",
+      "status": "original-retained",
+      "reason": "No verified complete logo matching the existing brand name and colors; retain original artwork"
+    },
+    {
+      "name": "汽车之家",
+      "original": "assets/client_03.png",
+      "file": "assets/clients/client_03.svg",
+      "status": "svg",
+      "iconfont_id": 8032968,
+      "iconfont_name": "汽车之家",
+      "source": "https://www.iconfont.cn/search/index?searchType=icon&q=汽车之家&page=1",
+      "collection": "https://www.iconfont.cn/collections/detail?cid=49423",
+      "author_id": 307228,
+      "modifications": "Trimmed SVG viewBox to vector artwork bounds; retained paths and colors"
+    },
+    {
+      "name": "阿里云",
+      "original": "assets/client_31.png",
+      "file": "assets/clients/client_31.svg",
+      "status": "svg",
+      "iconfont_id": 26129685,
+      "iconfont_name": "阿里云官方-中文LOGO",
+      "source": "https://www.iconfont.cn/search/index?searchType=icon&q=阿里云&page=1",
+      "collection": "https://www.iconfont.cn/collections/detail?cid=247353",
+      "author_id": 6856114,
+      "modifications": "Trimmed SVG viewBox to vector artwork bounds; retained paths and colors"
+    },
+    {
+      "name": "猫眼电影",
+      "original": "assets/client_27.png",
+      "file": "assets/clients/client_27.svg",
+      "status": "svg",
+      "iconfont_id": 9289626,
+      "iconfont_name": "猫眼电影",
+      "source": "https://www.iconfont.cn/search/index?searchType=icon&q=猫眼电影&page=1",
+      "collection": "https://www.iconfont.cn/collections/detail?cid=22830",
+      "author_id": 104096,
+      "modifications": "Trimmed SVG viewBox to vector artwork bounds; retained paths and colors"
+    },
+    {
+      "name": "闪送",
+      "original": "assets/client_11.png",
+      "file": "assets/client_11.png",
+      "status": "original-retained",
+      "reason": "No verified complete logo matching the existing brand name and colors; retain original artwork"
+    },
+    {
+      "name": "便利蜂",
+      "original": "assets/client_05.png",
+      "file": "assets/client_05.png",
+      "status": "original-retained",
+      "reason": "No verified complete logo matching the existing brand name and colors; retain original artwork"
+    },
+    {
+      "name": "喜马拉雅",
+      "original": "assets/client_13.png",
+      "file": "assets/client_13.png",
+      "status": "original-retained",
+      "reason": "No verified complete logo matching the existing brand name and colors; retain original artwork"
+    },
+    {
+      "name": "浪潮",
+      "original": "assets/client_33.png",
+      "file": "assets/clients/client_33.svg",
+      "status": "svg",
+      "iconfont_id": 40751916,
+      "iconfont_name": "浪潮",
+      "source": "https://www.iconfont.cn/search/index?searchType=icon&q=浪潮&page=1",
+      "collection": "https://www.iconfont.cn/collections/detail?cid=116586",
+      "author_id": 4783289,
+      "modifications": "Trimmed SVG viewBox to vector artwork bounds; retained paths and colors"
+    }
+  ]
+}
