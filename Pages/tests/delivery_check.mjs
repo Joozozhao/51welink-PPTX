@@ -123,10 +123,15 @@ try {
   await page.screenshot({ path: path.join(output, 'ui-deck-preview.png'), fullPage: false });
 
   // 关闭整册预览
-  const closePreviewBtn = await page.$('#deck-preview-dialog button[data-act="close"]');
+  const closePreviewBtn = await page.$('#deck-preview-dialog button[data-close]');
   if (closePreviewBtn) await closePreviewBtn.click();
   else await page.keyboard.press('Escape');
   await page.waitForTimeout(300);
+  const dialogHiddenAfterClose = await page.evaluate(() => {
+    const dlg = document.getElementById('deck-preview-dialog');
+    return window.getComputedStyle(dlg).display === 'none' && document.documentElement.scrollHeight <= document.documentElement.clientHeight;
+  });
+  assert(dialogHiddenAfterClose, 'Closed preview dialog must be display:none and not cause vertical page overflow');
 
   // 测试 JSON 导出
   const [download] = await Promise.all([
